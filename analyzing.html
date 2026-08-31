@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Analyzing Your Results | Career Compass AI</title>
+
+    <link rel="stylesheet" href="./css/style.css">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: #f7f5f2;
+            color: #443846;
+            overflow: hidden;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            height: 76px;
+            background: white;
+            border-bottom: 1px solid #ebe5e3;
+            display: flex;
+            align-items: center;
+            padding: 0 7%;
+        }
+
+        .brand {
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+            color: #443846;
+        }
+
+        .brand span {
+            color: #e998b3;
+        }
+
+
+        /* ================= MAIN ================= */
+
+        .analyzing-page {
+            min-height: calc(100vh - 76px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .analyzing-card {
+            width: 100%;
+            max-width: 650px;
+            background: white;
+            border: 1px solid #ebe5e3;
+            border-radius: 30px;
+            padding: 55px 45px;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(68, 56, 70, 0.08);
+        }
+
+
+        /* ================= AVATAR ================= */
+
+        .avatar-container {
+            position: relative;
+            width: 130px;
+            height: 130px;
+            margin: 0 auto 30px;
+        }
+
+        .avatar-circle {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: #f4e4ea;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 65px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .pulse {
+            position: absolute;
+            inset: -12px;
+            border: 2px solid #e998b3;
+            border-radius: 50%;
+            animation: pulse 1.8s infinite;
+        }
+
+        @keyframes pulse {
+
+            0% {
+                transform: scale(0.8);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(1.25);
+                opacity: 0;
+            }
+
+        }
+
+
+        /* ================= TEXT ================= */
+
+        .analyzing-card h1 {
+            font-family: Georgia, serif;
+            font-size: 42px;
+            margin: 0 0 15px;
+            color: #443846;
+        }
+
+        .analyzing-card h1 span {
+            color: #e998b3;
+        }
+
+        .subtitle {
+            color: #756d76;
+            font-size: 16px;
+            line-height: 1.7;
+            margin-bottom: 35px;
+        }
+
+
+        /* ================= PROGRESS ================= */
+
+        .progress-container {
+            width: 100%;
+            height: 10px;
+            background: #eee8e8;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: #e998b3;
+            border-radius: 20px;
+            transition: width 0.5s ease;
+        }
+
+        .percentage {
+            font-size: 13px;
+            color: #805269;
+            font-weight: bold;
+            margin-bottom: 35px;
+        }
+
+
+        /* ================= ANALYSIS STEPS ================= */
+
+        .analysis-list {
+            text-align: left;
+            display: grid;
+            gap: 13px;
+        }
+
+        .analysis-item {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 14px 16px;
+            border-radius: 14px;
+            background: #faf8f7;
+            color: #9a9198;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .analysis-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #eee8e8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 13px;
+        }
+
+        .analysis-item.active {
+            background: #fdf0f4;
+            color: #805269;
+        }
+
+        .analysis-item.active .analysis-icon {
+            background: #e998b3;
+            color: white;
+        }
+
+        .analysis-item.complete {
+            background: #f6f1f4;
+            color: #443846;
+        }
+
+        .analysis-item.complete .analysis-icon {
+            background: #443846;
+            color: white;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 600px) {
+
+            .analyzing-card {
+                padding: 40px 22px;
+            }
+
+            .analyzing-card h1 {
+                font-size: 34px;
+            }
+
+            .navbar {
+                padding: 0 5%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <a href="./index.html" class="brand">
+            Career Compass <span>AI ✦</span>
+        </a>
+
+    </nav>
+
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="analyzing-page">
+
+        <section class="analyzing-card">
+
+
+            <!-- AVATAR -->
+
+            <div class="avatar-container">
+
+                <div class="pulse"></div>
+
+                <div
+                    class="avatar-circle"
+                    id="avatarIcon"
+                >
+                    🧠
+                </div>
+
+            </div>
+
+
+
+            <!-- TEXT -->
+
+            <h1>
+                Creating your <span>career profile...</span>
+            </h1>
+
+            <p class="subtitle" id="subtitle">
+
+                We're looking at your answers and discovering
+                the career paths that may suit you best.
+
+            </p>
+
+
+
+            <!-- PROGRESS -->
+
+            <div class="progress-container">
+
+                <div
+                    class="progress-bar"
+                    id="progressBar"
+                ></div>
+
+            </div>
+
+            <div
+                class="percentage"
+                id="percentage"
+            >
+                0% Complete
+            </div>
+
+
+
+            <!-- ANALYSIS STEPS -->
+
+            <div class="analysis-list">
+
+                <div
+                    class="analysis-item"
+                    id="step1"
+                >
+                    <div class="analysis-icon">
+                        1
+                    </div>
+
+                    Understanding your interests
+
+                </div>
+
+
+                <div
+                    class="analysis-item"
+                    id="step2"
+                >
+                    <div class="analysis-icon">
+                        2
+                    </div>
+
+                    Identifying your strengths and skills
+
+                </div>
+
+
+                <div
+                    class="analysis-item"
+                    id="step3"
+                >
+                    <div class="analysis-icon">
+                        3
+                    </div>
+
+                    Analyzing your work style
+
+                </div>
+
+
+                <div
+                    class="analysis-item"
+                    id="step4"
+                >
+                    <div class="analysis-icon">
+                        4
+                    </div>
+
+                    Matching your career values
+
+                </div>
+
+
+                <div
+                    class="analysis-item"
+                    id="step5"
+                >
+                    <div class="analysis-icon">
+                        ✦
+                    </div>
+
+                    Finding your best career matches
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+        const progressBar =
+            document.getElementById("progressBar");
+
+        const percentage =
+            document.getElementById("percentage");
+
+        const avatarIcon =
+            document.getElementById("avatarIcon");
+
+        const subtitle =
+            document.getElementById("subtitle");
+
+
+        /* =========================
+           LOAD SELECTED AVATAR
+        ========================= */
+
+        const savedAvatar =
+            localStorage.getItem(
+                "selectedAvatarIcon"
+            );
+
+
+        const savedAvatarName =
+            localStorage.getItem(
+                "selectedAvatar"
+            );
+
+
+        if (savedAvatar) {
+
+            avatarIcon.textContent =
+                savedAvatar;
+
+        }
+
+
+        if (savedAvatarName) {
+
+            subtitle.textContent =
+                savedAvatarName +
+                " is analyzing your answers to discover your best career matches.";
+
+        }
+
+
+
+        /* =========================
+           ANALYSIS STEPS
+        ========================= */
+
+        const steps = [
+
+            document.getElementById("step1"),
+
+            document.getElementById("step2"),
+
+            document.getElementById("step3"),
+
+            document.getElementById("step4"),
+
+            document.getElementById("step5")
+
+        ];
+
+
+
+        let progress = 0;
+
+
+        const loadingInterval =
+            setInterval(function() {
+
+
+                progress += 1;
+
+
+                progressBar.style.width =
+                    progress + "%";
+
+
+                percentage.textContent =
+                    progress + "% Complete";
+
+
+                /* ACTIVE STEP */
+
+                const stepIndex =
+                    Math.min(
+                        Math.floor(progress / 20),
+                        4
+                    );
+
+
+                steps.forEach(
+                    function(step, index) {
+
+
+                        step.classList.remove(
+                            "active"
+                        );
+
+
+                        if (index < stepIndex) {
+
+                            step.classList.add(
+                                "complete"
+                            );
+
+                        }
+
+
+                        if (
+                            index === stepIndex &&
+                            progress < 100
+                        ) {
+
+                            step.classList.add(
+                                "active"
+                            );
+
+                        }
+
+                    }
+                );
+
+
+
+                /* FINISH */
+
+                if (progress >= 100) {
+
+
+                    clearInterval(
+                        loadingInterval
+                    );
+
+
+                    steps.forEach(
+                        function(step) {
+
+                            step.classList.remove(
+                                "active"
+                            );
+
+                            step.classList.add(
+                                "complete"
+                            );
+
+                        }
+                    );
+
+
+                    percentage.textContent =
+                        "Analysis Complete! ✨";
+
+
+                    setTimeout(
+                        function() {
+
+                            window.location.href =
+                                "./results.html";
+
+                        },
+                        1000
+                    );
+
+                }
+
+
+            }, 50);
+
+    </script>
+
+</body>
+
+</html>

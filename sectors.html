@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Explore Career Sectors | Career Compass AI</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7f5f2;
+            color: #443846;
+        }
+
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            height: 76px;
+            background: white;
+            border-bottom: 1px solid #ebe5e3;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 7%;
+        }
+
+        .brand {
+            text-decoration: none;
+            color: #443846;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .brand span {
+            color: #e998b3;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #756d76;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .nav-links a:hover {
+            color: #e998b3;
+        }
+
+
+        /* ================= MAIN ================= */
+
+        .page {
+            width: min(1200px, 90%);
+            margin: auto;
+            padding: 60px 0 80px;
+        }
+
+
+        /* ================= HERO ================= */
+
+        .hero {
+            text-align: center;
+            max-width: 750px;
+            margin: auto auto 55px;
+        }
+
+        .small-label {
+            display: inline-block;
+
+            background: #f4e4ea;
+            color: #805269;
+
+            padding: 9px 17px;
+            border-radius: 30px;
+
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 1px;
+
+            margin-bottom: 18px;
+        }
+
+        .hero h1 {
+            font-family: Georgia, serif;
+            font-size: 48px;
+            margin: 0 0 18px;
+        }
+
+        .hero h1 span {
+            color: #e998b3;
+        }
+
+        .hero p {
+            color: #756d76;
+            font-size: 16px;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+
+        /* ================= SEARCH ================= */
+
+        .search-box {
+            max-width: 700px;
+            margin: 35px auto 50px;
+
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+
+            padding: 18px 22px 18px 50px;
+
+            border: 1px solid #ddd5d7;
+            border-radius: 30px;
+
+            outline: none;
+
+            font-size: 15px;
+            color: #443846;
+
+            background: white;
+        }
+
+        .search-box input:focus {
+            border-color: #e998b3;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            font-size: 18px;
+        }
+
+
+        /* ================= SECTION ================= */
+
+        .section-heading {
+            margin-bottom: 28px;
+        }
+
+        .section-heading h2 {
+            font-family: Georgia, serif;
+            font-size: 32px;
+            margin: 0 0 8px;
+        }
+
+        .section-heading p {
+            color: #756d76;
+            margin: 0;
+        }
+
+
+        /* ================= SECTOR GRID ================= */
+
+        .sector-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 22px;
+        }
+
+
+        /* ================= SECTOR CARD ================= */
+
+        .sector-card {
+            background: white;
+
+            border: 1px solid #ebe5e3;
+
+            border-radius: 26px;
+
+            padding: 28px;
+
+            transition: 0.25s;
+        }
+
+        .sector-card:hover {
+            transform: translateY(-6px);
+
+            box-shadow:
+                0 18px 40px
+                rgba(68, 56, 70, 0.08);
+
+            border-color: #e998b3;
+        }
+
+        .sector-top {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: flex-start;
+        }
+
+        .sector-icon {
+            width: 65px;
+            height: 65px;
+
+            background: #f4e4ea;
+
+            border-radius: 20px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 32px;
+        }
+
+        .role-count {
+            background: #faf5f7;
+
+            color: #c46d8c;
+
+            padding: 8px 13px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .sector-card h3 {
+            font-family: Georgia, serif;
+
+            font-size: 25px;
+
+            margin: 22px 0 10px;
+        }
+
+        .sector-card p {
+            color: #756d76;
+
+            font-size: 14px;
+
+            line-height: 1.7;
+
+            min-height: 65px;
+
+            margin-bottom: 22px;
+        }
+
+
+        /* ================= CAREER TAGS ================= */
+
+        .career-tags {
+            display: flex;
+            flex-wrap: wrap;
+
+            gap: 8px;
+
+            margin-bottom: 25px;
+        }
+
+        .career-tag {
+            background: #f7f5f2;
+
+            color: #756d76;
+
+            padding: 7px 11px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+        }
+
+
+        /* ================= BUTTON ================= */
+
+        .explore-btn {
+            width: 100%;
+
+            border: none;
+
+            background: #443846;
+
+            color: white;
+
+            padding: 14px;
+
+            border-radius: 22px;
+
+            font-size: 14px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .explore-btn:hover {
+            background: #e998b3;
+        }
+
+
+        /* ================= BOTTOM ================= */
+
+        .bottom-area {
+            margin-top: 60px;
+
+            background: #443846;
+
+            color: white;
+
+            border-radius: 30px;
+
+            padding: 45px;
+
+            text-align: center;
+        }
+
+        .bottom-area h2 {
+            font-family: Georgia, serif;
+
+            font-size: 32px;
+
+            margin: 0 0 12px;
+        }
+
+        .bottom-area p {
+            color: #e6dfe4;
+
+            max-width: 600px;
+
+            margin: auto auto 25px;
+
+            line-height: 1.7;
+        }
+
+        .assessment-btn {
+            display: inline-block;
+
+            background: #e998b3;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 15px 28px;
+
+            border-radius: 30px;
+
+            font-weight: bold;
+        }
+
+
+        /* ================= NO RESULTS ================= */
+
+        .no-results {
+            display: none;
+
+            text-align: center;
+
+            color: #756d76;
+
+            font-size: 16px;
+
+            padding: 40px;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 800px) {
+
+            .sector-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                padding: 0 5%;
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+
+            .nav-links a:last-child {
+                display: none;
+            }
+
+            .page {
+                padding: 40px 0 60px;
+            }
+
+            .hero h1 {
+                font-size: 37px;
+            }
+
+            .bottom-area {
+                padding: 35px 20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <a href="./index.html" class="brand">
+            Career Compass <span>AI ✦</span>
+        </a>
+
+
+        <div class="nav-links">
+
+            <a href="./results.html">
+                My Results
+            </a>
+
+            <a href="./dashboard.html">
+                Dashboard
+            </a>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="page">
+
+
+        <!-- ================= HERO ================= -->
+
+        <section class="hero">
+
+            <div class="small-label">
+                EXPLORE CAREERS
+            </div>
+
+            <h1>
+                Find your <span>career world</span>
+            </h1>
+
+            <p>
+                Explore different career sectors and discover
+                roles that match your interests, strengths and
+                future goals.
+            </p>
+
+        </section>
+
+
+
+        <!-- ================= SEARCH ================= -->
+
+        <div class="search-box">
+
+            <span class="search-icon">
+                🔍
+            </span>
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search a career sector..."
+            >
+
+        </div>
+
+
+
+        <!-- ================= SECTORS ================= -->
+
+        <section>
+
+            <div class="section-heading">
+
+                <h2>
+                    Explore by sector
+                </h2>
+
+                <p>
+                    Choose an area that interests you and discover
+                    different career opportunities.
+                </p>
+
+            </div>
+
+
+            <div
+                class="sector-grid"
+                id="sectorGrid"
+            >
+
+
+                <!-- TECHNOLOGY -->
+
+                <article
+                    class="sector-card"
+                    data-sector="technology"
+                    data-search="technology it software developer web developer ai data cybersecurity cloud"
+                >
+
+                    <div class="sector-top">
+
+                        <div class="sector-icon">
+                            💻
+                        </div>
+
+                        <div class="role-count">
+                            10+ Roles
+                        </div>
+
+                    </div>
+
+                    <h3>
+                        Technology & IT
+                    </h3>
+
+                    <p>
+                        Build software, websites, apps and intelligent
+                        systems that shape the digital future.
+                    </p>
+
+                    <div class="career-tags">
+
+                        <span class="career-tag">
+                            Software Developer
+                        </span>
+
+                        <span class="career-tag">
+                            AI Engineer
+                        </span>
+
+                        <span class="career-tag">
+                            Data Analyst
+                        </span>
+
+                    </div>
+
+                    <button
+                        class="explore-btn"
+                        onclick="exploreSector('technology')"
+                    >
+                        Explore Roles →
+                    </button>
+
+                </article>
+
+
+
+                <!-- CREATIVE -->
+
+                <article
+                    class="sector-card"
+                    data-sector="creative"
+                    data-search="creative design graphic ux ui animation game content video photography fashion"
+                >
+
+                    <div class="sector-top">
+
+                        <div class="sector-icon">
+                            🎨
+                        </div>
+
+                        <div class="role-count">
+                            8+ Roles
+                        </div>
+
+                    </div>
+
+                    <h3>
+                        Creative & Design
+                    </h3>
+
+                    <p>
+                        Turn imagination and ideas into visual,
+                        digital and creative experiences.
+                    </p>
+
+                    <div class="career-tags">
+
+                        <span class="career-tag">
+                            UX/UI Designer
+                        </span>
+
+                        <span class="career-tag">
+                            Graphic Designer
+                        </span>
+
+                        <span class="career-tag">
+                            Animator
+                        </span>
+
+                    </div>
+
+                    <button
+                        class="explore-btn"
+                        onclick="exploreSector('creative')"
+                    >
+                        Explore Roles →
+                    </button>
+
+                </article>
+
+
+
+                <!-- BUSINESS -->
+
+                <article
+                    class="sector-card"
+                    data-sector="business"
+                    data-search="business management marketing finance entrepreneur product manager analyst project"
+                >
+
+                    <div class="sector-top">
+
+                        <div class="sector-icon">
+                            📈
+                        </div>
+
+                        <div class="role-count">
+                            8+ Roles
+                        </div>
+
+                    </div>
+
+                    <h3>
+                        Business & Management
+                    </h3>
+
+                    <p>
+                        Lead teams, build strategies and help
+                        organizations grow and succeed.
+                    </p>
+
+                    <div class="career-tags">
+
+                        <span class="career-tag">
+                            Product Manager
+                        </span>
+
+                        <span class="career-tag">
+                            Marketing
+                        </span>
+
+                        <span class="career-tag">
+                            Finance
+                        </span>
+
+                    </div>
+
+                    <button
+                        class="explore-btn"
+                        onclick="exploreSector('business')"
+                    >
+                        Explore Roles →
+                    </button>
+
+                </article>
+
+
+
+                <!-- PEOPLE -->
+
+                <article
+                    class="sector-card"
+                    data-sector="people"
+                    data-search="people psychology counselor teacher social worker hr human resources public relations"
+                >
+
+                    <div class="sector-top">
+
+                        <div class="sector-icon">
+                            🤝
+                        </div>
+
+                        <div class="role-count">
+                            6+ Roles
+                        </div>
+
+                    </div>
+
+                    <h3>
+                        People & Social Services
+                    </h3>
+
+                    <p>
+                        Support, guide and empower individuals
+                        and communities.
+                    </p>
+
+                    <div class="career-tags">
+
+                        <span class="career-tag">
+                            Psychologist
+                        </span>
+
+                        <span class="career-tag">
+                            Teacher
+                        </span>
+
+                        <span class="career-tag">
+                            HR Specialist
+                        </span>
+
+                    </div>
+
+                    <button
+                        class="explore-btn"
+                        onclick="exploreSector('people')"
+                    >
+                        Explore Roles →
+                    </button>
+
+                </article>
+
+
+
+                <!-- SCIENCE -->
+
+                <article
+                    class="sector-card"
+                    data-sector="science"
+                    data-search="science research scientist biotechnology environmental clinical forensic laboratory"
+                >
+
+                    <div class="sector-top">
+
+                        <div class="sector-icon">
+                            🔬
+                        </div>
+
+                        <div class="role-count">
+                            5+ Roles
+                        </div>
+
+                    </div>
+
+                    <h3>
+                        Science & Research
+                    </h3>
+
+                    <p>
+                        Explore, experiment and discover new
+                        knowledge that can change the world.
+                    </p>
+
+                    <div class="career-tags">
+
+                        <span class="career-tag">
+                            Research Scientist
+                        </span>
+
+                        <span class="career-tag">
+                            Biotechnologist
+                        </span>
+
+                        <span class="career-tag">
+                            Environmental Science
+                        </span>
+
+                    </div>
+
+                    <button
+                        class="explore-btn"
+                        onclick="exploreSector('science')"
+                    >
+                        Explore Roles →
+                    </button>
+
+                </article>
+
+
+
+                <!-- LAW -->
+
+                <article
+                    class="sector-card"
+                    data-sector="law"
+                    data-search="law legal lawyer policy criminology civil services government public service"
+                >
+
+                    <div class="sector-top">
+
+                        <div class="sector-icon">
+                            ⚖️
+                        </div>
+
+                        <div class="role-count">
+                            5+ Roles
+                        </div>
+
+                    </div>
+
+                    <h3>
+                        Law & Public Service
+                    </h3>
+
+                    <p>
+                        Work with law, justice, public policy
+                        and important social decisions.
+                    </p>
+
+                    <div class="career-tags">
+
+                        <span class="career-tag">
+                            Lawyer
+                        </span>
+
+                        <span class="career-tag">
+                            Legal Advisor
+                        </span>
+
+                        <span class="career-tag">
+                            Policy Analyst
+                        </span>
+
+                    </div>
+
+                    <button
+                        class="explore-btn"
+                        onclick="exploreSector('law')"
+                    >
+                        Explore Roles →
+                    </button>
+
+                </article>
+
+
+
+                <!-- HEALTHCARE -->
+
+                <article
+                    class="sector-card"
+                    data-sector="healthcare"
+                    data-search="healthcare doctor nurse physiotherapist nutritionist hospital medical health"
+                >
+
+                    <div class="sector-top">
+
+                        <div class="sector-icon">
+                            🏥
+                        </div>
+
+                        <div class="role-count">
+                            5+ Roles
+                        </div>
+
+                    </div>
+
+                    <h3>
+                        Healthcare
+                    </h3>
+
+                    <p>
+                        Improve lives through medical care,
+                        health services and wellbeing.
+                    </p>
+
+                    <div class="career-tags">
+
+                        <span class="career-tag">
+                            Doctor
+                        </span>
+
+                        <span class="career-tag">
+                            Nurse
+                        </span>
+
+                        <span class="career-tag">
+                            Physiotherapist
+                        </span>
+
+                    </div>
+
+                    <button
+                        class="explore-btn"
+                        onclick="exploreSector('healthcare')"
+                    >
+                        Explore Roles →
+                    </button>
+
+                </article>
+
+
+
+                <!-- HOSPITALITY -->
+
+                <article
+                    class="sector-card"
+                    data-sector="hospitality"
+                    data-search="travel hospitality hotel tourism event manager chef travel consultant"
+                >
+
+                    <div class="sector-top">
+
+                        <div class="sector-icon">
+                            🌍
+                        </div>
+
+                        <div class="role-count">
+                            5+ Roles
+                        </div>
+
+                    </div>
+
+                    <h3>
+                        Travel & Hospitality
+                    </h3>
+
+                    <p>
+                        Create memorable experiences through
+                        travel, tourism, events and hospitality.
+                    </p>
+
+                    <div class="career-tags">
+
+                        <span class="career-tag">
+                            Hotel Manager
+                        </span>
+
+                        <span class="career-tag">
+                            Event Manager
+                        </span>
+
+                        <span class="career-tag">
+                            Travel Consultant
+                        </span>
+
+                    </div>
+
+                    <button
+                        class="explore-btn"
+                        onclick="exploreSector('hospitality')"
+                    >
+                        Explore Roles →
+                    </button>
+
+                </article>
+
+
+            </div>
+
+
+            <div
+                class="no-results"
+                id="noResults"
+            >
+
+                😕 No career sector found.
+                Try searching with another keyword.
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ================= BOTTOM ================= -->
+
+        <section class="bottom-area">
+
+            <h2>
+                Not sure where to start?
+            </h2>
+
+            <p>
+                Take the career assessment and get personalized
+                recommendations based on your interests and strengths.
+            </p>
+
+            <a
+                href="./questionnaire.html"
+                class="assessment-btn"
+            >
+                Take Assessment →
+            </a>
+
+        </section>
+
+
+    </main>
+
+
+
+    <script>
+
+        /* ===============================
+           EXPLORE SELECTED SECTOR
+        =============================== */
+
+        function exploreSector(sector) {
+
+            localStorage.setItem(
+                "selectedSector",
+                sector
+            );
+
+
+            window.location.href =
+                "./job-roles.html";
+
+        }
+
+
+
+        /* ===============================
+           SEARCH SECTORS
+        =============================== */
+
+        const searchInput =
+            document.getElementById("searchInput");
+
+
+        const sectorCards =
+            document.querySelectorAll(
+                ".sector-card"
+            );
+
+
+        const noResults =
+            document.getElementById("noResults");
+
+
+        searchInput.addEventListener(
+            "input",
+            function() {
+
+
+                const searchValue =
+                    searchInput.value
+                    .toLowerCase()
+                    .trim();
+
+
+                let visibleCards = 0;
+
+
+                sectorCards.forEach(
+                    function(card) {
+
+
+                        const searchableText =
+                            card.dataset.search;
+
+
+                        if (
+                            searchableText.includes(
+                                searchValue
+                            )
+                        ) {
+
+                            card.style.display =
+                                "block";
+
+
+                            visibleCards++;
+
+                        } else {
+
+                            card.style.display =
+                                "none";
+
+                        }
+
+                    }
+                );
+
+
+                if (
+                    visibleCards === 0
+                ) {
+
+                    noResults.style.display =
+                        "block";
+
+                } else {
+
+                    noResults.style.display =
+                        "none";
+
+                }
+
+            }
+        );
+
+    </script>
+
+
+</body>
+
+</html>

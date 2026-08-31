@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Your Career Results | Career Compass AI</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7f5f2;
+            color: #443846;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            height: 76px;
+            background: white;
+            border-bottom: 1px solid #ebe5e3;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+        }
+
+        .brand {
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+            color: #443846;
+        }
+
+        .brand span {
+            color: #e998b3;
+        }
+
+        .retake-top {
+            text-decoration: none;
+            color: #756d76;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* MAIN */
+
+        .results-page {
+            width: min(1100px, 90%);
+            margin: auto;
+            padding: 60px 0 80px;
+        }
+
+        /* HERO */
+
+        .results-hero {
+            background: white;
+            border: 1px solid #ebe5e3;
+            border-radius: 30px;
+            padding: 50px;
+            text-align: center;
+            box-shadow: 0 12px 35px rgba(68, 56, 70, 0.06);
+            margin-bottom: 35px;
+        }
+
+        .avatar-circle {
+            width: 95px;
+            height: 95px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: #f4e4ea;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+
+        .small-label {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 30px;
+            background: #f0e7eb;
+            color: #805269;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .results-hero h1 {
+            font-family: Georgia, serif;
+            font-size: 46px;
+            margin: 0 0 15px;
+        }
+
+        .results-hero h1 span {
+            color: #e998b3;
+        }
+
+        .results-hero p {
+            max-width: 650px;
+            margin: auto;
+            color: #756d76;
+            line-height: 1.7;
+        }
+
+        /* PROFILE */
+
+        .profile-card {
+            background: #443846;
+            color: white;
+            border-radius: 28px;
+            padding: 35px;
+            margin-bottom: 40px;
+        }
+
+        .profile-card h2 {
+            font-family: Georgia, serif;
+            font-size: 30px;
+            margin: 0 0 12px;
+        }
+
+        .profile-card p {
+            color: #e6dfe4;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .traits {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .trait {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 10px 16px;
+            border-radius: 25px;
+            font-size: 13px;
+        }
+
+        /* SECTION */
+
+        .section-title {
+            margin-bottom: 20px;
+        }
+
+        .section-title h2 {
+            font-family: Georgia, serif;
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .section-title p {
+            color: #756d76;
+        }
+
+        /* CAREER GRID */
+
+        .career-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .career-card {
+            background: white;
+            border: 1px solid #ebe5e3;
+            border-radius: 24px;
+            padding: 25px;
+            transition: 0.25s;
+        }
+
+        .career-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(68, 56, 70, 0.08);
+        }
+
+        .career-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .career-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 17px;
+            background: #f4e4ea;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 27px;
+        }
+
+        .match {
+            background: #fdf0f4;
+            color: #c46d8c;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .career-card h3 {
+            font-size: 22px;
+            margin: 20px 0 8px;
+        }
+
+        .career-card p {
+            color: #756d76;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .career-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .explore-btn {
+            flex: 1;
+            background: #443846;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .save-btn {
+            width: 48px;
+            border: none;
+            background: #f4e4ea;
+            border-radius: 15px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .save-btn.saved {
+            background: #e998b3;
+        }
+
+        /* MORE BUTTON */
+
+        .more-area {
+            text-align: center;
+            margin-top: 35px;
+        }
+
+        .more-btn {
+            display: inline-block;
+            text-decoration: none;
+            background: white;
+            border: 1px solid #d8d0d2;
+            color: #443846;
+            padding: 15px 28px;
+            border-radius: 30px;
+            font-weight: bold;
+        }
+
+        /* BOTTOM */
+
+        .bottom-actions {
+            text-align: center;
+            margin-top: 55px;
+        }
+
+        .dashboard-btn {
+            display: inline-block;
+            text-decoration: none;
+            background: #443846;
+            color: white;
+            padding: 16px 30px;
+            border-radius: 30px;
+            font-weight: bold;
+            margin: 8px;
+        }
+
+        .retake-btn {
+            display: inline-block;
+            text-decoration: none;
+            background: white;
+            color: #443846;
+            border: 1px solid #d8d0d2;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-weight: bold;
+            margin: 8px;
+        }
+
+        @media (max-width: 800px) {
+            .career-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .navbar {
+                padding: 0 5%;
+            }
+
+            .retake-top {
+                display: none;
+            }
+
+            .results-page {
+                padding: 35px 0;
+            }
+
+            .results-hero {
+                padding: 35px 20px;
+            }
+
+            .results-hero h1 {
+                font-size: 35px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <a href="./index.html" class="brand">
+            Career Compass <span>AI ✦</span>
+        </a>
+
+        <a href="./questionnaire.html" class="retake-top">
+            ↻ Retake Assessment
+        </a>
+
+    </nav>
+
+    <main class="results-page">
+
+        <section class="results-hero">
+
+            <div class="avatar-circle" id="avatarIcon">
+                ✨
+            </div>
+
+            <div class="small-label">
+                YOUR PERSONALIZED RESULTS
+            </div>
+
+            <h1>
+                Your future looks <span>exciting!</span>
+            </h1>
+
+            <p id="resultMessage">
+                We analyzed your interests, strengths and career preferences.
+            </p>
+
+        </section>
+
+
+        <section class="profile-card">
+
+            <h2 id="profileTitle">
+                Your Career Profile
+            </h2>
+
+            <p id="profileDescription">
+                Discovering your strengths...
+            </p>
+
+            <div class="traits" id="traitsContainer"></div>
+
+        </section>
+
+
+        <section class="section-title">
+
+            <h2>Your top career matches</h2>
+
+            <p>
+                These recommendations are generated from your assessment answers.
+            </p>
+
+        </section>
+
+
+        <section class="career-grid" id="careerGrid"></section>
+
+
+        <div class="more-area">
+
+            <a href="./job-roles.html" class="more-btn">
+                View More Career Recommendations →
+            </a>
+
+        </div>
+
+
+        <section class="bottom-actions">
+
+            <a href="./dashboard.html" class="dashboard-btn">
+                Go to Dashboard →
+            </a>
+
+            <a href="./questionnaire.html" class="retake-btn">
+                ↻ Retake Assessment
+            </a>
+
+        </section>
+
+    </main>
+
+
+    <script>
+
+        /* =============================
+           LOAD USER DATA
+        ============================= */
+
+        const answers = JSON.parse(
+            localStorage.getItem("careerAnswers")
+        ) || [];
+
+        const savedAvatar =
+            localStorage.getItem("selectedAvatarIcon");
+
+        const savedAvatarName =
+            localStorage.getItem("selectedAvatar");
+
+
+        if (savedAvatar) {
+
+            document.getElementById("avatarIcon").textContent =
+                savedAvatar;
+
+        }
+
+
+        if (savedAvatarName) {
+
+            document.getElementById("resultMessage").textContent =
+                savedAvatarName +
+                " analyzed your answers and discovered career paths that may suit your interests and strengths.";
+
+        }
+
+
+        /* =============================
+           CAREER CATEGORIES
+        ============================= */
+
+        const categories = {
+            technology: 0,
+            creative: 0,
+            business: 0,
+            people: 0,
+            science: 0,
+            law: 0,
+            healthcare: 0,
+            hospitality: 0
+        };
+
+
+        /*
+        OPTION SCORE MAPPING
+
+        Each answer from the questionnaire
+        adds a score to a career category.
+
+        Option positions:
+        0 = Technology / Analytical
+        1 = People / Social
+        2 = Creative
+        3 = Business / Leadership
+        */
+
+        answers.forEach(function(answer) {
+
+            if (answer === 0) {
+                categories.technology += 2;
+                categories.science += 1;
+            }
+
+            if (answer === 1) {
+                categories.people += 2;
+                categories.healthcare += 1;
+            }
+
+            if (answer === 2) {
+                categories.creative += 2;
+                categories.hospitality += 1;
+            }
+
+            if (answer === 3) {
+                categories.business += 2;
+                categories.law += 1;
+            }
+
+        });
+
+
+        /* =============================
+           PROFILE DATA
+        ============================= */
+
+        const profileData = {
+
+            technology: {
+                title: "The Analytical Innovator",
+                description:
+                    "You enjoy solving problems, understanding systems and exploring how technology can create useful solutions.",
+                traits: ["🧠 Analytical", "💻 Technical", "🔍 Curious", "🚀 Innovative"]
+            },
+
+            creative: {
+                title: "The Creative Visionary",
+                description:
+                    "You enjoy expressing ideas, designing new experiences and turning imagination into something meaningful.",
+                traits: ["🎨 Creative", "💡 Imaginative", "✨ Expressive", "🌈 Innovative"]
+            },
+
+            business: {
+                title: "The Ambitious Leader",
+                description:
+                    "You enjoy taking initiative, achieving goals and bringing people and ideas together.",
+                traits: ["🚀 Ambitious", "👑 Leadership", "📈 Strategic", "💼 Goal-Oriented"]
+            },
+
+            people: {
+                title: "The People Connector",
+                description:
+                    "You enjoy understanding people, supporting others and building meaningful connections.",
+                traits: ["🤝 Empathetic", "💬 Communicative", "❤️ Supportive", "🌍 People-Focused"]
+            },
+
+            science: {
+                title: "The Curious Researcher",
+                description:
+                    "You enjoy discovering how things work, exploring ideas and finding answers through research and analysis.",
+                traits: ["🔬 Curious", "🧠 Logical", "📚 Research-Oriented", "🔍 Detail-Focused"]
+            },
+
+            law: {
+                title: "The Strategic Thinker",
+                description:
+                    "You are interested in structured thinking, decision-making and understanding complex systems.",
+                traits: ["⚖️ Strategic", "🗣️ Confident", "📖 Logical", "🎯 Focused"]
+            },
+
+            healthcare: {
+                title: "The Caring Professional",
+                description:
+                    "You value helping others and may enjoy work where your knowledge can improve people's lives.",
+                traits: ["❤️ Caring", "🤝 Supportive", "🩺 Responsible", "🌱 Helpful"]
+            },
+
+            hospitality: {
+                title: "The Experience Creator",
+                description:
+                    "You enjoy creating enjoyable experiences, working with people and bringing energy to different environments.",
+                traits: ["🌍 Social", "✨ Energetic", "🎉 Creative", "🤝 Friendly"]
+            }
+
+        };
+
+
+        /* =============================
+           CAREER DATABASE
+        ============================= */
+
+        const careerDatabase = {
+
+            technology: [
+
+                {
+                    name: "Software Developer",
+                    icon: "💻",
+                    description: "Build websites, applications and software solutions."
+                },
+
+                {
+                    name: "Web Developer",
+                    icon: "🌐",
+                    description: "Create modern and interactive websites."
+                },
+
+                {
+                    name: "Mobile App Developer",
+                    icon: "📱",
+                    description: "Design and develop mobile applications."
+                },
+
+                {
+                    name: "AI / ML Engineer",
+                    icon: "🤖",
+                    description: "Build intelligent systems using artificial intelligence."
+                },
+
+                {
+                    name: "Data Analyst",
+                    icon: "📊",
+                    description: "Analyze data and discover useful insights."
+                },
+
+                {
+                    name: "Data Scientist",
+                    icon: "📈",
+                    description: "Use data, statistics and technology to solve problems."
+                },
+
+                {
+                    name: "Cybersecurity Analyst",
+                    icon: "🔐",
+                    description: "Protect systems and digital information."
+                },
+
+                {
+                    name: "Cloud Engineer",
+                    icon: "☁️",
+                    description: "Build and manage cloud-based systems."
+                },
+
+                {
+                    name: "DevOps Engineer",
+                    icon: "⚙️",
+                    description: "Improve software development and deployment processes."
+                },
+
+                {
+                    name: "UI Developer",
+                    icon: "🖥️",
+                    description: "Build attractive and user-friendly interfaces."
+                }
+
+            ],
+
+
+            creative: [
+
+                {
+                    name: "UX/UI Designer",
+                    icon: "🎨",
+                    description: "Design easy and enjoyable digital experiences."
+                },
+
+                {
+                    name: "Graphic Designer",
+                    icon: "🖌️",
+                    description: "Create visual designs for brands and media."
+                },
+
+                {
+                    name: "Animator",
+                    icon: "🎬",
+                    description: "Create animated characters and visual stories."
+                },
+
+                {
+                    name: "Game Designer",
+                    icon: "🎮",
+                    description: "Design creative and engaging game experiences."
+                },
+
+                {
+                    name: "Content Creator",
+                    icon: "📸",
+                    description: "Create engaging content for digital platforms."
+                },
+
+                {
+                    name: "Video Editor",
+                    icon: "🎥",
+                    description: "Transform video footage into engaging stories."
+                },
+
+                {
+                    name: "Photographer",
+                    icon: "📷",
+                    description: "Capture visual stories through photography."
+                },
+
+                {
+                    name: "Fashion Designer",
+                    icon: "👗",
+                    description: "Create and develop clothing and fashion concepts."
+                }
+
+            ],
+
+
+            business: [
+
+                {
+                    name: "Product Manager",
+                    icon: "🚀",
+                    description: "Guide teams to build successful products."
+                },
+
+                {
+                    name: "Business Analyst",
+                    icon: "📊",
+                    description: "Analyze business needs and improve processes."
+                },
+
+                {
+                    name: "Marketing Manager",
+                    icon: "📣",
+                    description: "Plan strategies to promote products and brands."
+                },
+
+                {
+                    name: "Digital Marketing Specialist",
+                    icon: "📱",
+                    description: "Promote businesses through digital platforms."
+                },
+
+                {
+                    name: "Financial Analyst",
+                    icon: "💰",
+                    description: "Analyze financial data and business performance."
+                },
+
+                {
+                    name: "Operations Manager",
+                    icon: "📋",
+                    description: "Manage systems and improve business operations."
+                },
+
+                {
+                    name: "Entrepreneur",
+                    icon: "💡",
+                    description: "Build and grow your own business ideas."
+                },
+
+                {
+                    name: "Project Manager",
+                    icon: "📌",
+                    description: "Plan and lead projects from start to finish."
+                }
+
+            ],
+
+
+            people: [
+
+                {
+                    name: "Psychologist",
+                    icon: "🧠",
+                    description: "Study human behavior and support mental wellbeing."
+                },
+
+                {
+                    name: "Career Counselor",
+                    icon: "🧭",
+                    description: "Help people explore education and career paths."
+                },
+
+                {
+                    name: "Teacher",
+                    icon: "📚",
+                    description: "Educate and guide students."
+                },
+
+                {
+                    name: "Social Worker",
+                    icon: "🤝",
+                    description: "Support individuals and communities."
+                },
+
+                {
+                    name: "Human Resources Specialist",
+                    icon: "👥",
+                    description: "Support employees and workplace development."
+                },
+
+                {
+                    name: "Public Relations Specialist",
+                    icon: "🎤",
+                    description: "Build communication between organizations and people."
+                }
+
+            ],
+
+
+            science: [
+
+                {
+                    name: "Research Scientist",
+                    icon: "🔬",
+                    description: "Conduct research and discover new knowledge."
+                },
+
+                {
+                    name: "Biotechnologist",
+                    icon: "🧬",
+                    description: "Use biology and technology to solve scientific problems."
+                },
+
+                {
+                    name: "Environmental Scientist",
+                    icon: "🌱",
+                    description: "Study and protect the environment."
+                },
+
+                {
+                    name: "Clinical Researcher",
+                    icon: "🧪",
+                    description: "Conduct research related to health and medicine."
+                },
+
+                {
+                    name: "Forensic Scientist",
+                    icon: "🔍",
+                    description: "Use scientific methods to investigate evidence."
+                }
+
+            ],
+
+
+            law: [
+
+                {
+                    name: "Lawyer",
+                    icon: "⚖️",
+                    description: "Provide legal advice and represent clients."
+                },
+
+                {
+                    name: "Legal Advisor",
+                    icon: "📜",
+                    description: "Guide organizations and individuals on legal matters."
+                },
+
+                {
+                    name: "Policy Analyst",
+                    icon: "🏛️",
+                    description: "Research and evaluate public policies."
+                },
+
+                {
+                    name: "Criminologist",
+                    icon: "🔎",
+                    description: "Study crime, behavior and criminal justice."
+                },
+
+                {
+                    name: "Civil Services Officer",
+                    icon: "🏛️",
+                    description: "Work in public administration and government services."
+                }
+
+            ],
+
+
+            healthcare: [
+
+                {
+                    name: "Doctor",
+                    icon: "👨‍⚕️",
+                    description: "Diagnose and treat patients."
+                },
+
+                {
+                    name: "Nurse",
+                    icon: "🩺",
+                    description: "Provide healthcare and patient support."
+                },
+
+                {
+                    name: "Physiotherapist",
+                    icon: "🏃",
+                    description: "Help patients improve movement and physical health."
+                },
+
+                {
+                    name: "Nutritionist",
+                    icon: "🥗",
+                    description: "Guide people on healthy eating and nutrition."
+                },
+
+                {
+                    name: "Healthcare Administrator",
+                    icon: "🏥",
+                    description: "Manage healthcare services and organizations."
+                }
+
+            ],
+
+
+            hospitality: [
+
+                {
+                    name: "Hotel Manager",
+                    icon: "🏨",
+                    description: "Manage hotel operations and guest experiences."
+                },
+
+                {
+                    name: "Event Manager",
+                    icon: "🎉",
+                    description: "Plan and manage events and experiences."
+                },
+
+                {
+                    name: "Travel Consultant",
+                    icon: "✈️",
+                    description: "Help people plan travel experiences."
+                },
+
+                {
+                    name: "Tourism Manager",
+                    icon: "🌍",
+                    description: "Manage tourism services and destinations."
+                },
+
+                {
+                    name: "Chef",
+                    icon: "👨‍🍳",
+                    description: "Create and prepare food experiences."
+                }
+
+            ]
+
+        };
+
+
+        /* =============================
+           FIND TOP CATEGORIES
+        ============================= */
+
+        const sortedCategories =
+            Object.entries(categories)
+            .sort(function(a, b) {
+                return b[1] - a[1];
+            });
+
+
+        const topCategory =
+            sortedCategories[0][0];
+
+
+        const secondCategory =
+            sortedCategories[1][0];
+
+
+        /* =============================
+           PROFILE
+        ============================= */
+
+        const profile =
+            profileData[topCategory];
+
+
+        document.getElementById("profileTitle").textContent =
+            profile.title;
+
+
+        document.getElementById("profileDescription").textContent =
+            profile.description;
+
+
+        const traitsContainer =
+            document.getElementById("traitsContainer");
+
+
+        profile.traits.forEach(function(trait) {
+
+            const traitElement =
+                document.createElement("div");
+
+            traitElement.className =
+                "trait";
+
+            traitElement.textContent =
+                trait;
+
+            traitsContainer.appendChild(
+                traitElement
+            );
+
+        });
+
+
+        /* =============================
+           CREATE RECOMMENDATIONS
+        ============================= */
+
+        let recommendedCareers = [];
+
+
+        recommendedCareers =
+            careerDatabase[topCategory]
+            .slice(0, 4)
+            .concat(
+                careerDatabase[secondCategory]
+                .slice(0, 2)
+            );
+
+
+        /* =============================
+           DISPLAY CAREERS
+        ============================= */
+
+        const careerGrid =
+            document.getElementById("careerGrid");
+
+
+        recommendedCareers.forEach(
+            function(career, index) {
+
+
+                const matchPercentage =
+                    96 - (index * 3);
+
+
+                const card =
+                    document.createElement("article");
+
+
+                card.className =
+                    "career-card";
+
+
+                card.innerHTML =
+
+                    '<div class="career-top">' +
+
+                    '<div class="career-icon">' +
+                    career.icon +
+                    '</div>' +
+
+                    '<div class="match">' +
+                    matchPercentage +
+                    '% Match' +
+                    '</div>' +
+
+                    '</div>' +
+
+                    '<h3>' +
+                    career.name +
+                    '</h3>' +
+
+                    '<p>' +
+                    career.description +
+                    '</p>' +
+
+                    '<div class="career-actions">' +
+
+                    '<button class="explore-btn" onclick="exploreCareer(\'' +
+                    career.name.replace(/'/g, "\\'") +
+                    '\')">' +
+
+                    'Explore Career' +
+
+                    '</button>' +
+
+                    '<button class="save-btn">♡</button>' +
+
+                    '</div>';
+
+
+                careerGrid.appendChild(card);
+
+            }
+        );
+
+
+        /* =============================
+           SAVE CAREER
+        ============================= */
+
+        document.addEventListener(
+            "click",
+            function(event) {
+
+                if (
+                    event.target.classList.contains(
+                        "save-btn"
+                    )
+                ) {
+
+                    event.target.classList.toggle(
+                        "saved"
+                    );
+
+
+                    if (
+                        event.target.classList.contains(
+                            "saved"
+                        )
+                    ) {
+
+                        event.target.textContent =
+                            "♥";
+
+                    } else {
+
+                        event.target.textContent =
+                            "♡";
+
+                    }
+
+                }
+
+            }
+        );
+
+
+        /* =============================
+           EXPLORE CAREER
+        ============================= */
+
+        function exploreCareer(career) {
+
+            localStorage.setItem(
+                "selectedCareer",
+                career
+            );
+
+
+            window.location.href =
+                "./job-role-detail.html";
+
+        }
+
+    </script>
+
+</body>
+
+</html>

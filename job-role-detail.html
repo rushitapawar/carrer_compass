@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Career Details | Career Compass AI</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7f5f2;
+            color: #443846;
+        }
+
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            height: 76px;
+            background: white;
+            border-bottom: 1px solid #ebe5e3;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 7%;
+        }
+
+        .brand {
+            text-decoration: none;
+            color: #443846;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .brand span {
+            color: #e998b3;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #756d76;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .nav-links a:hover {
+            color: #e998b3;
+        }
+
+
+        /* ================= MAIN ================= */
+
+        .page {
+            width: min(1150px, 90%);
+            margin: auto;
+            padding: 45px 0 80px;
+        }
+
+
+        /* ================= BACK BUTTON ================= */
+
+        .back-btn {
+            display: inline-block;
+            text-decoration: none;
+            color: #756d76;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .back-btn:hover {
+            color: #e998b3;
+        }
+
+
+        /* ================= HERO ================= */
+
+        .career-hero {
+            background: white;
+            border: 1px solid #ebe5e3;
+            border-radius: 30px;
+
+            padding: 40px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 30px;
+
+            margin-bottom: 25px;
+        }
+
+        .career-info {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .career-icon {
+            width: 100px;
+            height: 100px;
+
+            background: #f4e4ea;
+
+            border-radius: 28px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 52px;
+        }
+
+        .sector-label {
+            display: inline-block;
+
+            background: #faf5f7;
+            color: #c46d8c;
+
+            padding: 8px 14px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+            font-weight: bold;
+
+            margin-bottom: 12px;
+        }
+
+        .career-info h1 {
+            font-family: Georgia, serif;
+            font-size: 42px;
+            margin: 0 0 10px;
+        }
+
+        .career-info p {
+            color: #756d76;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .save-btn,
+        .compare-btn {
+            border: none;
+            padding: 14px 20px;
+            border-radius: 22px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .save-btn {
+            background: #443846;
+            color: white;
+        }
+
+        .save-btn:hover {
+            background: #e998b3;
+        }
+
+        .save-btn.saved {
+            background: #e998b3;
+        }
+
+        .compare-btn {
+            background: #f4e4ea;
+            color: #805269;
+        }
+
+        .compare-btn:hover {
+            background: #e998b3;
+            color: white;
+        }
+
+
+        /* ================= GRID ================= */
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+        }
+
+
+        /* ================= CARDS ================= */
+
+        .card {
+            background: white;
+            border: 1px solid #ebe5e3;
+            border-radius: 26px;
+            padding: 30px;
+            margin-bottom: 25px;
+        }
+
+        .card h2 {
+            font-family: Georgia, serif;
+            font-size: 27px;
+            margin-top: 0;
+            margin-bottom: 16px;
+        }
+
+        .card p {
+            color: #756d76;
+            line-height: 1.8;
+            font-size: 15px;
+        }
+
+
+        /* ================= RESPONSIBILITIES ================= */
+
+        .responsibility-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .responsibility-list li {
+            padding: 14px 0;
+            border-bottom: 1px solid #eee8e8;
+            color: #756d76;
+            line-height: 1.5;
+        }
+
+        .responsibility-list li:last-child {
+            border-bottom: none;
+        }
+
+        .responsibility-list li::before {
+            content: "✦";
+            color: #e998b3;
+            margin-right: 12px;
+        }
+
+
+        /* ================= SKILLS ================= */
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-tag {
+            background: #f4e4ea;
+            color: #805269;
+            padding: 10px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+
+        /* ================= SIDEBAR ================= */
+
+        .side-card {
+            background: white;
+            border: 1px solid #ebe5e3;
+            border-radius: 26px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .side-card h3 {
+            font-family: Georgia, serif;
+            font-size: 21px;
+            margin-top: 0;
+        }
+
+        .info-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #eee8e8;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: #9a9198;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            color: #443846;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+
+        /* ================= EDUCATION ================= */
+
+        .education-step {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .step-number {
+            min-width: 35px;
+            height: 35px;
+
+            background: #f4e4ea;
+            color: #805269;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-weight: bold;
+        }
+
+        .education-step h4 {
+            margin: 0 0 5px;
+            font-size: 15px;
+        }
+
+        .education-step p {
+            margin: 0;
+            font-size: 13px;
+        }
+
+
+        /* ================= OPPORTUNITIES ================= */
+
+        .opportunity {
+            padding: 13px 15px;
+            background: #f7f5f2;
+            border-radius: 15px;
+            margin-bottom: 10px;
+            color: #756d76;
+            font-size: 14px;
+        }
+
+
+        /* ================= EMPTY STATE ================= */
+
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            background: white;
+            border-radius: 30px;
+            border: 1px solid #ebe5e3;
+        }
+
+        .empty-state h1 {
+            font-family: Georgia, serif;
+        }
+
+        .empty-state a {
+            display: inline-block;
+            margin-top: 15px;
+            background: #443846;
+            color: white;
+            text-decoration: none;
+            padding: 14px 22px;
+            border-radius: 22px;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 900px) {
+
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .career-hero {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+        }
+
+        @media (max-width: 650px) {
+
+            .navbar {
+                padding: 0 5%;
+            }
+
+            .nav-links a:last-child {
+                display: none;
+            }
+
+            .career-info {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .career-info h1 {
+                font-size: 34px;
+            }
+
+            .hero-actions {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .save-btn,
+            .compare-btn {
+                width: 100%;
+            }
+
+            .card {
+                padding: 22px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <a href="./index.html" class="brand">
+            Career Compass <span>AI ✦</span>
+        </a>
+
+        <div class="nav-links">
+
+            <a href="./results.html">
+                My Results
+            </a>
+
+            <a href="./sectors.html">
+                Explore
+            </a>
+
+            <a href="./dashboard.html">
+                Dashboard
+            </a>
+
+        </div>
+
+    </nav>
+
+
+
+    <main class="page">
+
+
+        <!-- BACK BUTTON -->
+
+        <a href="./job-roles.html" class="back-btn">
+            ← Back to Job Roles
+        </a>
+
+
+        <!-- ================= CAREER CONTENT ================= -->
+
+        <div id="careerContent">
+
+            <!-- JavaScript will add career details here -->
+
+        </div>
+
+
+    </main>
+
+
+
+    <script>
+
+        /* =========================================
+           GET SELECTED CAREER
+        ========================================= */
+
+        const selectedCareer =
+            localStorage.getItem("selectedCareer");
+
+
+        /* =========================================
+           CAREER DATABASE
+        ========================================= */
+
+        const careerData = {
+
+            "Software Developer": {
+                icon: "💻",
+                sector: "Technology & IT",
+
+                overview:
+                    "Software Developers design, build, test and maintain applications and digital systems. They use programming languages and problem-solving skills to create technology that people and businesses use every day.",
+
+                responsibilities: [
+                    "Design and develop software applications",
+                    "Write clean and efficient code",
+                    "Test and debug software",
+                    "Work with designers and other developers",
+                    "Maintain and improve existing applications"
+                ],
+
+                skills: [
+                    "Programming",
+                    "Problem Solving",
+                    "JavaScript",
+                    "Python",
+                    "Git",
+                    "Databases"
+                ],
+
+                education: [
+                    {
+                        title: "Build your foundation",
+                        text: "Learn programming fundamentals, logic and problem solving."
+                    },
+                    {
+                        title: "Study technology",
+                        text: "Consider BCA, B.Tech, Computer Science or relevant courses."
+                    },
+                    {
+                        title: "Build projects",
+                        text: "Create websites, applications and software projects for your portfolio."
+                    }
+                ],
+
+                opportunities: [
+                    "Frontend Developer",
+                    "Backend Developer",
+                    "Full Stack Developer",
+                    "Application Developer",
+                    "Software Engineer"
+                ],
+
+                workStyle: "Analytical & Creative",
+                growth: "High growth potential",
+                environment: "Office / Remote / Hybrid"
+            },
+
+
+            "Web Developer": {
+                icon: "🌐",
+                sector: "Technology & IT",
+
+                overview:
+                    "Web Developers create and maintain websites and web applications. They combine programming, design and problem-solving skills to build experiences that work smoothly across different devices.",
+
+                responsibilities: [
+                    "Build responsive websites",
+                    "Develop interactive web applications",
+                    "Work with HTML, CSS and JavaScript",
+                    "Test and improve website performance",
+                    "Collaborate with designers and developers"
+                ],
+
+                skills: [
+                    "HTML",
+                    "CSS",
+                    "JavaScript",
+                    "Responsive Design",
+                    "Git",
+                    "Problem Solving"
+                ],
+
+                education: [
+                    {
+                        title: "Learn web fundamentals",
+                        text: "Start with HTML, CSS and JavaScript."
+                    },
+                    {
+                        title: "Learn frameworks",
+                        text: "Explore modern tools and frameworks."
+                    },
+                    {
+                        title: "Build a portfolio",
+                        text: "Create real projects and publish them online."
+                    }
+                ],
+
+                opportunities: [
+                    "Frontend Developer",
+                    "Backend Developer",
+                    "Full Stack Developer",
+                    "WordPress Developer",
+                    "Web Application Developer"
+                ],
+
+                workStyle: "Creative & Technical",
+                growth: "High growth potential",
+                environment: "Office / Remote / Freelance"
+            },
+
+
+            "AI / ML Engineer": {
+                icon: "🤖",
+                sector: "Technology & IT",
+
+                overview:
+                    "AI and Machine Learning Engineers build systems that can learn from data and make intelligent predictions or decisions.",
+
+                responsibilities: [
+                    "Develop machine learning models",
+                    "Prepare and analyze data",
+                    "Train and test AI systems",
+                    "Improve model performance",
+                    "Deploy intelligent applications"
+                ],
+
+                skills: [
+                    "Python",
+                    "Machine Learning",
+                    "Data Analysis",
+                    "Statistics",
+                    "Deep Learning",
+                    "Problem Solving"
+                ],
+
+                education: [
+                    {
+                        title: "Learn programming",
+                        text: "Build a strong foundation in Python and mathematics."
+                    },
+                    {
+                        title: "Study AI and data",
+                        text: "Learn machine learning and data analysis."
+                    },
+                    {
+                        title: "Build AI projects",
+                        text: "Create models and practical AI applications."
+                    }
+                ],
+
+                opportunities: [
+                    "Machine Learning Engineer",
+                    "AI Engineer",
+                    "Data Scientist",
+                    "NLP Engineer",
+                    "Computer Vision Engineer"
+                ],
+
+                workStyle: "Analytical & Innovative",
+                growth: "Very high growth potential",
+                environment: "Technology / Research / Hybrid"
+            },
+
+
+            "Data Analyst": {
+                icon: "📊",
+                sector: "Technology & IT",
+
+                overview:
+                    "Data Analysts collect, organize and analyze data to help organizations make better decisions.",
+
+                responsibilities: [
+                    "Collect and organize data",
+                    "Analyze trends and patterns",
+                    "Create reports and dashboards",
+                    "Use SQL and spreadsheet tools",
+                    "Communicate insights clearly"
+                ],
+
+                skills: [
+                    "SQL",
+                    "Excel",
+                    "Data Visualization",
+                    "Statistics",
+                    "Python",
+                    "Communication"
+                ],
+
+                education: [
+                    {
+                        title: "Learn data basics",
+                        text: "Understand spreadsheets, statistics and databases."
+                    },
+                    {
+                        title: "Learn analytics tools",
+                        text: "Practice SQL, Python and visualization tools."
+                    },
+                    {
+                        title: "Create projects",
+                        text: "Analyze real datasets and build dashboards."
+                    }
+                ],
+
+                opportunities: [
+                    "Business Analyst",
+                    "Data Analyst",
+                    "BI Analyst",
+                    "Analytics Consultant",
+                    "Junior Data Scientist"
+                ],
+
+                workStyle: "Analytical",
+                growth: "High growth potential",
+                environment: "Office / Hybrid / Remote"
+            },
+
+
+            "UX/UI Designer": {
+                icon: "🎨",
+                sector: "Creative & Design",
+
+                overview:
+                    "UX/UI Designers create digital products that are attractive, easy to use and enjoyable for users.",
+
+                responsibilities: [
+                    "Research user needs",
+                    "Create wireframes and prototypes",
+                    "Design application interfaces",
+                    "Test user experiences",
+                    "Work with developers and product teams"
+                ],
+
+                skills: [
+                    "Figma",
+                    "UX Research",
+                    "Wireframing",
+                    "Prototyping",
+                    "Visual Design",
+                    "Communication"
+                ],
+
+                education: [
+                    {
+                        title: "Learn design principles",
+                        text: "Understand color, typography, layout and usability."
+                    },
+                    {
+                        title: "Learn design tools",
+                        text: "Practice using Figma and prototyping tools."
+                    },
+                    {
+                        title: "Build a portfolio",
+                        text: "Create case studies and real design projects."
+                    }
+                ],
+
+                opportunities: [
+                    "UX Designer",
+                    "UI Designer",
+                    "Product Designer",
+                    "Interaction Designer",
+                    "UX Researcher"
+                ],
+
+                workStyle: "Creative & Analytical",
+                growth: "High growth potential",
+                environment: "Office / Hybrid / Freelance"
+            },
+
+
+            "Graphic Designer": {
+                icon: "🖌️",
+                sector: "Creative & Design",
+
+                overview:
+                    "Graphic Designers communicate ideas through visual content such as branding, social media, advertisements and digital designs.",
+
+                responsibilities: [
+                    "Create visual concepts",
+                    "Design brand materials",
+                    "Create social media content",
+                    "Work with typography and colors",
+                    "Collaborate with clients and teams"
+                ],
+
+                skills: [
+                    "Creativity",
+                    "Typography",
+                    "Branding",
+                    "Photoshop",
+                    "Illustration",
+                    "Communication"
+                ],
+
+                education: [
+                    {
+                        title: "Learn design basics",
+                        text: "Understand visual communication and design principles."
+                    },
+                    {
+                        title: "Practice design tools",
+                        text: "Learn tools such as Photoshop and Illustrator."
+                    },
+                    {
+                        title: "Build your portfolio",
+                        text: "Create a collection of your best work."
+                    }
+                ],
+
+                opportunities: [
+                    "Brand Designer",
+                    "Visual Designer",
+                    "Social Media Designer",
+                    "Illustrator",
+                    "Art Director"
+                ],
+
+                workStyle: "Highly Creative",
+                growth: "Growing digital opportunities",
+                environment: "Agency / Freelance / Remote"
+            }
+
+        };
+
+
+        /* =========================================
+           GENERIC CAREER DATA
+           FOR ROLES NOT YET IN FULL DATABASE
+        ========================================= */
+
+        const fallbackData = {
+
+            icon: "💼",
+
+            sector: "Career Exploration",
+
+            overview:
+                "This career offers opportunities to develop professional skills, solve meaningful problems and grow within a specialized field. Explore this role further to understand the education, skills and career paths available.",
+
+            responsibilities: [
+                "Perform key responsibilities related to the profession",
+                "Work with people, teams or specialized tools",
+                "Solve problems and make informed decisions",
+                "Continue learning and developing professional skills",
+                "Contribute to organizational or community goals"
+            ],
+
+            skills: [
+                "Communication",
+                "Problem Solving",
+                "Critical Thinking",
+                "Teamwork",
+                "Professional Skills"
+            ],
+
+            education: [
+                {
+                    title: "Explore the field",
+                    text: "Learn about the role and the qualifications commonly required."
+                },
+                {
+                    title: "Develop relevant skills",
+                    text: "Study courses and practice the skills used in this career."
+                },
+                {
+                    title: "Gain experience",
+                    text: "Build projects, complete internships or gain practical experience."
+                }
+            ],
+
+            opportunities: [
+                "Entry Level Professional",
+                "Specialist",
+                "Senior Professional",
+                "Team Lead",
+                "Industry Expert"
+            ],
+
+            workStyle: "Depends on the role",
+            growth: "Career growth opportunities available",
+            environment: "Depends on the organization"
+
+        };
+
+
+        /* =========================================
+           CREATE CAREER PAGE
+        ========================================= */
+
+        const careerContent =
+            document.getElementById("careerContent");
+
+
+        if (
+            !selectedCareer
+        ) {
+
+            careerContent.innerHTML =
+
+                '<section class="empty-state">' +
+
+                '<div style="font-size: 55px;">🧭</div>' +
+
+                '<h1>No career selected</h1>' +
+
+                '<p>Please explore job roles and select a career first.</p>' +
+
+                '<a href="./job-roles.html">' +
+                'Explore Job Roles' +
+                '</a>' +
+
+                '</section>';
+
+        } else {
+
+            const career =
+                careerData[selectedCareer] ||
+                {
+                    ...fallbackData,
+                    name: selectedCareer
+                };
+
+
+            const savedCareers =
+                JSON.parse(
+                    localStorage.getItem("savedCareers")
+                ) || [];
+
+
+            const isSaved =
+                savedCareers.includes(selectedCareer);
+
+
+            document.title =
+                selectedCareer +
+                " | Career Compass AI";
+
+
+            /* RESPONSIBILITIES */
+
+            const responsibilitiesHTML =
+                career.responsibilities.map(
+                    function(item) {
+
+                        return (
+                            "<li>" +
+                            item +
+                            "</li>"
+                        );
+
+                    }
+                ).join("");
+
+
+            /* SKILLS */
+
+            const skillsHTML =
+                career.skills.map(
+                    function(skill) {
+
+                        return (
+                            '<span class="skill-tag">' +
+                            skill +
+                            '</span>'
+                        );
+
+                    }
+                ).join("");
+
+
+            /* EDUCATION */
+
+            const educationHTML =
+                career.education.map(
+                    function(step, index) {
+
+                        return (
+
+                            '<div class="education-step">' +
+
+                            '<div class="step-number">' +
+                            (index + 1) +
+                            '</div>' +
+
+                            '<div>' +
+
+                            '<h4>' +
+                            step.title +
+                            '</h4>' +
+
+                            '<p>' +
+                            step.text +
+                            '</p>' +
+
+                            '</div>' +
+
+                            '</div>'
+
+                        );
+
+                    }
+                ).join("");
+
+
+            /* OPPORTUNITIES */
+
+            const opportunitiesHTML =
+                career.opportunities.map(
+                    function(item) {
+
+                        return (
+                            '<div class="opportunity">' +
+                            "→ " +
+                            item +
+                            '</div>'
+                        );
+
+                    }
+                ).join("");
+
+
+            /* FULL PAGE */
+
+            careerContent.innerHTML =
+
+                '<section class="career-hero">' +
+
+                '<div class="career-info">' +
+
+                '<div class="career-icon">' +
+                career.icon +
+                '</div>' +
+
+                '<div>' +
+
+                '<div class="sector-label">' +
+                career.sector +
+                '</div>' +
+
+                '<h1>' +
+                selectedCareer +
+                '</h1>' +
+
+                '<p>' +
+                career.overview +
+                '</p>' +
+
+                '</div>' +
+
+                '</div>' +
+
+
+                '<div class="hero-actions">' +
+
+                '<button id="saveButton" class="save-btn ' +
+                (isSaved ? "saved" : "") +
+                '">' +
+
+                (isSaved ? "♥ Saved" : "♡ Save") +
+
+                '</button>' +
+
+
+                '<button class="compare-btn" id="compareButton">' +
+                '⇄ Compare' +
+                '</button>' +
+
+                '</div>' +
+
+                '</section>' +
+
+
+                '<div class="details-grid">' +
+
+
+                '<div>' +
+
+
+                '<section class="card">' +
+
+                '<h2>Career Overview</h2>' +
+
+                '<p>' +
+                career.overview +
+                '</p>' +
+
+                '</section>' +
+
+
+                '<section class="card">' +
+
+                '<h2>What will you do?</h2>' +
+
+                '<ul class="responsibility-list">' +
+                responsibilitiesHTML +
+                '</ul>' +
+
+                '</section>' +
+
+
+                '<section class="card">' +
+
+                '<h2>Skills you will need</h2>' +
+
+                '<div class="skills-container">' +
+                skillsHTML +
+                '</div>' +
+
+                '</section>' +
+
+
+                '<section class="card">' +
+
+                '<h2>Education & Career Path</h2>' +
+
+                educationHTML +
+
+                '</section>' +
+
+
+                '</div>' +
+
+
+                '<aside>' +
+
+
+                '<section class="side-card">' +
+
+                '<h3>Career Snapshot</h3>' +
+
+
+                '<div class="info-item">' +
+
+                '<div class="info-label">WORK STYLE</div>' +
+
+                '<div class="info-value">' +
+                career.workStyle +
+                '</div>' +
+
+                '</div>' +
+
+
+                '<div class="info-item">' +
+
+                '<div class="info-label">CAREER GROWTH</div>' +
+
+                '<div class="info-value">' +
+                career.growth +
+                '</div>' +
+
+                '</div>' +
+
+
+                '<div class="info-item">' +
+
+                '<div class="info-label">WORK ENVIRONMENT</div>' +
+
+                '<div class="info-value">' +
+                career.environment +
+                '</div>' +
+
+                '</div>' +
+
+                '</section>' +
+
+
+                '<section class="side-card">' +
+
+                '<h3>Career Opportunities</h3>' +
+
+                opportunitiesHTML +
+
+                '</section>' +
+
+
+                '</aside>' +
+
+
+                '</div>';
+
+
+            /* =========================================
+               SAVE CAREER
+            ========================================= */
+
+            document
+                .getElementById("saveButton")
+                .addEventListener(
+                    "click",
+                    function() {
+
+
+                        let savedCareers =
+                            JSON.parse(
+                                localStorage.getItem(
+                                    "savedCareers"
+                                )
+                            ) || [];
+
+
+                        if (
+                            savedCareers.includes(
+                                selectedCareer
+                            )
+                        ) {
+
+                            savedCareers =
+                                savedCareers.filter(
+                                    function(name) {
+
+                                        return (
+                                            name !==
+                                            selectedCareer
+                                        );
+
+                                    }
+                                );
+
+
+                            this.textContent =
+                                "♡ Save";
+
+
+                            this.classList.remove(
+                                "saved"
+                            );
+
+                        } else {
+
+                            savedCareers.push(
+                                selectedCareer
+                            );
+
+
+                            this.textContent =
+                                "♥ Saved";
+
+
+                            this.classList.add(
+                                "saved"
+                            );
+
+                        }
+
+
+                        localStorage.setItem(
+                            "savedCareers",
+                            JSON.stringify(
+                                savedCareers
+                            )
+                        );
+
+                    }
+                );
+
+
+            /* =========================================
+               COMPARE CAREER
+            ========================================= */
+
+            document
+                .getElementById("compareButton")
+                .addEventListener(
+                    "click",
+                    function() {
+
+
+                        localStorage.setItem(
+                            "careerToCompare",
+                            selectedCareer
+                        );
+
+
+                        window.location.href =
+                            "./compare-roles.html";
+
+                    }
+                );
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>

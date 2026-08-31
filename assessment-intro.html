@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Career Assessment | Career Compass AI</title>
+
+    <link rel="stylesheet" href="./css/style.css">
+
+    <style>
+
+        .assessment-page {
+            min-height: 100vh;
+            background: #f7f5f2;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .assessment-nav {
+            height: 76px;
+            padding: 0 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: white;
+            border-bottom: 1px solid #ebe5e3;
+        }
+
+        .assessment-brand {
+            font-size: 24px;
+            font-weight: bold;
+            color: #443846;
+        }
+
+        .assessment-brand span {
+            color: #e998b3;
+        }
+
+        .nav-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #756d76;
+            font-size: 14px;
+        }
+
+        .user-circle {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #f4e4ea;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        /* ================= MAIN ================= */
+
+        .assessment-container {
+            width: min(1050px, 90%);
+            margin: auto;
+            padding: 70px 0;
+        }
+
+        .intro-header {
+            max-width: 700px;
+            text-align: center;
+            margin: 0 auto 55px;
+        }
+
+        .intro-label {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 30px;
+            background: #f0e7eb;
+            color: #805269;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .intro-header h1 {
+            font-family: Georgia, serif;
+            color: #443846;
+            font-size: 54px;
+            line-height: 1.15;
+            margin-bottom: 18px;
+        }
+
+        .intro-header h1 span {
+            color: #e998b3;
+        }
+
+        .intro-header p {
+            color: #756d76;
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+        /* ================= INFO CARDS ================= */
+
+        .assessment-info {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+
+        .info-card {
+            background: white;
+            border: 1px solid #eee8e7;
+            border-radius: 22px;
+            padding: 28px;
+            text-align: center;
+        }
+
+        .info-icon {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 16px;
+            border-radius: 20px;
+            background: #f4e4ea;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+        }
+
+        .info-card h3 {
+            color: #443846;
+            margin-bottom: 8px;
+            font-size: 18px;
+        }
+
+        .info-card p {
+            color: #756d76;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* ================= ASSESSMENT BOX ================= */
+
+        .assessment-box {
+            background: #443846;
+            color: white;
+            border-radius: 30px;
+            padding: 50px;
+        }
+
+        .assessment-box h2 {
+            font-family: Georgia, serif;
+            font-size: 36px;
+            margin-bottom: 25px;
+        }
+
+        .assessment-box p {
+            color: #ddd2dc;
+            margin-bottom: 25px;
+            line-height: 1.7;
+        }
+
+        .instruction-list {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .instruction-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.12);
+            color: #eee6ed;
+            font-size: 15px;
+        }
+
+        .instruction-list li:last-child {
+            border-bottom: none;
+        }
+
+        .start-btn {
+            display: inline-block;
+            background: #e998b3;
+            color: white;
+            padding: 16px 30px;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-2px);
+            background: #d986a5;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 800px) {
+
+            .assessment-info {
+                grid-template-columns: 1fr;
+            }
+
+            .intro-header h1 {
+                font-size: 42px;
+            }
+
+            .assessment-box {
+                padding: 35px 25px;
+            }
+
+        }
+
+        @media (max-width: 500px) {
+
+            .assessment-nav {
+                padding: 0 5%;
+            }
+
+            .nav-user span {
+                display: none;
+            }
+
+            .intro-header h1 {
+                font-size: 36px;
+            }
+
+            .assessment-container {
+                padding: 50px 0;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <div class="assessment-page">
+
+        <!-- ================= NAVBAR ================= -->
+
+        <nav class="assessment-nav">
+
+            <a href="./index.html" class="assessment-brand">
+                Career Compass <span>AI ✦</span>
+            </a>
+
+            <div class="nav-user">
+                <span>Your Career Journey</span>
+
+                <div class="user-circle">
+                    👤
+                </div>
+            </div>
+
+        </nav>
+
+
+        <!-- ================= MAIN ================= -->
+
+        <main class="assessment-container">
+
+            <!-- HEADER -->
+
+            <section class="intro-header">
+
+                <span class="intro-label">
+                    CAREER ASSESSMENT
+                </span>
+
+                <h1>
+                    Let's discover what
+                    <span>fits you best.</span>
+                </h1>
+
+                <p>
+                    This short assessment helps us understand your interests,
+                    strengths and work preferences so we can recommend career
+                    paths that are better suited to you.
+                </p>
+
+            </section>
+
+
+            <!-- INFO CARDS -->
+
+            <section class="assessment-info">
+
+                <div class="info-card">
+
+                    <div class="info-icon">
+                        ⏱️
+                    </div>
+
+                    <h3>10–15 Minutes</h3>
+
+                    <p>
+                        Take your time and answer each question honestly.
+                    </p>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <div class="info-icon">
+                        🧠
+                    </div>
+
+                    <h3>3 Key Areas</h3>
+
+                    <p>
+                        Explore your interests, strengths and career values.
+                    </p>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <div class="info-icon">
+                        🎯
+                    </div>
+
+                    <h3>Personalized Results</h3>
+
+                    <p>
+                        Get career recommendations based on your answers.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- INSTRUCTIONS -->
+
+            <section class="assessment-box">
+
+                <h2>Before you begin</h2>
+
+                <p>
+                    There are no right or wrong answers. The goal is to
+                    understand you better and help you explore possible
+                    career directions.
+                </p>
+
+                <ul class="instruction-list">
+
+                    <li>
+                        ✓ Answer based on what genuinely interests you.
+                    </li>
+
+                    <li>
+                        ✓ Choose the option that feels most natural to you.
+                    </li>
+
+                    <li>
+                        ✓ Don't overthink your answers.
+                    </li>
+
+                    <li>
+                        ✓ You can move between questions before submitting.
+                    </li>
+
+                </ul>
+
+                <a href="./questionnaire.html" class="start-btn">
+                    Start Assessment →
+                </a>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Career Assessment | Career Compass AI</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7f5f2;
+            color: #443846;
+        }
+
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            height: 76px;
+            background: white;
+            border-bottom: 1px solid #ebe5e3;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 7%;
+        }
+
+        .brand {
+            text-decoration: none;
+            color: #443846;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .brand span {
+            color: #e998b3;
+        }
+
+        .exit-btn {
+            text-decoration: none;
+            color: #756d76;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+
+        /* ================= MAIN ================= */
+
+        .assessment-page {
+            width: min(850px, 90%);
+            margin: auto;
+            padding: 50px 0 70px;
+        }
+
+
+        /* ================= PROGRESS ================= */
+
+        .progress-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+
+            color: #756d76;
+            font-size: 14px;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 9px;
+            background: #e9e3e3;
+            border-radius: 20px;
+            overflow: hidden;
+
+            margin-bottom: 40px;
+        }
+
+        .progress-bar {
+            width: 4%;
+            height: 100%;
+            background: #e998b3;
+            border-radius: 20px;
+            transition: width 0.4s ease;
+        }
+
+
+        /* ================= GUIDE SELECTION ================= */
+
+        .guide-selection {
+            background: white;
+            border: 1px solid #ebe5e3;
+            border-radius: 30px;
+            padding: 45px;
+            text-align: center;
+        }
+
+        .guide-selection h1 {
+            font-family: Georgia, serif;
+            font-size: 42px;
+            margin: 0 0 12px;
+        }
+
+        .guide-selection h1 span {
+            color: #e998b3;
+        }
+
+        .guide-selection p {
+            color: #756d76;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+
+        .guide-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .guide-card {
+            background: #faf8f7;
+            border: 2px solid transparent;
+            border-radius: 22px;
+            padding: 20px 10px;
+            cursor: pointer;
+            transition: 0.25s;
+        }
+
+        .guide-card:hover {
+            transform: translateY(-4px);
+            border-color: #e998b3;
+        }
+
+        .guide-card.selected {
+            border-color: #e998b3;
+            background: #fdf0f4;
+        }
+
+        .guide-avatar {
+            width: 75px;
+            height: 75px;
+            margin: auto auto 12px;
+
+            border-radius: 50%;
+            background: #f4e4ea;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 38px;
+        }
+
+        .guide-card h3 {
+            margin: 0 0 5px;
+            font-size: 15px;
+        }
+
+        .guide-card small {
+            color: #756d76;
+        }
+
+        .start-btn {
+            margin-top: 30px;
+            background: #443846;
+            color: white;
+
+            border: none;
+            border-radius: 30px;
+
+            padding: 15px 35px;
+
+            font-size: 15px;
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .start-btn:hover {
+            background: #332a37;
+        }
+
+
+        /* ================= QUESTION ================= */
+
+        .question-card {
+            display: none;
+
+            background: white;
+            border: 1px solid #ebe5e3;
+            border-radius: 30px;
+            padding: 45px;
+        }
+
+        .question-number {
+            display: inline-block;
+
+            background: #f4e4ea;
+            color: #805269;
+
+            padding: 8px 15px;
+            border-radius: 20px;
+
+            font-size: 13px;
+            font-weight: bold;
+
+            margin-bottom: 22px;
+        }
+
+        .guide-message {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            background: #faf5f7;
+            border-radius: 18px;
+
+            padding: 14px 18px;
+
+            margin-bottom: 28px;
+
+            color: #756d76;
+            font-size: 14px;
+        }
+
+        .mini-avatar {
+            width: 40px;
+            height: 40px;
+
+            border-radius: 50%;
+            background: #f4e4ea;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 22px;
+
+            flex-shrink: 0;
+        }
+
+        .question-card h2 {
+            font-family: Georgia, serif;
+            font-size: 30px;
+            line-height: 1.4;
+
+            margin: 0 0 30px;
+        }
+
+
+        /* ================= OPTIONS ================= */
+
+        .options {
+            display: grid;
+            gap: 14px;
+        }
+
+        .option {
+            width: 100%;
+            text-align: left;
+
+            background: #faf8f7;
+            border: 1px solid #ebe5e3;
+
+            border-radius: 18px;
+
+            padding: 18px 20px;
+
+            color: #443846;
+            font-size: 15px;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .option:hover {
+            border-color: #e998b3;
+            background: #fdf0f4;
+        }
+
+        .option.selected {
+            border-color: #e998b3;
+            background: #fdf0f4;
+            box-shadow: 0 0 0 2px rgba(233, 152, 179, 0.15);
+        }
+
+
+        /* ================= BUTTONS ================= */
+
+        .question-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+
+            margin-top: 35px;
+        }
+
+        .back-btn {
+            background: white;
+            color: #443846;
+
+            border: 1px solid #d8d0d2;
+            border-radius: 25px;
+
+            padding: 13px 25px;
+
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .next-btn {
+            background: #443846;
+            color: white;
+
+            border: none;
+            border-radius: 25px;
+
+            padding: 13px 28px;
+
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .next-btn:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+
+        .next-btn:hover:not(:disabled) {
+            background: #332a37;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 700px) {
+
+            .guide-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .guide-selection,
+            .question-card {
+                padding: 30px 20px;
+            }
+
+            .guide-selection h1 {
+                font-size: 34px;
+            }
+
+            .question-card h2 {
+                font-size: 25px;
+            }
+
+        }
+
+        @media (max-width: 500px) {
+
+            .navbar {
+                padding: 0 5%;
+            }
+
+            .exit-btn {
+                display: none;
+            }
+
+            .assessment-page {
+                padding-top: 30px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <a href="./index.html" class="brand">
+            Career Compass <span>AI ✦</span>
+        </a>
+
+        <a href="./index.html" class="exit-btn">
+            Exit Assessment
+        </a>
+
+    </nav>
+
+
+
+    <main class="assessment-page">
+
+
+        <!-- ================= PROGRESS ================= -->
+
+        <div class="progress-top">
+
+            <span id="progressText">
+                Choose your guide
+            </span>
+
+            <span id="questionCount">
+                Step 1
+            </span>
+
+        </div>
+
+
+        <div class="progress-container">
+
+            <div
+                class="progress-bar"
+                id="progressBar"
+            ></div>
+
+        </div>
+
+
+
+        <!-- ================= GUIDE SELECTION ================= -->
+
+        <section
+            class="guide-selection"
+            id="guideSelection"
+        >
+
+            <h1>
+                Choose your <span>career guide</span>
+            </h1>
+
+            <p>
+                Pick a guide who will accompany you through
+                your career discovery journey.
+            </p>
+
+
+            <div class="guide-grid">
+
+
+                <div
+                    class="guide-card"
+                    data-name="Ava"
+                    data-icon="👩‍💼"
+                >
+
+                    <div class="guide-avatar">
+                        👩‍💼
+                    </div>
+
+                    <h3>Ava</h3>
+
+                    <small>
+                        Friendly & Creative
+                    </small>
+
+                </div>
+
+
+
+                <div
+                    class="guide-card"
+                    data-name="Leo"
+                    data-icon="👨‍💻"
+                >
+
+                    <div class="guide-avatar">
+                        👨‍💻
+                    </div>
+
+                    <h3>Leo</h3>
+
+                    <small>
+                        Analytical & Smart
+                    </small>
+
+                </div>
+
+
+
+                <div
+                    class="guide-card"
+                    data-name="Maya"
+                    data-icon="👩‍🎨"
+                >
+
+                    <div class="guide-avatar">
+                        👩‍🎨
+                    </div>
+
+                    <h3>Maya</h3>
+
+                    <small>
+                        Curious & Supportive
+                    </small>
+
+                </div>
+
+
+
+                <div
+                    class="guide-card"
+                    data-name="Noah"
+                    data-icon="🧑‍🚀"
+                >
+
+                    <div class="guide-avatar">
+                        🧑‍🚀
+                    </div>
+
+                    <h3>Noah</h3>
+
+                    <small>
+                        Ambitious & Bold
+                    </small>
+
+                </div>
+
+
+            </div>
+
+
+            <button
+                class="start-btn"
+                id="startBtn"
+            >
+                Start Assessment →
+            </button>
+
+        </section>
+
+
+
+        <!-- ================= QUESTION SECTION ================= -->
+
+        <section
+            class="question-card"
+            id="questionCard"
+        >
+
+
+            <div
+                class="question-number"
+                id="questionNumber"
+            >
+                QUESTION 1 OF 25
+            </div>
+
+
+            <div class="guide-message">
+
+                <div
+                    class="mini-avatar"
+                    id="miniAvatar"
+                >
+                    ✨
+                </div>
+
+                <span id="guideMessage">
+                    Choose the answer that feels most like you.
+                </span>
+
+            </div>
+
+
+            <h2 id="questionText">
+                Question goes here
+            </h2>
+
+
+            <div
+                class="options"
+                id="optionsContainer"
+            ></div>
+
+
+            <div class="question-actions">
+
+                <button
+                    class="back-btn"
+                    id="backBtn"
+                >
+                    ← Back
+                </button>
+
+
+                <button
+                    class="next-btn"
+                    id="nextBtn"
+                    disabled
+                >
+                    Next →
+                </button>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <script>
+
+        /* ========================================
+           25 CAREER ASSESSMENT QUESTIONS
+
+           Option index meaning:
+
+           0 = Technology + Science
+           1 = People + Healthcare
+           2 = Creative + Hospitality
+           3 = Business + Law
+        ======================================== */
+
+
+        const questions = [
+
+            {
+                question:
+                    "What type of activity sounds most enjoyable to you?",
+
+                options: [
+                    "Solving a technical or logical challenge",
+                    "Helping someone solve a problem",
+                    "Creating something new and visually interesting",
+                    "Planning a strategy to achieve a goal"
+                ]
+            },
+
+            {
+                question:
+                    "When you have a difficult problem, what do you usually do first?",
+
+                options: [
+                    "Analyze the facts and look for patterns",
+                    "Talk to someone and understand different perspectives",
+                    "Think of an unusual or creative solution",
+                    "Make a plan and decide the best course of action"
+                ]
+            },
+
+            {
+                question:
+                    "Which school or college project would interest you the most?",
+
+                options: [
+                    "Building an app or conducting an experiment",
+                    "Organizing a student support or awareness program",
+                    "Designing a creative campaign or presentation",
+                    "Creating a business plan or leading the project"
+                ]
+            },
+
+            {
+                question:
+                    "Which type of achievement would make you feel most proud?",
+
+                options: [
+                    "Solving a complex technical problem",
+                    "Making a positive difference in someone's life",
+                    "Creating something people admire or enjoy",
+                    "Leading a successful team or project"
+                ]
+            },
+
+            {
+                question:
+                    "What kind of environment would you prefer to work in?",
+
+                options: [
+                    "A place focused on technology, research or innovation",
+                    "A place where I can directly support and guide people",
+                    "A dynamic and creative environment",
+                    "A fast-paced environment with goals and leadership opportunities"
+                ]
+            },
+
+            {
+                question:
+                    "Which task would you choose if you had a free afternoon?",
+
+                options: [
+                    "Learning how a new technology or system works",
+                    "Volunteering or helping someone with something important",
+                    "Making a video, design, photo or creative project",
+                    "Planning an event, project or new idea"
+                ]
+            },
+
+            {
+                question:
+                    "When learning something new, what interests you the most?",
+
+                options: [
+                    "Understanding how it works step by step",
+                    "Understanding how it can help people",
+                    "Finding different and creative ways to use it",
+                    "Understanding how it can create value or opportunities"
+                ]
+            },
+
+            {
+                question:
+                    "What role do you naturally take in a group?",
+
+                options: [
+                    "The problem solver who figures things out",
+                    "The person who listens and supports everyone",
+                    "The person who brings fresh and creative ideas",
+                    "The person who organizes and leads the group"
+                ]
+            },
+
+            {
+                question:
+                    "Which challenge sounds the most interesting?",
+
+                options: [
+                    "Finding an error in a system and fixing it",
+                    "Helping two people understand each other",
+                    "Turning a boring idea into something exciting",
+                    "Finding the best strategy to beat a competitor"
+                ]
+            },
+
+            {
+                question:
+                    "What type of information do you enjoy working with?",
+
+                options: [
+                    "Numbers, data, systems and logical patterns",
+                    "Stories, emotions and human behavior",
+                    "Images, ideas, experiences and visual concepts",
+                    "Plans, market trends and business opportunities"
+                ]
+            },
+
+            {
+                question:
+                    "Which future technology sounds most exciting?",
+
+                options: [
+                    "Artificial intelligence and robotics",
+                    "Technology that improves healthcare and people's lives",
+                    "Virtual experiences, games and digital media",
+                    "Technology that creates new businesses and industries"
+                ]
+            },
+
+            {
+                question:
+                    "If you could solve one major problem, which would you choose?",
+
+                options: [
+                    "Developing a smart technological solution",
+                    "Improving people's health or wellbeing",
+                    "Creating an experience that inspires people",
+                    "Developing a policy or strategy for a large problem"
+                ]
+            },
+
+            {
+                question:
+                    "What motivates you the most?",
+
+                options: [
+                    "Learning difficult skills and solving challenging problems",
+                    "Helping and supporting others",
+                    "Expressing ideas and creating something unique",
+                    "Achieving success, influence and leadership"
+                ]
+            },
+
+            {
+                question:
+                    "Which tool would you be most excited to learn?",
+
+                options: [
+                    "A programming, data or scientific tool",
+                    "A counseling, teaching or healthcare tool",
+                    "A design, editing or creative tool",
+                    "A business, finance or management tool"
+                ]
+            },
+
+            {
+                question:
+                    "How do you prefer to make decisions?",
+
+                options: [
+                    "Using facts, research and logical analysis",
+                    "Considering how the decision affects people",
+                    "Following intuition and exploring possibilities",
+                    "Comparing risks, opportunities and long-term results"
+                ]
+            },
+
+            {
+                question:
+                    "What kind of problem would you enjoy solving every day?",
+
+                options: [
+                    "Technical, scientific or data-related problems",
+                    "Problems involving people, health or wellbeing",
+                    "Creative and experience-related problems",
+                    "Business, legal or organizational problems"
+                ]
+            },
+
+            {
+                question:
+                    "Which workplace activity sounds most exciting?",
+
+                options: [
+                    "Testing, building or improving a system",
+                    "Teaching, guiding or caring for someone",
+                    "Designing, filming or creating something",
+                    "Negotiating, managing or making important decisions"
+                ]
+            },
+
+            {
+                question:
+                    "What type of success would you prefer?",
+
+                options: [
+                    "Being known for expertise and innovation",
+                    "Being known for helping and improving lives",
+                    "Being known for creativity and original ideas",
+                    "Being known for leadership and achievement"
+                ]
+            },
+
+            {
+                question:
+                    "If you started your own project, what would it most likely be?",
+
+                options: [
+                    "A technology or research-based solution",
+                    "A service that helps people or communities",
+                    "A creative brand, media channel or experience",
+                    "A business, startup or professional service"
+                ]
+            },
+
+            {
+                question:
+                    "Which subject area would you enjoy exploring deeply?",
+
+                options: [
+                    "Computer science, engineering or research",
+                    "Psychology, education or healthcare",
+                    "Design, media, fashion or communication",
+                    "Business, law, finance or management"
+                ]
+            },
+
+            {
+                question:
+                    "How would your friends most likely describe you?",
+
+                options: [
+                    "Logical and good at solving problems",
+                    "Kind and easy to talk to",
+                    "Creative and full of ideas",
+                    "Confident and good at taking charge"
+                ]
+            },
+
+            {
+                question:
+                    "What kind of impact would you like your career to have?",
+
+                options: [
+                    "Build useful technology or discover new knowledge",
+                    "Improve people's lives directly",
+                    "Inspire, entertain or create meaningful experiences",
+                    "Lead organizations and influence important decisions"
+                ]
+            },
+
+            {
+                question:
+                    "Which situation would make you feel most confident?",
+
+                options: [
+                    "Solving a difficult problem using logic",
+                    "Supporting someone through a difficult situation",
+                    "Presenting an original idea or creative project",
+                    "Leading a team toward an important goal"
+                ]
+            },
+
+            {
+                question:
+                    "What would you enjoy learning about in your free time?",
+
+                options: [
+                    "Coding, science, technology or data",
+                    "Human behavior, health or personal development",
+                    "Art, design, photography, fashion or media",
+                    "Entrepreneurship, finance, law or leadership"
+                ]
+            },
+
+            {
+                question:
+                    "Imagine your ideal career. What is most important to you?",
+
+                options: [
+                    "Interesting problems and continuous learning",
+                    "Helping people and making a positive difference",
+                    "Freedom to create and express new ideas",
+                    "Growth, leadership and achieving ambitious goals"
+                ]
+            }
+
+        ];
+
+
+
+        /* ========================================
+           VARIABLES
+        ======================================== */
+
+        let currentQuestion = 0;
+
+        let selectedGuide = null;
+
+        let selectedGuideIcon = null;
+
+        let answers = new Array(questions.length).fill(null);
+
+
+
+        /* ========================================
+           ELEMENTS
+        ======================================== */
+
+        const guideCards =
+            document.querySelectorAll(".guide-card");
+
+        const startBtn =
+            document.getElementById("startBtn");
+
+        const guideSelection =
+            document.getElementById("guideSelection");
+
+        const questionCard =
+            document.getElementById("questionCard");
+
+        const questionText =
+            document.getElementById("questionText");
+
+        const optionsContainer =
+            document.getElementById("optionsContainer");
+
+        const questionNumber =
+            document.getElementById("questionNumber");
+
+        const progressBar =
+            document.getElementById("progressBar");
+
+        const progressText =
+            document.getElementById("progressText");
+
+        const questionCount =
+            document.getElementById("questionCount");
+
+        const nextBtn =
+            document.getElementById("nextBtn");
+
+        const backBtn =
+            document.getElementById("backBtn");
+
+        const miniAvatar =
+            document.getElementById("miniAvatar");
+
+        const guideMessage =
+            document.getElementById("guideMessage");
+
+
+
+        /* ========================================
+           SELECT GUIDE
+        ======================================== */
+
+        guideCards.forEach(function(card) {
+
+            card.addEventListener("click", function() {
+
+                guideCards.forEach(function(item) {
+
+                    item.classList.remove("selected");
+
+                });
+
+
+                card.classList.add("selected");
+
+
+                selectedGuide =
+                    card.dataset.name;
+
+
+                selectedGuideIcon =
+                    card.dataset.icon;
+
+
+                startBtn.textContent =
+                    "Start with " +
+                    selectedGuide +
+                    " →";
+
+            });
+
+        });
+
+
+
+        /* ========================================
+           START ASSESSMENT
+        ======================================== */
+
+        startBtn.addEventListener("click", function() {
+
+            if (!selectedGuide) {
+
+                alert(
+                    "Please choose your career guide first! ✨"
+                );
+
+                return;
+
+            }
+
+
+            /* Save guide */
+
+            localStorage.setItem(
+                "selectedAvatar",
+                selectedGuide
+            );
+
+            localStorage.setItem(
+                "selectedAvatarIcon",
+                selectedGuideIcon
+            );
+
+
+            /* Clear old answers */
+
+            localStorage.removeItem(
+                "careerAnswers"
+            );
+
+
+            guideSelection.style.display =
+                "none";
+
+
+            questionCard.style.display =
+                "block";
+
+
+            miniAvatar.textContent =
+                selectedGuideIcon;
+
+
+            guideMessage.textContent =
+                selectedGuide +
+                " says: Choose the answer that feels most like you. There are no wrong answers!";
+
+
+            loadQuestion();
+
+        });
+
+
+
+        /* ========================================
+           LOAD QUESTION
+        ======================================== */
+
+        function loadQuestion() {
+
+            const current =
+                questions[currentQuestion];
+
+
+            questionText.textContent =
+                current.question;
+
+
+            questionNumber.textContent =
+                "QUESTION " +
+                (currentQuestion + 1) +
+                " OF " +
+                questions.length;
+
+
+            progressText.textContent =
+                "Question " +
+                (currentQuestion + 1) +
+                " of " +
+                questions.length;
+
+
+            questionCount.textContent =
+                Math.round(
+                    ((currentQuestion + 1) / questions.length) * 100
+                ) +
+                "%";
+
+
+            progressBar.style.width =
+                ((currentQuestion + 1) / questions.length) * 100 +
+                "%";
+
+
+            optionsContainer.innerHTML =
+                "";
+
+
+            current.options.forEach(
+                function(option, index) {
+
+
+                    const optionButton =
+                        document.createElement("button");
+
+
+                    optionButton.className =
+                        "option";
+
+
+                    optionButton.textContent =
+                        option;
+
+
+                    /* Show previous answer */
+
+                    if (
+                        answers[currentQuestion] === index
+                    ) {
+
+                        optionButton.classList.add(
+                            "selected"
+                        );
+
+                    }
+
+
+                    optionButton.addEventListener(
+                        "click",
+                        function() {
+
+
+                            answers[currentQuestion] =
+                                index;
+
+
+                            document
+                                .querySelectorAll(".option")
+                                .forEach(function(button) {
+
+                                    button.classList.remove(
+                                        "selected"
+                                    );
+
+                                });
+
+
+                            optionButton.classList.add(
+                                "selected"
+                            );
+
+
+                            nextBtn.disabled =
+                                false;
+
+                        }
+                    );
+
+
+                    optionsContainer.appendChild(
+                        optionButton
+                    );
+
+                }
+            );
+
+
+            /* Enable button if answer exists */
+
+            nextBtn.disabled =
+                answers[currentQuestion] === null;
+
+
+            /* Button text */
+
+            if (
+                currentQuestion ===
+                questions.length - 1
+            ) {
+
+                nextBtn.textContent =
+                    "Finish Assessment ✨";
+
+            } else {
+
+                nextBtn.textContent =
+                    "Next →";
+
+            }
+
+
+            /* Hide Back on first question */
+
+            if (currentQuestion === 0) {
+
+                backBtn.style.visibility =
+                    "hidden";
+
+            } else {
+
+                backBtn.style.visibility =
+                    "visible";
+
+            }
+
+        }
+
+
+
+        /* ========================================
+           NEXT QUESTION
+        ======================================== */
+
+        nextBtn.addEventListener(
+            "click",
+            function() {
+
+
+                if (
+                    answers[currentQuestion] === null
+                ) {
+
+                    alert(
+                        "Please select an answer first."
+                    );
+
+                    return;
+
+                }
+
+
+                /* Last question */
+
+                if (
+                    currentQuestion ===
+                    questions.length - 1
+                ) {
+
+
+                    /* Save answers */
+
+                    localStorage.setItem(
+                        "careerAnswers",
+                        JSON.stringify(answers)
+                    );
+
+
+                    /* Go to analysis */
+
+                    window.location.href =
+                        "./analyzing.html";
+
+
+                    return;
+
+                }
+
+
+                currentQuestion++;
+
+
+                loadQuestion();
+
+            }
+        );
+
+
+
+        /* ========================================
+           BACK BUTTON
+        ======================================== */
+
+        backBtn.addEventListener(
+            "click",
+            function() {
+
+
+                if (currentQuestion > 0) {
+
+                    currentQuestion--;
+
+
+                    loadQuestion();
+
+                }
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>
