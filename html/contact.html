@@ -1,0 +1,751 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us | Career Compass AI</title>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --plum: #443846;
+    --plum-dark: #322936;
+    --pink: #e998b3;
+    --pink-light: #f6c4d3;
+    --cream: #f7f5f2;
+    --white: #ffffff;
+    --text: #342d3b;
+    --muted: #756d76;
+    --border: #e7dfe2;
+    --soft-pink: #fff0f5;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "DM Sans", sans-serif;
+    background: var(--cream);
+    color: var(--text);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* NAVBAR */
+.navbar {
+    min-height: 76px;
+    background: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 7%;
+    border-bottom: 1px solid var(--border);
+}
+
+.logo {
+    font-family: "Playfair Display", serif;
+    font-size: 23px;
+    font-weight: 700;
+    color: var(--plum);
+    white-space: nowrap;
+}
+
+.logo span {
+    color: var(--pink);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.nav-links a {
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--plum);
+}
+
+.profile {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--soft-pink);
+    color: var(--plum);
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+}
+
+/* HERO */
+.hero {
+    background: linear-gradient(120deg, #fff0f5, #f9e9ef, #f7f5f2);
+    padding: 65px 20px 70px;
+    text-align: center;
+}
+
+.eyebrow {
+    color: #b66d89;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 14px;
+}
+
+.hero h1 {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(35px, 5vw, 49px);
+    color: var(--plum);
+    margin-bottom: 16px;
+}
+
+.hero p {
+    max-width: 620px;
+    margin: auto;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+/* MAIN */
+.container {
+    max-width: 1150px;
+    margin: auto;
+    padding: 65px 25px 80px;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 0.85fr 1.4fr;
+    gap: 30px;
+    align-items: start;
+}
+
+/* CONTACT INFO */
+.info-panel {
+    background: var(--plum);
+    color: white;
+    border-radius: 20px;
+    padding: 35px 30px;
+    position: relative;
+    overflow: hidden;
+    min-height: 500px;
+}
+
+.info-panel::after {
+    content: "✦";
+    position: absolute;
+    right: 15px;
+    bottom: -45px;
+    font-size: 180px;
+    color: rgba(255,255,255,0.045);
+}
+
+.info-panel h2 {
+    font-family: "Playfair Display", serif;
+    font-size: 29px;
+    margin-bottom: 13px;
+}
+
+.info-intro {
+    font-size: 14px;
+    color: #e5dce4;
+    line-height: 1.8;
+    margin-bottom: 35px;
+}
+
+.info-item {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+    margin-bottom: 28px;
+    position: relative;
+    z-index: 1;
+}
+
+.info-icon {
+    min-width: 43px;
+    height: 43px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    font-size: 19px;
+}
+
+.info-item h3 {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.info-item p,
+.info-item a {
+    font-size: 13px;
+    color: #e5dce4;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+.info-item a:hover {
+    color: var(--pink-light);
+}
+
+/* FORM */
+.form-panel {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 38px;
+    box-shadow: 0 8px 28px rgba(68, 56, 70, 0.05);
+}
+
+.form-panel h2 {
+    font-family: "Playfair Display", serif;
+    font-size: 29px;
+    color: var(--plum);
+    margin-bottom: 9px;
+}
+
+.form-description {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 28px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--plum);
+    margin-bottom: 9px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 14px 15px;
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    font-family: inherit;
+    font-size: 13px;
+    color: var(--text);
+    background: #fff;
+    outline: none;
+    transition: 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--pink);
+    box-shadow: 0 0 0 3px rgba(233, 152, 179, 0.13);
+}
+
+.form-group textarea {
+    min-height: 145px;
+    resize: vertical;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #aaa1a9;
+}
+
+.submit-btn {
+    border: none;
+    background: var(--plum);
+    color: white;
+    padding: 15px 26px;
+    border-radius: 11px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.submit-btn:hover {
+    background: var(--plum-dark);
+    transform: translateY(-2px);
+}
+
+.form-note {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 15px;
+    line-height: 1.6;
+}
+
+/* FAQ */
+.faq-section {
+    margin-top: 75px;
+}
+
+.section-heading {
+    text-align: center;
+    font-family: "Playfair Display", serif;
+    color: var(--plum);
+    font-size: 34px;
+    margin-bottom: 12px;
+}
+
+.section-subtitle {
+    text-align: center;
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 35px;
+}
+
+.faq-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.faq-card {
+    background: white;
+    padding: 23px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+}
+
+.faq-card h3 {
+    color: var(--plum);
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.faq-card p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+/* CTA */
+.bottom-cta {
+    margin-top: 65px;
+    text-align: center;
+    padding: 45px 20px;
+    background: linear-gradient(120deg, #f9e7ee, #fff2f5);
+    border-radius: 20px;
+}
+
+.bottom-cta h2 {
+    font-family: "Playfair Display", serif;
+    color: var(--plum);
+    font-size: 28px;
+    margin-bottom: 12px;
+}
+
+.bottom-cta p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 22px;
+}
+
+.cta-btn {
+    display: inline-block;
+    background: var(--plum);
+    color: white;
+    padding: 13px 24px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    transition: 0.2s;
+}
+
+.cta-btn:hover {
+    background: var(--plum-dark);
+    transform: translateY(-2px);
+}
+
+/* FOOTER */
+footer {
+    background: white;
+    border-top: 1px solid var(--border);
+    padding: 35px 7% 22px;
+}
+
+.footer-content {
+    max-width: 1150px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.footer-brand {
+    font-family: "Playfair Display", serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--plum);
+}
+
+.footer-brand span {
+    color: var(--pink);
+}
+
+.footer-links {
+    display: flex;
+    gap: 22px;
+    flex-wrap: wrap;
+}
+
+.footer-links a {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.footer-links a:hover {
+    color: var(--plum);
+}
+
+.copyright {
+    text-align: center;
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+}
+
+/* RESPONSIVE */
+@media (max-width: 850px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .info-panel {
+        min-height: auto;
+    }
+}
+
+@media (max-width: 650px) {
+    .navbar {
+        padding: 15px 5%;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .logo {
+        font-size: 19px;
+    }
+
+    .nav-links {
+        order: 3;
+        width: 100%;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .nav-links a {
+        font-size: 12px;
+    }
+
+    .profile {
+        margin-left: auto;
+    }
+
+    .container {
+        padding: 45px 17px 60px;
+    }
+
+    .form-panel {
+        padding: 25px 20px;
+    }
+
+    .form-row,
+    .faq-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .faq-grid {
+        gap: 15px;
+    }
+
+    .section-heading {
+        font-size: 29px;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-links {
+        justify-content: center;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+    <a href="index.html" class="logo">Career Compass <span>AI ✦</span></a>
+
+    <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html" class="active">Contact</a>
+        <a href="login.html">Login</a>
+    </nav>
+
+    <div class="profile">A</div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+    <p class="eyebrow">We're here to help</p>
+    <h1>Let's Start a Conversation</h1>
+    <p>
+        Have a question, suggestion or idea? We'd love to hear from you.
+        Reach out to the Career Compass AI team and let's make your
+        career exploration experience better.
+    </p>
+</section>
+
+<main class="container">
+
+    <!-- CONTACT SECTION -->
+    <section class="contact-grid">
+
+        <!-- CONTACT INFORMATION -->
+        <aside class="info-panel">
+            <h2>Get in Touch</h2>
+            <p class="info-intro">
+                Whether you're exploring careers or sharing feedback,
+                your thoughts matter to us.
+            </p>
+
+            <div class="info-item">
+                <div class="info-icon">✉</div>
+                <div>
+                    <h3>Email Us</h3>
+                    <p>Use the contact form to send us your message.</p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <div class="info-icon">💡</div>
+                <div>
+                    <h3>Share an Idea</h3>
+                    <p>Tell us how we can improve your career journey.</p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <div class="info-icon">🌸</div>
+                <div>
+                    <h3>Explore Your Future</h3>
+                    <p>Discover career paths that match your interests.</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- CONTACT FORM -->
+        <section class="form-panel">
+            <h2>Send Us a Message</h2>
+            <p class="form-description">
+                Fill in the details below to share your query or feedback.
+            </p>
+
+            <form id="contactForm">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input
+                            type="text"
+                            id="name"
+                            placeholder="Enter your full name"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="Enter your email"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <select id="subject" required>
+                        <option value="">Select a subject</option>
+                        <option value="Career Guidance">Career Guidance</option>
+                        <option value="Website Feedback">Website Feedback</option>
+                        <option value="Technical Issue">Technical Issue</option>
+                        <option value="Suggestion">Suggestion</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Your Message</label>
+                    <textarea
+                        id="message"
+                        placeholder="Write your message here..."
+                        required
+                    ></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    Send Message →
+                </button>
+
+                <p class="form-note">
+                    This is currently a demo form. Messages will not be
+                    delivered until a backend or form service is connected.
+                </p>
+
+            </form>
+        </section>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section">
+        <h2 class="section-heading">Frequently Asked Questions</h2>
+        <p class="section-subtitle">
+            A few helpful answers to get you started.
+        </p>
+
+        <div class="faq-grid">
+
+            <article class="faq-card">
+                <h3>What is Career Compass AI?</h3>
+                <p>
+                    Career Compass AI is a career exploration platform
+                    designed to help users discover and explore career
+                    possibilities based on their interests and skills.
+                </p>
+            </article>
+
+            <article class="faq-card">
+                <h3>How can I explore career options?</h3>
+                <p>
+                    You can begin with the career assessment and explore
+                    the career recommendations and information available
+                    on the platform.
+                </p>
+            </article>
+
+            <article class="faq-card">
+                <h3>Can I compare different careers?</h3>
+                <p>
+                    Yes. Visit the Compare page to explore differences
+                    between career paths, including skills, education
+                    and work areas.
+                </p>
+            </article>
+
+            <article class="faq-card">
+                <h3>Can I share suggestions?</h3>
+                <p>
+                    Absolutely! Use the contact form to share feedback,
+                    suggestions or ideas that could improve the website.
+                </p>
+            </article>
+
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="bottom-cta">
+        <h2>Your Future Starts with Exploration</h2>
+        <p>
+            Take the next step toward discovering career possibilities
+            that interest you.
+        </p>
+        <a href="questionnaire.html" class="cta-btn">
+            Explore Careers →
+        </a>
+    </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-content">
+        <a href="index.html" class="footer-brand">
+            Career Compass <span>AI ✦</span>
+        </a>
+
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="contact.html">Contact</a>
+            <a href="questionnaire.html">Assessment</a>
+        </div>
+    </div>
+
+    <p class="copyright">
+        © 2026 Career Compass AI. All rights reserved.
+    </p>
+</footer>
+
+<script>
+const contactForm = document.getElementById("contactForm");
+
+contactForm.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const subject = document.getElementById("subject").value;
+    const message = document.getElementById("message").value.trim();
+
+    if (!name || !email || !subject || !message) {
+        alert("Please fill in all fields.");
+        return;
+    }
+
+    alert(
+        "Thank you, " + name + "!\n\n" +
+        "Your message form is working as a demo. " +
+        "To actually deliver your message, a backend or form service is still needed."
+    );
+
+    contactForm.reset();
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login | Career Compass AI</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+
+<body class="login-page">
+
+    <!-- Decorative background -->
+    <div class="login-bg-circle circle-one"></div>
+    <div class="login-bg-circle circle-two"></div>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <nav class="navbar login-navbar">
+
+        <a href="index.html" class="logo">
+            <img
+                src="../images/logo.png"
+                alt="Career Compass AI"
+            >
+        </a>
+
+
+        <div class="nav-buttons">
+
+            <span class="login-question">
+                New here?
+            </span>
+
+            <a href="signup.html" class="nav-signup">
+                Get Started
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =========================
+         LOGIN MAIN
+    ========================== -->
+
+    <main class="creative-login">
+
+        <div class="login-wrapper">
+
+
+            <!-- =========================
+                 LEFT CREATIVE AREA
+            ========================== -->
+
+            <section class="login-story">
+
+                <span class="hero-badge">
+                    ✦ Welcome Back
+                </span>
+
+
+                <h1>
+                    Your journey
+                    <br>
+                    <span>starts again.</span>
+                </h1>
+
+
+                <p class="login-story-text">
+                    Continue discovering career possibilities
+                    that match who you are, what you enjoy,
+                    and where you want to go.
+                </p>
+
+
+                <!-- COMPASS VISUAL -->
+
+                <div class="compass-visual">
+
+                    <div class="compass-ring ring-large"></div>
+
+                    <div class="compass-ring ring-small"></div>
+
+
+                    <div class="compass-center">
+                        🧭
+                    </div>
+
+
+                    <div class="compass-label label-top">
+                        Interests
+                    </div>
+
+                    <div class="compass-label label-right">
+                        Strengths
+                    </div>
+
+                    <div class="compass-label label-bottom">
+                        Goals
+                    </div>
+
+                    <div class="compass-label label-left">
+                        Skills
+                    </div>
+
+                </div>
+
+
+                <!-- SMALL MESSAGE -->
+
+                <div class="login-tip">
+
+                    <span class="tip-icon">
+                        ✨
+                    </span>
+
+                    <div>
+                        <strong>
+                            Your direction matters.
+                        </strong>
+
+                        <p>
+                            Let Career Compass help you
+                            explore what's possible.
+                        </p>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =========================
+                 LOGIN CARD
+            ========================== -->
+
+            <section class="creative-login-card">
+
+
+                <!-- Card top -->
+
+                <div class="login-card-top">
+
+                    <div class="login-icon">
+                        👋
+                    </div>
+
+
+                    <div>
+
+                        <h2>
+                            Welcome back
+                        </h2>
+
+                        <p>
+                            Sign in to continue your journey.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     LOGIN FORM
+                ========================== -->
+
+                <form id="loginForm">
+
+
+                    <!-- EMAIL -->
+
+                    <div class="creative-form-group">
+
+                        <label for="loginEmail">
+                            Email Address
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                ✉
+                            </span>
+
+                            <input
+                                type="email"
+                                id="loginEmail"
+                                name="email"
+                                placeholder="you@example.com"
+                                autocomplete="email"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="creative-form-group">
+
+                        <div class="creative-label-row">
+
+                            <label for="loginPassword">
+                                Password
+                            </label>
+
+                            <a href="#" class="forgot-link">
+                                Forgot password?
+                            </a>
+
+                        </div>
+
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                🔒
+                            </span>
+
+                            <input
+                                type="password"
+                                id="loginPassword"
+                                name="password"
+                                placeholder="Enter your password"
+                                autocomplete="current-password"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="show-password"
+                                onclick="togglePassword()"
+                            >
+                                Show
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- REMEMBER -->
+
+                    <div class="remember-box">
+
+                        <label>
+
+                            <input
+                                type="checkbox"
+                                id="rememberMe"
+                            >
+
+                            <span>
+                                Remember me
+                            </span>
+
+                        </label>
+
+                    </div>
+
+
+
+                    <!-- LOGIN -->
+
+                    <button
+                        type="submit"
+                        class="creative-login-btn"
+                    >
+
+                        <span>
+                            Login to Career Compass
+                        </span>
+
+                        <strong>
+                            →
+                        </strong>
+
+                    </button>
+
+                </form>
+
+
+
+                <!-- DIVIDER -->
+
+                <div class="creative-divider">
+
+                    <span></span>
+
+                    <p>
+                        OR
+                    </p>
+
+                    <span></span>
+
+                </div>
+
+
+
+                <!-- SIGNUP -->
+
+                <div class="new-user">
+
+                    <p>
+                        Don't have an account?
+                    </p>
+
+                    <a href="signup.html">
+                        Create your account →
+                    </a>
+
+                </div>
+
+
+
+                <!-- BACK -->
+
+                <a
+                    href="index.html"
+                    class="login-back-home"
+                >
+                    ← Back to Home
+                </a>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script src="../js/script.js"></script>
+
+
+    <!-- Password visibility -->
+    <script>
+
+        function togglePassword() {
+
+            const password =
+                document.getElementById("loginPassword");
+
+            const button =
+                document.querySelector(".show-password");
+
+
+            if (password.type === "password") {
+
+                password.type = "text";
+
+                button.textContent = "Hide";
+
+            } else {
+
+                password.type = "password";
+
+                button.textContent = "Show";
+
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>

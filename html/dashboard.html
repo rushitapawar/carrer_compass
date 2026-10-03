@@ -1,0 +1,803 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard | Career Compass AI</title>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --plum: #443846;
+  --plum-dark: #322936;
+  --pink: #e998b3;
+  --pink-light: #f6c4d3;
+  --cream: #f7f5f2;
+  --white: #fff;
+  --text: #342d3b;
+  --muted: #817681;
+  --border: #eee5e8;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "DM Sans", sans-serif;
+  background: var(--cream);
+  color: var(--text);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* LEFT SIDEBAR */
+.sidebar {
+  width: 245px;
+  background: var(--plum-dark);
+  color: white;
+  padding: 30px 19px 22px;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 10;
+}
+
+.logo {
+  padding: 0 10px;
+  margin-bottom: 48px;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.logo span {
+  color: var(--pink);
+}
+
+.menu-label {
+  color: #bcaeba;
+  font-size: 10px;
+  letter-spacing: 2px;
+  margin: 0 12px 14px;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.nav a {
+  padding: 13px 14px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  color: #e9e1e9;
+  font-size: 13px;
+  transition: .25s;
+}
+
+.nav a:hover,
+.nav a.active {
+  background: rgba(233,152,179,.16);
+  color: white;
+}
+
+.nav a.active {
+  border-left: 3px solid var(--pink);
+  padding-left: 11px;
+}
+
+.nav-icon {
+  width: 21px;
+  font-size: 17px;
+  text-align: center;
+}
+
+.sidebar-bottom {
+  margin-top: auto;
+  padding: 17px 10px 0;
+  border-top: 1px solid #514451;
+  font-size: 11px;
+  line-height: 1.8;
+  color: #d0c5d0;
+}
+
+/* MAIN AREA */
+.main {
+  margin-left: 245px;
+  width: calc(100% - 245px);
+  padding: 30px 5%;
+  max-width: 1700px;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 34px;
+}
+
+.breadcrumb {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.breadcrumb strong {
+  color: var(--plum);
+}
+
+.profile-chip {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  padding: 6px 13px 6px 6px;
+}
+
+.avatar {
+  width: 35px;
+  height: 35px;
+  display: grid;
+  place-items: center;
+  background: #f9e4eb;
+  border-radius: 50%;
+  font-size: 18px;
+}
+
+.profile-chip span {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--plum);
+}
+
+/* WELCOME */
+.welcome {
+  background: linear-gradient(110deg, #f9e8ee 0%, #fceff2 60%, #f7e4eb 100%);
+  border: 1px solid #f3dce5;
+  border-radius: 22px;
+  padding: 36px 39px;
+  min-height: 225px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.welcome::after {
+  content: "✦";
+  position: absolute;
+  right: 32%;
+  top: 24px;
+  font-size: 22px;
+  color: #e6a4b9;
+  opacity: .7;
+}
+
+.welcome-content {
+  max-width: 560px;
+  position: relative;
+  z-index: 1;
+}
+
+.eyebrow {
+  color: #a66b83;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+
+.welcome h1 {
+  font-family: "Playfair Display", serif;
+  color: var(--plum);
+  font-size: clamp(28px, 3vw, 39px);
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+
+.welcome h1 span {
+  color: #df86a5;
+}
+
+.welcome p {
+  font-size: 13px;
+  line-height: 1.8;
+  color: #766777;
+  max-width: 480px;
+  margin-bottom: 21px;
+}
+
+.primary-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 19px;
+  background: var(--plum);
+  color: white;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  transition: .25s;
+}
+
+.primary-btn:hover {
+  background: #5b465b;
+  transform: translateY(-2px);
+}
+
+.welcome-art {
+  width: 125px;
+  height: 125px;
+  min-width: 125px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(255,255,255,.75);
+  border: 1px solid #f3d5df;
+  box-shadow: 0 12px 30px rgba(120,75,96,.07);
+  font-size: 56px;
+  margin-right: 30px;
+}
+
+/* SECTION HEADINGS */
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin: 34px 0 17px;
+}
+
+.section-heading h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 22px;
+  color: var(--plum);
+}
+
+.section-heading p {
+  color: var(--muted);
+  font-size: 11px;
+  margin-top: 5px;
+}
+
+/* OVERVIEW CARDS */
+.overview {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 17px;
+}
+
+.overview-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  padding: 20px 22px;
+  display: flex;
+  align-items: center;
+  gap: 17px;
+  box-shadow: 0 5px 20px rgba(68,56,70,.025);
+  transition: .25s;
+}
+
+.overview-card:hover {
+  border-color: #eec6d4;
+  box-shadow: 0 9px 24px rgba(68,56,70,.055);
+  transform: translateY(-2px);
+}
+
+.overview-icon {
+  width: 49px;
+  height: 49px;
+  border-radius: 14px;
+  background: #fbedf2;
+  display: grid;
+  place-items: center;
+  font-size: 23px;
+  flex-shrink: 0;
+}
+
+.overview-card h3 {
+  color: var(--plum);
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.overview-card strong {
+  display: block;
+  color: #bd7792;
+  font-size: 21px;
+  margin-bottom: 3px;
+}
+
+.overview-card p {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+/* JOURNEY */
+.journey {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 24px 25px;
+  margin-top: 18px;
+  box-shadow: 0 5px 20px rgba(68,56,70,.025);
+}
+
+.journey-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.journey h3 {
+  font-family: "Playfair Display", serif;
+  font-size: 18px;
+  color: var(--plum);
+  margin-bottom: 6px;
+}
+
+.journey p {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.percent {
+  color: #bd7792;
+  font-weight: 700;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+.progress-track {
+  background: #f2e8ec;
+  height: 8px;
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 22px 0 17px;
+}
+
+.progress-fill {
+  width: 0;
+  height: 100%;
+  border-radius: 20px;
+  background: linear-gradient(90deg, #443846, #e998b3);
+  transition: width .5s;
+}
+
+.journey-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.journey-bottom p {
+  max-width: 500px;
+}
+
+.small-link {
+  color: #a45e7a;
+  font-weight: 700;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+/* SAVED CAREERS */
+.saved-section {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 23px 25px;
+  margin-top: 18px;
+}
+
+.saved-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.saved-header h3 {
+  font-family: "Playfair Display", serif;
+  font-size: 18px;
+  color: var(--plum);
+}
+
+.saved-header a {
+  color: #a45e7a;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.saved-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.saved-item {
+  background: #fff6f8;
+  border: 1px solid #f4e1e8;
+  color: var(--plum);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.empty-state {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+  margin-top: 14px;
+}
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  color: #9b9099;
+  font-size: 10px;
+  margin: 32px 0 8px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1000px) {
+  .sidebar {
+    width: 215px;
+  }
+
+  .main {
+    margin-left: 215px;
+    width: calc(100% - 215px);
+    padding: 26px 4%;
+  }
+
+  .welcome-art {
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 760px) {
+  .sidebar {
+    width: 68px;
+    padding: 25px 9px;
+  }
+
+  .logo {
+    font-size: 0;
+    padding: 0;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .logo::before {
+    content: "✦";
+    font-size: 25px;
+    color: var(--pink);
+  }
+
+  .menu-label,
+  .nav-text,
+  .sidebar-bottom {
+    display: none;
+  }
+
+  .nav a {
+    justify-content: center;
+    padding: 13px 5px;
+  }
+
+  .main {
+    margin-left: 68px;
+    width: calc(100% - 68px);
+  }
+
+  .welcome-art {
+    width: 95px;
+    height: 95px;
+    min-width: 95px;
+    font-size: 43px;
+  }
+}
+
+@media (max-width: 560px) {
+  .main {
+    padding: 19px 14px;
+  }
+
+  .topbar {
+    margin-bottom: 23px;
+  }
+
+  .welcome {
+    padding: 27px 22px;
+  }
+
+  .welcome-art {
+    display: none;
+  }
+
+  .welcome h1 {
+    font-size: 29px;
+  }
+
+  .overview {
+    grid-template-columns: 1fr;
+    gap: 11px;
+  }
+
+  .section-heading {
+    margin-top: 27px;
+  }
+
+  .journey,
+  .saved-section {
+    padding: 19px;
+  }
+
+  .profile-chip span {
+    display: none;
+  }
+
+  .journey-bottom {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="logo">Career Compass <span>AI ✦</span></div>
+
+    <div class="menu-label">MENU</div>
+
+    <nav class="nav">
+      <a href="./dashboard.html" class="active">
+        <span class="nav-icon">⌂</span>
+        <span class="nav-text">Dashboard</span>
+      </a>
+
+      <a href="./results.html">
+        <span class="nav-icon">✧</span>
+        <span class="nav-text">My Results</span>
+      </a>
+
+      <a href="./job-roles.html">
+        <span class="nav-icon">♧</span>
+        <span class="nav-text">Explore Careers</span>
+      </a>
+
+      <a href="./questionnaire.html">
+        <span class="nav-icon">▤</span>
+        <span class="nav-text">Retake Assessment</span>
+      </a>
+
+      <a href="./index.html">
+        <span class="nav-icon">↪</span>
+        <span class="nav-text">Home</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      ✦ Discover your strengths.<br>
+      Explore your possibilities.
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <header class="topbar">
+      <div class="breadcrumb">Workspace / <strong>Dashboard</strong></div>
+
+      <div class="profile-chip">
+        <div class="avatar" id="topAvatar">✨</div>
+        <span>My Profile</span>
+      </div>
+    </header>
+
+    <!-- WELCOME BANNER -->
+    <section class="welcome">
+      <div class="welcome-content">
+        <div class="eyebrow">YOUR PERSONAL CAREER SPACE</div>
+        <h1>Explore your <span>future.</span></h1>
+        <p>
+          Every great journey starts with a single step.
+          Discover your interests and explore the career paths
+          that inspire you.
+        </p>
+        <a href="./questionnaire.html" class="primary-btn" id="heroButton">
+          Start Your Journey <span>↗</span>
+        </a>
+      </div>
+
+      <div class="welcome-art" id="heroAvatar">✨</div>
+    </section>
+
+    <!-- OVERVIEW -->
+    <div class="section-heading">
+      <div>
+        <h2>Your Overview</h2>
+        <p>A quick look at your career journey.</p>
+      </div>
+    </div>
+
+    <section class="overview">
+      <div class="overview-card">
+        <div class="overview-icon">✦</div>
+        <div>
+          <h3>Assessment Status</h3>
+          <strong id="assessmentStatus">0%</strong>
+          <p id="assessmentText">Not completed yet</p>
+        </div>
+      </div>
+
+      <div class="overview-card">
+        <div class="overview-icon">♡</div>
+        <div>
+          <h3>Saved Careers</h3>
+          <strong id="careerCount">0</strong>
+          <p>Your favorite career paths</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- JOURNEY -->
+    <section class="journey">
+      <div class="journey-top">
+        <div>
+          <h3>Your Career Journey</h3>
+          <p>Keep moving forward, one step at a time.</p>
+        </div>
+        <span class="percent" id="progressPercent">0%</span>
+      </div>
+
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+
+      <div class="journey-bottom">
+        <p id="progressMessage">
+          Begin your assessment to discover your career interests.
+        </p>
+        <a href="./questionnaire.html" class="small-link" id="journeyLink">
+          Start assessment →
+        </a>
+      </div>
+    </section>
+
+    <!-- SAVED CAREERS -->
+    <section class="saved-section">
+      <div class="saved-header">
+        <h3>My Saved Careers <span style="color:#e998b3;">♡</span></h3>
+        <a href="./job-roles.html">Explore careers ↗</a>
+      </div>
+
+      <div id="savedList"></div>
+    </section>
+
+    <footer class="footer">
+      Career Compass AI · Your journey, your future.
+    </footer>
+
+  </main>
+</div>
+
+<script>
+const answers = JSON.parse(
+  localStorage.getItem("careerAnswers") || "null"
+);
+
+const savedCareers = JSON.parse(
+  localStorage.getItem("savedCareers") || "[]"
+);
+
+const guideIcon =
+  localStorage.getItem("selectedAvatarIcon") || "✨";
+
+const completed =
+  Array.isArray(answers) && answers.length >= 25;
+
+const progress = completed ? 100 : 0;
+
+document.getElementById("topAvatar").textContent = guideIcon;
+document.getElementById("heroAvatar").textContent = guideIcon;
+
+document.getElementById("assessmentStatus").textContent =
+  progress + "%";
+
+document.getElementById("assessmentText").textContent =
+  completed ? "Completed successfully" : "Not completed yet";
+
+document.getElementById("careerCount").textContent =
+  savedCareers.length;
+
+document.getElementById("progressPercent").textContent =
+  progress + "%";
+
+document.getElementById("progressFill").style.width =
+  progress + "%";
+
+if (completed) {
+  document.getElementById("heroButton").href = "./result.html";
+  document.getElementById("heroButton").innerHTML =
+    'View My Results <span>↗</span>';
+
+  document.getElementById("progressMessage").textContent =
+    "Your assessment is complete. Explore your personalized results.";
+
+  document.getElementById("journeyLink").textContent =
+    "View results →";
+
+  document.getElementById("journeyLink").href =
+    "./result.html";
+}
+
+const savedList = document.getElementById("savedList");
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[char]);
+}
+
+if (!Array.isArray(savedCareers) || savedCareers.length === 0) {
+  savedList.innerHTML = `
+    <p class="empty-state">
+      No saved careers yet. Explore your results and save the
+      career paths that interest you.
+    </p>
+  `;
+} else {
+  savedList.innerHTML = `
+    <div class="saved-list">
+      ${savedCareers.slice(0, 6).map(item => {
+        const name = typeof item === "string"
+          ? item
+          : item.name || "Career";
+
+        return `
+          <div class="saved-item">
+            ♡ &nbsp; ${escapeHTML(name)}
+          </div>
+        `;
+      }).join("")}
+    </div>
+  `;
+}
+</script>
+</body>
+</html>

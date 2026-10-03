@@ -1,0 +1,605 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compare Careers | Career Compass AI</title>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --plum: #443846;
+    --plum-dark: #322936;
+    --pink: #e998b3;
+    --pink-light: #f6c4d3;
+    --cream: #f7f5f2;
+    --white: #fff;
+    --text: #342d3b;
+    --muted: #756d76;
+    --border: #e7dfe2;
+    --soft-pink: #fff0f5;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "DM Sans", sans-serif;
+    background: var(--cream);
+    color: var(--text);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* NAVBAR */
+.navbar {
+    height: 76px;
+    background: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 7%;
+    border-bottom: 1px solid var(--border);
+}
+
+.logo {
+    font-family: "Playfair Display", serif;
+    font-size: 23px;
+    font-weight: 700;
+    color: var(--plum);
+}
+
+.logo span {
+    color: var(--pink);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--plum);
+}
+
+.profile {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--soft-pink);
+    color: var(--plum);
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+}
+
+/* MAIN */
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 55px 25px 80px;
+}
+
+.eyebrow {
+    color: #b66d89;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.page-heading {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(32px, 5vw, 44px);
+    color: var(--plum);
+    margin-bottom: 12px;
+}
+
+.subtitle {
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.7;
+    max-width: 650px;
+}
+
+/* SELECTOR */
+.selector-section {
+    margin-top: 38px;
+    padding: 25px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    box-shadow: 0 5px 20px rgba(68, 56, 70, 0.04);
+}
+
+.selector-title {
+    font-family: "Playfair Display", serif;
+    font-size: 21px;
+    margin-bottom: 20px;
+    color: var(--plum);
+}
+
+.selector-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.field label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 9px;
+    color: var(--plum);
+}
+
+.field select {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    background: #fff;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+}
+
+.field select:focus {
+    border-color: var(--pink);
+    box-shadow: 0 0 0 3px rgba(233, 152, 179, 0.14);
+}
+
+.compare-btn {
+    margin-top: 20px;
+    border: none;
+    background: var(--plum);
+    color: white;
+    padding: 13px 25px;
+    border-radius: 10px;
+    font-family: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.compare-btn:hover {
+    background: var(--plum-dark);
+    transform: translateY(-1px);
+}
+
+/* COMPARISON */
+.comparison-section {
+    margin-top: 45px;
+}
+
+.section-heading {
+    font-family: "Playfair Display", serif;
+    color: var(--plum);
+    font-size: 27px;
+    margin-bottom: 20px;
+}
+
+.comparison-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.career-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 7px 25px rgba(68, 56, 70, 0.05);
+}
+
+.card-top {
+    background: linear-gradient(135deg, #fff0f5, #f9e9ef);
+    padding: 25px;
+    min-height: 145px;
+}
+
+.career-icon {
+    width: 48px;
+    height: 48px;
+    background: white;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    font-size: 24px;
+    margin-bottom: 14px;
+}
+
+.career-card h3 {
+    font-family: "Playfair Display", serif;
+    font-size: 23px;
+    color: var(--plum);
+}
+
+.card-body {
+    padding: 23px;
+}
+
+.career-description {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--muted);
+    min-height: 72px;
+    margin-bottom: 20px;
+}
+
+.detail {
+    padding: 16px 0;
+    border-top: 1px solid var(--border);
+}
+
+.detail h4 {
+    font-size: 13px;
+    color: var(--plum);
+    margin-bottom: 9px;
+}
+
+.detail p,
+.detail li {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--muted);
+}
+
+.detail ul {
+    padding-left: 18px;
+}
+
+.tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.tag {
+    font-size: 11px;
+    padding: 6px 10px;
+    background: var(--soft-pink);
+    color: #89566b;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+/* EMPTY STATE */
+.empty-state {
+    text-align: center;
+    padding: 55px 20px;
+    background: white;
+    border: 1px dashed #d9cbd2;
+    border-radius: 18px;
+    margin-top: 25px;
+}
+
+.empty-icon {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+.empty-state h3 {
+    font-family: "Playfair Display", serif;
+    color: var(--plum);
+    font-size: 23px;
+    margin-bottom: 8px;
+}
+
+.empty-state p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: var(--muted);
+    font-size: 12px;
+    border-top: 1px solid var(--border);
+    background: white;
+}
+
+/* RESPONSIVE */
+@media (max-width: 750px) {
+    .navbar {
+        padding: 0 5%;
+    }
+
+    .nav-links {
+        gap: 13px;
+    }
+
+    .nav-links a {
+        font-size: 12px;
+    }
+
+    .selector-grid,
+    .comparison-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .container {
+        padding: 38px 18px 60px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        height: auto;
+        min-height: 70px;
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 15px 5%;
+    }
+
+    .logo {
+        font-size: 19px;
+    }
+
+    .nav-links {
+        order: 3;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .profile {
+        margin-left: auto;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+    <a href="index.html" class="logo">Career Compass <span>AI ✦</span></a>
+
+    <nav class="nav-links">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="results.html">My Results</a>
+        <a href="favourites.html">Saved</a>
+        <a href="compare.html" class="active">Compare</a>
+    </nav>
+
+    <div class="profile">A</div>
+</header>
+
+<main class="container">
+
+    <p class="eyebrow">Make an informed choice</p>
+    <h1 class="page-heading">Compare Your Career Paths</h1>
+    <p class="subtitle">
+        Explore different career options side by side. Understand their
+        skills, work areas, education paths and opportunities before
+        deciding which direction interests you.
+    </p>
+
+    <!-- CAREER SELECTOR -->
+    <section class="selector-section">
+        <h2 class="selector-title">Choose careers to compare</h2>
+
+        <div class="selector-grid">
+            <div class="field">
+                <label for="careerOne">First career</label>
+                <select id="careerOne">
+                    <option value="">Select a career</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="careerTwo">Second career</label>
+                <select id="careerTwo">
+                    <option value="">Select a career</option>
+                </select>
+            </div>
+        </div>
+
+        <button class="compare-btn" onclick="compareCareers()">
+            Compare Careers →
+        </button>
+    </section>
+
+    <!-- COMPARISON RESULTS -->
+    <section class="comparison-section">
+        <h2 class="section-heading">Career Comparison</h2>
+
+        <div id="comparisonArea">
+            <div class="empty-state">
+                <div class="empty-icon">✦</div>
+                <h3>Your comparison starts here</h3>
+                <p>Select two careers above and click “Compare Careers”<br>
+                to see their details side by side.</p>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    © 2026 Career Compass AI · Explore your future with confidence.
+</footer>
+
+<script>
+const careers = [
+    {
+        id: "software",
+        name: "Software Developer",
+        icon: "💻",
+        description: "Designs, builds and maintains software applications and digital solutions.",
+        skills: ["Programming", "Problem solving", "Logical thinking", "Debugging"],
+        education: "Computer Science, IT or related degree; practical coding projects are also valuable.",
+        work: ["Technology companies", "Startups", "IT services", "Remote teams"],
+        areas: ["Web development", "App development", "Software engineering"],
+        growth: "Can progress into senior development, software architecture or technical leadership."
+    },
+    {
+        id: "designer",
+        name: "UI/UX Designer",
+        icon: "🎨",
+        description: "Creates digital experiences that are useful, accessible and easy to navigate.",
+        skills: ["Creativity", "User research", "Visual design", "Prototyping"],
+        education: "Design, interaction design or related studies; a strong portfolio is important.",
+        work: ["Design studios", "Technology companies", "Startups", "Freelance projects"],
+        areas: ["Interface design", "User experience", "Product design"],
+        growth: "Can progress into senior design, product design or design leadership."
+    },
+    {
+        id: "doctor",
+        name: "Doctor",
+        icon: "🩺",
+        description: "Diagnoses, treats and helps prevent illness while supporting patient health.",
+        skills: ["Communication", "Scientific knowledge", "Critical thinking", "Empathy"],
+        education: "Medical education and required clinical training and licensing.",
+        work: ["Hospitals", "Clinics", "Healthcare centers", "Research institutions"],
+        areas: ["Patient care", "Medical research", "Specialized practice"],
+        growth: "May pursue medical specializations, teaching or healthcare research."
+    },
+    {
+        id: "teacher",
+        name: "Teacher",
+        icon: "📚",
+        description: "Helps learners understand concepts and develop knowledge and skills.",
+        skills: ["Communication", "Patience", "Planning", "Subject knowledge"],
+        education: "Relevant subject education and teaching qualifications as required.",
+        work: ["Schools", "Colleges", "Learning centers", "Online education"],
+        areas: ["Classroom teaching", "Curriculum design", "Educational support"],
+        growth: "Can move into academic leadership, curriculum development or education management."
+    },
+    {
+        id: "analyst",
+        name: "Data Analyst",
+        icon: "📊",
+        description: "Studies data to identify patterns and communicate useful findings.",
+        skills: ["Data interpretation", "Statistics", "Critical thinking", "Communication"],
+        education: "Data science, statistics, mathematics, business or related studies.",
+        work: ["Businesses", "Finance", "Technology", "Research teams"],
+        areas: ["Business analytics", "Data visualization", "Research"],
+        growth: "Can progress into senior analytics, business intelligence or data science roles."
+    },
+    {
+        id: "entrepreneur",
+        name: "Entrepreneur",
+        icon: "🚀",
+        description: "Builds and develops a business, product or service around an opportunity.",
+        skills: ["Planning", "Adaptability", "Communication", "Decision making"],
+        education: "No single required degree; business, finance and industry knowledge can help.",
+        work: ["Own business", "Startups", "Small enterprises", "Social ventures"],
+        areas: ["Business development", "Product building", "Operations"],
+        growth: "Growth depends on the business, market, resources and goals."
+    }
+];
+
+const careerOne = document.getElementById("careerOne");
+const careerTwo = document.getElementById("careerTwo");
+const comparisonArea = document.getElementById("comparisonArea");
+
+function loadCareers() {
+    careers.forEach(career => {
+        const optionOne = document.createElement("option");
+        optionOne.value = career.id;
+        optionOne.textContent = career.name;
+        careerOne.appendChild(optionOne);
+
+        const optionTwo = document.createElement("option");
+        optionTwo.value = career.id;
+        optionTwo.textContent = career.name;
+        careerTwo.appendChild(optionTwo);
+    });
+}
+
+function createTags(items) {
+    return `<div class="tag-list">
+        ${items.map(item => `<span class="tag">${item}</span>`).join("")}
+    </div>`;
+}
+
+function createCareerCard(career) {
+    return `
+        <article class="career-card">
+            <div class="card-top">
+                <div class="career-icon">${career.icon}</div>
+                <h3>${career.name}</h3>
+            </div>
+
+            <div class="card-body">
+                <p class="career-description">${career.description}</p>
+
+                <div class="detail">
+                    <h4>Key Skills</h4>
+                    ${createTags(career.skills)}
+                </div>
+
+                <div class="detail">
+                    <h4>Education Path</h4>
+                    <p>${career.education}</p>
+                </div>
+
+                <div class="detail">
+                    <h4>Work Areas</h4>
+                    <ul>${career.work.map(item => `<li>${item}</li>`).join("")}</ul>
+                </div>
+
+                <div class="detail">
+                    <h4>Specialization Areas</h4>
+                    ${createTags(career.areas)}
+                </div>
+
+                <div class="detail">
+                    <h4>Possible Career Growth</h4>
+                    <p>${career.growth}</p>
+                </div>
+            </div>
+        </article>
+    `;
+}
+
+function compareCareers() {
+    const first = careers.find(career => career.id === careerOne.value);
+    const second = careers.find(career => career.id === careerTwo.value);
+
+    if (!first || !second) {
+        alert("Please select both careers to compare.");
+        return;
+    }
+
+    if (first.id === second.id) {
+        alert("Please select two different careers.");
+        return;
+    }
+
+    comparisonArea.innerHTML = `
+        <div class="comparison-grid">
+            ${createCareerCard(first)}
+            ${createCareerCard(second)}
+        </div>
+    `;
+}
+
+loadCareers();
+</script>
+
+</body>
+</html>
