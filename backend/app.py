@@ -10,6 +10,7 @@ from database import (
 from auth import auth_bp
 from questionnaire import questionnaire_bp
 from dashboard import dashboard
+from chatbot import chatbot_bp
 
 
 # ============================================================
@@ -54,6 +55,7 @@ create_profiles_table()
 app.register_blueprint(auth_bp)
 app.register_blueprint(questionnaire_bp)
 app.register_blueprint(dashboard)
+app.register_blueprint(chatbot_bp)
 
 
 # ============================================================

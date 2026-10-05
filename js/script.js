@@ -554,78 +554,130 @@ if (currentYear) {
 // ============================================================
 // END OF SCRIPT
 // ============================================================
-const chatbotButton = document.getElementById("chatbot-button");
-const chatbotBox = document.getElementById("chatbot-box");
-const closeChat = document.getElementById("close-chat");
+// ============================================================
+// AI CHATBOT
+// Works on every page: injects UI if missing, guards nulls,
+// falls back to /api/chat if /chat fails.
+// ============================================================
 
-const userInput = document.getElementById("user-input");
-const sendButton = document.getElementById("send-button");
-const chatMessages = document.getElementById("chat-messages");
+function initChatbot() {
+    let chatbotButton = document.getElementById("chatbot-button");
+    let chatbotBox = document.getElementById("chatbot-box");
+    let closeChat = document.getElementById("close-chat");
+    let userInput = document.getElementById("user-input");
+    let sendButton = document.getElementById("send-button");
+    let chatMessages = document.getElementById("chat-messages");
 
-chatbotButton.addEventListener("click", function () {
-    chatbotBox.style.display = "flex";
-    userInput.focus();
-});
+    // Inject chatbot UI on pages that don't have it
+    if (!chatbotButton || !chatbotBox) {
+        const btn = document.createElement("button");
+        btn.id = "chatbot-button";
+        btn.textContent = "💬";
+        btn.setAttribute("aria-label", "Open chat");
+        document.body.appendChild(btn);
 
-closeChat.addEventListener("click", function () {
-    chatbotBox.style.display = "none";
-});
+        const box = document.createElement("div");
+        box.id = "chatbot-box";
+        box.innerHTML =
+            '<div id="chatbot-header">Career Assistant <span id="close-chat">×</span></div>' +
+            '<div id="chat-messages"><div class="bot-message">Hi! I\'m your Career Assistant. How can I help you?</div></div>' +
+            '<div id="chat-input-area"><input type="text" id="user-input" placeholder="Type your message..."><button id="send-button">Send</button></div>';
+        document.body.appendChild(box);
 
-function sendMessage() {
+        chatbotButton = btn;
+        chatbotBox = box;
+        closeChat = box.querySelector("#close-chat");
+        userInput = box.querySelector("#user-input");
+        sendButton = box.querySelector("#send-button");
+        chatMessages = box.querySelector("#chat-messages");
+    }
 
-    const message = userInput.value.trim();
-
-    if (message === "") {
+    if (!chatbotButton || !chatbotBox || !userInput || !sendButton || !chatMessages) {
         return;
     }
 
-    // Show user's message
-    const userMessage = document.createElement("div");
-    userMessage.className = "user-message";
-    userMessage.textContent = message;
+    chatbotButton.addEventListener("click", function () {
+        chatbotBox.style.display = "flex";
+        userInput.focus();
+    });
 
-    chatMessages.appendChild(userMessage);
+    if (closeChat) {
+        closeChat.addEventListener("click", function () {
+            chatbotBox.style.display = "none";
+        });
+    }
 
-    userInput.value = "";
-
-    // Send message to Python
-    fetch("/chat", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            message: message
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-
-        const botMessage = document.createElement("div");
-        botMessage.className = "bot-message";
-        botMessage.textContent = data.response;
-
-        chatMessages.appendChild(botMessage);
-
+    function addMessage(text, cls) {
+        const el = document.createElement("div");
+        el.className = cls;
+        el.style.whiteSpace = "pre-line";
+        el.textContent = text;
+        chatMessages.appendChild(el);
         chatMessages.scrollTop = chatMessages.scrollHeight;
-    })
-    .catch(error => {
-        console.error(error);
+    }
 
-        const botMessage = document.createElement("div");
-        botMessage.className = "bot-message";
-        botMessage.textContent = "Sorry, something went wrong.";
+    function sendMessage() {
+        const message = userInput.value.trim();
 
-        chatMessages.appendChild(botMessage);
+        if (message === "") {
+            return;
+        }
+
+        addMessage(message, "user-message");
+        userInput.value = "";
+
+        // Show typing indicator
+        const typing = document.createElement("div");
+        typing.className = "bot-message";
+        typing.textContent = "Typing...";
+        chatMessages.appendChild(typing);
+
+        function postMessage(url) {
+            return fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    message: message
+                })
+            }).then(function (response) {
+                if (!response.ok) {
+                    throw new Error("HTTP " + response.status);
+                }
+                return response.json();
+            });
+        }
+
+        postMessage("/api/chat")
+            .catch(function () {
+                return postMessage("/chat");
+            })
+            .then(function (data) {
+                typing.remove();
+                addMessage(data.response || "Sorry, I got an empty reply.", "bot-message");
+            })
+            .catch(function (error) {
+                console.error("Chat error:", error);
+                typing.remove();
+                addMessage(
+                    "Sorry, I can't reach the server. Please make sure Flask (backend/app.py) is running.",
+                    "bot-message"
+                );
+            });
+    }
+
+    sendButton.addEventListener("click", sendMessage);
+
+    userInput.addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
+            sendMessage();
+        }
     });
 }
 
-sendButton.addEventListener("click", sendMessage);
-
-userInput.addEventListener("keypress", function (event) {
-
-    if (event.key === "Enter") {
-        sendMessage();
-    }
-
-});
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initChatbot);
+} else {
+    initChatbot();
+}
