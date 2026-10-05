@@ -1,0 +1,1660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Settings | Career Compass AI</title>
+
+    <style>
+
+        /* =========================
+           GLOBAL
+        ========================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "DM Sans", Arial, sans-serif;
+            background: #f7f5f2;
+            color: #342d3b;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button,
+        select {
+            font-family: inherit;
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================== */
+
+        .navbar {
+            height: 76px;
+
+            background: #ffffff;
+
+            border-bottom: 1px solid #ded8d4;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 7%;
+
+            position: sticky;
+            top: 0;
+
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+
+            color: #443846;
+
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: #e998b3;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            color: #756d76;
+
+            transition: 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #443846;
+        }
+
+        .profile-btn {
+            width: 38px;
+            height: 38px;
+
+            border-radius: 50%;
+
+            background: #f6c4d3;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 16px;
+        }
+
+
+        /* =========================
+           PAGE HEADER
+        ========================== */
+
+        .page-header {
+            max-width: 1050px;
+
+            margin: 0 auto;
+
+            padding: 55px 25px 30px;
+        }
+
+        .eyebrow {
+            color: #d27f9c;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            letter-spacing: 1.5px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 9px;
+        }
+
+        .page-header h1 {
+            font-family: Georgia, "Times New Roman", serif;
+
+            color: #443846;
+
+            font-size: 43px;
+
+            line-height: 1.15;
+
+            margin-bottom: 10px;
+        }
+
+        .page-header p {
+            color: #756d76;
+
+            font-size: 14px;
+
+            max-width: 650px;
+        }
+
+
+        /* =========================
+           MAIN
+        ========================== */
+
+        .settings-container {
+            max-width: 1050px;
+
+            margin: 0 auto;
+
+            padding: 0 25px 70px;
+        }
+
+
+        /* =========================
+           SETTINGS CARD
+        ========================== */
+
+        .settings-card {
+            background: #ffffff;
+
+            border: 1px solid #ded8d4;
+
+            border-radius: 22px;
+
+            margin-bottom: 20px;
+
+            overflow: hidden;
+        }
+
+        .settings-heading {
+            padding: 22px 25px;
+
+            border-bottom: 1px solid #eee9e6;
+        }
+
+        .settings-heading h2 {
+            font-family: Georgia, "Times New Roman", serif;
+
+            color: #443846;
+
+            font-size: 21px;
+
+            margin-bottom: 3px;
+        }
+
+        .settings-heading p {
+            color: #8a8089;
+
+            font-size: 12px;
+        }
+
+
+        /* =========================
+           SETTING ROW
+        ========================== */
+
+        .setting-row {
+            min-height: 76px;
+
+            padding: 17px 25px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 25px;
+
+            border-bottom: 1px solid #eee9e6;
+        }
+
+        .setting-row:last-child {
+            border-bottom: none;
+        }
+
+        .setting-info {
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+        }
+
+        .setting-icon {
+            width: 42px;
+            height: 42px;
+
+            flex-shrink: 0;
+
+            border-radius: 13px;
+
+            background: #fff4f7;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 18px;
+        }
+
+        .setting-text h3 {
+            font-size: 14px;
+
+            color: #443846;
+
+            margin-bottom: 2px;
+        }
+
+        .setting-text p {
+            color: #8a8089;
+
+            font-size: 11px;
+
+            max-width: 560px;
+        }
+
+
+        /* =========================
+           TOGGLE
+        ========================== */
+
+        .toggle {
+            position: relative;
+
+            width: 48px;
+            height: 27px;
+
+            flex-shrink: 0;
+        }
+
+        .toggle input {
+            opacity: 0;
+
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+
+            inset: 0;
+
+            background: #ded8d4;
+
+            border-radius: 30px;
+
+            cursor: pointer;
+
+            transition: 0.25s;
+        }
+
+        .slider::before {
+            content: "";
+
+            position: absolute;
+
+            width: 21px;
+            height: 21px;
+
+            left: 3px;
+            top: 3px;
+
+            background: white;
+
+            border-radius: 50%;
+
+            box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+
+            transition: 0.25s;
+        }
+
+        .toggle input:checked + .slider {
+            background: #e998b3;
+        }
+
+        .toggle input:checked + .slider::before {
+            transform: translateX(21px);
+        }
+
+
+        /* =========================
+           SELECT
+        ========================== */
+
+        .setting-select {
+            min-width: 170px;
+
+            padding: 10px 12px;
+
+            border: 1px solid #ded8d4;
+
+            border-radius: 10px;
+
+            background: #fdfcfb;
+
+            color: #443846;
+
+            font-size: 12px;
+
+            outline: none;
+
+            cursor: pointer;
+        }
+
+        .setting-select:focus {
+            border-color: #e998b3;
+        }
+
+
+        /* =========================
+           BUTTONS
+        ========================== */
+
+        .setting-button {
+            border: 1px solid #ded8d4;
+
+            background: #ffffff;
+
+            color: #443846;
+
+            padding: 9px 15px;
+
+            border-radius: 10px;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .setting-button:hover {
+            background: #fff7f9;
+
+            border-color: #e998b3;
+        }
+
+        .danger-button {
+            border-color: #e4cbd2;
+
+            color: #9c506b;
+        }
+
+        .danger-button:hover {
+            background: #fff4f7;
+        }
+
+
+        /* =========================
+           PROFILE PREVIEW
+        ========================== */
+
+        .profile-preview {
+            padding: 25px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+        }
+
+        .profile-info {
+            display: flex;
+
+            align-items: center;
+
+            gap: 16px;
+        }
+
+        .avatar {
+            width: 58px;
+            height: 58px;
+
+            border-radius: 18px;
+
+            background: #f6c4d3;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 25px;
+        }
+
+        .profile-info h3 {
+            color: #443846;
+
+            font-size: 16px;
+
+            margin-bottom: 2px;
+        }
+
+        .profile-info p {
+            color: #8a8089;
+
+            font-size: 12px;
+        }
+
+
+        /* =========================
+           DATA BOX
+        ========================== */
+
+        .data-box {
+            margin: 20px 25px 25px;
+
+            background: #fff7f9;
+
+            border: 1px solid #f0dce3;
+
+            border-radius: 16px;
+
+            padding: 17px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 20px;
+        }
+
+        .data-box h3 {
+            color: #443846;
+
+            font-size: 13px;
+
+            margin-bottom: 3px;
+        }
+
+        .data-box p {
+            color: #756d76;
+
+            font-size: 11px;
+        }
+
+
+        /* =========================
+           SAVE MESSAGE
+        ========================== */
+
+        .save-message {
+            position: fixed;
+
+            right: 25px;
+            bottom: 25px;
+
+            background: #443846;
+
+            color: white;
+
+            padding: 12px 18px;
+
+            border-radius: 11px;
+
+            font-size: 12px;
+
+            opacity: 0;
+
+            transform: translateY(15px);
+
+            pointer-events: none;
+
+            transition: 0.3s;
+
+            z-index: 200;
+        }
+
+        .save-message.show {
+            opacity: 1;
+
+            transform: translateY(0);
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================== */
+
+        footer {
+            background: #322936;
+
+            color: #d9d0d6;
+
+            padding: 30px 7%;
+
+            text-align: center;
+
+            font-size: 12px;
+        }
+
+        footer span {
+            color: #e998b3;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================== */
+
+        @media (max-width: 700px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .page-header {
+                padding-top: 40px;
+            }
+
+            .page-header h1 {
+                font-size: 36px;
+            }
+
+            .setting-row {
+                align-items: flex-start;
+            }
+
+            .setting-info {
+                align-items: flex-start;
+            }
+
+            .setting-select {
+                min-width: 125px;
+            }
+
+            .profile-preview {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .data-box {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+        }
+
+
+        @media (max-width: 500px) {
+
+            .navbar {
+                padding: 0 20px;
+            }
+
+            .page-header {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .settings-container {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+
+            .setting-row {
+                padding: 16px 18px;
+            }
+
+            .settings-heading {
+                padding: 20px 18px;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <nav class="navbar">
+
+        <a href="index.html" class="logo">
+            Career Compass <span>AI ✦</span>
+        </a>
+
+        <div class="nav-links">
+
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="roles.html">
+                Career Roles
+            </a>
+
+            <a href="favourites.html">
+                Saved Careers
+            </a>
+
+            <a href="about.html">
+                About
+            </a>
+
+            <a href="profile.html" class="profile-btn">
+                ✦
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =========================
+         PAGE HEADER
+    ========================== -->
+
+    <header class="page-header">
+
+        <div class="eyebrow">
+            PERSONALISE YOUR EXPERIENCE
+        </div>
+
+        <h1>
+            Settings
+        </h1>
+
+        <p>
+            Manage your Career Compass AI preferences,
+            recommendations, notifications and privacy choices.
+        </p>
+
+    </header>
+
+
+    <!-- =========================
+         SETTINGS
+    ========================== -->
+
+    <main class="settings-container">
+
+
+        <!-- =====================
+             ACCOUNT
+        ====================== -->
+
+        <section class="settings-card">
+
+            <div class="settings-heading">
+
+                <h2>
+                    Account
+                </h2>
+
+                <p>
+                    Manage your profile and account preferences.
+                </p>
+
+            </div>
+
+
+            <div class="profile-preview">
+
+                <div class="profile-info">
+
+                    <div class="avatar">
+                        ✦
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Your Career Compass Profile
+                        </h3>
+
+                        <p>
+                            Keep your profile information updated.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="setting-button"
+                    onclick="window.location.href='profile.html'">
+
+                    Edit Profile
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================
+             NOTIFICATIONS
+        ====================== -->
+
+        <section class="settings-card">
+
+            <div class="settings-heading">
+
+                <h2>
+                    Notifications
+                </h2>
+
+                <p>
+                    Choose what updates you would like to receive.
+                </p>
+
+            </div>
+
+
+            <!-- Career Updates -->
+
+            <div class="setting-row">
+
+                <div class="setting-info">
+
+                    <div class="setting-icon">
+                        🔔
+                    </div>
+
+                    <div class="setting-text">
+
+                        <h3>
+                            Career Updates
+                        </h3>
+
+                        <p>
+                            Receive updates about career exploration
+                            and new opportunities.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <label class="toggle">
+
+                    <input
+                        type="checkbox"
+                        id="careerNotifications"
+                        onchange="saveSettings()">
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+
+            <!-- Assessment Reminder -->
+
+            <div class="setting-row">
+
+                <div class="setting-info">
+
+                    <div class="setting-icon">
+                        🎯
+                    </div>
+
+                    <div class="setting-text">
+
+                        <h3>
+                            Assessment Reminders
+                        </h3>
+
+                        <p>
+                            Get reminders to revisit your career assessment
+                            and explore your results.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <label class="toggle">
+
+                    <input
+                        type="checkbox"
+                        id="assessmentNotifications"
+                        onchange="saveSettings()">
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+
+            <!-- Recommendations -->
+
+            <div class="setting-row">
+
+                <div class="setting-info">
+
+                    <div class="setting-icon">
+                        ✨
+                    </div>
+
+                    <div class="setting-text">
+
+                        <h3>
+                            Career Recommendations
+                        </h3>
+
+                        <p>
+                            Receive suggestions for careers that may
+                            match your interests.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <label class="toggle">
+
+                    <input
+                        type="checkbox"
+                        id="recommendationNotifications"
+                        onchange="saveSettings()">
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================
+             PREFERENCES
+        ====================== -->
+
+        <section class="settings-card">
+
+            <div class="settings-heading">
+
+                <h2>
+                    Preferences
+                </h2>
+
+                <p>
+                    Personalise how Career Compass AI works for you.
+                </p>
+
+            </div>
+
+
+            <!-- Recommendation Style -->
+
+            <div class="setting-row">
+
+                <div class="setting-info">
+
+                    <div class="setting-icon">
+                        🎯
+                    </div>
+
+                    <div class="setting-text">
+
+                        <h3>
+                            Recommendation Focus
+                        </h3>
+
+                        <p>
+                            Choose the type of career recommendations
+                            you want to explore.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <select
+                    class="setting-select"
+                    id="recommendationFocus"
+                    onchange="saveSettings()">
+
+                    <option value="interests">
+                        My Interests
+                    </option>
+
+                    <option value="skills">
+                        My Skills
+                    </option>
+
+                    <option value="both">
+                        Interests & Skills
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Language -->
+
+            <div class="setting-row">
+
+                <div class="setting-info">
+
+                    <div class="setting-icon">
+                        🌐
+                    </div>
+
+                    <div class="setting-text">
+
+                        <h3>
+                            Language
+                        </h3>
+
+                        <p>
+                            Select your preferred language.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <select
+                    class="setting-select"
+                    id="language"
+                    onchange="saveSettings()">
+
+                    <option value="english">
+                        English
+                    </option>
+
+                    <option value="hindi">
+                        Hindi
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Appearance -->
+
+            <div class="setting-row">
+
+                <div class="setting-info">
+
+                    <div class="setting-icon">
+                        🎨
+                    </div>
+
+                    <div class="setting-text">
+
+                        <h3>
+                            Appearance
+                        </h3>
+
+                        <p>
+                            Choose how the website should appear.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <select
+                    class="setting-select"
+                    id="appearance"
+                    onchange="saveSettings()">
+
+                    <option value="light">
+                        Light
+                    </option>
+
+                    <option value="system">
+                        System Default
+                    </option>
+
+                </select>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================
+             PRIVACY
+        ====================== -->
+
+        <section class="settings-card">
+
+            <div class="settings-heading">
+
+                <h2>
+                    Privacy & Data
+                </h2>
+
+                <p>
+                    Control your saved information and privacy choices.
+                </p>
+
+            </div>
+
+
+            <!-- Personalisation -->
+
+            <div class="setting-row">
+
+                <div class="setting-info">
+
+                    <div class="setting-icon">
+                        🔒
+                    </div>
+
+                    <div class="setting-text">
+
+                        <h3>
+                            Personalised Experience
+                        </h3>
+
+                        <p>
+                            Allow Career Compass AI to use your preferences
+                            to personalise recommendations.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <label class="toggle">
+
+                    <input
+                        type="checkbox"
+                        id="personalisation"
+                        onchange="saveSettings()">
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+
+            <!-- Privacy Page -->
+
+            <div class="setting-row">
+
+                <div class="setting-info">
+
+                    <div class="setting-icon">
+                        🛡
+                    </div>
+
+                    <div class="setting-text">
+
+                        <h3>
+                            Privacy Information
+                        </h3>
+
+                        <p>
+                            Read how information is handled in
+                            Career Compass AI.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="setting-button"
+                    onclick="window.location.href='privacy.html'">
+
+                    View Privacy
+
+                </button>
+
+            </div>
+
+
+            <!-- Saved Data -->
+
+            <div class="data-box">
+
+                <div>
+
+                    <h3>
+                        Your Saved Careers
+                    </h3>
+
+                    <p id="savedCareerText">
+                        Checking your saved career data...
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="setting-button danger-button"
+                    onclick="clearSavedCareers()">
+
+                    Clear Saved Careers
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================
+             ABOUT
+        ====================== -->
+
+        <section class="settings-card">
+
+            <div class="settings-heading">
+
+                <h2>
+                    About Career Compass AI
+                </h2>
+
+                <p>
+                    Information about this website.
+                </p>
+
+            </div>
+
+
+            <div class="setting-row">
+
+                <div class="setting-info">
+
+                    <div class="setting-icon">
+                        ℹ️
+                    </div>
+
+                    <div class="setting-text">
+
+                        <h3>
+                            About Us
+                        </h3>
+
+                        <p>
+                            Learn more about the purpose and vision
+                            behind Career Compass AI.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="setting-button"
+                    onclick="window.location.href='about.html'">
+
+                    About Career Compass
+
+                </button>
+
+            </div>
+
+
+            <div class="setting-row">
+
+                <div class="setting-info">
+
+                    <div class="setting-icon">
+                        ⚙️
+                    </div>
+
+                    <div class="setting-text">
+
+                        <h3>
+                            How It Works
+                        </h3>
+
+                        <p>
+                            Understand how Career Compass AI guides
+                            your career exploration.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="setting-button"
+                    onclick="window.location.href='how-it-works.html'">
+
+                    Learn More
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================
+             LOGOUT
+        ====================== -->
+
+        <section class="settings-card">
+
+            <div class="setting-row">
+
+                <div class="setting-info">
+
+                    <div class="setting-icon">
+                        ↪
+                    </div>
+
+                    <div class="setting-text">
+
+                        <h3>
+                            Sign Out
+                        </h3>
+
+                        <p>
+                            Sign out from your current Career Compass
+                            AI session.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="setting-button danger-button"
+                    onclick="logoutUser()">
+
+                    Log Out
+
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         SAVE MESSAGE
+    ========================== -->
+
+    <div
+        class="save-message"
+        id="saveMessage">
+
+        Settings saved ✓
+
+    </div>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+        <p>
+            © 2026 Career Compass
+            <span>AI ✦</span>
+            · Explore. Discover. Plan.
+        </p>
+
+    </footer>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+
+        /* =====================================
+           DEFAULT SETTINGS
+        ===================================== */
+
+        const defaultSettings = {
+
+            careerNotifications: true,
+
+            assessmentNotifications: true,
+
+            recommendationNotifications: true,
+
+            recommendationFocus: "both",
+
+            language: "english",
+
+            appearance: "light",
+
+            personalisation: true
+
+        };
+
+
+        /* =====================================
+           LOAD SETTINGS
+        ===================================== */
+
+        function loadSettings() {
+
+            let settings;
+
+            try {
+
+                settings =
+                    JSON.parse(
+                        localStorage.getItem(
+                            "careerCompassSettings"
+                        )
+                    ) || defaultSettings;
+
+            } catch {
+
+                settings = defaultSettings;
+
+            }
+
+
+            document.getElementById(
+                "careerNotifications"
+            ).checked =
+                settings.careerNotifications;
+
+
+            document.getElementById(
+                "assessmentNotifications"
+            ).checked =
+                settings.assessmentNotifications;
+
+
+            document.getElementById(
+                "recommendationNotifications"
+            ).checked =
+                settings.recommendationNotifications;
+
+
+            document.getElementById(
+                "recommendationFocus"
+            ).value =
+                settings.recommendationFocus;
+
+
+            document.getElementById(
+                "language"
+            ).value =
+                settings.language;
+
+
+            document.getElementById(
+                "appearance"
+            ).value =
+                settings.appearance;
+
+
+            document.getElementById(
+                "personalisation"
+            ).checked =
+                settings.personalisation;
+
+
+            updateSavedCareerCount();
+
+        }
+
+
+        /* =====================================
+           SAVE SETTINGS
+        ===================================== */
+
+        function saveSettings() {
+
+            const settings = {
+
+                careerNotifications:
+                    document.getElementById(
+                        "careerNotifications"
+                    ).checked,
+
+                assessmentNotifications:
+                    document.getElementById(
+                        "assessmentNotifications"
+                    ).checked,
+
+                recommendationNotifications:
+                    document.getElementById(
+                        "recommendationNotifications"
+                    ).checked,
+
+                recommendationFocus:
+                    document.getElementById(
+                        "recommendationFocus"
+                    ).value,
+
+                language:
+                    document.getElementById(
+                        "language"
+                    ).value,
+
+                appearance:
+                    document.getElementById(
+                        "appearance"
+                    ).value,
+
+                personalisation:
+                    document.getElementById(
+                        "personalisation"
+                    ).checked
+
+            };
+
+
+            localStorage.setItem(
+                "careerCompassSettings",
+                JSON.stringify(settings)
+            );
+
+
+            showSaveMessage();
+
+        }
+
+
+        /* =====================================
+           SAVE MESSAGE
+        ===================================== */
+
+        function showSaveMessage() {
+
+            const message =
+                document.getElementById(
+                    "saveMessage"
+                );
+
+            message.classList.add("show");
+
+
+            setTimeout(() => {
+
+                message.classList.remove("show");
+
+            }, 1800);
+
+        }
+
+
+        /* =====================================
+           SAVED CAREER COUNT
+        ===================================== */
+
+        function updateSavedCareerCount() {
+
+            let saved = [];
+
+            try {
+
+                saved =
+                    JSON.parse(
+                        localStorage.getItem(
+                            "savedCareers"
+                        )
+                    ) || [];
+
+            } catch {
+
+                saved = [];
+
+            }
+
+
+            const text =
+                document.getElementById(
+                    "savedCareerText"
+                );
+
+
+            if (saved.length === 0) {
+
+                text.textContent =
+                    "You currently have no saved careers.";
+
+            } else {
+
+                text.textContent =
+                    `You have ${saved.length} saved career${
+                        saved.length === 1 ? "" : "s"
+                    } in your Career Compass profile.`;
+
+            }
+
+        }
+
+
+        /* =====================================
+           CLEAR SAVED CAREERS
+        ===================================== */
+
+        function clearSavedCareers() {
+
+            const saved =
+                JSON.parse(
+                    localStorage.getItem(
+                        "savedCareers"
+                    ) || "[]"
+                );
+
+
+            if (saved.length === 0) {
+
+                alert(
+                    "You don't have any saved careers."
+                );
+
+                return;
+
+            }
+
+
+            const confirmDelete =
+                confirm(
+                    "Are you sure you want to remove all saved careers?"
+                );
+
+
+            if (!confirmDelete) {
+                return;
+            }
+
+
+            localStorage.removeItem(
+                "savedCareers"
+            );
+
+
+            updateSavedCareerCount();
+
+            showSaveMessage();
+
+        }
+
+
+        /* =====================================
+           LOGOUT
+        ===================================== */
+
+        function logoutUser() {
+
+            const confirmLogout =
+                confirm(
+                    "Are you sure you want to log out?"
+                );
+
+
+            if (!confirmLogout) {
+                return;
+            }
+
+
+            /*
+             * Demo/static website ke liye.
+             *
+             * Important career data ko delete
+             * nahi kar rahe.
+             */
+
+            localStorage.removeItem(
+                "isLoggedIn"
+            );
+
+
+            window.location.href =
+                "login.html";
+
+        }
+
+
+        /* =====================================
+           INITIAL LOAD
+        ===================================== */
+
+        loadSettings();
+
+    </script>
+
+</body>
+</html>

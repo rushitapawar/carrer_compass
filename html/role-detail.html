@@ -1,0 +1,1540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Career Details | Career Compass AI</title>
+
+    <style>
+        /* =========================
+           GLOBAL
+        ========================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "DM Sans", Arial, sans-serif;
+            background: #f7f5f2;
+            color: #342d3b;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            font-family: inherit;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================== */
+
+        .navbar {
+            height: 76px;
+            background: #ffffff;
+            border-bottom: 1px solid #ded8d4;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 7%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            color: #443846;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: #e998b3;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            color: #756d76;
+            transition: 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #443846;
+        }
+
+        .profile-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #f6c4d3;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 17px;
+        }
+
+        /* =========================
+           BREADCRUMB
+        ========================== */
+
+        .breadcrumb {
+            max-width: 1180px;
+            margin: 30px auto 0;
+            padding: 0 25px;
+
+            color: #756d76;
+            font-size: 13px;
+        }
+
+        .breadcrumb a {
+            color: #756d76;
+        }
+
+        .breadcrumb a:hover {
+            color: #443846;
+        }
+
+        .breadcrumb span {
+            margin: 0 8px;
+            color: #b3a9b0;
+        }
+
+        /* =========================
+           HERO
+        ========================== */
+
+        .hero {
+            max-width: 1180px;
+            margin: 20px auto 0;
+            padding: 45px;
+
+            background: #443846;
+            color: white;
+
+            border-radius: 28px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+
+            box-shadow: 0 15px 40px rgba(68, 56, 70, 0.12);
+        }
+
+        .hero-left {
+            display: flex;
+            align-items: flex-start;
+            gap: 25px;
+        }
+
+        .career-icon {
+            min-width: 82px;
+            width: 82px;
+            height: 82px;
+
+            border-radius: 22px;
+            background: #f6c4d3;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 38px;
+        }
+
+        .category {
+            display: inline-block;
+
+            background: rgba(255,255,255,0.12);
+            color: #f6c4d3;
+
+            padding: 6px 13px;
+            border-radius: 20px;
+
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+
+            margin-bottom: 10px;
+        }
+
+        .hero h1 {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 43px;
+            line-height: 1.15;
+            margin-bottom: 13px;
+        }
+
+        .hero-description {
+            color: #e7dfe4;
+            max-width: 650px;
+            font-size: 15px;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            min-width: 170px;
+        }
+
+        .btn {
+            border: none;
+            cursor: pointer;
+
+            padding: 13px 20px;
+            border-radius: 12px;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            transition: 0.2s;
+        }
+
+        .btn-primary {
+            background: #e998b3;
+            color: #342d3b;
+        }
+
+        .btn-primary:hover {
+            background: #f0aac1;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.08);
+        }
+
+        /* =========================
+           MAIN CONTENT
+        ========================== */
+
+        .main-container {
+            max-width: 1180px;
+            margin: 35px auto 70px;
+
+            padding: 0 25px;
+
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+        }
+
+        .content-card {
+            background: white;
+            border: 1px solid #ded8d4;
+            border-radius: 22px;
+            padding: 30px;
+            margin-bottom: 25px;
+        }
+
+        .content-card h2 {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 25px;
+            color: #443846;
+            margin-bottom: 16px;
+        }
+
+        .content-card h3 {
+            font-size: 17px;
+            color: #443846;
+            margin: 22px 0 9px;
+        }
+
+        .content-card p {
+            color: #756d76;
+            font-size: 14px;
+        }
+
+        /* =========================
+           RESPONSIBILITIES
+        ========================== */
+
+        .responsibilities {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .responsibilities li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 12px;
+
+            color: #5f5661;
+            font-size: 14px;
+        }
+
+        .responsibilities li::before {
+            content: "✓";
+
+            position: absolute;
+            left: 0;
+            top: 0;
+
+            width: 21px;
+            height: 21px;
+
+            border-radius: 50%;
+            background: #f6c4d3;
+            color: #443846;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* =========================
+           SKILLS
+        ========================== */
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+            margin-top: 15px;
+        }
+
+        .skill {
+            padding: 8px 13px;
+
+            background: #f7f5f2;
+            border: 1px solid #ded8d4;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+            color: #5f5661;
+        }
+
+        /* =========================
+           CAREER PATH
+        ========================== */
+
+        .timeline {
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: "";
+
+            position: absolute;
+            left: 12px;
+            top: 10px;
+            bottom: 10px;
+
+            width: 2px;
+            background: #eadfe4;
+        }
+
+        .timeline-item {
+            position: relative;
+
+            padding-left: 40px;
+            margin-bottom: 25px;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 5px;
+            top: 4px;
+
+            width: 16px;
+            height: 16px;
+
+            border-radius: 50%;
+            background: #e998b3;
+
+            border: 4px solid #fff;
+            box-shadow: 0 0 0 1px #eadfe4;
+        }
+
+        .timeline-item h4 {
+            font-size: 15px;
+            color: #443846;
+            margin-bottom: 3px;
+        }
+
+        .timeline-item p {
+            font-size: 13px;
+        }
+
+        /* =========================
+           SIDEBAR
+        ========================== */
+
+        .sidebar-card {
+            background: white;
+            border: 1px solid #ded8d4;
+            border-radius: 22px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .sidebar-card h3 {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 20px;
+            color: #443846;
+            margin-bottom: 20px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+
+            padding: 13px 0;
+
+            border-bottom: 1px solid #eee9e6;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: #8a8089;
+        }
+
+        .info-value {
+            font-size: 13px;
+            font-weight: 600;
+            color: #443846;
+            text-align: right;
+        }
+
+        /* =========================
+           WHY SUIT YOU
+        ========================== */
+
+        .suit-box {
+            background: #fff7f9;
+            border: 1px solid #f1dce3;
+            border-radius: 18px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+
+        .suit-box p {
+            color: #655b64;
+            font-size: 13px;
+        }
+
+        /* =========================
+           CTA
+        ========================== */
+
+        .bottom-cta {
+            max-width: 1180px;
+            margin: 0 auto 60px;
+            padding: 0 25px;
+        }
+
+        .cta-box {
+            background: #f6c4d3;
+            border-radius: 25px;
+            padding: 35px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px;
+        }
+
+        .cta-box h2 {
+            font-family: Georgia, "Times New Roman", serif;
+            color: #443846;
+            margin-bottom: 5px;
+        }
+
+        .cta-box p {
+            color: #5f5661;
+            font-size: 13px;
+        }
+
+        .cta-button {
+            background: #443846;
+            color: white;
+
+            border: none;
+            padding: 13px 22px;
+
+            border-radius: 12px;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+        /* =========================
+           FOOTER
+        ========================== */
+
+        footer {
+            background: #322936;
+            color: #d9d0d6;
+
+            padding: 30px 7%;
+
+            text-align: center;
+            font-size: 12px;
+        }
+
+        footer span {
+            color: #e998b3;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================== */
+
+        @media (max-width: 850px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                margin-left: 20px;
+                margin-right: 20px;
+                padding: 30px;
+
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .hero-actions {
+                width: 100%;
+                flex-direction: row;
+            }
+
+            .hero-actions .btn {
+                flex: 1;
+            }
+
+            .hero h1 {
+                font-size: 34px;
+            }
+
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+
+            .bottom-cta {
+                margin-left: 0;
+                margin-right: 0;
+            }
+
+            .cta-box {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 550px) {
+
+            .navbar {
+                padding: 0 20px;
+            }
+
+            .breadcrumb {
+                padding: 0 20px;
+            }
+
+            .hero {
+                margin-left: 15px;
+                margin-right: 15px;
+                padding: 25px;
+                border-radius: 20px;
+            }
+
+            .hero-left {
+                flex-direction: column;
+            }
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+            }
+
+            .main-container {
+                padding: 0 15px;
+            }
+
+            .content-card,
+            .sidebar-card {
+                padding: 22px;
+            }
+
+            .bottom-cta {
+                padding: 0 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <nav class="navbar">
+
+        <a href="index.html" class="logo">
+            Career Compass <span>AI ✦</span>
+        </a>
+
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="roles.html">Career Roles</a>
+            <a href="favourites.html">Saved Careers</a>
+            <a href="about.html">About</a>
+
+            <a href="profile.html" class="profile-btn">
+                ✦
+            </a>
+        </div>
+
+    </nav>
+
+
+    <!-- =========================
+         BREADCRUMB
+    ========================== -->
+
+    <div class="breadcrumb">
+
+        <a href="dashboard.html">Dashboard</a>
+
+        <span>›</span>
+
+        <a href="roles.html">Career Roles</a>
+
+        <span>›</span>
+
+        <span id="breadcrumbCareer">
+            Career Details
+        </span>
+
+    </div>
+
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <section class="hero">
+
+        <div class="hero-left">
+
+            <div class="career-icon" id="careerIcon">
+                💼
+            </div>
+
+            <div>
+
+                <span class="category" id="careerCategory">
+                    Career
+                </span>
+
+                <h1 id="careerTitle">
+                    Career Details
+                </h1>
+
+                <p class="hero-description" id="careerDescription">
+                    Explore this career to understand the skills,
+                    education, responsibilities and opportunities
+                    associated with the role.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="hero-actions">
+
+            <button
+                class="btn btn-primary"
+                id="saveBtn"
+                onclick="toggleSave()">
+
+                ♡ Save Career
+
+            </button>
+
+            <button
+                class="btn btn-secondary"
+                onclick="goToCompare()">
+
+                ⚖ Compare Career
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         MAIN
+    ========================== -->
+
+    <main class="main-container">
+
+
+        <!-- LEFT CONTENT -->
+
+        <div>
+
+
+            <!-- ABOUT ROLE -->
+
+            <section class="content-card">
+
+                <h2>About This Career</h2>
+
+                <p id="aboutCareer">
+                    This section provides an overview of the career,
+                    including what professionals in this field generally
+                    work on and the type of problems they may solve.
+                </p>
+
+                <h3>What You May Do</h3>
+
+                <ul class="responsibilities" id="responsibilities">
+
+                    <li>Work on projects related to the field</li>
+                    <li>Apply relevant knowledge and skills</li>
+                    <li>Collaborate with other professionals</li>
+                    <li>Analyse problems and develop solutions</li>
+
+                </ul>
+
+            </section>
+
+
+            <!-- SKILLS -->
+
+            <section class="content-card">
+
+                <h2>Key Skills</h2>
+
+                <p>
+                    The following skills can be useful when building
+                    a career in this field.
+                </p>
+
+                <div class="skills" id="skillsContainer">
+
+                    <span class="skill">Communication</span>
+                    <span class="skill">Problem Solving</span>
+                    <span class="skill">Critical Thinking</span>
+                    <span class="skill">Teamwork</span>
+
+                </div>
+
+            </section>
+
+
+            <!-- EDUCATION -->
+
+            <section class="content-card">
+
+                <h2>Education & Qualification</h2>
+
+                <p id="educationText">
+                    Educational requirements can vary depending on the
+                    specific role, organisation and career path.
+                    Explore relevant courses and qualifications before
+                    making your decision.
+                </p>
+
+                <h3>Useful Areas to Study</h3>
+
+                <ul class="responsibilities" id="educationList">
+
+                    <li>Relevant undergraduate or professional courses</li>
+                    <li>Practical projects and experience</li>
+                    <li>Industry-relevant certifications where applicable</li>
+
+                </ul>
+
+            </section>
+
+
+            <!-- CAREER PATH -->
+
+            <section class="content-card">
+
+                <h2>Possible Career Path</h2>
+
+                <p>
+                    Career progression can differ based on experience,
+                    specialisation and individual goals.
+                </p>
+
+                <div class="timeline" id="careerTimeline">
+
+                    <div class="timeline-item">
+
+                        <div class="timeline-dot"></div>
+
+                        <h4>Education & Learning</h4>
+
+                        <p>
+                            Build foundational knowledge and relevant skills.
+                        </p>
+
+                    </div>
+
+
+                    <div class="timeline-item">
+
+                        <div class="timeline-dot"></div>
+
+                        <h4>Entry-Level Opportunities</h4>
+
+                        <p>
+                            Gain practical experience through internships,
+                            projects or entry-level roles.
+                        </p>
+
+                    </div>
+
+
+                    <div class="timeline-item">
+
+                        <div class="timeline-dot"></div>
+
+                        <h4>Specialisation</h4>
+
+                        <p>
+                            Develop expertise in a specific area of the field.
+                        </p>
+
+                    </div>
+
+
+                    <div class="timeline-item">
+
+                        <div class="timeline-dot"></div>
+
+                        <h4>Advanced Roles</h4>
+
+                        <p>
+                            Move towards senior, specialist or leadership
+                            opportunities.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- WHY THIS CAREER -->
+
+            <section class="content-card">
+
+                <h2>Why This Career May Suit You</h2>
+
+                <div class="suit-box">
+
+                    <p id="suitText">
+                        This career may be worth exploring if you enjoy
+                        learning, solving problems and developing skills
+                        related to this field. Your interests and strengths
+                        should always be considered when making a career
+                        decision.
+                    </p>
+
+                </div>
+
+            </section>
+
+        </div>
+
+
+        <!-- RIGHT SIDEBAR -->
+
+        <aside>
+
+
+            <!-- QUICK INFO -->
+
+            <div class="sidebar-card">
+
+                <h3>Career at a Glance</h3>
+
+
+                <div class="info-row">
+
+                    <span class="info-label">
+                        Career Area
+                    </span>
+
+                    <span
+                        class="info-value"
+                        id="infoCategory">
+                        —
+                    </span>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span class="info-label">
+                        Education
+                    </span>
+
+                    <span
+                        class="info-value"
+                        id="infoEducation">
+                        Explore
+                    </span>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span class="info-label">
+                        Work Style
+                    </span>
+
+                    <span
+                        class="info-value"
+                        id="infoWorkStyle">
+                        Varies
+                    </span>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span class="info-label">
+                        Work Areas
+                    </span>
+
+                    <span
+                        class="info-value"
+                        id="infoWorkAreas">
+                        Multiple
+                    </span>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span class="info-label">
+                        Experience
+                    </span>
+
+                    <span
+                        class="info-value"
+                        id="infoExperience">
+                        Varies
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- WORK AREAS -->
+
+            <div class="sidebar-card">
+
+                <h3>Where You Can Work</h3>
+
+                <div
+                    class="skills"
+                    id="workAreas">
+
+                    <span class="skill">
+                        Companies
+                    </span>
+
+                    <span class="skill">
+                        Organisations
+                    </span>
+
+                    <span class="skill">
+                        Startups
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- ACTIONS -->
+
+            <div class="sidebar-card">
+
+                <h3>Explore More</h3>
+
+                <button
+                    class="btn btn-primary"
+                    style="width:100%; margin-bottom:10px;"
+                    onclick="window.location.href='roles.html'">
+
+                    ← Browse Career Roles
+
+                </button>
+
+                <button
+                    class="btn"
+                    style="
+                        width:100%;
+                        background:#f7f5f2;
+                        color:#443846;
+                    "
+                    onclick="window.location.href='questionnaire.html'">
+
+                    Retake Assessment
+
+                </button>
+
+            </div>
+
+        </aside>
+
+    </main>
+
+
+    <!-- =========================
+         BOTTOM CTA
+    ========================== -->
+
+    <section class="bottom-cta">
+
+        <div class="cta-box">
+
+            <div>
+
+                <h2>Still exploring your options?</h2>
+
+                <p>
+                    Discover more career paths that may match
+                    your interests and strengths.
+                </p>
+
+            </div>
+
+            <button
+                class="cta-button"
+                onclick="window.location.href='roles.html'">
+
+                Explore Career Roles →
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+        <p>
+            © 2026 Career Compass <span>AI ✦</span>
+            · Explore. Discover. Plan.
+        </p>
+
+    </footer>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+        /*
+         * ------------------------------------------
+         * CAREER DATA
+         * ------------------------------------------
+         *
+         * Abhi demo data hai.
+         *
+         * Future mein jab tumhare friend ka database
+         * connect hoga, isi structure ko database/API
+         * data se replace kiya ja sakta hai.
+         *
+         */
+
+        const demoCareers = {
+
+            "software-engineer": {
+
+                id: "software-engineer",
+
+                title: "Software Engineer",
+
+                icon: "💻",
+
+                category: "Technology",
+
+                description:
+                    "A career focused on designing, developing, testing and maintaining software applications and systems.",
+
+                about:
+                    "Software engineers use programming, problem-solving and logical thinking to build software products and digital solutions. They may work on websites, applications, platforms or other technology systems.",
+
+                responsibilities: [
+                    "Design and develop software solutions",
+                    "Write and maintain computer programs",
+                    "Test applications and identify issues",
+                    "Work with other technical and non-technical teams",
+                    "Improve and maintain existing software"
+                ],
+
+                skills: [
+                    "Programming",
+                    "Problem Solving",
+                    "Logical Thinking",
+                    "Communication",
+                    "Teamwork",
+                    "Debugging"
+                ],
+
+                education:
+                    "A degree or qualification in computer science, information technology, software engineering or a related field can be useful.",
+
+                educationList: [
+                    "Computer Science or related degree",
+                    "Programming and software development practice",
+                    "Projects and practical experience",
+                    "Relevant technical certifications where applicable"
+                ],
+
+                workStyle: "Technical / Collaborative",
+
+                workAreas: [
+                    "Technology Companies",
+                    "Startups",
+                    "IT Services",
+                    "Product Companies",
+                    "Freelance"
+                ],
+
+                experience: "Varies by role"
+
+            }
+
+        };
+
+
+        /*
+         * ------------------------------------------
+         * GET CAREER ID FROM URL
+         * ------------------------------------------
+         *
+         * Example:
+         *
+         * role-detail.html?id=software-engineer
+         *
+         */
+
+        const params = new URLSearchParams(window.location.search);
+
+        const careerId =
+            params.get("id") ||
+            params.get("career");
+
+
+        /*
+         * ------------------------------------------
+         * LOAD CAREER
+         * ------------------------------------------
+         */
+
+        let career = demoCareers[careerId];
+
+
+        /*
+         * If no matching career is found,
+         * use a generic fallback.
+         */
+
+        if (!career) {
+
+            career = {
+
+                id: careerId || "career",
+
+                title: "Career Details",
+
+                icon: "💼",
+
+                category: "Career",
+
+                description:
+                    "Explore this career and learn more about its skills, education, responsibilities and possible opportunities.",
+
+                about:
+                    "Career information will appear here once the career database is connected to Career Compass AI.",
+
+                responsibilities: [
+                    "Explore the responsibilities associated with this career",
+                    "Develop relevant skills",
+                    "Gain practical knowledge and experience",
+                    "Explore education and training options"
+                ],
+
+                skills: [
+                    "Communication",
+                    "Problem Solving",
+                    "Critical Thinking",
+                    "Teamwork"
+                ],
+
+                education:
+                    "Education requirements will depend on the specific career and role.",
+
+                educationList: [
+                    "Relevant education",
+                    "Practical learning",
+                    "Projects and experience"
+                ],
+
+                workStyle: "Varies",
+
+                workAreas: [
+                    "Organisations",
+                    "Companies",
+                    "Other Workplaces"
+                ],
+
+                experience: "Varies"
+
+            };
+
+        }
+
+
+        /*
+         * ------------------------------------------
+         * DISPLAY CAREER INFORMATION
+         * ------------------------------------------
+         */
+
+        document.title =
+            career.title + " | Career Compass AI";
+
+
+        document.getElementById("careerTitle").textContent =
+            career.title;
+
+        document.getElementById("careerIcon").textContent =
+            career.icon;
+
+        document.getElementById("careerCategory").textContent =
+            career.category;
+
+        document.getElementById("careerDescription").textContent =
+            career.description;
+
+        document.getElementById("breadcrumbCareer").textContent =
+            career.title;
+
+        document.getElementById("aboutCareer").textContent =
+            career.about;
+
+        document.getElementById("infoCategory").textContent =
+            career.category;
+
+        document.getElementById("infoEducation").textContent =
+            career.education
+                ? "Available"
+                : "Explore";
+
+        document.getElementById("infoWorkStyle").textContent =
+            career.workStyle;
+
+        document.getElementById("infoWorkAreas").textContent =
+            career.workAreas.length + " Areas";
+
+        document.getElementById("infoExperience").textContent =
+            career.experience;
+
+
+        /*
+         * ------------------------------------------
+         * RESPONSIBILITIES
+         * ------------------------------------------
+         */
+
+        const responsibilities =
+            document.getElementById("responsibilities");
+
+        responsibilities.innerHTML = "";
+
+        career.responsibilities.forEach(item => {
+
+            const li =
+                document.createElement("li");
+
+            li.textContent = item;
+
+            responsibilities.appendChild(li);
+
+        });
+
+
+        /*
+         * ------------------------------------------
+         * SKILLS
+         * ------------------------------------------
+         */
+
+        const skillsContainer =
+            document.getElementById("skillsContainer");
+
+        skillsContainer.innerHTML = "";
+
+        career.skills.forEach(skill => {
+
+            const span =
+                document.createElement("span");
+
+            span.className = "skill";
+
+            span.textContent = skill;
+
+            skillsContainer.appendChild(span);
+
+        });
+
+
+        /*
+         * ------------------------------------------
+         * EDUCATION
+         * ------------------------------------------
+         */
+
+        document.getElementById("educationText")
+            .textContent = career.education;
+
+
+        const educationList =
+            document.getElementById("educationList");
+
+        educationList.innerHTML = "";
+
+        career.educationList.forEach(item => {
+
+            const li =
+                document.createElement("li");
+
+            li.textContent = item;
+
+            educationList.appendChild(li);
+
+        });
+
+
+        /*
+         * ------------------------------------------
+         * WORK AREAS
+         * ------------------------------------------
+         */
+
+        const workAreas =
+            document.getElementById("workAreas");
+
+        workAreas.innerHTML = "";
+
+        career.workAreas.forEach(area => {
+
+            const span =
+                document.createElement("span");
+
+            span.className = "skill";
+
+            span.textContent = area;
+
+            workAreas.appendChild(span);
+
+        });
+
+
+        /*
+         * ------------------------------------------
+         * SAVE CAREER
+         * ------------------------------------------
+         *
+         * Same localStorage key used by
+         * favourites.html:
+         *
+         * savedCareers
+         *
+         */
+
+        function getSavedCareers() {
+
+            try {
+
+                return JSON.parse(
+                    localStorage.getItem("savedCareers")
+                ) || [];
+
+            } catch (error) {
+
+                return [];
+
+            }
+
+        }
+
+
+        function isCareerSaved() {
+
+            const saved =
+                getSavedCareers();
+
+            return saved.some(item =>
+                item.id === career.id
+            );
+
+        }
+
+
+        function updateSaveButton() {
+
+            const button =
+                document.getElementById("saveBtn");
+
+            if (isCareerSaved()) {
+
+                button.innerHTML =
+                    "♥ Saved Career";
+
+            } else {
+
+                button.innerHTML =
+                    "♡ Save Career";
+
+            }
+
+        }
+
+
+        function toggleSave() {
+
+            let saved =
+                getSavedCareers();
+
+            const index =
+                saved.findIndex(item =>
+                    item.id === career.id
+                );
+
+
+            if (index === -1) {
+
+                saved.push({
+
+                    id: career.id,
+
+                    title: career.title,
+
+                    name: career.title,
+
+                    icon: career.icon,
+
+                    category: career.category,
+
+                    description: career.description
+
+                });
+
+            } else {
+
+                saved.splice(index, 1);
+
+            }
+
+
+            localStorage.setItem(
+                "savedCareers",
+                JSON.stringify(saved)
+            );
+
+
+            updateSaveButton();
+
+        }
+
+
+        /*
+         * ------------------------------------------
+         * COMPARE
+         * ------------------------------------------
+         */
+
+        function goToCompare() {
+
+            window.location.href =
+                "compare.html?career=" +
+                encodeURIComponent(career.id);
+
+        }
+
+
+        /*
+         * ------------------------------------------
+         * INITIAL BUTTON STATE
+         * ------------------------------------------
+         */
+
+        updateSaveButton();
+
+    </script>
+
+</body>
+</html>
