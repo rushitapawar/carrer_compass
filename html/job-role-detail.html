@@ -497,9 +497,19 @@
         /* =========================================
            GET SELECTED CAREER
         ========================================= */
-
         const selectedCareer =
-            localStorage.getItem("selectedCareer");
+             localStorage.getItem("selectedCareer");
+
+        const selectedCareerMatch =
+            localStorage.getItem("selectedCareerMatch");
+
+        const selectedCareerScores =
+             JSON.parse(
+                 localStorage.getItem("selectedCareerScores")
+             ) || {};
+
+        const selectedCareerCode =
+             localStorage.getItem("selectedCareerCode");
 
 
         /* =========================================
@@ -1047,12 +1057,43 @@
                 '</h1>' +
 
                 '<p>' +
-                career.overview +
+                 career.overview +
                 '</p>' +
 
+                '<div class="match-score">' +
+                    '<strong>' +
+                    (selectedCareerMatch || "0") +
+                    '% Match' +
+                    '</strong>' +
                 '</div>' +
 
-                '</div>' +
+                '<div class="riasec-match">' +
+
+            '<h3>Your Career Interest Match</h3>' +
+
+    '<div class="riasec-grid">' +
+
+        '<div>R — Realistic: ' +
+            selectedCareerScores.R + '%</div>' +
+
+        '<div>I — Investigative: ' +
+            selectedCareerScores.I + '%</div>' +
+
+        '<div>A — Artistic: ' +
+            selectedCareerScores.A + '%</div>' +
+
+        '<div>S — Social: ' +
+            selectedCareerScores.S + '%</div>' +
+
+        '<div>E — Enterprising: ' +
+            selectedCareerScores.E + '%</div>' +
+
+        '<div>C — Conventional: ' +
+            selectedCareerScores.C + '%</div>' +
+
+    '</div>' +
+
+'</div>' +
 
 
                 '<div class="hero-actions">' +

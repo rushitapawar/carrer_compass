@@ -4,13 +4,16 @@ import os
 from database import (
     create_users_table,
     create_assessments_table,
-    create_profiles_table
+    create_profiles_table,
+    create_saved_careers_table
 )
 
 from auth import auth_bp
 from questionnaire import questionnaire_bp
 from dashboard import dashboard
 from analysis import analysis_bp
+from careers import careers_bp
+from favourites import favourites_bp
 
 
 # ============================================================
@@ -46,7 +49,7 @@ IMAGES_DIR = os.path.join(BASE_DIR, "images")
 create_users_table()
 create_assessments_table()
 create_profiles_table()
-
+create_saved_careers_table()
 
 # ============================================================
 # REGISTER BLUEPRINTS
@@ -56,6 +59,10 @@ app.register_blueprint(auth_bp)
 app.register_blueprint(questionnaire_bp)
 app.register_blueprint(dashboard)
 app.register_blueprint(analysis_bp)
+app.register_blueprint(careers_bp)
+app.register_blueprint(favourites_bp)
+
+
 
 # ============================================================
 # HOMEPAGE

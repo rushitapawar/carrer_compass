@@ -3776,3 +3776,44 @@ footer p {
     object-fit: contain !important;
     display: block !important;
 }
+
+.match-score {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    background: #e8f5f2;
+    color: #166b5f;
+    font-size: 15px;
+}
+
+.match-score strong {
+    font-weight: 700;
+}
+
+.riasec-match {
+    margin-top: 18px;
+    padding: 18px;
+    border: 1px solid #ebe5e3;
+    border-radius: 14px;
+    background: #faf9f7;
+}
+
+.riasec-match h3 {
+    margin: 0 0 14px;
+    font-size: 18px;
+}
+
+.riasec-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.riasec-grid div {
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: white;
+    border: 1px solid #ebe5e3;
+    font-size: 14px;
+}
