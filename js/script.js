@@ -11,15 +11,24 @@ const loginForm = document.getElementById("loginForm");
 
 if (loginForm) {
 
-    loginForm.addEventListener("submit", function (event) {
+    loginForm.addEventListener("submit", async function (event) {
 
         event.preventDefault();
 
-        const emailInput = document.getElementById("loginEmail");
-        const passwordInput = document.getElementById("loginPassword");
+        const emailInput =
+            document.getElementById("loginEmail");
 
-        const email = emailInput ? emailInput.value.trim() : "";
-        const password = passwordInput ? passwordInput.value.trim() : "";
+        const passwordInput =
+            document.getElementById("loginPassword");
+
+        const email =
+            emailInput ? emailInput.value.trim() : "";
+
+        const password =
+            passwordInput ? passwordInput.value : "";
+
+
+        // Check empty fields
 
         if (email === "" || password === "") {
 
@@ -28,37 +37,64 @@ if (loginForm) {
             return;
         }
 
-        alert("Login successful!");
 
-        // Login ke baad profile page
-        window.location.href = "profile.html";
+        try {
+
+            const response = await fetch("/api/login", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+
+                    email: email,
+
+                    password: password
+
+                })
+
+            });
+
+
+            const result = await response.json();
+
+
+            if (result.success) {
+
+                // Save logged-in user's name
+                localStorage.setItem(
+                    "loggedInUser",
+                    result.name
+                );
+
+                alert(result.message);
+
+                // Go to profile after login
+                window.location.href = "profile.html";
+
+            } else {
+
+                alert(result.message);
+
+            }
+
+
+        } catch (error) {
+
+            console.error("Login error:", error);
+
+            alert(
+                "Unable to connect to the server. Please make sure Flask is running."
+            );
+
+        }
 
     });
 
 }
-
-
-// ============================================================
-// GOOGLE LOGIN BUTTON
-// ============================================================
-
-const googleButton = document.getElementById("googleLogin");
-
-if (googleButton) {
-
-    googleButton.addEventListener("click", function () {
-
-        // Abhi frontend demo hai.
-        // Backend / Google OAuth baad mein connect karenge.
-
-        alert("Google login will be connected later.");
-
-        window.location.href = "profile.html";
-
-    });
-
-}
-
 
 // ============================================================
 // GET STARTED BUTTON
@@ -77,6 +113,7 @@ if (getStartedButton) {
 }
 
 
+
 // ============================================================
 // SIGNUP FORM
 // ============================================================
@@ -85,7 +122,7 @@ const signupForm = document.getElementById("signupForm");
 
 if (signupForm) {
 
-    signupForm.addEventListener("submit", function (event) {
+    signupForm.addEventListener("submit", async function (event) {
 
         event.preventDefault();
 
@@ -98,15 +135,14 @@ if (signupForm) {
         const name = nameInput ? nameInput.value.trim() : "";
         const email = emailInput ? emailInput.value.trim() : "";
         const password =
-            passwordInput ? passwordInput.value.trim() : "";
+            passwordInput ? passwordInput.value : "";
         const confirmPassword =
             confirmPasswordInput
-                ? confirmPasswordInput.value.trim()
+                ? confirmPasswordInput.value
                 : "";
 
 
         // Check empty fields
-
         if (
             name === "" ||
             email === "" ||
@@ -121,7 +157,6 @@ if (signupForm) {
 
 
         // Check password length
-
         if (password.length < 6) {
 
             alert("Password must contain at least 6 characters.");
@@ -131,7 +166,6 @@ if (signupForm) {
 
 
         // Check passwords
-
         if (password !== confirmPassword) {
 
             alert("Passwords do not match!");
@@ -140,15 +174,81 @@ if (signupForm) {
         }
 
 
-        alert("Account created successfully!");
+        // Split full name into first name and last name
+        const nameParts = name.split(/\s+/);
 
-        // Signup ke baad PROFILE page
-        window.location.href = "profile.html";
+        const firstName = nameParts[0];
+
+        const lastName =
+            nameParts.length > 1
+                ? nameParts.slice(1).join(" ")
+                : "";
+
+
+        // Last name is required by the backend
+        if (lastName === "") {
+
+            alert("Please enter your first name and last name.");
+
+            return;
+        }
+
+
+        try {
+
+            const response = await fetch("/api/signup", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+
+                    firstName: firstName,
+
+                    lastName: lastName,
+
+                    email: email,
+
+                    password: password
+
+                })
+
+            });
+
+
+            const result = await response.json();
+
+
+            if (result.success) {
+
+                alert(result.message);
+
+                // After successful signup
+                window.location.href = "login.html";
+
+            } else {
+
+                alert(result.message);
+
+            }
+
+
+        } catch (error) {
+
+            console.error("Signup error:", error);
+
+            alert(
+                "Unable to connect to the server. Please make sure Flask is running."
+            );
+
+        }
 
     });
 
 }
-
 
 // ============================================================
 // PROFILE FORM
@@ -158,10 +258,14 @@ const profileForm = document.getElementById("profileForm");
 
 if (profileForm) {
 
-    profileForm.addEventListener("submit", function (event) {
+    profileForm.addEventListener("submit", async function (event) {
 
         event.preventDefault();
 
+
+        // ====================================================
+        // GET FORM VALUES
+        // ====================================================
 
         const fullNameInput =
             document.getElementById("fullName");
@@ -189,7 +293,9 @@ if (profileForm) {
                 : "";
 
 
-        // Check basic information
+        // ====================================================
+        // CHECK BASIC INFORMATION
+        // ====================================================
 
         if (
             fullName === "" ||
@@ -197,13 +303,17 @@ if (profileForm) {
             education === ""
         ) {
 
-            alert("Please complete your basic profile information.");
+            alert(
+                "Please complete your basic profile information."
+            );
 
             return;
         }
 
 
-        // Check stream
+        // ====================================================
+        // GET EDUCATION STREAM
+        // ====================================================
 
         const selectedStream =
             document.querySelector(
@@ -213,13 +323,17 @@ if (profileForm) {
 
         if (!selectedStream) {
 
-            alert("Please select your education stream.");
+            alert(
+                "Please select your education stream."
+            );
 
             return;
         }
 
 
-        // Check career goal
+        // ====================================================
+        // GET CAREER GOAL
+        // ====================================================
 
         const selectedGoal =
             document.querySelector(
@@ -229,13 +343,17 @@ if (profileForm) {
 
         if (!selectedGoal) {
 
-            alert("Please select your career goal.");
+            alert(
+                "Please select your career goal."
+            );
 
             return;
         }
 
 
-        // Check interests
+        // ====================================================
+        // GET INTERESTS
+        // ====================================================
 
         const selectedInterests =
             document.querySelectorAll(
@@ -245,18 +363,28 @@ if (profileForm) {
 
         if (selectedInterests.length === 0) {
 
-            alert("Please select at least one interest.");
+            alert(
+                "Please select at least one interest."
+            );
 
             return;
         }
 
 
-        // Save profile information temporarily
-        // Backend baad mein connect karenge.
+        const interests =
+            Array.from(selectedInterests)
+                .map(function (item) {
+                    return item.value;
+                });
+
+
+        // ====================================================
+        // CREATE PROFILE DATA
+        // ====================================================
 
         const profileData = {
 
-            name: fullName,
+            fullName: fullName,
 
             ageGroup: ageGroup,
 
@@ -264,41 +392,90 @@ if (profileForm) {
 
             stream: selectedStream.value,
 
-            goal: selectedGoal.value,
+            interests: interests,
 
-            interests: Array.from(selectedInterests)
-                .map(function (item) {
-                    return item.value;
-                })
+            careerGoal: selectedGoal.value
 
         };
 
 
-        // Browser mein temporary save
-
-        localStorage.setItem(
-            "careerCompassProfile",
-            JSON.stringify(profileData)
-        );
-
-
-        alert(
-            "Profile saved! Let's discover your career."
-        );
-
-
         // ====================================================
-        // IMPORTANT:
-        // Existing questionnaire page par jaana hai.
-        // career-quiz.html NAHI.
+        // SEND PROFILE TO FLASK
         // ====================================================
 
-        window.location.href = "questionnaire.html";
+        try {
+
+            const response = await fetch(
+                "/api/profile",
+                {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify(profileData)
+
+                }
+            );
+
+
+            const result = await response.json();
+
+
+            // =================================================
+            // SUCCESS
+            // =================================================
+
+            if (result.success) {
+
+                // Keep a temporary copy for the frontend
+                localStorage.setItem(
+                    "careerCompassProfile",
+                    JSON.stringify(profileData)
+                );
+
+
+                alert(
+                    "Profile saved! Let's discover your career."
+                );
+
+
+                // Continue to questionnaire
+                window.location.href =
+                    "questionnaire.html";
+
+            }
+
+
+            // =================================================
+            // ERROR
+            // =================================================
+
+            else {
+
+                alert(result.message);
+
+            }
+
+
+        } catch (error) {
+
+            console.error(
+                "Profile error:",
+                error
+            );
+
+            alert(
+                "Unable to connect to the server. Please make sure Flask is running."
+            );
+
+        }
 
     });
 
 }
-
 
 // ============================================================
 // BACK TO HOME BUTTONS
