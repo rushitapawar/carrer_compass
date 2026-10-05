@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Career Guidance</title>
+</head>
+
+<body>
+
+    <h1>Career Guidance</h1>
+
+    <form method="get" action="/careers">
+        <input type="text" name="q" placeholder="Search title, interest, code..." value="{{ q or '' }}">
+        <button type="submit">Search</button>
+    </form>
+
+    {% for row in data %}
+
+    <div class="career-card">
+
+        <h2>{{ row["title"] }}</h2>
+
+        <p>
+            <strong>O*NET-SOC Code:</strong>
+            {{ row["onet_soc_code"] }}
+        </p>
+
+        <p>
+            <strong>Interest / Element:</strong>
+            {{ row["element_name"] }}
+        </p>
+
+        <p>
+            <strong>Scale:</strong>
+            {{ row["scale_name"] }}
+        </p>
+
+        <p>
+            <strong>Data Value:</strong>
+            {{ row["data_value"] }}
+        </p>
+
+    </div>
+
+    <hr>
+
+    {% else %}
+    <p>No careers found.</p>
+    {% endfor %}
+
+</body>
+</html>

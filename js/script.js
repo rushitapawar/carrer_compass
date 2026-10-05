@@ -554,3 +554,78 @@ if (currentYear) {
 // ============================================================
 // END OF SCRIPT
 // ============================================================
+const chatbotButton = document.getElementById("chatbot-button");
+const chatbotBox = document.getElementById("chatbot-box");
+const closeChat = document.getElementById("close-chat");
+
+const userInput = document.getElementById("user-input");
+const sendButton = document.getElementById("send-button");
+const chatMessages = document.getElementById("chat-messages");
+
+chatbotButton.addEventListener("click", function () {
+    chatbotBox.style.display = "flex";
+    userInput.focus();
+});
+
+closeChat.addEventListener("click", function () {
+    chatbotBox.style.display = "none";
+});
+
+function sendMessage() {
+
+    const message = userInput.value.trim();
+
+    if (message === "") {
+        return;
+    }
+
+    // Show user's message
+    const userMessage = document.createElement("div");
+    userMessage.className = "user-message";
+    userMessage.textContent = message;
+
+    chatMessages.appendChild(userMessage);
+
+    userInput.value = "";
+
+    // Send message to Python
+    fetch("/chat", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            message: message
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+
+        const botMessage = document.createElement("div");
+        botMessage.className = "bot-message";
+        botMessage.textContent = data.response;
+
+        chatMessages.appendChild(botMessage);
+
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    })
+    .catch(error => {
+        console.error(error);
+
+        const botMessage = document.createElement("div");
+        botMessage.className = "bot-message";
+        botMessage.textContent = "Sorry, something went wrong.";
+
+        chatMessages.appendChild(botMessage);
+    });
+}
+
+sendButton.addEventListener("click", sendMessage);
+
+userInput.addEventListener("keypress", function (event) {
+
+    if (event.key === "Enter") {
+        sendMessage();
+    }
+
+});

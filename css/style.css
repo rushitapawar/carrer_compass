@@ -774,4 +774,156 @@
         padding: 22px 16px;
     }
 
+<<<<<<< HEAD
+.navbar .brand img {
+    width: 175px !important;
+    height: 55px !important;
+    max-width: 175px !important;
+    max-height: 55px !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    object-fit: contain !important;
+    display: block !important;
+}
+/* Chatbot Button */
+
+#chatbot-button {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+
+    width: 60px;
+    height: 60px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #8e7cc3;
+    color: white;
+
+    font-size: 25px;
+    cursor: pointer;
+
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Chatbot Box */
+
+#chatbot-box {
+    position: fixed;
+
+    right: 25px;
+    bottom: 95px;
+
+    width: 350px;
+    height: 450px;
+
+    background: white;
+
+    border-radius: 15px;
+
+    box-shadow: 0 5px 25px rgba(0,0,0,0.25);
+
+    display: none;
+    flex-direction: column;
+
+    overflow: hidden;
+
+    z-index: 9999;
+}
+
+/* Header */
+
+#chatbot-header {
+    background: #8e7cc3;
+    color: white;
+
+    padding: 18px;
+
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#close-chat {
+    float: right;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+/* Messages */
+
+#chat-messages {
+    flex: 1;
+
+    padding: 15px;
+
+    overflow-y: auto;
+
+    background: #f7f5fc;
+}
+
+.bot-message,
+.user-message {
+    padding: 10px 13px;
+
+    margin-bottom: 10px;
+
+    max-width: 80%;
+
+    border-radius: 12px;
+
+    font-size: 14px;
+}
+
+.bot-message {
+    background: #e5def5;
+    margin-right: auto;
+}
+
+.user-message {
+    background: #8e7cc3;
+    color: white;
+    margin-left: auto;
+}
+
+/* Input */
+
+#chat-input-area {
+    display: flex;
+
+    padding: 10px;
+
+    border-top: 1px solid #ddd;
+
+    background: white;
+}
+
+#user-input {
+    flex: 1;
+
+    padding: 10px;
+
+    border: 1px solid #ccc;
+
+    border-radius: 8px;
+
+    outline: none;
+}
+
+#send-button {
+    margin-left: 8px;
+
+    padding: 10px 15px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #8e7cc3;
+
+    color: white;
+
+    cursor: pointer;
+=======
+>>>>>>> 2750a81c962bcfbcdc4518cc23d07ade60751473
 }
