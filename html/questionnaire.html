@@ -1253,37 +1253,73 @@
 
 
 
+   /* ========================================
+   NEXT QUESTION
+    ======================================== */
+
+  nextBtn.addEventListener(
+    "click",
+     async function() {
+
+        if (
+            answers[currentQuestion] === null
+        ) {
+
+            alert(
+                "Please select an answer first."
+            );
+
+            return;
+        }
+
+
         /* ========================================
-           NEXT QUESTION
+           LAST QUESTION
         ======================================== */
 
-        nextBtn.addEventListener(
-            "click",
-            function() {
+        if (
+            currentQuestion ===
+            questions.length - 1
+        ) {
+
+            try {
+
+                /* ====================================
+                   SAVE ASSESSMENT TO FLASK
+                ==================================== */
+
+                const response = await fetch(
+                    "/api/save-assessment",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+
+                            guideName: selectedGuide,
+
+                            answers: answers
+
+                        })
+                    }
+                );
 
 
-                if (
-                    answers[currentQuestion] === null
-                ) {
-
-                    alert(
-                        "Please select an answer first."
-                    );
-
-                    return;
-
-                }
+                const result =
+                    await response.json();
 
 
-                /* Last question */
+                /* ====================================
+                   SUCCESS
+                ==================================== */
 
-                if (
-                    currentQuestion ===
-                    questions.length - 1
-                ) {
+                if (result.success) {
 
-
-                    /* Save answers */
+                    /* Keep answers temporarily
+                       for the results/analyzing page */
 
                     localStorage.setItem(
                         "careerAnswers",
@@ -1291,25 +1327,61 @@
                     );
 
 
-                    /* Go to analysis */
+                    alert(
+                        "Assessment saved successfully!"
+                    );
+
+
+                    /* Go to analyzing page */
 
                     window.location.href =
                         "./analyzing.html";
 
+                }
 
-                    return;
+
+                /* ====================================
+                   ERROR
+                ==================================== */
+
+                else {
+
+                    alert(
+                        result.message
+                    );
 
                 }
 
 
-                currentQuestion++;
+            } catch (error) {
+
+                console.error(
+                    "Assessment error:",
+                    error
+                );
 
 
-                loadQuestion();
+                alert(
+                    "Unable to save assessment. Please make sure Flask is running."
+                );
 
             }
-        );
 
+
+            return;
+        }
+
+
+        /* ========================================
+           GO TO NEXT QUESTION
+        ======================================== */
+
+        currentQuestion++;
+
+        loadQuestion();
+
+    }
+);
 
 
         /* ========================================
