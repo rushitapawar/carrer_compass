@@ -1,0 +1,702 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy | Career Compass AI</title>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --plum: #443846;
+    --plum-dark: #322936;
+    --pink: #e998b3;
+    --pink-light: #f6c4d3;
+    --cream: #f7f5f2;
+    --white: #ffffff;
+    --text: #342d3b;
+    --muted: #756d76;
+    --border: #e5dfe2;
+    --soft-pink: #fff0f5;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "DM Sans", sans-serif;
+    background: var(--cream);
+    color: var(--text);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* NAVBAR */
+.navbar {
+    min-height: 76px;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 7%;
+}
+
+.logo {
+    font-family: "Playfair Display", serif;
+    font-size: 23px;
+    font-weight: 700;
+    color: var(--plum);
+    white-space: nowrap;
+}
+
+.logo span {
+    color: var(--pink);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.nav-links a {
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--plum);
+}
+
+.profile {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--soft-pink);
+    color: var(--plum);
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+}
+
+/* HERO */
+.hero {
+    background: linear-gradient(120deg, #fff0f5, #f9e9ef, #f7f5f2);
+    text-align: center;
+    padding: 65px 20px 70px;
+}
+
+.eyebrow {
+    color: #b66d89;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 14px;
+}
+
+.hero h1 {
+    font-family: "Playfair Display", serif;
+    color: var(--plum);
+    font-size: clamp(36px, 5vw, 48px);
+    margin-bottom: 15px;
+}
+
+.hero p {
+    max-width: 680px;
+    margin: auto;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+/* CONTENT */
+.container {
+    max-width: 1050px;
+    margin: auto;
+    padding: 55px 25px 80px;
+}
+
+.policy-note {
+    background: white;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--pink);
+    border-radius: 12px;
+    padding: 20px 22px;
+    margin-bottom: 30px;
+}
+
+.policy-note h2 {
+    font-family: "Playfair Display", serif;
+    color: var(--plum);
+    font-size: 19px;
+    margin-bottom: 8px;
+}
+
+.policy-note p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.policy-layout {
+    display: grid;
+    grid-template-columns: 235px 1fr;
+    gap: 25px;
+    align-items: start;
+}
+
+/* TABLE OF CONTENTS */
+.toc {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px;
+    position: sticky;
+    top: 20px;
+}
+
+.toc h2 {
+    font-family: "Playfair Display", serif;
+    font-size: 19px;
+    color: var(--plum);
+    margin-bottom: 15px;
+}
+
+.toc a {
+    display: block;
+    padding: 9px 0;
+    border-bottom: 1px solid #f1ebee;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.5;
+    transition: 0.2s;
+}
+
+.toc a:last-child {
+    border-bottom: none;
+}
+
+.toc a:hover {
+    color: #b66d89;
+    padding-left: 4px;
+}
+
+/* POLICY CARDS */
+.policy-content {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.policy-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 27px;
+    scroll-margin-top: 25px;
+}
+
+.policy-card h2 {
+    font-family: "Playfair Display", serif;
+    color: var(--plum);
+    font-size: 22px;
+    margin-bottom: 13px;
+}
+
+.policy-card h3 {
+    color: var(--plum);
+    font-size: 14px;
+    margin: 18px 0 7px;
+}
+
+.policy-card p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.85;
+    margin-bottom: 10px;
+}
+
+.policy-card p:last-child {
+    margin-bottom: 0;
+}
+
+.policy-card ul {
+    padding-left: 20px;
+    margin: 10px 0;
+}
+
+.policy-card li {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.8;
+    padding-left: 3px;
+    margin-bottom: 5px;
+}
+
+.inline-link {
+    color: #a65f7d;
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+/* LAST UPDATED */
+.updated {
+    color: var(--muted);
+    font-size: 12px;
+    text-align: center;
+    margin-top: 25px;
+}
+
+/* FOOTER */
+footer {
+    background: white;
+    border-top: 1px solid var(--border);
+    padding: 30px 7% 22px;
+}
+
+.footer-content {
+    max-width: 1150px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.footer-brand {
+    font-family: "Playfair Display", serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--plum);
+}
+
+.footer-brand span {
+    color: var(--pink);
+}
+
+.footer-links {
+    display: flex;
+    gap: 22px;
+    flex-wrap: wrap;
+}
+
+.footer-links a {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.footer-links a:hover {
+    color: var(--plum);
+}
+
+.copyright {
+    text-align: center;
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+}
+
+/* RESPONSIVE */
+@media (max-width: 800px) {
+    .policy-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .toc {
+        position: static;
+    }
+
+    .toc-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 15px;
+    }
+}
+
+@media (max-width: 650px) {
+    .navbar {
+        padding: 15px 5%;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .logo {
+        font-size: 19px;
+    }
+
+    .nav-links {
+        order: 3;
+        width: 100%;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .nav-links a {
+        font-size: 12px;
+    }
+
+    .profile {
+        margin-left: auto;
+    }
+
+    .container {
+        padding: 38px 17px 60px;
+    }
+
+    .policy-card {
+        padding: 22px 18px;
+    }
+
+    .toc-list {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-links {
+        justify-content: center;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+    <a href="index.html" class="logo">
+        Career Compass <span>AI ✦</span>
+    </a>
+
+    <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="how-it-works.html">How It Works</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="profile">A</div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+    <p class="eyebrow">Your privacy matters</p>
+    <h1>Privacy Policy</h1>
+    <p>
+        We believe that exploring your future should feel safe and
+        transparent. This page explains how information may be handled
+        when you use Career Compass AI.
+    </p>
+</section>
+
+<main class="container">
+
+    <section class="policy-note">
+        <h2>About This Policy</h2>
+        <p>
+            Career Compass AI is currently a developing educational
+            project. The website may store some information in your
+            browser to support features such as assessment results
+            and saved careers. This draft describes the intended
+            handling of information for the current demo and should
+            be reviewed and updated as the website evolves.
+        </p>
+    </section>
+
+    <div class="policy-layout">
+
+        <!-- TABLE OF CONTENTS -->
+        <aside class="toc">
+            <h2>On This Page</h2>
+            <div class="toc-list">
+                <a href="#overview">1. Overview</a>
+                <a href="#information">2. Information We Handle</a>
+                <a href="#use">3. How Information Is Used</a>
+                <a href="#storage">4. Data Storage</a>
+                <a href="#sharing">5. Sharing of Information</a>
+                <a href="#security">6. Security</a>
+                <a href="#choices">7. Your Choices</a>
+                <a href="#children">8. Young Users</a>
+                <a href="#third-party">9. Third-Party Services</a>
+                <a href="#changes">10. Policy Updates</a>
+                <a href="#contact">11. Contact Us</a>
+            </div>
+        </aside>
+
+        <!-- POLICY CONTENT -->
+        <div class="policy-content">
+
+            <section class="policy-card" id="overview">
+                <h2>1. Overview</h2>
+                <p>
+                    Career Compass AI is designed to help users explore
+                    possible career paths, reflect on their interests
+                    and learn about different opportunities.
+                </p>
+                <p>
+                    This policy describes the types of information
+                    that may be entered or stored while using the
+                    current website and explains the choices available
+                    to users.
+                </p>
+            </section>
+
+            <section class="policy-card" id="information">
+                <h2>2. Information We Handle</h2>
+                <p>
+                    Depending on which features are used, the website
+                    may handle information that a user enters.
+                </p>
+
+                <h3>Profile Information</h3>
+                <p>
+                    Users may enter details such as their name,
+                    educational interests or other profile information
+                    in relevant forms.
+                </p>
+
+                <h3>Assessment Responses</h3>
+                <p>
+                    Answers entered into the career questionnaire
+                    may be used to display assessment outcomes
+                    and career suggestions.
+                </p>
+
+                <h3>Saved Careers</h3>
+                <p>
+                    If users save careers, the website may store
+                    the selected career details in browser storage
+                    so that they can be shown again later.
+                </p>
+
+                <h3>Contact Form Information</h3>
+                <p>
+                    The contact form may ask for a name, email address,
+                    subject and message. In the current demo, submitting
+                    the form displays a local confirmation only;
+                    it does not deliver the message to a team inbox.
+                </p>
+            </section>
+
+            <section class="policy-card" id="use">
+                <h2>3. How Information Is Used</h2>
+                <p>
+                    Information entered into Career Compass AI may
+                    be used for the following purposes, depending
+                    on the features enabled:
+                </p>
+                <ul>
+                    <li>To display profile details entered by the user.</li>
+                    <li>To process assessment responses and show results.</li>
+                    <li>To display and manage saved career options.</li>
+                    <li>To support navigation between website pages.</li>
+                    <li>To improve the website during development and testing.</li>
+                </ul>
+                <p>
+                    Career suggestions are intended to support
+                    exploration and should not be treated as a
+                    guaranteed outcome or a substitute for personal
+                    research and guidance.
+                </p>
+            </section>
+
+            <section class="policy-card" id="storage">
+                <h2>4. Data Storage</h2>
+                <p>
+                    Some current website features use the browser's
+                    localStorage to retain information, such as
+                    assessment responses or saved careers, on the
+                    same browser and device.
+                </p>
+                <p>
+                    Browser storage is not the same as a secure
+                    server database. Information saved there may
+                    remain on the device until it is removed by
+                    the website, cleared through browser settings
+                    or otherwise deleted.
+                </p>
+                <p>
+                    If a backend or external database is added in
+                    the future, this section must be updated to
+                    explain how that information is stored and
+                    managed.
+                </p>
+            </section>
+
+            <section class="policy-card" id="sharing">
+                <h2>5. Sharing of Information</h2>
+                <p>
+                    The current static demo does not include a
+                    configured backend for sending profile or
+                    assessment information to a Career Compass AI
+                    server. However, external resources used by
+                    the page, such as web fonts, may make requests
+                    to their respective providers when loaded.
+                </p>
+                <p>
+                    If external services, analytics, hosting
+                    integrations or a backend are added later,
+                    this policy should clearly identify what
+                    information is shared, with whom and why.
+                </p>
+            </section>
+
+            <section class="policy-card" id="security">
+                <h2>6. Security</h2>
+                <p>
+                    We aim to design the website with care.
+                    However, information kept in browser storage
+                    does not provide the same protection as
+                    properly secured server-side storage.
+                </p>
+                <p>
+                    Avoid entering passwords, financial details,
+                    highly sensitive personal information or
+                    other private information into this demo.
+                </p>
+                <p>
+                    Before the website is used with real user
+                    accounts or sensitive information, suitable
+                    security measures and a review of the
+                    implementation will be necessary.
+                </p>
+            </section>
+
+            <section class="policy-card" id="choices">
+                <h2>7. Your Choices</h2>
+                <p>
+                    Users can manage information stored by
+                    the current demo through available page
+                    features and their browser settings.
+                </p>
+                <ul>
+                    <li>Remove saved careers using the Saved Careers page.</li>
+                    <li>Clear browser site data through browser settings.</li>
+                    <li>Choose not to enter optional information into forms.</li>
+                    <li>Stop using the website at any time.</li>
+                </ul>
+                <p>
+                    Clearing browser storage may remove saved careers,
+                    assessment answers or other locally stored
+                    information used by the website.
+                </p>
+            </section>
+
+            <section class="policy-card" id="children">
+                <h2>8. Young Users</h2>
+                <p>
+                    Career Compass AI may be used by students
+                    exploring educational and career options.
+                    Users should avoid submitting unnecessary
+                    personal or sensitive information.
+                </p>
+                <p>
+                    If the project is later made available to
+                    younger users at scale, its data collection,
+                    consent processes and privacy practices
+                    should be reviewed for applicable laws
+                    and requirements.
+                </p>
+            </section>
+
+            <section class="policy-card" id="third-party">
+                <h2>9. Third-Party Services</h2>
+                <p>
+                    The website may use third-party resources,
+                    such as externally hosted fonts. These
+                    providers may process technical request
+                    information according to their own policies.
+                </p>
+                <p>
+                    Any future integrations, such as sign-in
+                    providers, analytics or external career
+                    databases, should be documented here
+                    before being enabled for users.
+                </p>
+            </section>
+
+            <section class="policy-card" id="changes">
+                <h2>10. Policy Updates</h2>
+                <p>
+                    This Privacy Policy may be updated as
+                    Career Compass AI develops and adds
+                    new features.
+                </p>
+                <p>
+                    When the website's data practices change,
+                    the policy should be revised to accurately
+                    explain those changes and the date of
+                    the latest update.
+                </p>
+            </section>
+
+            <section class="policy-card" id="contact">
+                <h2>11. Contact Us</h2>
+                <p>
+                    If you have a question or suggestion about
+                    this Privacy Policy, you can use the
+                    website's contact page.
+                </p>
+                <p>
+                    <a href="contact.html" class="inline-link">
+                        Go to Contact Us →
+                    </a>
+                </p>
+                <p>
+                    Please note that the current contact form
+                    is a demo and is not yet connected to
+                    a message-receiving service.
+                </p>
+            </section>
+
+        </div>
+    </div>
+
+    <p class="updated">
+        Draft Privacy Policy · Review and update before public launch
+    </p>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-content">
+        <a href="index.html" class="footer-brand">
+            Career Compass <span>AI ✦</span>
+        </a>
+
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="how-it-works.html">How It Works</a>
+            <a href="contact.html">Contact</a>
+            <a href="privacy.html">Privacy</a>
+        </div>
+    </div>
+
+    <p class="copyright">
+        © 2026 Career Compass AI. All rights reserved.
+    </p>
+</footer>
+
+</body>
+</html>
