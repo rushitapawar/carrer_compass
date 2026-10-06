@@ -276,126 +276,52 @@ if (profileForm) {
 
         event.preventDefault();
 
-
-        // ====================================================
-        // GET FORM VALUES
-        // ====================================================
-
-        const fullNameInput =
-            document.getElementById("fullName");
-
-        const ageGroupInput =
-            document.getElementById("ageGroup");
-
-        const educationInput =
-            document.getElementById("education");
-
-
+        // Get basic information
         const fullName =
-            fullNameInput
-                ? fullNameInput.value.trim()
-                : "";
+            document.getElementById("fullName").value.trim();
 
         const ageGroup =
-            ageGroupInput
-                ? ageGroupInput.value
-                : "";
+            document.getElementById("ageGroup").value;
 
         const education =
-            educationInput
-                ? educationInput.value
-                : "";
+            document.getElementById("education").value;
 
-
-        // ====================================================
-        // CHECK BASIC INFORMATION
-        // ====================================================
-
-        if (
-            fullName === "" ||
-            ageGroup === "" ||
-            education === ""
-        ) {
-
-            alert(
-                "Please complete your basic profile information."
-            );
-
-            return;
-        }
-
-
-        // ====================================================
-        // GET EDUCATION STREAM
-        // ====================================================
-
+        // Get stream
         const selectedStream =
-            document.querySelector(
-                'input[name="stream"]:checked'
-            );
+            document.querySelector('input[name="stream"]:checked');
 
-
-        if (!selectedStream) {
-
-            alert(
-                "Please select your education stream."
-            );
-
-            return;
-        }
-
-
-        // ====================================================
-        // GET CAREER GOAL
-        // ====================================================
-
+        // Get career goal
         const selectedGoal =
-            document.querySelector(
-                'input[name="goal"]:checked'
-            );
+            document.querySelector('input[name="goal"]:checked');
 
-
-        if (!selectedGoal) {
-
-            alert(
-                "Please select your career goal."
-            );
-
-            return;
-        }
-
-
-        // ====================================================
-        // GET INTERESTS
-        // ====================================================
-
+        // Get interests
         const selectedInterests =
             document.querySelectorAll(
                 'input[name="interest"]:checked'
             );
 
-
-        if (selectedInterests.length === 0) {
-
-            alert(
-                "Please select at least one interest."
-            );
-
+        // Validation
+        if (!fullName || !ageGroup || !education) {
+            alert("Please complete your basic profile information.");
             return;
         }
 
+        if (!selectedStream) {
+            alert("Please select your education stream.");
+            return;
+        }
 
-        const interests =
-            Array.from(selectedInterests)
-                .map(function (item) {
-                    return item.value;
-                });
+        if (!selectedGoal) {
+            alert("Please select your career goal.");
+            return;
+        }
 
+        if (selectedInterests.length === 0) {
+            alert("Please select at least one interest.");
+            return;
+        }
 
-        // ====================================================
-        // CREATE PROFILE DATA
-        // ====================================================
-
+        // Create profile data
         const profileData = {
 
             fullName: fullName,
@@ -406,85 +332,96 @@ if (profileForm) {
 
             stream: selectedStream.value,
 
-            interests: interests,
+            interests: Array.from(selectedInterests).map(
+                item => item.value
+            ),
 
             careerGoal: selectedGoal.value
-
         };
 
-
-        // ====================================================
-        // SEND PROFILE TO FLASK
-        // ====================================================
+        console.log("Profile data:", profileData);
 
         try {
 
             const response = await fetch(
                 "/api/profile",
                 {
-
                     method: "POST",
+
+                    credentials: "include",
 
                     headers: {
                         "Content-Type": "application/json"
                     },
 
                     body: JSON.stringify(profileData)
-
                 }
             );
 
+            // Read response as text first
+            const responseText = await response.text();
 
-            const result = await response.json();
+            console.log(
+                "Profile server response:",
+                responseText
+            );
 
+          let result;
 
-            // =================================================
-            // SUCCESS
-            // =================================================
+            try {
 
-            if (result.success) {
+                result = JSON.parse(responseText);
 
-                // Keep a temporary copy for the frontend
+            } catch (jsonError) {
+
+                console.error(
+                    "REAL SERVER RESPONSE:",
+                    responseText
+                );
+
+                alert(
+                    "FLASK RESPONSE:\n\n" +
+                    responseText.substring(0, 1000)
+                );
+
+                return;
+            }
+
+            // Backend success
+            if (response.ok && result.success) {
+
                 localStorage.setItem(
                     "careerCompassProfile",
                     JSON.stringify(profileData)
                 );
 
-
                 alert(
                     "Profile saved! Let's discover your career."
                 );
 
-
-                // Continue to questionnaire
                 window.location.href =
                     "questionnaire.html";
 
+                return;
             }
 
-
-            // =================================================
-            // ERROR
-            // =================================================
-
-            else {
-
-                alert(result.message);
-
-            }
-
+            // Backend error
+            alert(
+                result.message ||
+                "Unable to save your profile."
+            );
 
         } catch (error) {
 
             console.error(
-                "Profile error:",
+                "Profile request error:",
                 error
             );
 
             alert(
-                "Unable to connect to the server. Please make sure Flask is running."
+                "Unable to save the profile. " +
+                "Please try again."
             );
-
         }
 
     });
