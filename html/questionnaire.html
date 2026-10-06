@@ -1,10 +1,10 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Career Assessment | Career Compass AI</title>
@@ -22,18 +22,13 @@
             color: #443846;
         }
 
-
-        /* ================= NAVBAR ================= */
-
         .navbar {
             height: 76px;
             background: white;
             border-bottom: 1px solid #ebe5e3;
-
             display: flex;
             align-items: center;
             justify-content: space-between;
-
             padding: 0 7%;
         }
 
@@ -55,24 +50,17 @@
             font-weight: bold;
         }
 
-
-        /* ================= MAIN ================= */
-
         .assessment-page {
             width: min(850px, 90%);
             margin: auto;
             padding: 50px 0 70px;
         }
 
-
-        /* ================= PROGRESS ================= */
-
         .progress-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 12px;
-
             color: #756d76;
             font-size: 14px;
         }
@@ -83,7 +71,6 @@
             background: #e9e3e3;
             border-radius: 20px;
             overflow: hidden;
-
             margin-bottom: 40px;
         }
 
@@ -94,9 +81,6 @@
             border-radius: 20px;
             transition: width 0.4s ease;
         }
-
-
-        /* ================= GUIDE SELECTION ================= */
 
         .guide-selection {
             background: white;
@@ -151,14 +135,11 @@
             width: 75px;
             height: 75px;
             margin: auto auto 12px;
-
             border-radius: 50%;
             background: #f4e4ea;
-
             display: flex;
             align-items: center;
             justify-content: center;
-
             font-size: 38px;
         }
 
@@ -175,15 +156,11 @@
             margin-top: 30px;
             background: #443846;
             color: white;
-
             border: none;
             border-radius: 30px;
-
             padding: 15px 35px;
-
             font-size: 15px;
             font-weight: bold;
-
             cursor: pointer;
         }
 
@@ -191,12 +168,8 @@
             background: #332a37;
         }
 
-
-        /* ================= QUESTION ================= */
-
         .question-card {
             display: none;
-
             background: white;
             border: 1px solid #ebe5e3;
             border-radius: 30px;
@@ -205,16 +178,12 @@
 
         .question-number {
             display: inline-block;
-
             background: #f4e4ea;
             color: #805269;
-
             padding: 8px 15px;
             border-radius: 20px;
-
             font-size: 13px;
             font-weight: bold;
-
             margin-bottom: 22px;
         }
 
@@ -222,14 +191,10 @@
             display: flex;
             align-items: center;
             gap: 12px;
-
             background: #faf5f7;
             border-radius: 18px;
-
             padding: 14px 18px;
-
             margin-bottom: 28px;
-
             color: #756d76;
             font-size: 14px;
         }
@@ -237,16 +202,12 @@
         .mini-avatar {
             width: 40px;
             height: 40px;
-
             border-radius: 50%;
             background: #f4e4ea;
-
             display: flex;
             align-items: center;
             justify-content: center;
-
             font-size: 22px;
-
             flex-shrink: 0;
         }
 
@@ -254,12 +215,8 @@
             font-family: Georgia, serif;
             font-size: 30px;
             line-height: 1.4;
-
             margin: 0 0 30px;
         }
-
-
-        /* ================= OPTIONS ================= */
 
         .options {
             display: grid;
@@ -269,19 +226,13 @@
         .option {
             width: 100%;
             text-align: left;
-
             background: #faf8f7;
             border: 1px solid #ebe5e3;
-
             border-radius: 18px;
-
             padding: 18px 20px;
-
             color: #443846;
             font-size: 15px;
-
             cursor: pointer;
-
             transition: 0.2s;
         }
 
@@ -296,26 +247,19 @@
             box-shadow: 0 0 0 2px rgba(233, 152, 179, 0.15);
         }
 
-
-        /* ================= BUTTONS ================= */
-
         .question-actions {
             display: flex;
             justify-content: space-between;
             gap: 15px;
-
             margin-top: 35px;
         }
 
         .back-btn {
             background: white;
             color: #443846;
-
             border: 1px solid #d8d0d2;
             border-radius: 25px;
-
             padding: 13px 25px;
-
             cursor: pointer;
             font-weight: bold;
         }
@@ -323,12 +267,9 @@
         .next-btn {
             background: #443846;
             color: white;
-
             border: none;
             border-radius: 25px;
-
             padding: 13px 28px;
-
             cursor: pointer;
             font-weight: bold;
         }
@@ -341,9 +282,6 @@
         .next-btn:hover:not(:disabled) {
             background: #332a37;
         }
-
-
-        /* ================= RESPONSIVE ================= */
 
         @media (max-width: 700px) {
 
@@ -363,7 +301,6 @@
             .question-card h2 {
                 font-size: 25px;
             }
-
         }
 
         @media (max-width: 500px) {
@@ -379,7 +316,6 @@
             .assessment-page {
                 padding-top: 30px;
             }
-
         }
 
     </style>
@@ -403,7 +339,6 @@
         </a>
 
     </nav>
-
 
 
     <main class="assessment-page">
@@ -432,7 +367,6 @@
             ></div>
 
         </div>
-
 
 
         <!-- ================= GUIDE SELECTION ================= -->
@@ -474,7 +408,6 @@
                 </div>
 
 
-
                 <div
                     class="guide-card"
                     data-name="Leo"
@@ -494,7 +427,6 @@
                 </div>
 
 
-
                 <div
                     class="guide-card"
                     data-name="Maya"
@@ -512,7 +444,6 @@
                     </small>
 
                 </div>
-
 
 
                 <div
@@ -547,14 +478,12 @@
         </section>
 
 
-
         <!-- ================= QUESTION SECTION ================= -->
 
         <section
             class="question-card"
             id="questionCard"
         >
-
 
             <div
                 class="question-number"
@@ -611,27 +540,18 @@
 
             </div>
 
-
         </section>
 
 
     </main>
 
 
-
     <script>
+
 
         /* ========================================
            25 CAREER ASSESSMENT QUESTIONS
-
-           Option index meaning:
-
-           0 = Technology + Science
-           1 = People + Healthcare
-           2 = Creative + Hospitality
-           3 = Business + Law
         ======================================== */
-
 
         const questions = [
 
@@ -938,7 +858,6 @@
         ];
 
 
-
         /* ========================================
            VARIABLES
         ======================================== */
@@ -949,8 +868,8 @@
 
         let selectedGuideIcon = null;
 
-        let answers = new Array(questions.length).fill(null);
-
+        let answers =
+            new Array(questions.length).fill(null);
 
 
         /* ========================================
@@ -1000,102 +919,107 @@
             document.getElementById("guideMessage");
 
 
-
         /* ========================================
            SELECT GUIDE
         ======================================== */
 
         guideCards.forEach(function(card) {
 
-            card.addEventListener("click", function() {
+            card.addEventListener(
+                "click",
+                function() {
 
-                guideCards.forEach(function(item) {
+                    guideCards.forEach(
+                        function(item) {
 
-                    item.classList.remove("selected");
+                            item.classList.remove(
+                                "selected"
+                            );
 
-                });
-
-
-                card.classList.add("selected");
-
-
-                selectedGuide =
-                    card.dataset.name;
-
-
-                selectedGuideIcon =
-                    card.dataset.icon;
+                        }
+                    );
 
 
-                startBtn.textContent =
-                    "Start with " +
-                    selectedGuide +
-                    " →";
+                    card.classList.add(
+                        "selected"
+                    );
 
-            });
+
+                    selectedGuide =
+                        card.dataset.name;
+
+
+                    selectedGuideIcon =
+                        card.dataset.icon;
+
+
+                    startBtn.textContent =
+                        "Start with " +
+                        selectedGuide +
+                        " →";
+
+                }
+            );
 
         });
-
 
 
         /* ========================================
            START ASSESSMENT
         ======================================== */
 
-        startBtn.addEventListener("click", function() {
+        startBtn.addEventListener(
+            "click",
+            function() {
 
-            if (!selectedGuide) {
+                if (!selectedGuide) {
 
-                alert(
-                    "Please choose your career guide first! ✨"
+                    alert(
+                        "Please choose your career guide first! ✨"
+                    );
+
+                    return;
+                }
+
+
+                localStorage.setItem(
+                    "selectedAvatar",
+                    selectedGuide
                 );
 
-                return;
+
+                localStorage.setItem(
+                    "selectedAvatarIcon",
+                    selectedGuideIcon
+                );
+
+
+                localStorage.removeItem(
+                    "careerAnswers"
+                );
+
+
+                guideSelection.style.display =
+                    "none";
+
+
+                questionCard.style.display =
+                    "block";
+
+
+                miniAvatar.textContent =
+                    selectedGuideIcon;
+
+
+                guideMessage.textContent =
+                    selectedGuide +
+                    " says: Choose the answer that feels most like you. There are no wrong answers!";
+
+
+                loadQuestion();
 
             }
-
-
-            /* Save guide */
-
-            localStorage.setItem(
-                "selectedAvatar",
-                selectedGuide
-            );
-
-            localStorage.setItem(
-                "selectedAvatarIcon",
-                selectedGuideIcon
-            );
-
-
-            /* Clear old answers */
-
-            localStorage.removeItem(
-                "careerAnswers"
-            );
-
-
-            guideSelection.style.display =
-                "none";
-
-
-            questionCard.style.display =
-                "block";
-
-
-            miniAvatar.textContent =
-                selectedGuideIcon;
-
-
-            guideMessage.textContent =
-                selectedGuide +
-                " says: Choose the answer that feels most like you. There are no wrong answers!";
-
-
-            loadQuestion();
-
-        });
-
+        );
 
 
         /* ========================================
@@ -1128,13 +1052,14 @@
 
             questionCount.textContent =
                 Math.round(
-                    ((currentQuestion + 1) / questions.length) * 100
-                ) +
-                "%";
+                    ((currentQuestion + 1) /
+                        questions.length) * 100
+                ) + "%";
 
 
             progressBar.style.width =
-                ((currentQuestion + 1) / questions.length) * 100 +
+                ((currentQuestion + 1) /
+                    questions.length) * 100 +
                 "%";
 
 
@@ -1145,9 +1070,10 @@
             current.options.forEach(
                 function(option, index) {
 
-
                     const optionButton =
-                        document.createElement("button");
+                        document.createElement(
+                            "button"
+                        );
 
 
                     optionButton.className =
@@ -1158,10 +1084,9 @@
                         option;
 
 
-                    /* Show previous answer */
-
                     if (
-                        answers[currentQuestion] === index
+                        answers[currentQuestion] ===
+                        index
                     ) {
 
                         optionButton.classList.add(
@@ -1175,20 +1100,23 @@
                         "click",
                         function() {
 
-
                             answers[currentQuestion] =
                                 index;
 
 
                             document
-                                .querySelectorAll(".option")
-                                .forEach(function(button) {
+                                .querySelectorAll(
+                                    ".option"
+                                )
+                                .forEach(
+                                    function(button) {
 
-                                    button.classList.remove(
-                                        "selected"
-                                    );
+                                        button.classList.remove(
+                                            "selected"
+                                        );
 
-                                });
+                                    }
+                                );
 
 
                             optionButton.classList.add(
@@ -1211,13 +1139,10 @@
             );
 
 
-            /* Enable button if answer exists */
-
             nextBtn.disabled =
-                answers[currentQuestion] === null;
+                answers[currentQuestion] ===
+                null;
 
-
-            /* Button text */
 
             if (
                 currentQuestion ===
@@ -1235,8 +1160,6 @@
             }
 
 
-            /* Hide Back on first question */
-
             if (currentQuestion === 0) {
 
                 backBtn.style.visibility =
@@ -1252,136 +1175,121 @@
         }
 
 
-
-   /* ========================================
-   NEXT QUESTION
-    ======================================== */
-
-  nextBtn.addEventListener(
-    "click",
-     async function() {
-
-        if (
-            answers[currentQuestion] === null
-        ) {
-
-            alert(
-                "Please select an answer first."
-            );
-
-            return;
-        }
-
-
         /* ========================================
-           LAST QUESTION
+           NEXT QUESTION
         ======================================== */
 
-        if (
-            currentQuestion ===
-            questions.length - 1
-        ) {
+        nextBtn.addEventListener(
+            "click",
+            async function() {
 
-            try {
+                if (
+                    answers[currentQuestion] ===
+                    null
+                ) {
+
+                    alert(
+                        "Please select an answer first."
+                    );
+
+                    return;
+                }
+
 
                 /* ====================================
-                   SAVE ASSESSMENT TO FLASK
+                   LAST QUESTION
                 ==================================== */
 
-                const response = await fetch(
-                    "/api/save-assessment",
-                    {
-                        method: "POST",
+                if (
+                    currentQuestion ===
+                    questions.length - 1
+                ) {
 
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
+                    try {
 
-                        body: JSON.stringify({
+                        const response =
+                            await fetch(
+                                "/api/save-assessment",
+                                {
+                                    method: "POST",
 
-                            guideName: selectedGuide,
+                                    headers: {
+                                        "Content-Type":
+                                            "application/json"
+                                    },
 
-                            answers: answers
+                                    body:
+                                        JSON.stringify({
+                                            guideName:
+                                                selectedGuide,
 
-                        })
+                                            answers:
+                                                answers
+                                        })
+                                }
+                            );
+
+
+                        const result =
+                            await response.json();
+
+
+                        if (result.success) {
+
+                            localStorage.setItem(
+                                "careerAnswers",
+                                JSON.stringify(
+                                    answers
+                                )
+                            );
+
+
+                            alert(
+                                "Assessment saved successfully!"
+                            );
+
+
+                            window.location.href =
+                                "./analyzing.html";
+
+                        } else {
+
+                            alert(
+                                result.message
+                            );
+
+                        }
+
+
+                    } catch (error) {
+
+                        console.error(
+                            "Assessment error:",
+                            error
+                        );
+
+
+                        alert(
+                            "Unable to save assessment. Please make sure Flask is running."
+                        );
+
                     }
-                );
 
 
-                const result =
-                    await response.json();
-
-
-                /* ====================================
-                   SUCCESS
-                ==================================== */
-
-                if (result.success) {
-
-                    /* Keep answers temporarily
-                       for the results/analyzing page */
-
-                    localStorage.setItem(
-                        "careerAnswers",
-                        JSON.stringify(answers)
-                    );
-
-
-                    alert(
-                        "Assessment saved successfully!"
-                    );
-
-
-                    /* Go to analyzing page */
-
-                    window.location.href =
-                        "./analyzing.html";
-
+                    return;
                 }
 
 
                 /* ====================================
-                   ERROR
+                   NEXT QUESTION
                 ==================================== */
 
-                else {
+                currentQuestion++;
 
-                    alert(
-                        result.message
-                    );
-
-                }
-
-
-            } catch (error) {
-
-                console.error(
-                    "Assessment error:",
-                    error
-                );
-
-
-                alert(
-                    "Unable to save assessment. Please make sure Flask is running."
-                );
+                loadQuestion();
 
             }
-
-
-            return;
-        }
-
-
-        /* ========================================
-           GO TO NEXT QUESTION
-        ======================================== */
-
-        currentQuestion++;
-
-        loadQuestion();
-
-    }
-);
+        );
 
 
         /* ========================================
@@ -1392,11 +1300,9 @@
             "click",
             function() {
 
-
                 if (currentQuestion > 0) {
 
                     currentQuestion--;
-
 
                     loadQuestion();
 
@@ -1407,6 +1313,8 @@
 
     </script>
 
+
 </body>
 
 </html>
+```

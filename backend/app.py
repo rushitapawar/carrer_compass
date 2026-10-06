@@ -1,10 +1,11 @@
-from flask import Flask, send_from_directory
+from flask import Flask, send_from_directory, session, redirect
 import os
 
 from database import (
     create_users_table,
     create_assessments_table,
-    create_profiles_table
+    create_profiles_table,
+    create_saved_careers_table
 )
 
 from auth import auth_bp
@@ -46,6 +47,7 @@ IMAGES_DIR = os.path.join(BASE_DIR, "images")
 create_users_table()
 create_assessments_table()
 create_profiles_table()
+create_saved_careers_table()
 
 
 # ============================================================
@@ -72,11 +74,32 @@ def home():
 
 
 # ============================================================
+# PAGES THAT REQUIRE LOGIN
+# ============================================================
+
+PROTECTED_PAGES = {
+    "dashboard.html",
+    "profile.html",
+    "questionnaire.html",
+    "assessment-intro.html",
+    "analyzing.html",
+    "results.html",
+    "favourites.html",
+    "settings.html",
+}
+
+
+# ============================================================
 # SERVE HTML PAGES
 # ============================================================
 
 @app.route("/<page>")
 def serve_page(page):
+
+    # Logged-in pages: redirect to login if no session
+    if page in PROTECTED_PAGES and "user_id" not in session:
+
+        return redirect("/login.html")
 
     return send_from_directory(
         HTML_DIR,

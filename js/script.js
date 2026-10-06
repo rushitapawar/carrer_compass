@@ -580,7 +580,13 @@ function initChatbot() {
         box.id = "chatbot-box";
         box.innerHTML =
             '<div id="chatbot-header">Career Assistant <span id="close-chat">×</span></div>' +
-            '<div id="chat-messages"><div class="bot-message">Hi! I\'m your Career Assistant. How can I help you?</div></div>' +
+            '<div id="chat-messages"><div class="bot-message">Hi! I\'m your Career Assistant. How can I help you?</div>' +
+            '<div class="chat-quick-options">' +
+            '<button class="chat-quick-btn" data-msg="Suggest careers for artistic people">🎨 Artistic careers</button>' +
+            '<button class="chat-quick-btn" data-msg="What is investigative?">🔍 What is Investigative?</button>' +
+            '<button class="chat-quick-btn" data-msg="How does the assessment work?">📝 Assessment help</button>' +
+            '<button class="chat-quick-btn" data-msg="How it works">✨ How it works</button>' +
+            '</div></div>' +
             '<div id="chat-input-area"><input type="text" id="user-input" placeholder="Type your message..."><button id="send-button">Send</button></div>';
         document.body.appendChild(box);
 
@@ -616,6 +622,31 @@ function initChatbot() {
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
+    // Show quick-option buttons (after every bot reply)
+    function showQuickOptions() {
+        // Avoid duplicates if user typed instead of clicking
+        const old = chatMessages.querySelector(".chat-quick-options");
+        if (old) {
+            old.remove();
+        }
+        const wrap = document.createElement("div");
+        wrap.className = "chat-quick-options";
+        [
+            ["🎨 Artistic careers", "Suggest careers for artistic people"],
+            ["🔍 What is Investigative?", "What is investigative?"],
+            ["📝 Assessment help", "How does the assessment work?"],
+            ["✨ How it works", "How it works"]
+        ].forEach(function (pair) {
+            const b = document.createElement("button");
+            b.className = "chat-quick-btn";
+            b.textContent = pair[0];
+            b.setAttribute("data-msg", pair[1]);
+            wrap.appendChild(b);
+        });
+        chatMessages.appendChild(wrap);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
     function sendMessage() {
         const message = userInput.value.trim();
 
@@ -623,8 +654,13 @@ function initChatbot() {
             return;
         }
 
-        addMessage(message, "user-message");
+        sendText(message);
         userInput.value = "";
+    }
+
+    // Send any text (typed or from a quick button)
+    function sendText(message) {
+        addMessage(message, "user-message");
 
         // Show typing indicator
         const typing = document.createElement("div");
@@ -656,6 +692,7 @@ function initChatbot() {
             .then(function (data) {
                 typing.remove();
                 addMessage(data.response || "Sorry, I got an empty reply.", "bot-message");
+                showQuickOptions();
             })
             .catch(function (error) {
                 console.error("Chat error:", error);
@@ -664,6 +701,7 @@ function initChatbot() {
                     "Sorry, I can't reach the server. Please make sure Flask (backend/app.py) is running.",
                     "bot-message"
                 );
+                showQuickOptions();
             });
     }
 
@@ -672,6 +710,21 @@ function initChatbot() {
     userInput.addEventListener("keypress", function (event) {
         if (event.key === "Enter") {
             sendMessage();
+        }
+    });
+
+    // Quick-option buttons: one click = send + answer
+    chatMessages.addEventListener("click", function (event) {
+        const btn = event.target.closest(".chat-quick-btn");
+        if (!btn) {
+            return;
+        }
+        const preset = btn.getAttribute("data-msg") || btn.textContent.trim();
+        // Remove the buttons after first use so chat stays clean
+        const wrap = btn.closest(".chat-quick-options");
+        sendText(preset);
+        if (wrap) {
+            wrap.remove();
         }
     });
 }

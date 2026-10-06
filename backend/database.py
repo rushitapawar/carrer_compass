@@ -100,3 +100,27 @@ def create_profiles_table():
     conn.commit()
 
     conn.close()
+
+
+# ============================================================
+# SAVED CAREERS TABLE
+# ============================================================
+
+def create_saved_careers_table():
+    """Create the saved_careers table if it does not already exist."""
+
+    conn = get_db_connection()
+
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS saved_careers (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            career_name TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users(id)
+        )
+    """)
+
+    conn.commit()
+
+    conn.close()

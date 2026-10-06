@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, session
 import sqlite3
 import os
 
@@ -17,13 +17,17 @@ def get_db():
 @dashboard.route("/api/dashboard", methods=["GET"])
 def get_dashboard():
 
-    user_id = request.args.get("user_id")
+    # ============================================================
+    # ONLY THE LOGGED-IN USER'S DATA IS RETURNED
+    # ============================================================
+
+    user_id = session.get("user_id")
 
     if not user_id:
         return jsonify({
             "success": False,
-            "message": "User ID is required"
-        }), 400
+            "message": "Please login first."
+        }), 401
 
     conn = get_db()
 
