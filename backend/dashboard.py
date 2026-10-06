@@ -1,17 +1,7 @@
 from flask import Blueprint, jsonify, session
-import sqlite3
-import os
+from database import get_db_connection
 
 dashboard = Blueprint("dashboard", __name__)
-
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DATABASE = os.path.join(BASE_DIR, "userdb.db")
-
-
-def get_db():
-    conn = sqlite3.connect(DATABASE)
-    conn.row_factory = sqlite3.Row
-    return conn
 
 
 @dashboard.route("/api/dashboard", methods=["GET"])
@@ -22,60 +12,158 @@ def get_dashboard():
     # ============================================================
 
     user_id = session.get("user_id")
-
     if not user_id:
         return jsonify({
             "success": False,
             "message": "Please login first."
         }), 401
 
-    conn = get_db()
+
+    conn = get_db_connection()
 
     try:
-        # Get user information
+
+        # ========================================
+        # GET USER INFORMATION
+        # ========================================
+
         user = conn.execute(
-            "SELECT id, name, email FROM users WHERE id = ?",
+            """
+            SELECT
+                id,
+                name,
+                email
+            FROM users
+            WHERE id = ?
+            """,
             (user_id,)
         ).fetchone()
 
-        if not user:
+
+        if user is None:
+
             return jsonify({
                 "success": False,
-                "message": "User not found"
+                "message": "User not found."
             }), 404
 
-        # Get saved careers
+
+        # ========================================
+        # CHECK ASSESSMENT
+        # ========================================
+
+        assessment = conn.execute(
+            """
+            SELECT id
+            FROM assessments
+            WHERE user_id = ?
+            ORDER BY created_at DESC
+            LIMIT 1
+            """,
+            (user_id,)
+        ).fetchone()
+
+
+        assessment_completed = (
+            assessment is not None
+        )
+
+
+        # ========================================
+        # GET SAVED CAREERS
+        # ========================================
+
         careers = conn.execute(
-            "SELECT id, career_name FROM saved_careers WHERE user_id = ?",
+            """
+            SELECT
+                id,
+                career_title,
+                onet_soc_code,
+                match_percentage,
+                created_at
+            FROM saved_careers
+            WHERE user_id = ?
+            ORDER BY created_at DESC
+            """,
             (user_id,)
         ).fetchall()
 
+
         saved_careers = []
 
+
         for career in careers:
+
             saved_careers.append({
-                "id": career["id"],
-                "name": career["career_name"]
+
+                "id":
+                    career["id"],
+
+                "name":
+                    career["career_title"],
+
+                "onetSocCode":
+                    career["onet_soc_code"],
+
+                "matchPercentage":
+                    career["match_percentage"],
+
+                "createdAt":
+                    career["created_at"]
+
             })
 
+
+        # ========================================
+        # RETURN DASHBOARD DATA
+        # ========================================
+
         return jsonify({
+
             "success": True,
+
             "user": {
-                "id": user["id"],
-                "name": user["name"],
-                "email": user["email"]
+
+                "id":
+                    user["id"],
+
+                "name":
+                    user["name"],
+
+                "email":
+                    user["email"]
+
             },
-            "assessment_completed": False,
-            "saved_careers": saved_careers,
-            "career_count": len(saved_careers)
+
+            "assessment_completed":
+                assessment_completed,
+
+            "saved_careers":
+                saved_careers,
+
+            "career_count":
+                len(saved_careers)
+
         })
 
-    except Exception as e:
+
+    except Exception as error:
+
+        print(
+            "Dashboard error:",
+            error
+        )
 
         return jsonify({
+
             "success": False,
-            "message": str(e)
+
+            "message":
+                "Unable to load dashboard."
+
         }), 500
 
+
     finally:
+
         conn.close()

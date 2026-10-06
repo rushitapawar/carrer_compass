@@ -2,22 +2,13 @@ import sqlite3
 import os
 
 
-# ============================================================
-# DATABASE PATH
-# ============================================================
-
 DB_PATH = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
     "userdb.db"
 )
 
 
-# ============================================================
-# DATABASE CONNECTION
-# ============================================================
-
 def get_db_connection():
-    """Create and return a database connection."""
 
     conn = sqlite3.connect(DB_PATH)
 
@@ -26,12 +17,7 @@ def get_db_connection():
     return conn
 
 
-# ============================================================
-# USERS TABLE
-# ============================================================
-
 def create_users_table():
-    """Create the users table if it does not already exist."""
 
     conn = get_db_connection()
 
@@ -49,12 +35,7 @@ def create_users_table():
     conn.close()
 
 
-# ============================================================
-# ASSESSMENTS TABLE
-# ============================================================
-
 def create_assessments_table():
-    """Create the assessments table if it does not already exist."""
 
     conn = get_db_connection()
 
@@ -73,12 +54,7 @@ def create_assessments_table():
     conn.close()
 
 
-# ============================================================
-# PROFILES TABLE
-# ============================================================
-
 def create_profiles_table():
-    """Create the profiles table if it does not already exist."""
 
     conn = get_db_connection()
 
@@ -115,8 +91,11 @@ def create_saved_careers_table():
         CREATE TABLE IF NOT EXISTS saved_careers (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             user_id INTEGER NOT NULL,
-            career_name TEXT NOT NULL,
+            career_title TEXT NOT NULL,
+            onet_soc_code TEXT,
+            match_percentage INTEGER,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE(user_id, career_title),
             FOREIGN KEY (user_id) REFERENCES users(id)
         )
     """)

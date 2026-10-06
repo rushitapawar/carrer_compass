@@ -12,6 +12,9 @@ from auth import auth_bp
 from questionnaire import questionnaire_bp
 from dashboard import dashboard
 from chatbot import chatbot_bp
+from analysis import analysis_bp
+from careers import careers_bp
+from favourites import favourites_bp
 
 
 # ============================================================
@@ -49,7 +52,6 @@ create_assessments_table()
 create_profiles_table()
 create_saved_careers_table()
 
-
 # ============================================================
 # REGISTER BLUEPRINTS
 # ============================================================
@@ -58,6 +60,9 @@ app.register_blueprint(auth_bp)
 app.register_blueprint(questionnaire_bp)
 app.register_blueprint(dashboard)
 app.register_blueprint(chatbot_bp)
+app.register_blueprint(analysis_bp)
+app.register_blueprint(careers_bp)
+app.register_blueprint(favourites_bp)
 
 
 # ============================================================

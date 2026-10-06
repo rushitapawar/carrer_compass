@@ -72,8 +72,19 @@ if (loginForm) {
 
                 alert(result.message);
 
-                // Go to profile after login
-                window.location.href = "profile.html";
+                // Go to the correct page after login
+
+            if (result.nextPage === "profile") {
+
+                 window.location.href =
+                       "./profile.html";
+
+            } else {
+
+                window.location.href =
+                         "./dashboard.html";
+
+        }
 
             } else {
 
@@ -84,7 +95,10 @@ if (loginForm) {
 
         } catch (error) {
 
-            console.error("Login error:", error);
+            console.error(
+                "Login error:",
+                error
+            );
 
             alert(
                 "Unable to connect to the server. Please make sure Flask is running."

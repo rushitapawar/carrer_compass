@@ -95,7 +95,6 @@ def signup():
 # ============================================================
 # LOGIN API
 # ============================================================
-
 @auth_bp.route("/api/login", methods=["POST"])
 def login():
 
@@ -104,66 +103,106 @@ def login():
     email = data.get("email", "").strip()
     password = data.get("password", "")
 
-
     # Check required fields
-
     if not email or not password:
 
         return jsonify({
             "success": False,
-            "message": "Please fill in all fields"
+            "message": "Please fill in all fields."
         }), 400
 
 
     conn = get_db_connection()
 
+    try:
 
-    user = conn.execute(
-        "SELECT * FROM users WHERE email = ?",
-        (email,)
-    ).fetchone()
+        # Find user by email
+        user = conn.execute(
+            """
+            SELECT
+                id,
+                name,
+                email,
+                password
+            FROM users
+            WHERE email = ?
+            """,
+            (email,)
+        ).fetchone()
 
 
-    conn.close()
+        # Email does not exist
+        if user is None:
+
+            return jsonify({
+                "success": False,
+                "message": "Email not found."
+            }), 401
 
 
-    # Check if user exists
+        # Check password
+        if not check_password_hash(
+            user["password"],
+            password
+        ):
 
-    if user is None:
+            return jsonify({
+                "success": False,
+                "message": "Incorrect password."
+            }), 401
+
+
+        # Create login session
+        session["user_id"] = user["id"]
+        session["user_name"] = user["name"]
+        session["user_email"] = user["email"]
+
+
+        # Check whether profile already exists
+        profile = conn.execute(
+            """
+            SELECT id
+            FROM profiles
+            WHERE user_id = ?
+            """,
+            (user["id"],)
+        ).fetchone()
+
+
+        if profile is None:
+
+            next_page = "profile"
+
+        else:
+
+            next_page = "dashboard"
+
+
+        return jsonify({
+            "success": True,
+            "message": "Login successful!",
+            "name": user["name"],
+            "userId": user["id"],
+            "nextPage": next_page
+        })
+
+
+    except Exception as error:
+
+        print(
+            "Login error:",
+            error
+        )
 
         return jsonify({
             "success": False,
-            "message": "Email not found"
-        }), 401
+            "message": "Unable to login. Please try again."
+        }), 500
 
 
-    # Check password
+    finally:
 
-    if not check_password_hash(
-        user["password"],
-        password
-    ):
-
-        return jsonify({
-            "success": False,
-            "message": "Incorrect password"
-        }), 401
-
-
-    # ========================================================
-    # SAVE USER IN FLASK SESSION
-    # ========================================================
-
-    session["user_id"] = user["id"]
-    session["user_name"] = user["name"]
-    session["user_email"] = user["email"]
-
-
-    return jsonify({
-        "success": True,
-        "message": "Login successful!",
-        "name": user["name"]
-    })
+        conn.close()
 
 
 # ============================================================
@@ -188,40 +227,12 @@ def save_profile():
 
     # Get profile information
 
-    full_name = data.get(
-        "fullName",
-        ""
-    ).strip()
-
-
-    age_group = data.get(
-        "ageGroup",
-        ""
-    ).strip()
-
-
-    education = data.get(
-        "education",
-        ""
-    ).strip()
-
-
-    stream = data.get(
-        "stream",
-        ""
-    ).strip()
-
-
-    interests = data.get(
-        "interests",
-        []
-    )
-
-
-    career_goal = data.get(
-        "careerGoal",
-        ""
-    ).strip()
+    full_name = data.get("fullName", "").strip()
+    age_group = data.get("ageGroup", "").strip()
+    education = data.get("education", "").strip()
+    stream = data.get("stream", "").strip()
+    interests = data.get("interests", [])
+    career_goal = data.get("careerGoal", "").strip()
 
 
     # Check required fields
