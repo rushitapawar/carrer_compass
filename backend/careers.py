@@ -572,3 +572,84 @@ def get_careers():
                 "Unable to load career data."
 
         }), 500
+
+    # =========================================================
+# 500 CAREER CATALOG API
+# =========================================================
+
+@careers_bp.route(
+    "/api/career-catalog",
+    methods=["GET"]
+)
+def get_career_catalog():
+
+    if "user_id" not in session:
+
+        return jsonify({
+            "success": False,
+            "message": "Please login first."
+        }), 401
+
+    try:
+
+        conn = sqlite3.connect(CAREER_DB)
+        conn.row_factory = sqlite3.Row
+
+        rows = conn.execute("""
+            SELECT
+                career_id,
+                career_title,
+                sector,
+                short_description,
+                important_skills,
+                education_qualification,
+                recommended_courses,
+                salary_range,
+                demand_level,
+                career_roadmap,
+                common_job_roles,
+                career_growth,
+                onet_soc_code
+            FROM careers
+            ORDER BY career_title ASC
+        """).fetchall()
+
+        conn.close()
+
+        careers = []
+
+        for row in rows:
+
+            careers.append({
+                "careerId": row["career_id"],
+                "careerTitle": row["career_title"],
+                "sector": row["sector"],
+                "shortDescription": row["short_description"],
+                "importantSkills": row["important_skills"],
+                "educationQualification": row["education_qualification"],
+                "recommendedCourses": row["recommended_courses"],
+                "salaryRange": row["salary_range"],
+                "demandLevel": row["demand_level"],
+                "careerRoadmap": row["career_roadmap"],
+                "commonJobRoles": row["common_job_roles"],
+                "careerGrowth": row["career_growth"],
+                "onetSocCode": row["onet_soc_code"]
+            })
+
+        return jsonify({
+            "success": True,
+            "count": len(careers),
+            "careers": careers
+        })
+
+    except Exception as error:
+
+        print(
+            "Career catalog error:",
+            error
+        )
+
+        return jsonify({
+            "success": False,
+            "message": "Unable to load career catalog."
+        }), 500    

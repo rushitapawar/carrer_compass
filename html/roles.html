@@ -969,429 +969,577 @@
          JAVASCRIPT
     ========================== -->
 
-    <script>
+   <script>
+
+    // =========================================================
+    // CAREER CATALOG FROM BACKEND
+    // =========================================================
+
+    let careers = [];
+    let savedCareerTitles = new Set();
 
 
-        /* =====================================
-           CAREER DATA
-           =====================================
+    // =========================================================
+    // ELEMENTS
+    // =========================================================
 
-           Abhi ye demo data hai.
+    const careerGrid =
+        document.getElementById("careerGrid");
 
-           Jab tumhare friend ka actual career
-           database milega, isi array ko database
-           se replace/connect kiya ja sakta hai.
+    const searchInput =
+        document.getElementById("searchInput");
 
-        */
+    const categoryFilter =
+        document.getElementById("categoryFilter");
 
-        const careers = [
+    const resultCount =
+        document.getElementById("resultCount");
 
-            {
-                id: "software-engineer",
-                title: "Software Engineer",
-                icon: "💻",
-                category: "Technology",
-
-                description:
-                    "Design, develop and maintain software applications and digital solutions.",
-
-                skills: [
-                    "Programming",
-                    "Problem Solving",
-                    "Logic"
-                ]
-            },
+    const emptyState =
+        document.getElementById("emptyState");
 
 
-            {
-                id: "data-analyst",
-                title: "Data Analyst",
-                icon: "📊",
-                category: "Technology",
+    // =========================================================
+    // LOAD SAVED CAREERS
+    // =========================================================
 
-                description:
-                    "Analyse data and transform information into useful insights for decision-making.",
+    async function loadSavedCareers() {
 
-                skills: [
-                    "Data",
-                    "Analysis",
-                    "Critical Thinking"
-                ]
-            },
+        try {
 
-
-            {
-                id: "graphic-designer",
-                title: "Graphic Designer",
-                icon: "🎨",
-                category: "Creative",
-
-                description:
-                    "Create visual concepts and designs for digital and print communication.",
-
-                skills: [
-                    "Creativity",
-                    "Design",
-                    "Visual Thinking"
-                ]
-            },
-
-
-            {
-                id: "business-analyst",
-                title: "Business Analyst",
-                icon: "📈",
-                category: "Business",
-
-                description:
-                    "Study business needs and help organisations improve processes and make informed decisions.",
-
-                skills: [
-                    "Analysis",
-                    "Communication",
-                    "Strategy"
-                ]
-            },
-
-
-            {
-                id: "psychologist",
-                title: "Psychologist",
-                icon: "🧠",
-                category: "People",
-
-                description:
-                    "Study human behaviour and mental processes and support people through evidence-based approaches.",
-
-                skills: [
-                    "Listening",
-                    "Empathy",
-                    "Research"
-                ]
-            },
-
-
-            {
-                id: "scientist",
-                title: "Research Scientist",
-                icon: "🔬",
-                category: "Science",
-
-                description:
-                    "Conduct research, investigate questions and develop knowledge within a scientific field.",
-
-                skills: [
-                    "Research",
-                    "Analysis",
-                    "Curiosity"
-                ]
-            }
-
-        ];
-
-
-        /* =====================================
-           ELEMENTS
-        ===================================== */
-
-        const careerGrid =
-            document.getElementById("careerGrid");
-
-        const searchInput =
-            document.getElementById("searchInput");
-
-        const categoryFilter =
-            document.getElementById("categoryFilter");
-
-        const resultCount =
-            document.getElementById("resultCount");
-
-        const emptyState =
-            document.getElementById("emptyState");
-
-
-        /* =====================================
-           SAVED CAREERS
-        ===================================== */
-
-        function getSavedCareers() {
-
-            try {
-
-                return JSON.parse(
-                    localStorage.getItem("savedCareers")
-                ) || [];
-
-            } catch {
-
-                return [];
-
-            }
-
-        }
-
-
-        function isSaved(id) {
-
-            const saved =
-                getSavedCareers();
-
-            return saved.some(
-                career => career.id === id
+            const response = await fetch(
+                "/api/saved-careers",
+                {
+                    credentials: "include"
+                }
             );
 
+            const result = await response.json();
+
+            if (!result.success) {
+                return;
+            }
+
+            savedCareerTitles = new Set(
+                result.careers.map(
+                    career => career.careerTitle
+                )
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Saved careers error:",
+                error
+            );
+        }
+    }
+
+
+    // =========================================================
+    // LOAD 500 CAREERS FROM BACKEND
+    // =========================================================
+
+    async function loadCareers() {
+
+        try {
+
+            const response = await fetch(
+                "/api/career-catalog",
+                {
+                    credentials: "include"
+                }
+            );
+
+            const result = await response.json();
+
+            if (!result.success) {
+
+                console.error(
+                    "Career catalog error:",
+                    result.message
+                );
+
+                alert(
+                    result.message ||
+                    "Unable to load careers."
+                );
+
+                return;
+            }
+
+            careers = result.careers;
+
+            console.log(
+                "Career catalog loaded:",
+                careers.length
+            );
+
+            populateCategories();
+
+            renderCareers();
+
+        } catch (error) {
+
+            console.error(
+                "Career catalog error:",
+                error
+            );
+
+            alert(
+                "Unable to connect to the server."
+            );
+        }
+    }
+
+
+    // =========================================================
+    // POPULATE CATEGORY FILTER
+    // =========================================================
+
+    function populateCategories() {
+
+        const currentValue =
+            categoryFilter.value;
+
+        const sectors = [
+            ...new Set(
+                careers
+                    .map(career => career.sector)
+                    .filter(Boolean)
+                    .map(sector => sector.trim())
+            )
+        ].sort();
+
+        categoryFilter.innerHTML = `
+            <option value="all">
+                All Categories
+            </option>
+        `;
+
+        sectors.forEach(sector => {
+
+            const option =
+                document.createElement("option");
+
+            option.value = sector;
+            option.textContent = sector;
+
+            categoryFilter.appendChild(option);
+        });
+
+        if (
+            sectors.includes(currentValue)
+        ) {
+
+            categoryFilter.value =
+                currentValue;
+        }
+    }
+
+
+    // =========================================================
+    // SAVE / REMOVE CAREER
+    // =========================================================
+
+    async function toggleSave(careerId) {
+
+        const career =
+            careers.find(
+                item =>
+                    String(item.careerId) ===
+                    String(careerId)
+            );
+
+        if (!career) {
+            return;
         }
 
+        const isSaved =
+            savedCareerTitles.has(
+                career.careerTitle
+            );
 
-        function toggleSave(id) {
+        try {
 
-            let saved =
-                getSavedCareers();
+            let response;
 
-            const career =
-                careers.find(
-                    item => item.id === id
+            if (isSaved) {
+
+                response = await fetch(
+                    "/api/remove-career",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+                        credentials: "include",
+                        body: JSON.stringify({
+                            careerTitle:
+                                career.careerTitle
+                        })
+                    }
                 );
-
-            if (!career) return;
-
-
-            const index =
-                saved.findIndex(
-                    item => item.id === id
-                );
-
-
-            if (index === -1) {
-
-                saved.push(career);
 
             } else {
 
-                saved.splice(index, 1);
+                response = await fetch(
+                    "/api/save-career",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+                        credentials: "include",
+                        body: JSON.stringify({
 
+                            careerTitle:
+                                career.careerTitle,
+
+                            onetSocCode:
+                                career.onetSocCode ||
+                                "",
+
+                            matchPercentage:
+                                0
+                        })
+                    }
+                );
             }
 
+            const result =
+                await response.json();
 
-            localStorage.setItem(
-                "savedCareers",
-                JSON.stringify(saved)
-            );
+            if (!result.success) {
 
-
-            renderCareers();
-
-        }
-
-
-        /* =====================================
-           RENDER CAREERS
-        ===================================== */
-
-        function renderCareers() {
-
-            const search =
-                searchInput.value
-                    .toLowerCase()
-                    .trim();
-
-            const category =
-                categoryFilter.value;
-
-
-            const filtered =
-                careers.filter(career => {
-
-                    const matchesSearch =
-                        career.title
-                            .toLowerCase()
-                            .includes(search)
-
-                        ||
-
-                        career.category
-                            .toLowerCase()
-                            .includes(search)
-
-                        ||
-
-                        career.description
-                            .toLowerCase()
-                            .includes(search)
-
-                        ||
-
-                        career.skills.some(skill =>
-                            skill
-                                .toLowerCase()
-                                .includes(search)
-                        );
-
-
-                    const matchesCategory =
-                        category === "all" ||
-                        career.category === category;
-
-
-                    return (
-                        matchesSearch &&
-                        matchesCategory
-                    );
-
-                });
-
-
-            careerGrid.innerHTML = "";
-
-
-            resultCount.textContent =
-                filtered.length;
-
-
-            /* EMPTY STATE */
-
-            if (filtered.length === 0) {
-
-                emptyState.style.display =
-                    "block";
-
-                careerGrid.style.display =
-                    "none";
+                alert(
+                    result.message ||
+                    "Unable to update saved career."
+                );
 
                 return;
-
             }
 
+            if (isSaved) {
 
-            emptyState.style.display =
-                "none";
+                savedCareerTitles.delete(
+                    career.careerTitle
+                );
 
-            careerGrid.style.display =
-                "grid";
+            } else {
 
-
-            /* CREATE CARDS */
-
-            filtered.forEach(career => {
-
-                const saved =
-                    isSaved(career.id);
-
-
-                const card =
-                    document.createElement("article");
-
-                card.className =
-                    "career-card";
-
-
-                card.innerHTML = `
-
-                    <div class="card-top">
-
-                        <div class="career-icon">
-                            ${career.icon}
-                        </div>
-
-                        <span class="category-badge">
-                            ${career.category}
-                        </span>
-
-                    </div>
-
-
-                    <h2>
-                        ${career.title}
-                    </h2>
-
-
-                    <p class="career-description">
-                        ${career.description}
-                    </p>
-
-
-                    <div class="skill-list">
-
-                        ${career.skills.map(skill => `
-                            <span class="skill-tag">
-                                ${skill}
-                            </span>
-                        `).join("")}
-
-                    </div>
-
-
-                    <div class="card-bottom">
-
-                        <a
-                            href="role-detail.html?id=${encodeURIComponent(career.id)}"
-                            class="view-btn">
-
-                            View Career Details →
-
-                        </a>
-
-
-                        <button
-                            class="save-card-btn ${saved ? "saved" : ""}"
-                            onclick="toggleSave('${career.id}')"
-                            title="Save Career">
-
-                            ${saved ? "♥" : "♡"}
-
-                        </button>
-
-                    </div>
-
-                `;
-
-
-                careerGrid.appendChild(card);
-
-            });
-
-        }
-
-
-        /* =====================================
-           CLEAR FILTERS
-        ===================================== */
-
-        function clearFilters() {
-
-            searchInput.value = "";
-
-            categoryFilter.value =
-                "all";
+                savedCareerTitles.add(
+                    career.careerTitle
+                );
+            }
 
             renderCareers();
 
+        } catch (error) {
+
+            console.error(
+                "Save career error:",
+                error
+            );
+
+            alert(
+                "Unable to connect to the server."
+            );
+        }
+    }
+
+
+    // =========================================================
+    // VIEW CAREER DETAILS
+    // =========================================================
+
+    function viewCareer(careerId) {
+
+        const career =
+            careers.find(
+                item =>
+                    String(item.careerId) ===
+                    String(careerId)
+            );
+
+        if (!career) {
+            return;
+        }
+
+        /*
+         * The existing career-detail page uses
+         * selectedCareer from localStorage.
+         */
+
+        localStorage.setItem(
+            "selectedCareer",
+            career.careerTitle
+        );
+
+        localStorage.setItem(
+            "selectedCareerCode",
+            career.onetSocCode || ""
+        );
+
+        window.location.href =
+            "./job-role-detail.html";
+    }
+
+
+    // =========================================================
+    // GET SKILLS
+    // =========================================================
+
+    function getSkills(career) {
+
+        if (!career.importantSkills) {
+            return [];
+        }
+
+        return career.importantSkills
+            .split(";")
+            .map(skill => skill.trim())
+            .filter(Boolean)
+            .slice(0, 5);
+    }
+
+
+    // =========================================================
+    // RENDER CAREERS
+    // =========================================================
+
+    function renderCareers() {
+
+        const search =
+            searchInput.value
+                .toLowerCase()
+                .trim();
+
+        const category =
+            categoryFilter.value;
+
+
+        const filtered =
+            careers.filter(career => {
+
+                const title =
+                    (
+                        career.careerTitle ||
+                        ""
+                    ).toLowerCase();
+
+                const sector =
+                    (
+                        career.sector ||
+                        ""
+                    ).toLowerCase();
+
+                const description =
+                    (
+                        career.shortDescription ||
+                        ""
+                    ).toLowerCase();
+
+                const skills =
+                    (
+                        career.importantSkills ||
+                        ""
+                    ).toLowerCase();
+
+                const education =
+                    (
+                        career.educationQualification ||
+                        ""
+                    ).toLowerCase();
+
+
+                const matchesSearch =
+                    !search ||
+                    title.includes(search) ||
+                    sector.includes(search) ||
+                    description.includes(search) ||
+                    skills.includes(search) ||
+                    education.includes(search);
+
+
+                const matchesCategory =
+                    category === "all" ||
+                    career.sector === category;
+
+
+                return (
+                    matchesSearch &&
+                    matchesCategory
+                );
+            });
+
+
+        careerGrid.innerHTML = "";
+
+        resultCount.textContent =
+            filtered.length;
+
+
+        // =====================================================
+        // EMPTY STATE
+        // =====================================================
+
+        if (filtered.length === 0) {
+
+            emptyState.style.display =
+                "block";
+
+            careerGrid.style.display =
+                "none";
+
+            return;
         }
 
 
-        /* =====================================
-           LIVE SEARCH
-        ===================================== */
+        emptyState.style.display =
+            "none";
 
-        searchInput.addEventListener(
-            "input",
-            renderCareers
-        );
+        careerGrid.style.display =
+            "grid";
 
 
-        categoryFilter.addEventListener(
-            "change",
-            renderCareers
-        );
+        // =====================================================
+        // CREATE CARDS
+        // =====================================================
+
+        filtered.forEach(career => {
+
+            const saved =
+                savedCareerTitles.has(
+                    career.careerTitle
+                );
+
+            const skills =
+                getSkills(career);
 
 
-        /* =====================================
-           INITIAL LOAD
-        ===================================== */
+            const card =
+                document.createElement("article");
+
+            card.className =
+                "career-card";
+
+
+            card.innerHTML = `
+
+                <div class="card-top">
+
+                    <div class="career-icon">
+                        💼
+                    </div>
+
+                    <span class="category-badge">
+                        ${career.sector || "Career"}
+                    </span>
+
+                </div>
+
+
+                <h2>
+                    ${career.careerTitle}
+                </h2>
+
+
+                <p class="career-description">
+                    ${career.shortDescription || ""}
+                </p>
+
+
+                <div class="skill-list">
+
+                    ${skills.map(skill => `
+
+                        <span class="skill-tag">
+                            ${skill}
+                        </span>
+
+                    `).join("")}
+
+                </div>
+
+
+                <div class="card-bottom">
+
+                    <button
+                        class="view-btn"
+                        onclick="viewCareer('${career.careerId}')">
+
+                        View Career Details →
+
+                    </button>
+
+
+                    <button
+                        class="save-card-btn ${saved ? "saved" : ""}"
+                        onclick="toggleSave('${career.careerId}')"
+                        title="Save Career">
+
+                        ${saved ? "♥" : "♡"}
+
+                    </button>
+
+                </div>
+            `;
+
+
+            careerGrid.appendChild(card);
+
+        });
+    }
+
+
+    // =========================================================
+    // CLEAR FILTERS
+    // =========================================================
+
+    function clearFilters() {
+
+        searchInput.value = "";
+
+        categoryFilter.value =
+            "all";
 
         renderCareers();
+    }
 
-    </script>
 
+    // =========================================================
+    // LIVE SEARCH
+    // =========================================================
+
+    searchInput.addEventListener(
+        "input",
+        renderCareers
+    );
+
+
+    categoryFilter.addEventListener(
+        "change",
+        renderCareers
+    );
+
+
+    // =========================================================
+    // INITIAL LOAD
+    // =========================================================
+
+    async function initializeCareersPage() {
+
+        await loadSavedCareers();
+
+        await loadCareers();
+    }
+
+
+    initializeCareersPage();
+
+</script>
 </body>
 </html>
