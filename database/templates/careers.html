@@ -9,7 +9,7 @@
     <h1>Career Guidance</h1>
 
     <form method="get" action="/careers">
-        <input type="text" name="q" placeholder="Search title, interest, code..." value="{{ q or '' }}">
+        <input type="text" name="q" placeholder="Search title, sector, code..." value="{{ q or '' }}">
         <button type="submit">Search</button>
     </form>
 
@@ -17,7 +17,7 @@
 
     <div class="career-card">
 
-        <h2>{{ row["title"] }}</h2>
+        <h2>{{ row["career_title"] }}</h2>
 
         <p>
             <strong>O*NET-SOC Code:</strong>
@@ -25,18 +25,27 @@
         </p>
 
         <p>
-            <strong>Interest / Element:</strong>
-            {{ row["element_name"] }}
+            <strong>Sector:</strong>
+            {{ row["sector"] }}
         </p>
 
         <p>
-            <strong>Scale:</strong>
-            {{ row["scale_name"] }}
+            <strong>Salary:</strong>
+            {{ row["salary_range"] }}
         </p>
 
         <p>
-            <strong>Data Value:</strong>
-            {{ row["data_value"] }}
+            <strong>Demand:</strong>
+            {{ row["demand_level"] }}
+        </p>
+
+        <p>
+            <strong>Skills:</strong>
+            {{ row["important_skills"] }}
+        </p>
+
+        <p>
+            {{ row["short_description"] }}
         </p>
 
     </div>

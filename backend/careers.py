@@ -44,23 +44,30 @@ RIASEC_MAPPING = {
 
 def load_career_data():
 
+    if not os.path.exists(CAREER_DB):
+        return []
+
     conn = sqlite3.connect(CAREER_DB)
 
     conn.row_factory = sqlite3.Row
 
-    rows = conn.execute(
-        """
-        SELECT
-            onet_soc_code,
-            title,
-            element_id,
-            element_name,
-            scale_id,
-            scale_name,
-            data_value
-        FROM career_interest
-        """
-    ).fetchall()
+    try:
+        rows = conn.execute(
+            """
+            SELECT
+                onet_soc_code,
+                title,
+                element_id,
+                element_name,
+                scale_id,
+                scale_name,
+                data_value
+            FROM career_interest
+            """
+        ).fetchall()
+    except sqlite3.OperationalError:
+        # Table missing (e.g. career.db rebuilt from CSV only)
+        rows = []
 
     conn.close()
 
@@ -239,6 +246,15 @@ def career_matches():
         career_profiles = build_career_profiles(
             rows
         )
+
+        if not career_profiles:
+
+            return jsonify({
+                "success": False,
+                "message":
+                    "Career interest data is not available. "
+                    "Please contact support."
+            }), 503
 
         recommendations = []
 

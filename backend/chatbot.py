@@ -11,7 +11,7 @@ chatbot_bp = Blueprint("chatbot", __name__)
 
 
 # ============================================================
-# DATABASE PATH (career.db built from xlsx)
+# DATABASE PATH (career.db built from the CSV import)
 # ============================================================
 
 BASE_DIR = os.path.dirname(
@@ -25,8 +25,22 @@ CAREER_DB = os.path.join(BASE_DIR, "database", "career.db")
 # SMART REPLY: search real careers from career.db
 # ============================================================
 
+def table_exists(conn, table):
+    row = conn.execute(
+        "SELECT name FROM sqlite_master WHERE type='table' AND name=?",
+        (table,),
+    ).fetchone()
+    return row is not None
+
+
 def search_careers(keyword, limit=5):
-    """Search career titles / interests in career.db."""
+    """Search careers in career.db.
+
+    Queries both tables:
+    - `careers`        -> CSV data (career_title, sector, skills, ...)
+    - `career_interest` -> RIASEC data (title, element_name, ...)
+    Results are merged, CSV rows first.
+    """
 
     if not os.path.exists(CAREER_DB):
         return []
@@ -36,11 +50,40 @@ def search_careers(keyword, limit=5):
         conn.row_factory = sqlite3.Row
 
         like = f"%{keyword}%"
+        results = []
+        seen = set()
 
-        try:
+        # 1) New CSV table (career listings)
+        if table_exists(conn, "careers"):
             rows = conn.execute(
                 """
-                SELECT title, element_name, scale_name, data_value
+                SELECT career_title AS title,
+                       sector,
+                       short_description,
+                       important_skills,
+                       onet_soc_code
+                FROM careers
+                WHERE career_title LIKE ?
+                   OR sector LIKE ?
+                   OR short_description LIKE ?
+                   OR important_skills LIKE ?
+                   OR common_job_roles LIKE ?
+                ORDER BY career_title
+                LIMIT ?
+                """,
+                (like, like, like, like, like, limit),
+            ).fetchall()
+            for r in rows:
+                title = r["title"]
+                if title and title.lower() not in seen:
+                    seen.add(title.lower())
+                    results.append(dict(r))
+
+        # 2) Legacy RIASEC table (interest-based suggestions)
+        if len(results) < limit and table_exists(conn, "career_interest"):
+            rows = conn.execute(
+                """
+                SELECT title, element_name, data_value
                 FROM career_interest
                 WHERE title LIKE ? OR element_name LIKE ?
                 ORDER BY data_value DESC
@@ -48,50 +91,54 @@ def search_careers(keyword, limit=5):
                 """,
                 (like, like, limit),
             ).fetchall()
-            result = [dict(r) for r in rows]
-            conn.close()
-            return result
-        except sqlite3.OperationalError:
-            conn.close()
+            for r in rows:
+                title = r["title"]
+                if title and title.lower() not in seen:
+                    seen.add(title.lower())
+                    results.append(dict(r))
 
-        conn = sqlite3.connect(CAREER_DB)
-        rows = conn.execute(
-            """
-            SELECT Title, "Element Name", "Scale Name", "Data Value"
-            FROM career_interest
-            WHERE Title LIKE ? OR "Element Name" LIKE ?
-            LIMIT ?
-            """,
-            (like, like, limit),
-        ).fetchall()
         conn.close()
-        return [
-            {
-                "title": r[0],
-                "element_name": r[1],
-                "scale_name": r[2],
-                "data_value": r[3],
-            }
-            for r in rows
-        ]
+        return results[:limit]
 
     except Exception as error:
         print("Career search error:", error)
         return []
 
 
-def distinct_values(column, limit=8):
-    """Get example values for suggestions."""
+def distinct_values(kind, limit=8):
+    """Example values for suggestions.
+
+    kind='title'    -> career titles (CSV `careers` table first)
+    kind='interest' -> RIASEC element names from `career_interest`
+    """
     if not os.path.exists(CAREER_DB):
         return []
     try:
         conn = sqlite3.connect(CAREER_DB)
-        rows = conn.execute(
-            f'SELECT DISTINCT "{column}" FROM career_interest LIMIT ?',
-            (limit,),
-        ).fetchall()
+
+        if kind == "title":
+            if table_exists(conn, "careers"):
+                rows = conn.execute(
+                    "SELECT DISTINCT career_title FROM careers LIMIT ?",
+                    (limit,),
+                ).fetchall()
+                values = [r[0] for r in rows if r[0]]
+                if values:
+                    conn.close()
+                    return values
+
+        # fallback / interest kind: RIASEC element names
+        if table_exists(conn, "career_interest"):
+            column = "element_name" if kind == "interest" else "title"
+            rows = conn.execute(
+                f'SELECT DISTINCT "{column}" FROM career_interest LIMIT ?',
+                (limit,),
+            ).fetchall()
+            conn.close()
+            return [r[0] for r in rows if r[0]]
+
         conn.close()
-        return [r[0] for r in rows if r[0]]
+        return []
     except Exception:
         return []
 
@@ -124,7 +171,7 @@ def chatbot_response(message):
         )
 
     if "help" in text or "what can you" in text or "option" in text:
-        interests = distinct_values("element_name") or distinct_values("Element Name")
+        interests = distinct_values("interest")
         hint = f" Try interests like: {', '.join(interests[:5])}." if interests else ""
         return (
             "Here's what I can do:\n"
@@ -177,18 +224,30 @@ def chatbot_response(message):
             return desc
 
     search_keyword = None
-    for prefix in ("careers for ", "career for ", "jobs for ", "jobs in ", "suggest ", "show "):
+    for prefix in (
+        "careers for ", "career for ", "jobs for ", "jobs in ",
+        "careers in ", "career in ", "suggest ", "show ",
+    ):
         if prefix in text:
             search_keyword = text.split(prefix, 1)[1].strip(" ?.")
             break
 
     # Strip filler words: "artistic people" -> "artistic"
     if search_keyword:
-        for filler in (" people", " persons", " person", " jobs", " careers", " roles"):
+        for filler in (
+            " people", " persons", " person", " jobs", " job",
+            " careers", " career", " roles", " role",
+        ):
             if search_keyword.endswith(filler):
                 search_keyword = search_keyword[: -len(filler)].strip()
+        # Strip leading articles: "a career" -> "", "the sector" -> "sector"
+        for article in ("a ", "an ", "the ", "some ", "me "):
+            if search_keyword.startswith(article):
+                search_keyword = search_keyword[len(article):].strip()
+        if search_keyword in ("", "a", "an", "the", "some", "me"):
+            search_keyword = None
         # If multi-word still, try each interest word inside it first
-        if " " in search_keyword:
+        if search_keyword and " " in search_keyword:
             for key in INTEREST_INFO:
                 if key in search_keyword:
                     search_keyword = key
@@ -213,7 +272,10 @@ def chatbot_response(message):
     if search_keyword:
         results = search_careers(search_keyword, limit=5)
         if results:
-            lines = [f"- {r.get('title', '?')} ({r.get('element_name', '')})" for r in results]
+            lines = [
+                f"- {r.get('title', '?')} ({r.get('sector') or r.get('element_name') or ''})"
+                for r in results
+            ]
             return (
                 f"Top careers matching '{search_keyword}':\n"
                 + "\n".join(lines)
