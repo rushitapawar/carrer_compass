@@ -5,7 +5,8 @@ from database import (
     create_users_table,
     create_assessments_table,
     create_profiles_table,
-    create_saved_careers_table
+    create_saved_careers_table,
+    create_contact_messages_table
 )
 
 from auth import auth_bp
@@ -14,6 +15,7 @@ from dashboard import dashboard
 from analysis import analysis_bp
 from careers import careers_bp
 from favourites import favourites_bp
+from contact import contact_bp
 
 
 # ============================================================
@@ -50,6 +52,9 @@ create_users_table()
 create_assessments_table()
 create_profiles_table()
 create_saved_careers_table()
+create_contact_messages_table()
+
+
 
 # ============================================================
 # REGISTER BLUEPRINTS
@@ -61,6 +66,7 @@ app.register_blueprint(dashboard)
 app.register_blueprint(analysis_bp)
 app.register_blueprint(careers_bp)
 app.register_blueprint(favourites_bp)
+app.register_blueprint(contact_bp)
 
 
 

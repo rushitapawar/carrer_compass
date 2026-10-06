@@ -724,12 +724,13 @@ footer {
 <script>
 const contactForm = document.getElementById("contactForm");
 
-contactForm.addEventListener("submit", function(event) {
+contactForm.addEventListener("submit", async function(event) {
+
     event.preventDefault();
 
     const name = document.getElementById("name").value.trim();
     const email = document.getElementById("email").value.trim();
-    const subject = document.getElementById("subject").value;
+    const subject = document.getElementById("subject").value.trim();
     const message = document.getElementById("message").value.trim();
 
     if (!name || !email || !subject || !message) {
@@ -737,13 +738,48 @@ contactForm.addEventListener("submit", function(event) {
         return;
     }
 
-    alert(
-        "Thank you, " + name + "!\n\n" +
-        "Your message form is working as a demo. " +
-        "To actually deliver your message, a backend or form service is still needed."
-    );
+    try {
 
-    contactForm.reset();
+        const response = await fetch("/api/contact", {
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                name: name,
+                email: email,
+                subject: subject,
+                message: message
+            })
+        });
+
+        const result = await response.json();
+
+        if (!result.success) {
+            alert(
+                result.message ||
+                "Unable to send your message."
+            );
+            return;
+        }
+
+        alert(
+            "Thank you! Your message has been sent successfully."
+        );
+
+        contactForm.reset();
+
+    } catch (error) {
+
+        console.error("Contact form error:", error);
+
+        alert(
+            "Unable to connect to the server. Please try again."
+        );
+    }
+
 });
 </script>
 

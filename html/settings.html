@@ -1522,95 +1522,139 @@
            SAVED CAREER COUNT
         ===================================== */
 
-        function updateSavedCareerCount() {
+       async function updateSavedCareerCount() {
 
-            let saved = [];
+    const text =
+        document.getElementById("savedCareerText");
 
-            try {
+    if (!text) {
+        return;
+    }
 
-                saved =
-                    JSON.parse(
-                        localStorage.getItem(
-                            "savedCareers"
-                        )
-                    ) || [];
+    try {
 
-            } catch {
-
-                saved = [];
-
+        const response = await fetch(
+            "/api/saved-careers",
+            {
+                credentials: "include"
             }
+        );
 
+        const result = await response.json();
 
-            const text =
-                document.getElementById(
-                    "savedCareerText"
-                );
+        if (!result.success) {
 
+            text.textContent =
+                "Unable to load saved career data.";
 
-            if (saved.length === 0) {
-
-                text.textContent =
-                    "You currently have no saved careers.";
-
-            } else {
-
-                text.textContent =
-                    `You have ${saved.length} saved career${
-                        saved.length === 1 ? "" : "s"
-                    } in your Career Compass profile.`;
-
-            }
-
+            return;
         }
 
+        const savedCount =
+            result.careers.length;
+
+        if (savedCount === 0) {
+
+            text.textContent =
+                "You currently have no saved careers.";
+
+        } else {
+
+            text.textContent =
+                `You have ${savedCount} saved career${
+                    savedCount === 1 ? "" : "s"
+                } in your Career Compass profile.`;
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Saved career count error:",
+            error
+        );
+
+        text.textContent =
+            "Unable to load saved career data.";
+    }
+}
 
         /* =====================================
            CLEAR SAVED CAREERS
         ===================================== */
 
-        function clearSavedCareers() {
+        async function clearSavedCareers() {
 
-            const saved =
-                JSON.parse(
-                    localStorage.getItem(
-                        "savedCareers"
-                    ) || "[]"
-                );
+    try {
 
-
-            if (saved.length === 0) {
-
-                alert(
-                    "You don't have any saved careers."
-                );
-
-                return;
-
+        const checkResponse = await fetch(
+            "/api/saved-careers",
+            {
+                credentials: "include"
             }
+        );
 
+        const checkResult = await checkResponse.json();
 
-            const confirmDelete =
-                confirm(
-                    "Are you sure you want to remove all saved careers?"
-                );
+        if (!checkResult.success) {
+            alert(
+                checkResult.message ||
+                "Unable to load saved careers."
+            );
+            return;
+        }
 
+        if (checkResult.careers.length === 0) {
 
-            if (!confirmDelete) {
-                return;
-            }
-
-
-            localStorage.removeItem(
-                "savedCareers"
+            alert(
+                "You don't have any saved careers."
             );
 
-
-            updateSavedCareerCount();
-
-            showSaveMessage();
-
+            return;
         }
+
+        const confirmDelete = confirm(
+            "Are you sure you want to remove all saved careers?"
+        );
+
+        if (!confirmDelete) {
+            return;
+        }
+
+        const response = await fetch(
+            "/api/clear-saved-careers",
+            {
+                method: "POST",
+                credentials: "include"
+            }
+        );
+
+        const result = await response.json();
+
+        if (!result.success) {
+
+            alert(
+                result.message ||
+                "Unable to clear saved careers."
+            );
+
+            return;
+        }
+
+        updateSavedCareerCount();
+        showSaveMessage();
+
+    } catch (error) {
+
+        console.error(
+            "Clear saved careers error:",
+            error
+        );
+
+        alert(
+            "Unable to connect to the server."
+        );
+    }
+}
 
 
         /* =====================================

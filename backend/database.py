@@ -1,7 +1,6 @@
 import sqlite3
 import os
 
-
 DB_PATH = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
     "userdb.db"
@@ -9,16 +8,12 @@ DB_PATH = os.path.join(
 
 
 def get_db_connection():
-
     conn = sqlite3.connect(DB_PATH)
-
     conn.row_factory = sqlite3.Row
-
     return conn
 
 
 def create_users_table():
-
     conn = get_db_connection()
 
     conn.execute("""
@@ -31,12 +26,10 @@ def create_users_table():
     """)
 
     conn.commit()
-
     conn.close()
 
 
 def create_assessments_table():
-
     conn = get_db_connection()
 
     conn.execute("""
@@ -50,12 +43,10 @@ def create_assessments_table():
     """)
 
     conn.commit()
-
     conn.close()
 
 
 def create_profiles_table():
-
     conn = get_db_connection()
 
     conn.execute("""
@@ -74,12 +65,10 @@ def create_profiles_table():
     """)
 
     conn.commit()
-
     conn.close()
 
 
 def create_saved_careers_table():
-
     conn = get_db_connection()
 
     conn.execute("""
@@ -96,5 +85,22 @@ def create_saved_careers_table():
     """)
 
     conn.commit()
+    conn.close()
 
+
+def create_contact_messages_table():
+    conn = get_db_connection()
+
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS contact_messages (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            email TEXT NOT NULL,
+            subject TEXT NOT NULL,
+            message TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+
+    conn.commit()
     conn.close()
