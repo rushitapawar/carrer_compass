@@ -803,7 +803,7 @@
             -->
 
             <img
-                src="../images/logo.png"
+                src="/images/logo.png"
                 alt="Career Compass AI Logo"
                 onerror="
                     this.style.display='none';
@@ -1277,7 +1277,7 @@
             .getElementById("signupForm")
             .addEventListener(
                 "submit",
-                function(event) {
+                async function(event) {
 
                     event.preventDefault();
 
@@ -1369,42 +1369,126 @@
                     }
 
 
-                    const user = {
+                    // Split full name into first + last name
+                    // (backend requires both)
+                    const nameParts = name.split(/\s+/);
 
-                        name: name,
+                    const firstName = nameParts[0];
 
-                        email: email
+                    const lastName =
+                        nameParts.length > 1
+                            ? nameParts.slice(1).join(" ")
+                            : "";
 
-                    };
+                    if (lastName === "") {
 
+                        showMessage(
+                            "Please enter your first name and last name.",
+                            "error"
+                        );
 
-                    localStorage.setItem(
-                        "careerCompassUser",
-                        JSON.stringify(user)
-                    );
+                        return;
 
-
-                    localStorage.setItem(
-                        "isLoggedIn",
-                        "true"
-                    );
-
-
-                    showMessage(
-                        "Account created successfully! Redirecting...",
-                        "success"
-                    );
+                    }
 
 
-                    setTimeout(
-                        function() {
+                    // Normalize email (trimmed + lowercase)
+                    // so login matches the same way
+                    const cleanEmail = email.trim().toLowerCase();
 
-                            window.location.href =
-                                "profile.html";
 
-                        },
-                        900
-                    );
+                    try {
+
+                        const response = await fetch("/api/signup", {
+
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+
+                            body: JSON.stringify({
+
+                                firstName: firstName,
+
+                                lastName: lastName,
+
+                                email: cleanEmail,
+
+                                password: password
+
+                            })
+
+                        });
+
+
+                        const result = await response.json();
+
+
+                        if (!result.success) {
+
+                            showMessage(
+                                result.message ||
+                                "Unable to create account.",
+                                "error"
+                            );
+
+                            return;
+
+                        }
+
+
+                        const user = {
+
+                            name: name,
+
+                            email: cleanEmail
+
+                        };
+
+
+                        localStorage.setItem(
+                            "careerCompassUser",
+                            JSON.stringify(user)
+                        );
+
+
+                        localStorage.setItem(
+                            "isLoggedIn",
+                            "true"
+                        );
+
+
+                        showMessage(
+                            "Account created successfully! Redirecting...",
+                            "success"
+                        );
+
+
+                        setTimeout(
+                            function() {
+
+                                window.location.href =
+                                    "login.html";
+
+                            },
+                            900
+                        );
+
+
+                    } catch (error) {
+
+                        console.error(
+                            "Signup error:",
+                            error
+                        );
+
+                        showMessage(
+                            "Unable to connect to the server. Please make sure Flask is running.",
+                            "error"
+                        );
+
+                    }
 
                 }
             );

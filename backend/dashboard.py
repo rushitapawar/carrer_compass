@@ -7,19 +7,19 @@ dashboard = Blueprint("dashboard", __name__)
 @dashboard.route("/api/dashboard", methods=["GET"])
 def get_dashboard():
 
-    # Check login session
-    if "user_id" not in session:
+    # ============================================================
+    # ONLY THE LOGGED-IN USER'S DATA IS RETURNED
+    # ============================================================
 
+    user_id = session.get("user_id")
+    if not user_id:
         return jsonify({
             "success": False,
             "message": "Please login first."
         }), 401
 
 
-    user_id = session["user_id"]
-
     conn = get_db_connection()
-
 
     try:
 

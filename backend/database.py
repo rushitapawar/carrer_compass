@@ -13,6 +13,10 @@ def get_db_connection():
     return conn
 
 
+# ============================================================
+# USERS TABLE
+# ============================================================
+
 def create_users_table():
     conn = get_db_connection()
 
@@ -28,6 +32,10 @@ def create_users_table():
     conn.commit()
     conn.close()
 
+
+# ============================================================
+# ASSESSMENTS TABLE
+# ============================================================
 
 def create_assessments_table():
     conn = get_db_connection()
@@ -45,6 +53,10 @@ def create_assessments_table():
     conn.commit()
     conn.close()
 
+
+# ============================================================
+# PROFILES TABLE
+# ============================================================
 
 def create_profiles_table():
     conn = get_db_connection()
@@ -68,6 +80,10 @@ def create_profiles_table():
     conn.close()
 
 
+# ============================================================
+# SAVED CAREERS TABLE
+# ============================================================
+
 def create_saved_careers_table():
     conn = get_db_connection()
 
@@ -87,6 +103,10 @@ def create_saved_careers_table():
     conn.commit()
     conn.close()
 
+
+# ============================================================
+# CONTACT MESSAGES TABLE
+# ============================================================
 
 def create_contact_messages_table():
     conn = get_db_connection()

@@ -5,1336 +5,1456 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Explore Job Roles | Career Compass AI</title>
+    <title>Career Details | Career Compass AI</title>
 
     <style>
-
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
 
         body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f7f5f2;
-            color: #443846;
+            font-family: "DM Sans", Arial, sans-serif;
+            background: #f8f5f2;
+            color: #342d3b;
+            min-height: 100vh;
         }
 
-        /* ================= NAVBAR ================= */
+        /* =========================
+           NAVBAR
+        ========================= */
 
         .navbar {
-            height: 76px;
-            background: white;
-            border-bottom: 1px solid #ebe5e3;
+            height: 82px;
+            background: rgba(255, 255, 255, 0.98);
+            border-bottom: 1px solid #e7dfdb;
 
             display: flex;
             align-items: center;
             justify-content: space-between;
 
-            padding: 0 7%;
+            padding: 0 55px;
+
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         .brand {
+            width: 175px;
+            height: 55px;
+
+            display: flex;
+            align-items: center;
+
             text-decoration: none;
-            color: #443846;
-            font-size: 24px;
-            font-weight: bold;
+            flex-shrink: 0;
         }
 
-        .brand span {
-            color: #e998b3;
+        .brand img {
+            width: 175px;
+            height: 55px;
+
+            max-width: 175px;
+            max-height: 55px;
+
+            object-fit: contain;
+            display: block;
         }
 
         .nav-links {
             display: flex;
-            gap: 24px;
             align-items: center;
+            gap: 28px;
         }
 
         .nav-links a {
             text-decoration: none;
             color: #756d76;
+
             font-size: 14px;
-            font-weight: bold;
+            font-weight: 600;
+
+            transition: 0.25s ease;
         }
 
         .nav-links a:hover {
-            color: #e998b3;
+            color: #443846;
         }
 
-        /* ================= MAIN ================= */
+        .profile-btn {
+            width: 43px;
+            height: 43px;
+
+            border-radius: 50%;
+
+            background: #443846;
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            text-decoration: none;
+
+            font-size: 15px;
+            font-weight: 700;
+
+            box-shadow: 0 7px 18px rgba(68, 56, 70, 0.18);
+
+            transition: 0.25s ease;
+        }
+
+        .profile-btn:hover {
+            background: #322936;
+            transform: translateY(-2px);
+        }
+
+        /* =========================
+           MAIN PAGE
+        ========================= */
 
         .page {
-            width: min(1200px, 90%);
-            margin: auto;
-            padding: 55px 0 80px;
+            max-width: 1180px;
+            margin: 0 auto;
+
+            padding: 45px 35px 80px;
         }
 
-        /* ================= HERO ================= */
+        /* =========================
+           BACK BUTTON
+        ========================= */
 
-        .hero {
-            text-align: center;
-            max-width: 760px;
-            margin: auto auto 40px;
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            text-decoration: none;
+
+            color: #756d76;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            margin-bottom: 28px;
+
+            transition: 0.2s ease;
         }
 
-        .small-label {
-            display: inline-block;
-            background: #f4e4ea;
-            color: #805269;
-            padding: 9px 17px;
+        .back-btn:hover {
+            color: #443846;
+            transform: translateX(-3px);
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .career-hero {
+            background: white;
+
+            border: 1px solid #e6dedb;
+
+            border-radius: 28px;
+
+            padding: 42px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 35px;
+
+            box-shadow: 0 12px 35px rgba(68, 56, 70, 0.07);
+
+            position: relative;
+            overflow: hidden;
+
+            margin-bottom: 28px;
+        }
+
+        .career-hero::after {
+            content: "";
+
+            position: absolute;
+
+            width: 260px;
+            height: 260px;
+
+            border-radius: 50%;
+
+            background: #f6e4ea;
+
+            right: -100px;
+            top: -110px;
+
+            opacity: 0.65;
+        }
+
+        .career-hero-content {
+            position: relative;
+            z-index: 2;
+
+            max-width: 700px;
+        }
+
+        .sector-label {
+            display: inline-flex;
+
+            padding: 8px 14px;
+
             border-radius: 30px;
-            font-size: 12px;
-            font-weight: bold;
-            letter-spacing: 1px;
+
+            background: #f7e8ed;
+
+            color: #9a6074;
+
+            font-size: 11px;
+            font-weight: 800;
+
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+
             margin-bottom: 18px;
         }
 
-        .hero h1 {
-            font-family: Georgia, serif;
-            font-size: 46px;
-            margin: 0 0 15px;
-        }
+        .career-hero h1 {
+            font-family: Georgia, "Times New Roman", serif;
 
-        .hero h1 span {
-            color: #e998b3;
-        }
-
-        .hero p {
-            color: #756d76;
-            line-height: 1.7;
-            margin: 0;
-        }
-
-        /* ================= SEARCH ================= */
-
-        .search-box {
-            max-width: 750px;
-            margin: 35px auto 25px;
-            position: relative;
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 18px;
-        }
-
-        .search-box input {
-            width: 100%;
-            padding: 18px 22px 18px 52px;
-            border: 1px solid #ddd5d7;
-            border-radius: 30px;
-            outline: none;
-            font-size: 15px;
-            background: white;
             color: #443846;
+
+            font-size: clamp(38px, 5vw, 58px);
+
+            line-height: 1.1;
+
+            margin-bottom: 16px;
         }
 
-        .search-box input:focus {
-            border-color: #e998b3;
-        }
-
-        /* ================= FILTERS ================= */
-
-        .filters {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 45px;
-        }
-
-        .filter-btn {
-            border: 1px solid #ddd5d7;
-            background: white;
+        .career-hero p {
             color: #756d76;
-            padding: 11px 17px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: bold;
+
+            font-size: 15px;
+
+            line-height: 1.75;
+
+            max-width: 680px;
         }
 
-        .filter-btn:hover,
-        .filter-btn.active {
+        .career-icon {
+            width: 120px;
+            height: 120px;
+
+            flex-shrink: 0;
+
+            border-radius: 30px;
+
+            background: #f8e9ee;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 55px;
+
+            position: relative;
+            z-index: 2;
+
+            box-shadow: inset 0 0 0 1px #eedce2;
+        }
+
+        /* =========================
+           ACTIONS
+        ========================= */
+
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            margin-top: 25px;
+        }
+
+        .btn {
+            text-decoration: none;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 11px;
+
+            padding: 12px 18px;
+
+            font-size: 13px;
+            font-weight: 700;
+
+            border: none;
+
+            cursor: pointer;
+
+            transition: 0.25s ease;
+        }
+
+        .btn-primary {
             background: #443846;
             color: white;
-            border-color: #443846;
+
+            box-shadow: 0 7px 18px rgba(68, 56, 70, 0.14);
         }
 
-        /* ================= RESULTS INFO ================= */
-
-        .results-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
+        .btn-primary:hover {
+            background: #322936;
+            transform: translateY(-2px);
         }
 
-        .results-info h2 {
-            font-family: Georgia, serif;
-            font-size: 30px;
-            margin: 0;
+        .btn-secondary {
+            background: #f7f2f0;
+            color: #443846;
+
+            border: 1px solid #e4dcd8;
         }
 
-        .results-count {
-            color: #756d76;
-            font-size: 14px;
+        .btn-secondary:hover {
+            background: #eee7e4;
         }
 
-        /* ================= JOB GRID ================= */
+        /* =========================
+           CONTENT GRID
+        ========================= */
 
-        .job-grid {
+        .details-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
+
+            grid-template-columns: 2fr 1fr;
+
+            gap: 25px;
         }
 
-        .job-card {
+        .left-column,
+        .right-column {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* =========================
+           CARD
+        ========================= */
+
+        .card {
             background: white;
-            border: 1px solid #ebe5e3;
-            border-radius: 25px;
-            padding: 24px;
-            transition: 0.25s;
+
+            border: 1px solid #e6dedb;
+
+            border-radius: 22px;
+
+            padding: 30px;
+
+            box-shadow: 0 8px 25px rgba(68, 56, 70, 0.05);
         }
 
-        .job-card:hover {
-            transform: translateY(-5px);
-            border-color: #e998b3;
-            box-shadow: 0 15px 35px rgba(68, 56, 70, 0.08);
+        .card h2 {
+            font-family: Georgia, "Times New Roman", serif;
+
+            font-size: 24px;
+
+            color: #443846;
+
+            margin-bottom: 20px;
         }
 
-        .job-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 10px;
-        }
-
-        .job-icon {
-            width: 58px;
-            height: 58px;
-            border-radius: 18px;
-            background: #f4e4ea;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            font-size: 28px;
-        }
-
-        .sector-badge {
-            background: #faf5f7;
-            color: #c46d8c;
-            padding: 7px 10px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: bold;
-        }
-
-        .job-card h3 {
-            font-size: 21px;
-            margin: 20px 0 9px;
-        }
-
-        .job-card p {
+        .card p {
             color: #756d76;
+
             font-size: 14px;
-            line-height: 1.6;
-            min-height: 65px;
+
+            line-height: 1.75;
         }
+
+        /* =========================
+           SKILLS
+        ========================= */
 
         .skills {
             display: flex;
+
             flex-wrap: wrap;
-            gap: 7px;
-            margin: 18px 0;
-        }
 
-        .skill {
-            background: #f7f5f2;
-            color: #756d76;
-            padding: 6px 10px;
-            border-radius: 20px;
-            font-size: 11px;
-        }
-
-        .job-actions {
-            display: flex;
             gap: 10px;
         }
 
-        .details-btn {
-            flex: 1;
-            border: none;
-            background: #443846;
-            color: white;
-            padding: 12px;
-            border-radius: 20px;
-            font-weight: bold;
-            cursor: pointer;
+        .skill-tag {
+            background: #f8efec;
+
+            color: #695d65;
+
+            border: 1px solid #eadfdc;
+
+            border-radius: 30px;
+
+            padding: 9px 13px;
+
+            font-size: 12px;
+
+            font-weight: 600;
         }
 
-        .details-btn:hover {
-            background: #e998b3;
+        /* =========================
+           INFO LIST
+        ========================= */
+
+        .info-list {
+            display: flex;
+            flex-direction: column;
+
+            gap: 16px;
         }
 
-        .save-btn {
-            width: 46px;
-            border: none;
-            background: #f4e4ea;
-            border-radius: 15px;
-            font-size: 18px;
-            cursor: pointer;
+        .info-item {
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 13px;
+
+            padding-bottom: 16px;
+
+            border-bottom: 1px solid #eee7e4;
         }
 
-        .save-btn.saved {
-            background: #e998b3;
-            color: white;
+        .info-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
         }
 
-        /* ================= NO RESULTS ================= */
+        .info-icon {
+            width: 37px;
+            height: 37px;
 
-        .no-results {
-            display: none;
-            text-align: center;
-            padding: 60px 20px;
-            color: #756d76;
+            border-radius: 11px;
+
+            background: #f7e8ed;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            flex-shrink: 0;
+
+            font-size: 16px;
         }
 
-        .no-results h3 {
-            font-family: Georgia, serif;
+        .info-text span {
+            display: block;
+
+            color: #91868e;
+
+            font-size: 11px;
+
+            margin-bottom: 3px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.4px;
+        }
+
+        .info-text strong {
             color: #443846;
-            font-size: 25px;
+
+            font-size: 13px;
         }
 
-        /* ================= RESPONSIVE ================= */
+        /* =========================
+           EDUCATION
+        ========================= */
 
-        @media (max-width: 950px) {
+        .education-step {
+            display: flex;
 
-            .job-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+            gap: 15px;
 
+            margin-bottom: 20px;
         }
 
-        @media (max-width: 650px) {
+        .education-step:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-number {
+            width: 35px;
+            height: 35px;
+
+            border-radius: 50%;
+
+            background: #443846;
+
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            flex-shrink: 0;
+        }
+
+        .education-step h3 {
+            font-size: 14px;
+
+            color: #443846;
+
+            margin-bottom: 5px;
+        }
+
+        .education-step p {
+            font-size: 12px;
+            line-height: 1.55;
+        }
+
+        /* =========================
+           OPPORTUNITY BOX
+        ========================= */
+
+        .opportunity {
+            background: #443846;
+
+            color: white;
+
+            border-radius: 22px;
+
+            padding: 28px;
+        }
+
+        .opportunity h2 {
+            color: white;
+
+            font-family: Georgia, "Times New Roman", serif;
+
+            font-size: 22px;
+
+            margin-bottom: 10px;
+        }
+
+        .opportunity p {
+            color: #ddd2d8;
+
+            font-size: 13px;
+
+            line-height: 1.65;
+
+            margin-bottom: 20px;
+        }
+
+        .opportunity .btn {
+            background: #f2b5c8;
+            color: #443846;
+        }
+
+        .opportunity .btn:hover {
+            background: #f6c7d6;
+        }
+
+        /* =========================
+           EMPTY / ERROR STATE
+        ========================= */
+
+        .empty-state {
+            background: white;
+
+            border: 1px solid #e6dedb;
+
+            border-radius: 25px;
+
+            padding: 70px 30px;
+
+            text-align: center;
+
+            box-shadow: 0 10px 30px rgba(68, 56, 70, 0.06);
+        }
+
+        .empty-icon {
+            width: 75px;
+            height: 75px;
+
+            margin: 0 auto 20px;
+
+            border-radius: 50%;
+
+            background: #f8e9ee;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 30px;
+        }
+
+        .empty-state h2 {
+            font-family: Georgia, "Times New Roman", serif;
+
+            color: #443846;
+
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            color: #756d76;
+
+            max-width: 520px;
+
+            margin: 0 auto 22px;
+
+            font-size: 14px;
+
+            line-height: 1.7;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            border-top: 1px solid #e4dcd8;
+
+            background: white;
+
+            padding: 25px;
+
+            text-align: center;
+
+            color: #8a8188;
+
+            font-size: 12px;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 900px) {
 
             .navbar {
-                padding: 0 5%;
+                padding: 0 25px;
             }
 
-            .nav-links a:last-child {
+            .nav-links {
+                gap: 17px;
+            }
+
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .career-hero {
+                padding: 32px;
+            }
+        }
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                height: 72px;
+                padding: 0 18px;
+            }
+
+            .brand,
+            .brand img {
+                width: 145px;
+                height: 48px;
+            }
+
+            .nav-links {
                 display: none;
             }
 
             .page {
-                padding-top: 40px;
+                padding: 35px 18px 60px;
             }
 
-            .hero h1 {
-                font-size: 36px;
-            }
-
-            .job-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .results-info {
+            .career-hero {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 7px;
             }
 
+            .career-icon {
+                width: 85px;
+                height: 85px;
+                font-size: 38px;
+            }
+
+            .career-hero h1 {
+                font-size: 39px;
+            }
+
+            .hero-actions {
+                flex-wrap: wrap;
+            }
+
+            .hero-actions .btn {
+                flex: 1;
+            }
         }
 
+        @media (max-width: 450px) {
+
+            .career-hero {
+                padding: 25px;
+            }
+
+            .card {
+                padding: 23px;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .hero-actions .btn {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 
-
 <body>
 
-    <!-- ================= NAVBAR ================= -->
+    <!-- =========================
+         NAVBAR
+    ========================= -->
 
-    <nav class="navbar">
+    <header class="navbar">
 
-        <a href="./index.html" class="brand">
-            Career Compass <span>AI ✦</span>
+        <a href="dashboard.html" class="brand">
+
+            <img
+                src="../images/logo.png"
+                alt="Career Compass AI"
+            >
+
         </a>
 
-        <div class="nav-links">
-            <a href="./results.html">My Results</a>
-            <a href="./sectors.html">Explore Sectors</a>
-            <a href="./dashboard.html">Dashboard</a>
-        </div>
 
-    </nav>
+        <nav class="nav-links">
 
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="results.html">
+                Results
+            </a>
+
+            <a href="favourites.html">
+                Favourites
+            </a>
+
+            <a href="compare.html">
+                Compare
+            </a>
+
+            <a href="contact.html">
+                Contact
+            </a>
+
+        </nav>
+
+
+        <a
+            href="profile.html"
+            class="profile-btn"
+        >
+            A
+        </a>
+
+    </header>
+
+
+    <!-- =========================
+         MAIN
+    ========================= -->
 
     <main class="page">
 
-        <!-- ================= HERO ================= -->
+        <a
+            href="results.html"
+            class="back-btn"
+        >
+            ← Back to Career Results
+        </a>
 
-        <section class="hero">
 
-            <div class="small-label">
-                CAREER EXPLORATION
+        <!-- =========================
+             CAREER HERO
+        ========================= -->
+
+        <section
+            class="career-hero"
+            id="careerHero"
+        >
+
+            <div class="career-hero-content">
+
+                <div
+                    class="sector-label"
+                    id="sectorLabel"
+                >
+                    Career
+                </div>
+
+                <h1 id="careerTitle">
+                    Career Details
+                </h1>
+
+                <p id="careerDescription">
+                    Explore this career path and discover
+                    what it could look like for your future.
+                </p>
+
+
+                <div class="hero-actions">
+
+                    <button
+                        class="btn btn-primary"
+                        id="saveBtn"
+                        type="button"
+                    >
+                        ♡ Save Career
+                    </button>
+
+                    <a
+                        href="compare.html"
+                        class="btn btn-secondary"
+                    >
+                        Compare
+                    </a>
+
+                </div>
+
             </div>
 
-            <h1>
-                Explore <span>job roles</span>
-            </h1>
 
-            <p>
-                Discover career opportunities, explore the skills
-                they require and find roles that interest you.
-            </p>
+            <div
+                class="career-icon"
+                id="careerIcon"
+            >
+                ✦
+            </div>
 
         </section>
 
 
-        <!-- ================= SEARCH ================= -->
-
-        <div class="search-box">
-
-            <span class="search-icon">🔍</span>
-
-            <input
-                type="text"
-                id="searchInput"
-                placeholder="Search careers, skills or sectors..."
-            >
-
-        </div>
-
-
-        <!-- ================= FILTERS ================= -->
-
-        <div class="filters" id="filters">
-
-            <button class="filter-btn active" data-sector="all">
-                All
-            </button>
-
-            <button class="filter-btn" data-sector="technology">
-                💻 Technology
-            </button>
-
-            <button class="filter-btn" data-sector="creative">
-                🎨 Creative
-            </button>
-
-            <button class="filter-btn" data-sector="business">
-                📈 Business
-            </button>
-
-            <button class="filter-btn" data-sector="people">
-                🤝 People
-            </button>
-
-            <button class="filter-btn" data-sector="science">
-                🔬 Science
-            </button>
-
-            <button class="filter-btn" data-sector="law">
-                ⚖️ Law
-            </button>
-
-            <button class="filter-btn" data-sector="healthcare">
-                🏥 Healthcare
-            </button>
-
-            <button class="filter-btn" data-sector="hospitality">
-                🌍 Hospitality
-            </button>
-
-        </div>
-
-
-        <!-- ================= RESULTS ================= -->
-
-        <div class="results-info">
-
-            <h2 id="sectionTitle">
-                All Career Roles
-            </h2>
-
-            <span
-                class="results-count"
-                id="resultsCount"
-            >
-            </span>
-
-        </div>
-
+        <!-- =========================
+             DETAILS
+        ========================= -->
 
         <section
-            class="job-grid"
-            id="jobGrid"
-        ></section>
-
-
-        <section
-            class="no-results"
-            id="noResults"
+            class="details-grid"
+            id="detailsSection"
         >
 
-            <div style="font-size: 50px;">
-                🔎
+            <div class="left-column">
+
+                <!-- ABOUT -->
+
+                <article class="card">
+
+                    <h2>
+                        About This Career
+                    </h2>
+
+                    <p id="aboutCareer">
+                        This career offers an opportunity to build
+                        valuable skills and work in a field that
+                        matches your interests.
+                    </p>
+
+                </article>
+
+
+                <!-- SKILLS -->
+
+                <article class="card">
+
+                    <h2>
+                        Skills You May Need
+                    </h2>
+
+                    <div
+                        class="skills"
+                        id="skillsContainer"
+                    >
+
+                        <span class="skill-tag">
+                            Problem Solving
+                        </span>
+
+                        <span class="skill-tag">
+                            Communication
+                        </span>
+
+                        <span class="skill-tag">
+                            Creativity
+                        </span>
+
+                        <span class="skill-tag">
+                            Critical Thinking
+                        </span>
+
+                    </div>
+
+                </article>
+
+
+                <!-- EDUCATION -->
+
+                <article class="card">
+
+                    <h2>
+                        Education Path
+                    </h2>
+
+                    <div class="education-step">
+
+                        <div class="step-number">
+                            1
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Choose a Relevant Stream
+                            </h3>
+
+                            <p>
+                                Select subjects and an educational
+                                path related to the career you want
+                                to explore.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="education-step">
+
+                        <div class="step-number">
+                            2
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Build Your Knowledge
+                            </h3>
+
+                            <p>
+                                Develop the academic knowledge and
+                                practical skills required in the field.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="education-step">
+
+                        <div class="step-number">
+                            3
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Gain Practical Experience
+                            </h3>
+
+                            <p>
+                                Projects, internships and practical
+                                experience can help you understand
+                                the profession better.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
             </div>
 
-            <h3>No careers found</h3>
 
-            <p>
-                Try another search term or select a different sector.
-            </p>
+            <div class="right-column">
+
+                <!-- QUICK INFO -->
+
+                <article class="card">
+
+                    <h2>
+                        Quick Overview
+                    </h2>
+
+                    <div class="info-list">
+
+                        <div class="info-item">
+
+                            <div class="info-icon">
+                                🎓
+                            </div>
+
+                            <div class="info-text">
+
+                                <span>
+                                    Education
+                                </span>
+
+                                <strong id="educationInfo">
+                                    Relevant Degree
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <div class="info-icon">
+                                💼
+                            </div>
+
+                            <div class="info-text">
+
+                                <span>
+                                    Work Style
+                                </span>
+
+                                <strong id="workStyleInfo">
+                                    Professional
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <div class="info-icon">
+                                🌱
+                            </div>
+
+                            <div class="info-text">
+
+                                <span>
+                                    Growth
+                                </span>
+
+                                <strong>
+                                    Explore Opportunities
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <div class="info-icon">
+                                🧭
+                            </div>
+
+                            <div class="info-text">
+
+                                <span>
+                                    Field
+                                </span>
+
+                                <strong id="fieldInfo">
+                                    Career Field
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- CTA -->
+
+                <article class="opportunity">
+
+                    <h2>
+                        Explore Your Next Step
+                    </h2>
+
+                    <p>
+                        Save this career, compare it with other
+                        options or return to your results to explore
+                        more possibilities.
+                    </p>
+
+                    <a
+                        href="results.html"
+                        class="btn"
+                    >
+                        View More Careers →
+                    </a>
+
+                </article>
+
+            </div>
 
         </section>
 
     </main>
 
 
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <footer>
+
+        © 2026 Career Compass AI · Explore a future that fits you.
+
+    </footer>
+
+
     <script>
 
         /* =========================================
-           JOB ROLE DATABASE
+           CAREER DATA
         ========================================= */
 
-        const careers = [
+        const careerDatabase = {
 
-            /* ========== TECHNOLOGY ========== */
-
-            {
-                name: "Software Developer",
-                sector: "technology",
+            software: {
+                title: "Software Developer",
+                category: "Technology",
                 icon: "💻",
-                description: "Build software applications and solve technical problems.",
-                skills: ["Programming", "Problem Solving", "Git"]
+                description:
+                    "Design, build and maintain software applications that solve real-world problems.",
+                about:
+                    "Software developers create applications, websites and digital systems. The role combines logical thinking, problem solving and creativity.",
+                education: "Computer Science / IT",
+                workStyle: "Technology & Problem Solving",
+                skills: [
+                    "Programming",
+                    "Problem Solving",
+                    "Logical Thinking",
+                    "Communication",
+                    "Creativity"
+                ]
             },
 
-            {
-                name: "Web Developer",
-                sector: "technology",
-                icon: "🌐",
-                description: "Create websites and interactive web applications.",
-                skills: ["HTML", "CSS", "JavaScript"]
-            },
-
-            {
-                name: "Mobile App Developer",
-                sector: "technology",
-                icon: "📱",
-                description: "Build applications for Android and iOS devices.",
-                skills: ["Mobile Development", "UI", "Programming"]
-            },
-
-            {
-                name: "AI / ML Engineer",
-                sector: "technology",
-                icon: "🤖",
-                description: "Develop intelligent systems using artificial intelligence.",
-                skills: ["Python", "Machine Learning", "Data"]
-            },
-
-            {
-                name: "Data Analyst",
-                sector: "technology",
+            data: {
+                title: "Data Scientist",
+                category: "Technology",
                 icon: "📊",
-                description: "Analyze data and turn information into useful insights.",
-                skills: ["Excel", "SQL", "Analytics"]
+                description:
+                    "Use data, statistics and technology to discover patterns and support better decisions.",
+                about:
+                    "Data scientists work with large amounts of information to identify useful patterns, create models and communicate insights.",
+                education: "Data Science / Statistics / CS",
+                workStyle: "Analysis & Research",
+                skills: [
+                    "Statistics",
+                    "Python",
+                    "Data Analysis",
+                    "Critical Thinking",
+                    "Problem Solving"
+                ]
             },
 
-            {
-                name: "Data Scientist",
-                sector: "technology",
-                icon: "📈",
-                description: "Use data, statistics and programming to solve complex problems.",
-                skills: ["Python", "Statistics", "Machine Learning"]
-            },
-
-            {
-                name: "Cybersecurity Analyst",
-                sector: "technology",
-                icon: "🔐",
-                description: "Protect systems, networks and information from cyber threats.",
-                skills: ["Security", "Networking", "Analysis"]
-            },
-
-            {
-                name: "Cloud Engineer",
-                sector: "technology",
-                icon: "☁️",
-                description: "Design and manage cloud infrastructure and services.",
-                skills: ["Cloud", "Linux", "Networking"]
-            },
-
-            {
-                name: "DevOps Engineer",
-                sector: "technology",
-                icon: "⚙️",
-                description: "Improve software development, deployment and infrastructure processes.",
-                skills: ["Linux", "Cloud", "Automation"]
-            },
-
-            {
-                name: "UI Developer",
-                sector: "technology",
-                icon: "🖥️",
-                description: "Build attractive and responsive user interfaces.",
-                skills: ["HTML", "CSS", "JavaScript"]
-            },
-
-
-            /* ========== CREATIVE ========== */
-
-            {
-                name: "UX/UI Designer",
-                sector: "creative",
+            designer: {
+                title: "UX/UI Designer",
+                category: "Creative",
                 icon: "🎨",
-                description: "Design useful and enjoyable digital experiences.",
-                skills: ["Figma", "UX Research", "Prototyping"]
+                description:
+                    "Design digital experiences that are useful, intuitive and visually engaging.",
+                about:
+                    "UX/UI designers focus on how people interact with digital products and create interfaces that are both useful and enjoyable.",
+                education: "Design / HCI / Related Field",
+                workStyle: "Creative & User Focused",
+                skills: [
+                    "Design Thinking",
+                    "Creativity",
+                    "Research",
+                    "Communication",
+                    "Visual Design"
+                ]
             },
 
-            {
-                name: "Graphic Designer",
-                sector: "creative",
-                icon: "🖌️",
-                description: "Create visual designs for brands, products and media.",
-                skills: ["Design", "Photoshop", "Creativity"]
-            },
-
-            {
-                name: "Animator",
-                sector: "creative",
-                icon: "🎬",
-                description: "Create animated visuals, characters and stories.",
-                skills: ["Animation", "Storytelling", "3D"]
-            },
-
-            {
-                name: "Game Designer",
-                sector: "creative",
-                icon: "🎮",
-                description: "Design gameplay experiences, stories and game systems.",
-                skills: ["Creativity", "Game Design", "Storytelling"]
-            },
-
-            {
-                name: "Content Creator",
-                sector: "creative",
-                icon: "📸",
-                description: "Create engaging content for digital platforms.",
-                skills: ["Content", "Social Media", "Creativity"]
-            },
-
-            {
-                name: "Video Editor",
-                sector: "creative",
-                icon: "🎥",
-                description: "Edit and transform video footage into compelling stories.",
-                skills: ["Editing", "Storytelling", "Premiere Pro"]
-            },
-
-            {
-                name: "Photographer",
-                sector: "creative",
-                icon: "📷",
-                description: "Capture stories, people and experiences through photography.",
-                skills: ["Photography", "Editing", "Creativity"]
-            },
-
-            {
-                name: "Fashion Designer",
-                sector: "creative",
-                icon: "👗",
-                description: "Design clothing, fashion collections and visual concepts.",
-                skills: ["Fashion", "Sketching", "Creativity"]
-            },
-
-
-            /* ========== BUSINESS ========== */
-
-            {
-                name: "Product Manager",
-                sector: "business",
-                icon: "🚀",
-                description: "Guide teams to create successful products and solutions.",
-                skills: ["Strategy", "Leadership", "Communication"]
-            },
-
-            {
-                name: "Business Analyst",
-                sector: "business",
-                icon: "📊",
-                description: "Analyze business needs and improve organizational processes.",
-                skills: ["Analysis", "Communication", "Strategy"]
-            },
-
-            {
-                name: "Marketing Manager",
-                sector: "business",
-                icon: "📣",
-                description: "Plan strategies to promote brands, products and services.",
-                skills: ["Marketing", "Strategy", "Communication"]
-            },
-
-            {
-                name: "Digital Marketing Specialist",
-                sector: "business",
-                icon: "📱",
-                description: "Promote businesses through digital channels and campaigns.",
-                skills: ["SEO", "Social Media", "Analytics"]
-            },
-
-            {
-                name: "Financial Analyst",
-                sector: "business",
-                icon: "💰",
-                description: "Analyze financial information and support business decisions.",
-                skills: ["Finance", "Excel", "Analysis"]
-            },
-
-            {
-                name: "Operations Manager",
-                sector: "business",
-                icon: "📋",
-                description: "Manage processes and improve how organizations operate.",
-                skills: ["Management", "Planning", "Leadership"]
-            },
-
-            {
-                name: "Entrepreneur",
-                sector: "business",
-                icon: "💡",
-                description: "Create and grow new businesses and innovative ventures.",
-                skills: ["Leadership", "Strategy", "Risk Management"]
-            },
-
-            {
-                name: "Project Manager",
-                sector: "business",
-                icon: "📌",
-                description: "Plan, coordinate and deliver projects successfully.",
-                skills: ["Planning", "Leadership", "Communication"]
-            },
-
-
-            /* ========== PEOPLE ========== */
-
-            {
-                name: "Psychologist",
-                sector: "people",
-                icon: "🧠",
-                description: "Study human behavior and support people's wellbeing.",
-                skills: ["Psychology", "Listening", "Empathy"]
-            },
-
-            {
-                name: "Career Counselor",
-                sector: "people",
-                icon: "🧭",
-                description: "Guide people in making education and career decisions.",
-                skills: ["Counseling", "Communication", "Empathy"]
-            },
-
-            {
-                name: "Teacher",
-                sector: "people",
+            teacher: {
+                title: "Teacher",
+                category: "Education",
                 icon: "📚",
-                description: "Educate, guide and inspire students.",
-                skills: ["Teaching", "Communication", "Patience"]
+                description:
+                    "Help students learn, grow and develop the knowledge and skills they need.",
+                about:
+                    "Teachers guide students through learning, explain concepts and help create an environment where students can develop their abilities.",
+                education: "Education / Relevant Degree",
+                workStyle: "People & Communication",
+                skills: [
+                    "Communication",
+                    "Patience",
+                    "Leadership",
+                    "Planning",
+                    "Empathy"
+                ]
             },
 
-            {
-                name: "Social Worker",
-                sector: "people",
-                icon: "🤝",
-                description: "Support individuals, families and communities.",
-                skills: ["Empathy", "Communication", "Problem Solving"]
-            },
-
-            {
-                name: "Human Resources Specialist",
-                sector: "people",
-                icon: "👥",
-                description: "Support employees and improve workplace experiences.",
-                skills: ["Communication", "Recruitment", "Management"]
-            },
-
-            {
-                name: "Public Relations Specialist",
-                sector: "people",
-                icon: "🎤",
-                description: "Manage communication between organizations and the public.",
-                skills: ["Communication", "Writing", "Media"]
-            },
-
-
-            /* ========== SCIENCE ========== */
-
-            {
-                name: "Research Scientist",
-                sector: "science",
-                icon: "🔬",
-                description: "Conduct research and discover new knowledge.",
-                skills: ["Research", "Analysis", "Science"]
-            },
-
-            {
-                name: "Biotechnologist",
-                sector: "science",
-                icon: "🧬",
-                description: "Use biology and technology to solve scientific problems.",
-                skills: ["Biology", "Research", "Laboratory"]
-            },
-
-            {
-                name: "Environmental Scientist",
-                sector: "science",
-                icon: "🌱",
-                description: "Study environmental challenges and develop solutions.",
-                skills: ["Research", "Environment", "Analysis"]
-            },
-
-            {
-                name: "Clinical Researcher",
-                sector: "science",
-                icon: "🧪",
-                description: "Conduct research related to healthcare and medicine.",
-                skills: ["Research", "Data", "Science"]
-            },
-
-            {
-                name: "Forensic Scientist",
-                sector: "science",
-                icon: "🔍",
-                description: "Use scientific techniques to analyze evidence.",
-                skills: ["Science", "Analysis", "Investigation"]
-            },
-
-
-            /* ========== LAW ========== */
-
-            {
-                name: "Lawyer",
-                sector: "law",
-                icon: "⚖️",
-                description: "Provide legal advice and represent clients.",
-                skills: ["Law", "Research", "Communication"]
-            },
-
-            {
-                name: "Legal Advisor",
-                sector: "law",
-                icon: "📜",
-                description: "Guide organizations and individuals on legal matters.",
-                skills: ["Law", "Analysis", "Research"]
-            },
-
-            {
-                name: "Policy Analyst",
-                sector: "law",
-                icon: "🏛️",
-                description: "Research and evaluate public policies and decisions.",
-                skills: ["Research", "Analysis", "Writing"]
-            },
-
-            {
-                name: "Criminologist",
-                sector: "law",
-                icon: "🔎",
-                description: "Study crime, criminal behavior and justice systems.",
-                skills: ["Research", "Psychology", "Analysis"]
-            },
-
-            {
-                name: "Civil Services Officer",
-                sector: "law",
-                icon: "🏛️",
-                description: "Work in public administration and government services.",
-                skills: ["Leadership", "Policy", "Communication"]
-            },
-
-
-            /* ========== HEALTHCARE ========== */
-
-            {
-                name: "Doctor",
-                sector: "healthcare",
-                icon: "👨‍⚕️",
-                description: "Diagnose illnesses and provide medical treatment.",
-                skills: ["Medicine", "Diagnosis", "Communication"]
-            },
-
-            {
-                name: "Nurse",
-                sector: "healthcare",
+            doctor: {
+                title: "Doctor",
+                category: "Healthcare",
                 icon: "🩺",
-                description: "Provide patient care and healthcare support.",
-                skills: ["Patient Care", "Communication", "Responsibility"]
+                description:
+                    "Work with patients to understand health conditions and provide medical care.",
+                about:
+                    "Doctors use medical knowledge, observation and decision-making to diagnose and manage health conditions.",
+                education: "Medicine",
+                workStyle: "Healthcare & People",
+                skills: [
+                    "Communication",
+                    "Decision Making",
+                    "Science",
+                    "Empathy",
+                    "Critical Thinking"
+                ]
             },
 
-            {
-                name: "Physiotherapist",
-                sector: "healthcare",
-                icon: "🏃",
-                description: "Help patients improve movement and physical recovery.",
-                skills: ["Healthcare", "Physical Therapy", "Communication"]
-            },
-
-            {
-                name: "Nutritionist",
-                sector: "healthcare",
-                icon: "🥗",
-                description: "Guide people on nutrition and healthy lifestyles.",
-                skills: ["Nutrition", "Health", "Communication"]
-            },
-
-            {
-                name: "Healthcare Administrator",
-                sector: "healthcare",
-                icon: "🏥",
-                description: "Manage healthcare services and medical organizations.",
-                skills: ["Management", "Healthcare", "Planning"]
-            },
-
-
-            /* ========== HOSPITALITY ========== */
-
-            {
-                name: "Hotel Manager",
-                sector: "hospitality",
-                icon: "🏨",
-                description: "Manage hotel operations and guest experiences.",
-                skills: ["Management", "Customer Service", "Leadership"]
-            },
-
-            {
-                name: "Event Manager",
-                sector: "hospitality",
-                icon: "🎉",
-                description: "Plan and manage events and memorable experiences.",
-                skills: ["Planning", "Creativity", "Management"]
-            },
-
-            {
-                name: "Travel Consultant",
-                sector: "hospitality",
-                icon: "✈️",
-                description: "Help clients plan travel experiences and journeys.",
-                skills: ["Travel", "Communication", "Planning"]
-            },
-
-            {
-                name: "Tourism Manager",
-                sector: "hospitality",
-                icon: "🌍",
-                description: "Manage tourism services, destinations and experiences.",
-                skills: ["Tourism", "Management", "Communication"]
-            },
-
-            {
-                name: "Chef",
-                sector: "hospitality",
-                icon: "👨‍🍳",
-                description: "Create food experiences and manage culinary preparation.",
-                skills: ["Cooking", "Creativity", "Time Management"]
+            lawyer: {
+                title: "Lawyer",
+                category: "Law",
+                icon: "⚖️",
+                description:
+                    "Use legal knowledge and reasoning to advise and represent people or organizations.",
+                about:
+                    "Lawyers research legal issues, analyze information and communicate arguments to help clients navigate legal matters.",
+                education: "Law",
+                workStyle: "Research & Communication",
+                skills: [
+                    "Research",
+                    "Communication",
+                    "Critical Thinking",
+                    "Reasoning",
+                    "Writing"
+                ]
             }
-
-        ];
-
-
-        /* =========================================
-           VARIABLES
-        ========================================= */
-
-        let activeSector =
-            localStorage.getItem("selectedSector") || "all";
-
-
-        const searchInput =
-            document.getElementById("searchInput");
-
-        const jobGrid =
-            document.getElementById("jobGrid");
-
-        const noResults =
-            document.getElementById("noResults");
-
-        const resultsCount =
-            document.getElementById("resultsCount");
-
-        const sectionTitle =
-            document.getElementById("sectionTitle");
-
-        const filterButtons =
-            document.querySelectorAll(".filter-btn");
-
-
-        /* =========================================
-           SECTOR DISPLAY NAMES
-        ========================================= */
-
-        const sectorNames = {
-
-            all: "All Career Roles",
-            technology: "Technology & IT Roles",
-            creative: "Creative & Design Roles",
-            business: "Business & Management Roles",
-            people: "People & Social Service Roles",
-            science: "Science & Research Roles",
-            law: "Law & Public Service Roles",
-            healthcare: "Healthcare Roles",
-            hospitality: "Travel & Hospitality Roles"
 
         };
 
 
         /* =========================================
-           DISPLAY CAREERS
+           GET CAREER
         ========================================= */
 
-        function displayCareers() {
+        const params =
+            new URLSearchParams(window.location.search);
 
-            const searchValue =
-                searchInput.value
-                .toLowerCase()
-                .trim();
-
-
-            const filteredCareers =
-                careers.filter(function(career) {
-
-                    const sectorMatch =
-                        activeSector === "all" ||
-                        career.sector === activeSector;
+        const requestedCareer =
+            params.get("id") ||
+            params.get("career") ||
+            "software";
 
 
-                    const searchableText =
-                        (
-                            career.name + " " +
-                            career.sector + " " +
-                            career.description + " " +
-                            career.skills.join(" ")
-                        )
-                        .toLowerCase();
+        function findCareer(value) {
 
+            const search =
+                String(value)
+                    .toLowerCase()
+                    .trim();
 
-                    const searchMatch =
-                        searchableText.includes(
-                            searchValue
-                        );
-
-
-                    return sectorMatch && searchMatch;
-
-                });
-
-
-            jobGrid.innerHTML = "";
-
-
-            sectionTitle.textContent =
-                sectorNames[activeSector];
-
-
-            resultsCount.textContent =
-                filteredCareers.length +
-                " roles found";
-
-
-            if (filteredCareers.length === 0) {
-
-                jobGrid.style.display =
-                    "none";
-
-                noResults.style.display =
-                    "block";
-
-                return;
-
+            if (careerDatabase[search]) {
+                return careerDatabase[search];
             }
 
+            const found =
+                Object.values(careerDatabase)
+                    .find(career =>
+                        career.title
+                            .toLowerCase()
+                            .includes(search)
+                    );
 
-            jobGrid.style.display =
-                "grid";
-
-            noResults.style.display =
-                "none";
-
-
-            filteredCareers.forEach(
-                function(career) {
-
-
-                    const skillsHTML =
-                        career.skills.map(
-                            function(skill) {
-
-                                return (
-                                    '<span class="skill">' +
-                                    skill +
-                                    '</span>'
-                                );
-
-                            }
-                        ).join("");
-
-
-                    const sectorLabel =
-                        sectorNames[career.sector]
-                        .replace(" Roles", "")
-                        .replace(" Role", "");
-
-
-                    const card =
-                        document.createElement("article");
-
-
-                    card.className =
-                        "job-card";
-
-
-                    card.innerHTML =
-
-                        '<div class="job-top">' +
-
-                        '<div class="job-icon">' +
-                        career.icon +
-                        '</div>' +
-
-                        '<div class="sector-badge">' +
-                        sectorLabel +
-                        '</div>' +
-
-                        '</div>' +
-
-                        '<h3>' +
-                        career.name +
-                        '</h3>' +
-
-                        '<p>' +
-                        career.description +
-                        '</p>' +
-
-                        '<div class="skills">' +
-                        skillsHTML +
-                        '</div>' +
-
-                        '<div class="job-actions">' +
-
-                        '<button class="details-btn" onclick="viewDetails(' +
-                        '\'' +
-                        career.name.replace(/'/g, "\\'") +
-                        '\'' +
-                        ')">' +
-
-                        'View Details →' +
-
-                        '</button>' +
-
-                        '<button class="save-btn" onclick="saveCareer(this, ' +
-                        '\'' +
-                        career.name.replace(/'/g, "\\'") +
-                        '\'' +
-                        ')">' +
-
-                        '♡' +
-
-                        '</button>' +
-
-                        '</div>';
-
-
-                    jobGrid.appendChild(card);
-
-                }
-            );
-
+            return found || careerDatabase.software;
         }
 
 
-        /* =========================================
-           FILTER BUTTONS
-        ========================================= */
-
-        filterButtons.forEach(
-            function(button) {
-
-                button.addEventListener(
-                    "click",
-                    function() {
-
-                        activeSector =
-                            button.dataset.sector;
-
-
-                        localStorage.setItem(
-                            "selectedSector",
-                            activeSector
-                        );
-
-
-                        filterButtons.forEach(
-                            function(item) {
-
-                                item.classList.remove(
-                                    "active"
-                                );
-
-                            }
-                        );
-
-
-                        button.classList.add(
-                            "active"
-                        );
-
-
-                        displayCareers();
-
-                    }
-                );
-
-            }
-        );
+        const career =
+            findCareer(requestedCareer);
 
 
         /* =========================================
-           SET ACTIVE FILTER ON PAGE LOAD
+           UPDATE PAGE
         ========================================= */
 
-        function setActiveFilter() {
+        document.getElementById("careerTitle").textContent =
+            career.title;
 
-            filterButtons.forEach(
-                function(button) {
+        document.getElementById("sectorLabel").textContent =
+            career.category;
 
-                    if (
-                        button.dataset.sector ===
-                        activeSector
-                    ) {
+        document.getElementById("careerIcon").textContent =
+            career.icon;
 
-                        button.classList.add(
-                            "active"
-                        );
+        document.getElementById("careerDescription").textContent =
+            career.description;
 
-                    } else {
+        document.getElementById("aboutCareer").textContent =
+            career.about;
 
-                        button.classList.remove(
-                            "active"
-                        );
+        document.getElementById("educationInfo").textContent =
+            career.education;
 
-                    }
+        document.getElementById("workStyleInfo").textContent =
+            career.workStyle;
 
-                }
-            );
-
-        }
+        document.getElementById("fieldInfo").textContent =
+            career.category;
 
 
         /* =========================================
-           SEARCH
+           SKILLS
         ========================================= */
 
-        searchInput.addEventListener(
-            "input",
-            function() {
+        const skillsContainer =
+            document.getElementById("skillsContainer");
 
-                displayCareers();
+        skillsContainer.innerHTML = "";
 
-            }
-        );
+        career.skills.forEach(skill => {
+
+            const tag =
+                document.createElement("span");
+
+            tag.className = "skill-tag";
+
+            tag.textContent = skill;
+
+            skillsContainer.appendChild(tag);
+
+        });
 
 
         /* =========================================
-           VIEW DETAILS
+           FAVOURITES
         ========================================= */
 
-        function viewDetails(careerName) {
-
-            localStorage.setItem(
-                "selectedCareer",
-                careerName
-            );
+        const saveBtn =
+            document.getElementById("saveBtn");
 
 
-            window.location.href =
-                "./job-role-detail.html";
+        let savedCareers = [];
 
-        }
+        try {
 
-
-        /* =========================================
-           SAVE CAREER
-        ========================================= */
-
-        function saveCareer(button, careerName) {
-
-            let savedCareers =
+            savedCareers =
                 JSON.parse(
                     localStorage.getItem("savedCareers")
                 ) || [];
 
+        } catch (error) {
 
-            if (
-                savedCareers.includes(
-                    careerName
-                )
-            ) {
-
-                savedCareers =
-                    savedCareers.filter(
-                        function(name) {
-
-                            return name !== careerName;
-
-                        }
-                    );
-
-
-                button.textContent =
-                    "♡";
-
-                button.classList.remove(
-                    "saved"
-                );
-
-            } else {
-
-                savedCareers.push(
-                    careerName
-                );
-
-
-                button.textContent =
-                    "♥";
-
-                button.classList.add(
-                    "saved"
-                );
-
-            }
-
-
-            localStorage.setItem(
-                "savedCareers",
-                JSON.stringify(savedCareers)
-            );
+            savedCareers = [];
 
         }
 
 
-        /* =========================================
-           INITIAL LOAD
-        ========================================= */
+        function isSaved() {
 
-        setActiveFilter();
+            return savedCareers.some(item => {
 
-        displayCareers();
+                const title =
+                    typeof item === "string"
+                        ? item
+                        : item.title || item.name;
+
+                return title === career.title;
+
+            });
+
+        }
+
+
+        function updateSaveButton() {
+
+            if (isSaved()) {
+
+                saveBtn.innerHTML =
+                    "♥ Saved";
+
+            } else {
+
+                saveBtn.innerHTML =
+                    "♡ Save Career";
+
+            }
+
+        }
+
+
+        saveBtn.addEventListener(
+            "click",
+            function () {
+
+                const existingIndex =
+                    savedCareers.findIndex(item => {
+
+                        const title =
+                            typeof item === "string"
+                                ? item
+                                : item.title || item.name;
+
+                        return title === career.title;
+
+                    });
+
+
+                if (existingIndex !== -1) {
+
+                    savedCareers.splice(
+                        existingIndex,
+                        1
+                    );
+
+                } else {
+
+                    savedCareers.push({
+                        title: career.title,
+                        category: career.category,
+                        description: career.description,
+                        icon: career.icon,
+                        id: requestedCareer
+                    });
+
+                }
+
+
+                localStorage.setItem(
+                    "savedCareers",
+                    JSON.stringify(savedCareers)
+                );
+
+
+                updateSaveButton();
+
+            }
+        );
+
+
+        updateSaveButton();
 
     </script>
 

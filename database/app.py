@@ -1,4 +1,4 @@
-"""Career Compass Flask app: serves career_interest SQLite data + chatbot API."""
+"""Career Compass Flask app: serves career CSV SQLite data + chatbot API."""
 from pathlib import Path
 import sqlite3
 
@@ -6,7 +6,7 @@ from flask import Flask, jsonify, render_template, request
 
 BASE_DIR = Path(__file__).resolve().parent
 DB_FILE = BASE_DIR / "career.db"
-TABLE_NAME = "career_interest"
+TABLE_NAME = "careers"
 
 app = Flask(__name__, template_folder=str(BASE_DIR / "templates"))
 
@@ -35,10 +35,10 @@ def careers():
     query = f'SELECT * FROM "{TABLE_NAME}"'
     params: list = []
     if search:
-        query += " WHERE title LIKE ? OR element_name LIKE ? OR onet_soc_code LIKE ?"
+        query += " WHERE career_title LIKE ? OR sector LIKE ? OR onet_soc_code LIKE ?"
         like = f"%{search}%"
         params.extend([like, like, like])
-    query += " ORDER BY title LIMIT ? OFFSET ?"
+    query += " ORDER BY career_title LIMIT ? OFFSET ?"
     params.extend([per_page, offset])
 
     with get_db() as conn:
@@ -58,14 +58,14 @@ def api_careers():
     base_filter = ""
     params: list = []
     if search:
-        base_filter = " WHERE title LIKE ? OR element_name LIKE ? OR onet_soc_code LIKE ?"
+        base_filter = " WHERE career_title LIKE ? OR sector LIKE ? OR onet_soc_code LIKE ?"
         like = f"%{search}%"
         params = [like, like, like]
 
     with get_db() as conn:
         total = conn.execute(f'SELECT COUNT(*) FROM "{TABLE_NAME}"{base_filter}', params).fetchone()[0]
         rows = conn.execute(
-            f'SELECT * FROM "{TABLE_NAME}"{base_filter} ORDER BY title LIMIT ? OFFSET ?',
+            f'SELECT * FROM "{TABLE_NAME}"{base_filter} ORDER BY career_title LIMIT ? OFFSET ?',
             [*params, per_page, offset],
         ).fetchall()
 

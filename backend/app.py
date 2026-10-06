@@ -1,4 +1,4 @@
-from flask import Flask, send_from_directory
+from flask import Flask, send_from_directory, session, redirect
 import os
 
 from database import (
@@ -12,6 +12,7 @@ from database import (
 from auth import auth_bp
 from questionnaire import questionnaire_bp
 from dashboard import dashboard
+from chatbot import chatbot_bp
 from analysis import analysis_bp
 from careers import careers_bp
 from favourites import favourites_bp
@@ -63,11 +64,11 @@ create_contact_messages_table()
 app.register_blueprint(auth_bp)
 app.register_blueprint(questionnaire_bp)
 app.register_blueprint(dashboard)
+app.register_blueprint(chatbot_bp)
 app.register_blueprint(analysis_bp)
 app.register_blueprint(careers_bp)
 app.register_blueprint(favourites_bp)
 app.register_blueprint(contact_bp)
-
 
 
 # ============================================================
@@ -84,11 +85,32 @@ def home():
 
 
 # ============================================================
+# PAGES THAT REQUIRE LOGIN
+# ============================================================
+
+PROTECTED_PAGES = {
+    "dashboard.html",
+    "profile.html",
+    "questionnaire.html",
+    "assessment-intro.html",
+    "analyzing.html",
+    "results.html",
+    "favourites.html",
+    "settings.html",
+}
+
+
+# ============================================================
 # SERVE HTML PAGES
 # ============================================================
 
 @app.route("/<page>")
 def serve_page(page):
+
+    # Logged-in pages: redirect to login if no session
+    if page in PROTECTED_PAGES and "user_id" not in session:
+
+        return redirect("/login.html")
 
     return send_from_directory(
         HTML_DIR,
