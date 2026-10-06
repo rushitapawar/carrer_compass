@@ -516,18 +516,87 @@ const careerOne = document.getElementById("careerOne");
 const careerTwo = document.getElementById("careerTwo");
 const comparisonArea = document.getElementById("comparisonArea");
 
-function loadCareers() {
-    careers.forEach(career => {
-        const optionOne = document.createElement("option");
-        optionOne.value = career.id;
-        optionOne.textContent = career.name;
-        careerOne.appendChild(optionOne);
+async function loadCareers() {
 
-        const optionTwo = document.createElement("option");
-        optionTwo.value = career.id;
-        optionTwo.textContent = career.name;
-        careerTwo.appendChild(optionTwo);
-    });
+    try {
+
+        const response = await fetch("/api/careers");
+
+        const result = await response.json();
+
+        if (!result.success) {
+
+            alert(
+                result.message ||
+                "Unable to load careers."
+            );
+
+            return;
+        }
+
+        // Clear existing options
+        careerOne.innerHTML =
+            '<option value="">Select a career</option>';
+
+        careerTwo.innerHTML =
+            '<option value="">Select a career</option>';
+
+        result.careers.forEach(career => {
+
+            // Avoid duplicate career titles
+            if (
+                careerOne.querySelector(
+                    `option[value="${career.title}"]`
+                )
+            ) {
+                return;
+            }
+
+            const optionOne =
+                document.createElement("option");
+
+            optionOne.value =
+                career.title;
+
+            optionOne.textContent =
+                career.title;
+
+            careerOne.appendChild(
+                optionOne
+            );
+
+
+            const optionTwo =
+                document.createElement("option");
+
+            optionTwo.value =
+                career.title;
+
+            optionTwo.textContent =
+                career.title;
+
+            careerTwo.appendChild(
+                optionTwo
+            );
+
+        });
+
+        console.log(
+            "Careers loaded from backend:",
+            result.careers.length
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Career loading error:",
+            error
+        );
+
+        alert(
+            "Unable to connect to the server."
+        );
+    }
 }
 
 function createTags(items) {
@@ -575,27 +644,140 @@ function createCareerCard(career) {
         </article>
     `;
 }
+    function createBackendCareerCard(career) {
 
-function compareCareers() {
-    const first = careers.find(career => career.id === careerOne.value);
-    const second = careers.find(career => career.id === careerTwo.value);
+    const scores = career.scores || {};
 
-    if (!first || !second) {
-        alert("Please select both careers to compare.");
-        return;
-    }
+    return `
+        <article class="career-card">
 
-    if (first.id === second.id) {
-        alert("Please select two different careers.");
-        return;
-    }
+            <div class="card-top">
 
-    comparisonArea.innerHTML = `
-        <div class="comparison-grid">
-            ${createCareerCard(first)}
-            ${createCareerCard(second)}
-        </div>
+                <div class="career-icon">💼</div>
+
+                <h3>${career.title}</h3>
+
+            </div>
+
+            <div class="card-body">
+
+                <p class="career-description">
+                    O*NET-SOC Code:
+                    ${career.onetSocCode || "Not available"}
+                </p>
+
+                <div class="detail">
+
+                    <h4>RIASEC Interest Profile</h4>
+
+                    ${createTags([
+                        `Realistic: ${Number(scores.R || 0).toFixed(2)}`,
+                        `Investigative: ${Number(scores.I || 0).toFixed(2)}`,
+                        `Artistic: ${Number(scores.A || 0).toFixed(2)}`,
+                        `Social: ${Number(scores.S || 0).toFixed(2)}`,
+                        `Enterprising: ${Number(scores.E || 0).toFixed(2)}`,
+                        `Conventional: ${Number(scores.C || 0).toFixed(2)}`
+                    ])}
+
+                </div>
+
+                <div class="detail">
+
+                    <h4>Career Database</h4>
+
+                    <p>
+                        This career information is loaded
+                        from the Career Compass career database.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </article>
     `;
+}
+
+
+async function compareCareers() {
+
+    const firstTitle = careerOne.value;
+    const secondTitle = careerTwo.value;
+
+    if (!firstTitle || !secondTitle) {
+
+        alert(
+            "Please select both careers to compare."
+        );
+
+        return;
+    }
+
+    if (
+        firstTitle.toLowerCase() ===
+        secondTitle.toLowerCase()
+    ) {
+
+        alert(
+            "Please select two different careers."
+        );
+
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            "/api/compare-careers?first=" +
+            encodeURIComponent(firstTitle) +
+            "&second=" +
+            encodeURIComponent(secondTitle)
+        );
+
+        const result = await response.json();
+
+        if (!result.success) {
+
+            alert(
+                result.message ||
+                "Unable to compare careers."
+            );
+
+            return;
+        }
+
+        console.log(
+            "Career comparison from backend:",
+            result.careers
+        );
+
+        comparisonArea.innerHTML = `
+
+            <div class="comparison-grid">
+
+                ${createBackendCareerCard(
+                    result.careers[0]
+                )}
+
+                ${createBackendCareerCard(
+                    result.careers[1]
+                )}
+
+            </div>
+
+        `;
+
+    } catch (error) {
+
+        console.error(
+            "Compare careers error:",
+            error
+        );
+
+        alert(
+            "Unable to connect to the server."
+        );
+    }
 }
 
 loadCareers();

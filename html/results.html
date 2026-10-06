@@ -972,40 +972,227 @@ function escapeForAttribute(
 
 document.addEventListener(
     "click",
-    function(event) {
+    async function(event) {
 
         if (
-            event.target.classList.contains(
+            !event.target.classList.contains(
                 "save-btn"
             )
         ) {
+            return;
+        }
 
-            event.target.classList.toggle(
-                "saved"
+
+        const button =
+            event.target;
+
+
+        const careerTitle =
+            button.getAttribute(
+                "data-career"
             );
 
 
-            if (
-                event.target.classList.contains(
-                    "saved"
-                )
-            ) {
+        if (!careerTitle) {
 
-                event.target.textContent =
-                    "♥";
+            alert(
+                "Unable to identify this career."
+            );
 
-            } else {
-
-                event.target.textContent =
-                    "♡";
-
-            }
-
+            return;
         }
 
+
+        // ========================================
+        // SAVE CAREER
+        // ========================================
+
+        if (
+            !button.classList.contains(
+                "saved"
+            )
+        ) {
+
+            try {
+
+                const career =
+                    Array.from(
+                        document.querySelectorAll(
+                            ".career-card"
+                        )
+                    ).find(
+                        card =>
+                            card
+                                .querySelector(
+                                    ".career-card h3"
+                                )
+                                ?.textContent
+                                .trim() ===
+                            careerTitle
+                    );
+
+
+                const matchText =
+                    career
+                        ?.querySelector(
+                            ".match"
+                        )
+                        ?.textContent
+                        .replace(
+                            "% Match",
+                            ""
+                        )
+                        .trim();
+
+
+                const matchPercentage =
+                    parseInt(
+                        matchText
+                    ) || 0;
+
+
+                const response =
+                    await fetch(
+                        "/api/save-career",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify({
+
+                                    careerTitle:
+                                        careerTitle,
+
+                                    onetSocCode:
+                                        "",
+
+                                    matchPercentage:
+                                        matchPercentage
+
+                                })
+                        }
+                    );
+
+
+                const result =
+                    await response.json();
+
+
+                if (!result.success) {
+
+                    alert(
+                        result.message ||
+                        "Unable to save career."
+                    );
+
+                    return;
+                }
+
+
+                // Change heart
+                button.classList.add(
+                    "saved"
+                );
+
+                button.textContent =
+                    "♥";
+
+
+                alert(
+                    "Career saved successfully!"
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Save career error:",
+                    error
+                );
+
+                alert(
+                    "Unable to connect to the server."
+                );
+            }
+
+
+        } else {
+
+            // ========================================
+            // REMOVE CAREER
+            // ========================================
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/api/remove-career",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify({
+
+                                    careerTitle:
+                                        careerTitle
+
+                                })
+                        }
+                    );
+
+
+                const result =
+                    await response.json();
+
+
+                if (!result.success) {
+
+                    alert(
+                        result.message ||
+                        "Unable to remove career."
+                    );
+
+                    return;
+                }
+
+
+                button.classList.remove(
+                    "saved"
+                );
+
+                button.textContent =
+                    "♡";
+
+
+                alert(
+                    "Career removed successfully!"
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Remove career error:",
+                    error
+                );
+
+                alert(
+                    "Unable to connect to the server."
+                );
+            }
+        }
     }
 );
-
 
 /* =====================================================
    EXPLORE CAREER

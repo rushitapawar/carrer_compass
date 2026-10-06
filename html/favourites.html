@@ -122,7 +122,8 @@
         .page-title {
             font-family: "Playfair Display", serif;
             color: var(--plum);
-            font-size: clamp(34px, 5vw, 46px);
+            font-size: cl
+            amp(34px, 5vw, 46px);
             margin-bottom: 12px;
         }
 
@@ -672,455 +673,750 @@
          JAVASCRIPT
     ========================= -->
 
-    <script>
+   <script>
 
-        /*
-         * IMPORTANT
-         * -----------------------------------
-         * This page uses the same localStorage
-         * key used by the Results page:
-         *
-         * "savedCareers"
-         *
-         * The saved data is expected to be an
-         * array of career objects.
-         */
+/* =====================================================
+   FAVOURITES - BACKEND CONNECTION
+===================================================== */
 
+const careerGrid =
+    document.getElementById("careerGrid");
 
-        const careerGrid =
-            document.getElementById("careerGrid");
+const emptyState =
+    document.getElementById("emptyState");
 
-        const emptyState =
-            document.getElementById("emptyState");
-
-        const savedCount =
-            document.getElementById("savedCount");
+const savedCount =
+    document.getElementById("savedCount");
 
 
-        /* =========================
-           GET SAVED CAREERS
-        ========================= */
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
 
-        function getSavedCareers() {
+function escapeHTML(value) {
 
-            const saved =
-                localStorage.getItem("savedCareers");
+    return String(value).replace(
+        /[&<>"']/g,
+        function(char) {
 
-            if (!saved) {
-                return [];
-            }
+            return {
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;"
+            }[char];
 
-            try {
+        }
+    );
+}
 
-                const careers =
-                    JSON.parse(saved);
 
-                return Array.isArray(careers)
-                    ? careers
-                    : [];
+/* =====================================================
+   GET CAREER NAME
+===================================================== */
 
-            } catch (error) {
+function getCareerName(career) {
 
-                console.error(
-                    "Could not read saved careers:",
-                    error
+    return (
+        career.careerTitle ||
+        career.name ||
+        career.title ||
+        "Career"
+    );
+
+}
+
+
+/* =====================================================
+   GET CAREER ID
+===================================================== */
+
+function getCareerId(career) {
+
+    return (
+        career.onetSocCode ||
+        career.careerTitle ||
+        career.name ||
+        career.title ||
+        ""
+    );
+
+}
+
+
+/* =====================================================
+   LOAD SAVED CAREERS FROM BACKEND
+===================================================== */
+
+async function loadSavedCareers() {
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/saved-careers"
+            );
+
+
+        const result =
+            await response.json();
+
+
+        if (!result.success) {
+
+            if (response.status === 401) {
+
+                alert(
+                    "Please login first."
                 );
 
-                return [];
+                window.location.href =
+                    "./login.html";
 
+                return;
             }
 
+
+            throw new Error(
+                result.message ||
+                "Unable to load saved careers."
+            );
         }
 
 
-        /* =========================
-           SAVE CAREERS
-        ========================= */
+        let backendCareers =
+            result.careers || [];
 
-        function saveCareers(careers) {
 
-            localStorage.setItem(
-                "savedCareers",
-                JSON.stringify(careers)
+        /* ==========================================
+           MIGRATE OLD LOCALSTORAGE CAREERS
+           ========================================== */
+
+        const oldSaved =
+            JSON.parse(
+                localStorage.getItem(
+                    "savedCareers"
+                ) || "[]"
             );
 
-        }
 
-
-        /* =========================
-           GET CAREER VALUE
-        ========================= */
-
-        function getCareerName(career) {
-
-            return (
-                career.name ||
-                career.title ||
-                career.career ||
-                career.role ||
-                "Career"
-            );
-
-        }
-
-
-        function getCareerDescription(career) {
-
-            return (
-                career.description ||
-                career.desc ||
-                career.overview ||
-                "Explore this career path to learn more about its opportunities, skills and requirements."
-            );
-
-        }
-
-
-        function getCareerIcon(career) {
-
-            return (
-                career.icon ||
-                career.emoji ||
-                "✦"
-            );
-
-        }
-
-
-        function getCareerSkills(career) {
-
-            if (Array.isArray(career.skills)) {
-                return career.skills;
-            }
-
-            if (Array.isArray(career.keySkills)) {
-                return career.keySkills;
-            }
-
-            if (typeof career.skills === "string") {
-
-                return career.skills
-                    .split(",")
-                    .map(skill => skill.trim())
-                    .filter(Boolean);
-
-            }
-
-            return [];
-
-        }
-
-
-        function getCareerEducation(career) {
-
-            return (
-                career.education ||
-                career.educationPath ||
-                career.study ||
-                "Explore the recommended education path for this career."
-            );
-
-        }
-
-
-        /* =========================
-           CREATE CAREER CARD
-        ========================= */
-
-        function createCareerCard(
-            career,
-            index
+        if (
+            Array.isArray(oldSaved) &&
+            oldSaved.length > 0
         ) {
 
-            const name =
-                getCareerName(career);
+            for (
+                const oldCareer of oldSaved
+            ) {
 
-            const description =
-                getCareerDescription(career);
-
-            const icon =
-                getCareerIcon(career);
-
-            const skills =
-                getCareerSkills(career);
-
-            const education =
-                getCareerEducation(career);
+                const careerTitle =
+                    oldCareer.name ||
+                    oldCareer.title ||
+                    oldCareer.career ||
+                    oldCareer.role;
 
 
-            const skillsHTML =
-                skills.length > 0
+                if (!careerTitle) {
+                    continue;
+                }
 
-                ?
 
-                `
-                    <div class="tags">
+                const alreadyExists =
+                    backendCareers.some(
+                        function(item) {
 
-                        ${skills
-                            .slice(0, 5)
-                            .map(
-                                skill =>
-                                `<span class="tag">
-                                    ${skill}
-                                </span>`
-                            )
-                            .join("")
+                            return (
+                                getCareerName(item)
+                                    .toLowerCase() ===
+                                careerTitle
+                                    .toLowerCase()
+                            );
+
                         }
+                    );
 
-                    </div>
-                `
 
-                :
+                if (!alreadyExists) {
 
-                `
-                    <p class="detail-text">
-                        Skills information will be available soon.
-                    </p>
-                `;
+                    try {
 
+                        await fetch(
+                            "/api/save-career",
+                            {
+                                method: "POST",
 
-            /*
-             * Try to find an ID / slug.
-             */
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
 
-            const careerId =
-                career.id ||
-                career.slug ||
-                career.name ||
-                career.title ||
-                "";
+                                body:
+                                    JSON.stringify({
 
+                                        careerTitle:
+                                            careerTitle,
 
-            return `
+                                        onetSocCode:
+                                            oldCareer.onetSocCode ||
+                                            oldCareer.onet_soc_code ||
+                                            "",
 
-                <article
-                    class="career-card"
-                    data-index="${index}"
-                >
+                                        matchPercentage:
+                                            oldCareer.matchPercentage ||
+                                            oldCareer.match ||
+                                            0
 
-                    <div class="card-top">
+                                    })
+                            }
+                        );
 
-                        <button
-                            class="heart-btn"
-                            onclick="removeCareer(${index})"
-                            title="Remove from saved careers"
-                        >
-                            ♥
-                        </button>
+                    } catch (error) {
 
+                        console.error(
+                            "Migration error:",
+                            error
+                        );
 
-                        <div class="career-icon">
-                            ${icon}
-                        </div>
-
-
-                        <h2>
-                            ${name}
-                        </h2>
-
-                    </div>
-
-
-                    <div class="card-body">
-
-                        <p class="career-description">
-                            ${description}
-                        </p>
-
-
-                        <div class="details">
-
-                            <p class="detail-label">
-                                Key Skills
-                            </p>
-
-                            ${skillsHTML}
-
-                        </div>
-
-
-                        <div class="details">
-
-                            <p class="detail-label">
-                                Education
-                            </p>
-
-                            <p class="detail-text">
-                                ${education}
-                            </p>
-
-                        </div>
-
-
-                        <div class="card-actions">
-
-                            <a
-                                href="role-detail.html?id=${encodeURIComponent(careerId)}"
-                                class="details-btn"
-                            >
-                                View Details
-                            </a>
-
-                            <button
-                                class="compare-btn"
-                                onclick="compareCareer('${encodeURIComponent(careerId)}')"
-                            >
-                                Compare
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-            `;
-
-        }
-
-
-        /* =========================
-           RENDER SAVED CAREERS
-        ========================= */
-
-        function renderSavedCareers() {
-
-            const careers =
-                getSavedCareers();
-
-
-            savedCount.textContent =
-                careers.length;
-
-
-            if (careers.length === 0) {
-
-                careerGrid.innerHTML = "";
-
-                careerGrid.style.display =
-                    "none";
-
-                emptyState.style.display =
-                    "block";
-
-                return;
-
-            }
-
-
-            emptyState.style.display =
-                "none";
-
-            careerGrid.style.display =
-                "grid";
-
-
-            careerGrid.innerHTML =
-                careers
-                    .map(
-                        (career, index) =>
-                        createCareerCard(
-                            career,
-                            index
-                        )
-                    )
-                    .join("");
-
-        }
-
-
-        /* =========================
-           REMOVE CAREER
-        ========================= */
-
-        function removeCareer(index) {
-
-            const careers =
-                getSavedCareers();
-
-
-            const career =
-                careers[index];
-
-
-            if (!career) {
-                return;
-            }
-
-
-            const name =
-                getCareerName(career);
-
-
-            const confirmed =
-                confirm(
-                    `Remove "${name}" from your saved careers?`
-                );
-
-
-            if (!confirmed) {
-                return;
-            }
-
-
-            careers.splice(
-                index,
-                1
-            );
-
-
-            saveCareers(
-                careers
-            );
-
-
-            renderSavedCareers();
-
-        }
-
-
-        /* =========================
-           COMPARE CAREER
-        ========================= */
-
-        function compareCareer(id) {
-
-            window.location.href =
-                `compare.html?career=${id}`;
-
-        }
-
-
-        /* =========================
-           INITIAL LOAD
-        ========================= */
-
-        renderSavedCareers();
-
-
-        /*
-         * If another page changes
-         * localStorage and the user
-         * comes back to this tab,
-         * refresh the saved list.
-         */
-
-        window.addEventListener(
-            "storage",
-            function(event) {
-
-                if (
-                    event.key === "savedCareers"
-                ) {
-
-                    renderSavedCareers();
+                    }
 
                 }
 
             }
+
+
+            /* Reload backend after migration */
+
+            const refreshedResponse =
+                await fetch(
+                    "/api/saved-careers"
+                );
+
+
+            const refreshedResult =
+                await refreshedResponse.json();
+
+
+            if (refreshedResult.success) {
+
+                backendCareers =
+                    refreshedResult.careers || [];
+
+            }
+
+        }
+
+
+        /* ==========================================
+           RENDER
+           ========================================== */
+
+        renderSavedCareers(
+            backendCareers,
+            oldSaved
         );
 
-    </script>
 
+    } catch (error) {
+
+        console.error(
+            "Favourites error:",
+            error
+        );
+
+
+        alert(
+            "Unable to load saved careers. Please make sure Flask is running."
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   RENDER SAVED CAREERS
+===================================================== */
+
+function renderSavedCareers(
+    careers,
+    oldSaved
+) {
+
+    savedCount.textContent =
+        careers.length;
+
+
+    if (
+        !careers ||
+        careers.length === 0
+    ) {
+
+        careerGrid.innerHTML = "";
+
+        careerGrid.style.display =
+            "none";
+
+        emptyState.style.display =
+            "block";
+
+        return;
+
+    }
+
+
+    emptyState.style.display =
+        "none";
+
+    careerGrid.style.display =
+        "grid";
+
+
+    careerGrid.innerHTML =
+        careers
+            .map(
+                function(career, index) {
+
+                    return createCareerCard(
+                        career,
+                        index,
+                        oldSaved
+                    );
+
+                }
+            )
+            .join("");
+
+}
+
+
+/* =====================================================
+   CREATE CAREER CARD
+===================================================== */
+
+function createCareerCard(
+    career,
+    index,
+    oldSaved
+) {
+
+    const name =
+        getCareerName(career);
+
+
+    const careerId =
+        getCareerId(career);
+
+
+    const matchPercentage =
+        career.matchPercentage || 0;
+
+
+    /*
+       Find old localStorage data so the
+       existing page can still use any
+       extra information it had.
+    */
+
+    let oldData = null;
+
+
+    if (Array.isArray(oldSaved)) {
+
+        oldData =
+            oldSaved.find(
+                function(item) {
+
+                    const oldName =
+                        item.name ||
+                        item.title ||
+                        item.career ||
+                        item.role ||
+                        "";
+
+
+                    return (
+                        oldName.toLowerCase() ===
+                        name.toLowerCase()
+                    );
+
+                }
+            );
+
+    }
+
+
+    const description =
+        oldData?.description ||
+        oldData?.desc ||
+        oldData?.overview ||
+        "Explore this career path to learn more about its opportunities, skills and requirements.";
+
+
+    const skills =
+        getCareerSkills(
+            oldData || {}
+        );
+
+
+    const education =
+        oldData?.education ||
+        oldData?.educationPath ||
+        oldData?.study ||
+        "Explore the recommended education path for this career.";
+
+
+    const icon =
+        oldData?.icon ||
+        oldData?.emoji ||
+        "✦";
+
+
+    const skillsHTML =
+        skills.length > 0
+
+            ?
+
+            `
+                <div class="tags">
+
+                    ${skills
+                        .slice(0, 5)
+                        .map(
+                            function(skill) {
+
+                                return `
+                                    <span class="tag">
+                                        ${escapeHTML(skill)}
+                                    </span>
+                                `;
+
+                            }
+                        )
+                        .join("")}
+
+                </div>
+            `
+
+            :
+
+            `
+                <p class="detail-text">
+                    Skills information will be available soon.
+                </p>
+            `;
+
+
+    return `
+
+        <article
+            class="career-card"
+            data-index="${index}"
+        >
+
+            <div class="card-top">
+
+                <button
+                    class="heart-btn"
+                    onclick="removeCareer('${escapeForAttribute(name)}')"
+                    title="Remove from saved careers"
+                >
+                    ♥
+                </button>
+
+
+                <div class="career-icon">
+                    ${icon}
+                </div>
+
+
+                <h2>
+                    ${escapeHTML(name)}
+                </h2>
+
+            </div>
+
+
+            <div class="card-body">
+
+                <p class="career-description">
+                    ${escapeHTML(description)}
+                </p>
+
+
+                <div class="details">
+
+                    <p class="detail-label">
+                        Match
+                    </p>
+
+                    <p class="detail-text">
+                        ${matchPercentage}% Match
+                    </p>
+
+                </div>
+
+
+                <div class="details">
+
+                    <p class="detail-label">
+                        Key Skills
+                    </p>
+
+                    ${skillsHTML}
+
+                </div>
+
+
+                <div class="details">
+
+                    <p class="detail-label">
+                        Education
+                    </p>
+
+                    <p class="detail-text">
+                        ${escapeHTML(education)}
+                    </p>
+
+                </div>
+
+
+                <div class="card-actions">
+
+                    <a
+                        href="role-detail.html?id=${encodeURIComponent(careerId)}"
+                        class="details-btn"
+                    >
+                        View Details
+                    </a>
+
+
+                    <button
+                        class="compare-btn"
+                        onclick="compareCareer('${encodeURIComponent(careerId)}')"
+                    >
+                        Compare
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+    `;
+
+}
+
+
+/* =====================================================
+   GET SKILLS
+===================================================== */
+
+function getCareerSkills(career) {
+
+    if (
+        Array.isArray(
+            career.skills
+        )
+    ) {
+
+        return career.skills;
+
+    }
+
+
+    if (
+        Array.isArray(
+            career.keySkills
+        )
+    ) {
+
+        return career.keySkills;
+
+    }
+
+
+    if (
+        typeof career.skills ===
+        "string"
+    ) {
+
+        return career.skills
+            .split(",")
+            .map(
+                function(skill) {
+                    return skill.trim();
+                }
+            )
+            .filter(Boolean);
+
+    }
+
+
+    return [];
+
+}
+
+
+/* =====================================================
+   REMOVE CAREER
+===================================================== */
+
+async function removeCareer(
+    careerName
+) {
+
+    const confirmed =
+        confirm(
+            `Remove "${careerName}" from your saved careers?`
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/remove-career",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            careerTitle:
+                                careerName
+
+                        })
+                }
+            );
+
+
+        const result =
+            await response.json();
+
+
+        if (!result.success) {
+
+            alert(
+                result.message ||
+                "Unable to remove career."
+            );
+
+            return;
+        }
+
+
+        /* Remove old localStorage copy too */
+
+        const oldSaved =
+            JSON.parse(
+                localStorage.getItem(
+                    "savedCareers"
+                ) || "[]"
+            );
+
+
+        const updatedOldSaved =
+            oldSaved.filter(
+                function(item) {
+
+                    const name =
+                        item.name ||
+                        item.title ||
+                        item.career ||
+                        item.role ||
+                        "";
+
+
+                    return (
+                        name.toLowerCase() !==
+                        careerName.toLowerCase()
+                    );
+
+                }
+            );
+
+
+        localStorage.setItem(
+            "savedCareers",
+            JSON.stringify(
+                updatedOldSaved
+            )
+        );
+
+
+        /* Reload page data */
+
+        await loadSavedCareers();
+
+
+    } catch (error) {
+
+        console.error(
+            "Remove career error:",
+            error
+        );
+
+
+        alert(
+            "Unable to connect to the server."
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   COMPARE CAREER
+===================================================== */
+
+function compareCareer(id) {
+
+    window.location.href =
+        `compare.html?career=${id}`;
+
+}
+
+
+/* =====================================================
+   ESCAPE ATTRIBUTE
+===================================================== */
+
+function escapeForAttribute(
+    text
+) {
+
+    return String(text)
+        .replace(
+            /\\/g,
+            "\\\\"
+        )
+        .replace(
+            /'/g,
+            "\\'"
+        );
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+loadSavedCareers();
+
+</script>
 </body>
 </html>

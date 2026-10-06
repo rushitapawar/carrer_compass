@@ -299,7 +299,189 @@ def career_matches():
 
         }), 500
 
+# =========================================================
+# CAREER DETAIL API
+# =========================================================
 
+@careers_bp.route(
+    "/api/career-detail",
+    methods=["GET"]
+)
+def career_detail():
+
+    if "user_id" not in session:
+
+        return jsonify({
+            "success": False,
+            "message": "Please login first."
+        }), 401
+
+    career_title = request.args.get(
+        "title",
+        ""
+    ).strip()
+
+    if not career_title:
+
+        return jsonify({
+            "success": False,
+            "message": "Career title is required."
+        }), 400
+
+    try:
+
+        rows = load_career_data()
+
+        career_profiles = build_career_profiles(
+            rows
+        )
+
+        selected_career = None
+
+        for title, career in career_profiles.items():
+
+            if title.lower() == career_title.lower():
+
+                selected_career = career
+                break
+
+        if selected_career is None:
+
+            return jsonify({
+                "success": False,
+                "message": "Career not found."
+            }), 404
+
+        return jsonify({
+
+            "success": True,
+
+            "career": {
+
+                "title":
+                    selected_career["title"],
+
+                "onetSocCode":
+                    selected_career["onet_soc_code"],
+
+                "scores":
+                    selected_career["scores"]
+
+            }
+
+        })
+
+    except Exception as error:
+
+        print(
+            "Career detail error:",
+            error
+        )
+
+        return jsonify({
+
+            "success": False,
+
+            "message":
+                "Unable to load career details."
+
+        }), 500
+
+    # =========================================================
+# COMPARE CAREERS API
+# =========================================================
+
+@careers_bp.route(
+    "/api/compare-careers",
+    methods=["GET"]
+)
+def compare_careers():
+
+    if "user_id" not in session:
+        return jsonify({
+            "success": False,
+            "message": "Please login first."
+        }), 401
+
+    first_title = request.args.get(
+        "first",
+        ""
+    ).strip()
+
+    second_title = request.args.get(
+        "second",
+        ""
+    ).strip()
+
+    if not first_title or not second_title:
+        return jsonify({
+            "success": False,
+            "message": "Two career titles are required."
+        }), 400
+
+    if first_title.lower() == second_title.lower():
+        return jsonify({
+            "success": False,
+            "message": "Please select two different careers."
+        }), 400
+
+    try:
+
+        rows = load_career_data()
+
+        career_profiles = build_career_profiles(rows)
+
+        first_career = None
+        second_career = None
+
+        for title, career in career_profiles.items():
+
+            if title.lower() == first_title.lower():
+                first_career = career
+
+            if title.lower() == second_title.lower():
+                second_career = career
+
+        if first_career is None:
+            return jsonify({
+                "success": False,
+                "message": "First career not found."
+            }), 404
+
+        if second_career is None:
+            return jsonify({
+                "success": False,
+                "message": "Second career not found."
+            }), 404
+
+        return jsonify({
+            "success": True,
+            "careers": [
+                {
+                    "title": first_career["title"],
+                    "onetSocCode": first_career["onet_soc_code"],
+                    "scores": first_career["scores"]
+                },
+                {
+                    "title": second_career["title"],
+                    "onetSocCode": second_career["onet_soc_code"],
+                    "scores": second_career["scores"]
+                }
+            ]
+        })
+
+    except Exception as error:
+
+        print(
+            "Compare careers error:",
+            error
+        )
+
+        return jsonify({
+            "success": False,
+            "message": "Unable to compare careers."
+        }), 500
+    
 # =========================================================
 # EXISTING CAREER DATA API
 # =========================================================

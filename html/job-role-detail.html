@@ -511,7 +511,56 @@
         const selectedCareerCode =
              localStorage.getItem("selectedCareerCode");
 
+             // =========================================================
+// LOAD CAREER DETAILS FROM BACKEND
+// =========================================================
 
+let backendCareer = null;
+
+async function loadCareerFromBackend() {
+
+    if (!selectedCareer) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            "/api/career-detail?title=" +
+            encodeURIComponent(selectedCareer)
+        );
+
+        const result = await response.json();
+
+        if (result.success) {
+
+            backendCareer = result.career;
+
+            console.log(
+                "Career loaded from backend:",
+                backendCareer
+            );
+
+        } else {
+
+            console.log(
+                "Backend career not found:",
+                result.message
+            );
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Career backend error:",
+            error
+        );
+
+    }
+}
+
+loadCareerFromBackend();
         /* =========================================
            CAREER DATABASE
         ========================================= */
@@ -931,10 +980,30 @@
             const career =
                 careerData[selectedCareer] ||
                 {
-                    ...fallbackData,
-                    name: selectedCareer
+                   ...fallbackData,
+                  name: selectedCareer
                 };
 
+            const displayScores =
+                  backendCareer && backendCareer.scores
+                             ? backendCareer.scores
+                             : selectedCareerScores;
+            
+             const totalScore =
+                 Object.values(displayScores).reduce(
+                     (total, score) => total + Number(score || 0),
+                     0
+                     );
+
+            const displayPercentages = {
+                R: totalScore ? Math.round((displayScores.R / totalScore) * 100) : 0,
+                I: totalScore ? Math.round((displayScores.I / totalScore) * 100) : 0,
+                A: totalScore ? Math.round((displayScores.A / totalScore) * 100) : 0,
+                S: totalScore ? Math.round((displayScores.S / totalScore) * 100) : 0,
+                E: totalScore ? Math.round((displayScores.E / totalScore) * 100) : 0,
+                C: totalScore ? Math.round((displayScores.C / totalScore) * 100) : 0
+            };
+                
 
             const savedCareers =
                 JSON.parse(
@@ -1073,23 +1142,23 @@
 
     '<div class="riasec-grid">' +
 
-        '<div>R — Realistic: ' +
-            selectedCareerScores.R + '%</div>' +
+            '<div>R — Realistic: ' +
+                displayPercentages.R + '%</div>' +
 
-        '<div>I — Investigative: ' +
-            selectedCareerScores.I + '%</div>' +
+            '<div>I — Investigative: ' +
+                displayPercentages.I + '%</div>' +
 
-        '<div>A — Artistic: ' +
-            selectedCareerScores.A + '%</div>' +
+            '<div>A — Artistic: ' +
+                displayPercentages.A + '%</div>' +
 
-        '<div>S — Social: ' +
-            selectedCareerScores.S + '%</div>' +
+            '<div>S — Social: ' +
+                displayPercentages.S + '%</div>' +
 
-        '<div>E — Enterprising: ' +
-            selectedCareerScores.E + '%</div>' +
+            '<div>E — Enterprising: ' +
+                displayPercentages.E + '%</div>' +
 
-        '<div>C — Conventional: ' +
-            selectedCareerScores.C + '%</div>' +
+            '<div>C — Conventional: ' +
+                displayPercentages.C + '%</div>' +
 
     '</div>' +
 
@@ -1224,82 +1293,117 @@
 
                 '</div>';
 
+/* =========================================
+   SAVE CAREER - BACKEND
+========================================= */
 
-            /* =========================================
-               SAVE CAREER
-            ========================================= */
+document
+    .getElementById("saveButton")
+    .addEventListener(
+        "click",
+        async function() {
 
-            document
-                .getElementById("saveButton")
-                .addEventListener(
-                    "click",
-                    function() {
+            const button = this;
 
+            try {
 
-                        let savedCareers =
-                            JSON.parse(
-                                localStorage.getItem(
-                                    "savedCareers"
-                                )
-                            ) || [];
+                const isCurrentlySaved =
+                    button.classList.contains("saved");
 
+                if (isCurrentlySaved) {
 
-                        if (
-                            savedCareers.includes(
-                                selectedCareer
-                            )
-                        ) {
-
-                            savedCareers =
-                                savedCareers.filter(
-                                    function(name) {
-
-                                        return (
-                                            name !==
-                                            selectedCareer
-                                        );
-
-                                    }
-                                );
-
-
-                            this.textContent =
-                                "♡ Save";
-
-
-                            this.classList.remove(
-                                "saved"
-                            );
-
-                        } else {
-
-                            savedCareers.push(
-                                selectedCareer
-                            );
-
-
-                            this.textContent =
-                                "♥ Saved";
-
-
-                            this.classList.add(
-                                "saved"
-                            );
-
+                    // REMOVE FROM DATABASE
+                    const response = await fetch(
+                        "/api/remove-career",
+                        {
+                            method: "POST",
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+                            body: JSON.stringify({
+                                careerTitle:
+                                    selectedCareer
+                            })
                         }
+                    );
 
+                    const result =
+                        await response.json();
 
-                        localStorage.setItem(
-                            "savedCareers",
-                            JSON.stringify(
-                                savedCareers
-                            )
+                    if (!result.success) {
+
+                        alert(
+                            result.message ||
+                            "Unable to remove career."
                         );
 
+                        return;
                     }
+
+                    button.textContent = "♡ Save";
+
+                    button.classList.remove("saved");
+
+                } else {
+
+                    // SAVE TO DATABASE
+                    const response = await fetch(
+                        "/api/save-career",
+                        {
+                            method: "POST",
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+                            body: JSON.stringify({
+                                careerTitle:
+                                    selectedCareer,
+
+                                onetSocCode:
+                                    backendCareer
+                                        ? backendCareer.onetSocCode
+                                        : selectedCareerCode,
+
+                                matchPercentage:
+                                    selectedCareerMatch || 0
+                            })
+                        }
+                    );
+
+                    const result =
+                        await response.json();
+
+                    if (!result.success) {
+
+                        alert(
+                            result.message ||
+                            "Unable to save career."
+                        );
+
+                        return;
+                    }
+
+                    button.textContent = "♥ Saved";
+
+                    button.classList.add("saved");
+
+                }
+
+            } catch (error) {
+
+                console.error(
+                    "Save career error:",
+                    error
                 );
 
+                alert(
+                    "Unable to connect to the server."
+                );
+            }
 
+        }
+    );
             /* =========================================
                COMPARE CAREER
             ========================================= */

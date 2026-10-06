@@ -204,28 +204,20 @@ def login():
 
         conn.close()
 
-
-# ============================================================
-# PROFILE API
-# ============================================================
+        # =========================================
+# SAVE PROFILE
+# =========================================
 
 @auth_bp.route("/api/profile", methods=["POST"])
 def save_profile():
 
-    # Check whether user is logged in
-
     if "user_id" not in session:
-
         return jsonify({
             "success": False,
             "message": "Please login first."
         }), 401
 
-
-    data = request.get_json()
-
-
-    # Get profile information
+    data = request.get_json() or {}
 
     full_name = data.get("fullName", "").strip()
     age_group = data.get("ageGroup", "").strip()
@@ -233,9 +225,6 @@ def save_profile():
     stream = data.get("stream", "").strip()
     interests = data.get("interests", [])
     career_goal = data.get("careerGoal", "").strip()
-
-
-    # Check required fields
 
     if (
         not full_name
@@ -245,29 +234,18 @@ def save_profile():
         or not interests
         or not career_goal
     ):
-
         return jsonify({
             "success": False,
             "message": "Please complete all profile information."
         }), 400
 
-
-    # Convert interests list into text
-
     interests_text = ", ".join(interests)
-
 
     conn = get_db_connection()
 
-
     try:
 
-        # Save profile
-        # If profile already exists for this user,
-        # update it instead.
-
-        conn.execute(
-            """
+        conn.execute("""
             INSERT INTO profiles
             (
                 user_id,
@@ -288,39 +266,31 @@ def save_profile():
                 stream = excluded.stream,
                 interests = excluded.interests,
                 career_goal = excluded.career_goal
-            """,
-            (
-                session["user_id"],
-                full_name,
-                age_group,
-                education,
-                stream,
-                interests_text,
-                career_goal
-            )
-        )
-
+        """, (
+            session["user_id"],
+            full_name,
+            age_group,
+            education,
+            stream,
+            interests_text,
+            career_goal
+        ))
 
         conn.commit()
-
 
         return jsonify({
             "success": True,
             "message": "Profile saved successfully!"
         })
 
-
     except Exception as error:
 
-        print("Profile error:", error)
-
+        print("PROFILE ERROR:", error)
 
         return jsonify({
             "success": False,
             "message": "Unable to save profile."
         }), 500
 
-
     finally:
-
         conn.close()
