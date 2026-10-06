@@ -22,7 +22,7 @@ if (loginForm) {
             document.getElementById("loginPassword");
 
         const email =
-            emailInput ? emailInput.value.trim() : "";
+            emailInput ? emailInput.value.trim().toLowerCase() : "";
 
         const password =
             passwordInput ? passwordInput.value : "";
@@ -147,7 +147,7 @@ if (signupForm) {
             document.getElementById("confirmPassword");
 
         const name = nameInput ? nameInput.value.trim() : "";
-        const email = emailInput ? emailInput.value.trim() : "";
+        const email = emailInput ? emailInput.value.trim().toLowerCase() : "";
         const password =
             passwordInput ? passwordInput.value : "";
         const confirmPassword =

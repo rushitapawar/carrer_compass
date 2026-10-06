@@ -22,11 +22,12 @@ auth_bp = Blueprint("auth", __name__)
 @auth_bp.route("/api/signup", methods=["POST"])
 def signup():
 
-    data = request.get_json()
+    data = request.get_json(silent=True) or {}
 
     first_name = data.get("firstName", "").strip()
     last_name = data.get("lastName", "").strip()
-    email = data.get("email", "").strip()
+    # Normalize email: trimmed + lowercase (login matches the same way)
+    email = data.get("email", "").strip().lower()
     password = data.get("password", "")
 
 
@@ -54,6 +55,19 @@ def signup():
 
 
     try:
+
+        # Case-insensitive duplicate check
+        existing = conn.execute(
+            "SELECT id FROM users WHERE LOWER(email) = ?",
+            (email,)
+        ).fetchone()
+
+        if existing is not None:
+
+            return jsonify({
+                "success": False,
+                "message": "Email already exists. Please login instead."
+            }), 400
 
         conn.execute(
             """
@@ -98,9 +112,10 @@ def signup():
 @auth_bp.route("/api/login", methods=["POST"])
 def login():
 
-    data = request.get_json()
+    data = request.get_json(silent=True) or {}
 
-    email = data.get("email", "").strip()
+    # Normalize email the same way as signup (trimmed + lowercase)
+    email = data.get("email", "").strip().lower()
     password = data.get("password", "")
 
     # Check required fields
@@ -116,7 +131,8 @@ def login():
 
     try:
 
-        # Find user by email
+        # Find user by email (case-insensitive so emails stored
+        # before normalization still match)
         user = conn.execute(
             """
             SELECT
@@ -125,7 +141,7 @@ def login():
                 email,
                 password
             FROM users
-            WHERE email = ?
+            WHERE LOWER(email) = ?
             """,
             (email,)
         ).fetchone()
@@ -136,7 +152,9 @@ def login():
 
             return jsonify({
                 "success": False,
-                "message": "Email not found."
+                "message":
+                    f"No account found for '{email}'. "
+                    "Please sign up first (or check for typos)."
             }), 401
 
 
