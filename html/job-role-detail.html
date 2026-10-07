@@ -492,695 +492,562 @@
 
 
 
-    <script>
+<script>
 
-        /* =========================================
-           GET SELECTED CAREER
-        ========================================= */
-        const selectedCareer =
-             localStorage.getItem("selectedCareer");
+    /* =====================================================
+       CAREER DETAIL — 500 CAREER DATABASE
+    ===================================================== */
 
-        const selectedCareerMatch =
-            localStorage.getItem("selectedCareerMatch");
+    const selectedCareer =
+        localStorage.getItem("selectedCareer");
 
-        const selectedCareerScores =
-             JSON.parse(
-                 localStorage.getItem("selectedCareerScores")
-             ) || {};
+    const careerContent =
+        document.getElementById("careerContent");
 
-        const selectedCareerCode =
-             localStorage.getItem("selectedCareerCode");
 
-             // =========================================================
-// LOAD CAREER DETAILS FROM BACKEND
-// =========================================================
+    /* =====================================================
+       ESCAPE HTML
+    ===================================================== */
 
-let backendCareer = null;
+    function escapeHTML(value) {
 
-async function loadCareerFromBackend() {
+        if (value === null || value === undefined) {
+            return "";
+        }
 
-    if (!selectedCareer) {
-        return;
+        return String(value)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
     }
 
-    try {
 
-        const response = await fetch(
-            "/api/career-detail?title=" +
-            encodeURIComponent(selectedCareer)
-        );
+    /* =====================================================
+       CONVERT DATABASE TEXT INTO LIST
+    ===================================================== */
 
-        const result = await response.json();
+    function toList(value) {
 
-        if (result.success) {
+        if (!value) {
+            return [];
+        }
 
-            backendCareer = result.career;
+        if (Array.isArray(value)) {
+            return value;
+        }
 
-            console.log(
-                "Career loaded from backend:",
-                backendCareer
+        return String(value)
+            .split(/\n|;|\||,/)
+            .map(function(item) {
+                return item.trim();
+            })
+            .filter(function(item) {
+                return item.length > 0;
+            });
+    }
+
+
+    /* =====================================================
+       LIST HTML
+    ===================================================== */
+
+    function createList(items) {
+
+        if (!items || items.length === 0) {
+            return "<p>No information available.</p>";
+        }
+
+        return items.map(function(item) {
+
+            return (
+                '<div class="opportunity">' +
+                "→ " +
+                escapeHTML(item) +
+                "</div>"
             );
 
-        } else {
+        }).join("");
+    }
 
-            console.log(
-                "Backend career not found:",
-                result.message
+
+    /* =====================================================
+       SKILLS HTML
+    ===================================================== */
+
+    function createSkills(items) {
+
+        if (!items || items.length === 0) {
+            return "<p>No skills listed.</p>";
+        }
+
+        return items.map(function(item) {
+
+            return (
+                '<span class="skill-tag">' +
+                escapeHTML(item) +
+                "</span>"
+            );
+
+        }).join("");
+    }
+
+
+    /* =====================================================
+       LOAD SAVED CAREERS
+    ===================================================== */
+
+    async function getSavedCareers() {
+
+        try {
+
+            const response =
+                await fetch("/api/saved-careers");
+
+            const data =
+                await response.json();
+
+            if (
+                data.success &&
+                Array.isArray(data.savedCareers)
+            ) {
+
+                return data.savedCareers;
+
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Unable to load saved careers:",
+                error
             );
 
         }
 
-    } catch (error) {
-
-        console.error(
-            "Career backend error:",
-            error
-        );
-
+        return [];
     }
-}
 
-loadCareerFromBackend();
-        /* =========================================
-           CAREER DATABASE
-        ========================================= */
 
-        const careerData = {
+    /* =====================================================
+       SAVE CAREER
+    ===================================================== */
 
-            "Software Developer": {
-                icon: "💻",
-                sector: "Technology & IT",
+    async function saveCareer(career) {
 
-                overview:
-                    "Software Developers design, build, test and maintain applications and digital systems. They use programming languages and problem-solving skills to create technology that people and businesses use every day.",
+        const button =
+            document.getElementById("saveButton");
 
-                responsibilities: [
-                    "Design and develop software applications",
-                    "Write clean and efficient code",
-                    "Test and debug software",
-                    "Work with designers and other developers",
-                    "Maintain and improve existing applications"
-                ],
+        try {
 
-                skills: [
-                    "Programming",
-                    "Problem Solving",
-                    "JavaScript",
-                    "Python",
-                    "Git",
-                    "Databases"
-                ],
+            const response =
+                await fetch("/api/save-career", {
 
-                education: [
-                    {
-                        title: "Build your foundation",
-                        text: "Learn programming fundamentals, logic and problem solving."
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
                     },
-                    {
-                        title: "Study technology",
-                        text: "Consider BCA, B.Tech, Computer Science or relevant courses."
-                    },
-                    {
-                        title: "Build projects",
-                        text: "Create websites, applications and software projects for your portfolio."
-                    }
-                ],
 
-                opportunities: [
-                    "Frontend Developer",
-                    "Backend Developer",
-                    "Full Stack Developer",
-                    "Application Developer",
-                    "Software Engineer"
-                ],
+     body: JSON.stringify({
 
-                workStyle: "Analytical & Creative",
-                growth: "High growth potential",
-                environment: "Office / Remote / Hybrid"
-            },
+                careerTitle:
+                    career.careerTitle,
 
+                onetSocCode:
+                    career.onetSocCode || "",
 
-            "Web Developer": {
-                icon: "🌐",
-                sector: "Technology & IT",
+                matchPercentage:
+                    parseInt(
+                        localStorage.getItem(
+                            "selectedCareerMatch"
+                        )
+                    ) || 0
 
-                overview:
-                    "Web Developers create and maintain websites and web applications. They combine programming, design and problem-solving skills to build experiences that work smoothly across different devices.",
+            })
+                });
 
-                responsibilities: [
-                    "Build responsive websites",
-                    "Develop interactive web applications",
-                    "Work with HTML, CSS and JavaScript",
-                    "Test and improve website performance",
-                    "Collaborate with designers and developers"
-                ],
+            const data =
+                await response.json();
 
-                skills: [
-                    "HTML",
-                    "CSS",
-                    "JavaScript",
-                    "Responsive Design",
-                    "Git",
-                    "Problem Solving"
-                ],
+            if (data.success) {
 
-                education: [
-                    {
-                        title: "Learn web fundamentals",
-                        text: "Start with HTML, CSS and JavaScript."
-                    },
-                    {
-                        title: "Learn frameworks",
-                        text: "Explore modern tools and frameworks."
-                    },
-                    {
-                        title: "Build a portfolio",
-                        text: "Create real projects and publish them online."
-                    }
-                ],
+                button.textContent =
+                    "♥ Saved";
 
-                opportunities: [
-                    "Frontend Developer",
-                    "Backend Developer",
-                    "Full Stack Developer",
-                    "WordPress Developer",
-                    "Web Application Developer"
-                ],
+                button.classList.add("saved");
 
-                workStyle: "Creative & Technical",
-                growth: "High growth potential",
-                environment: "Office / Remote / Freelance"
-            },
+                return;
 
-
-            "AI / ML Engineer": {
-                icon: "🤖",
-                sector: "Technology & IT",
-
-                overview:
-                    "AI and Machine Learning Engineers build systems that can learn from data and make intelligent predictions or decisions.",
-
-                responsibilities: [
-                    "Develop machine learning models",
-                    "Prepare and analyze data",
-                    "Train and test AI systems",
-                    "Improve model performance",
-                    "Deploy intelligent applications"
-                ],
-
-                skills: [
-                    "Python",
-                    "Machine Learning",
-                    "Data Analysis",
-                    "Statistics",
-                    "Deep Learning",
-                    "Problem Solving"
-                ],
-
-                education: [
-                    {
-                        title: "Learn programming",
-                        text: "Build a strong foundation in Python and mathematics."
-                    },
-                    {
-                        title: "Study AI and data",
-                        text: "Learn machine learning and data analysis."
-                    },
-                    {
-                        title: "Build AI projects",
-                        text: "Create models and practical AI applications."
-                    }
-                ],
-
-                opportunities: [
-                    "Machine Learning Engineer",
-                    "AI Engineer",
-                    "Data Scientist",
-                    "NLP Engineer",
-                    "Computer Vision Engineer"
-                ],
-
-                workStyle: "Analytical & Innovative",
-                growth: "Very high growth potential",
-                environment: "Technology / Research / Hybrid"
-            },
-
-
-            "Data Analyst": {
-                icon: "📊",
-                sector: "Technology & IT",
-
-                overview:
-                    "Data Analysts collect, organize and analyze data to help organizations make better decisions.",
-
-                responsibilities: [
-                    "Collect and organize data",
-                    "Analyze trends and patterns",
-                    "Create reports and dashboards",
-                    "Use SQL and spreadsheet tools",
-                    "Communicate insights clearly"
-                ],
-
-                skills: [
-                    "SQL",
-                    "Excel",
-                    "Data Visualization",
-                    "Statistics",
-                    "Python",
-                    "Communication"
-                ],
-
-                education: [
-                    {
-                        title: "Learn data basics",
-                        text: "Understand spreadsheets, statistics and databases."
-                    },
-                    {
-                        title: "Learn analytics tools",
-                        text: "Practice SQL, Python and visualization tools."
-                    },
-                    {
-                        title: "Create projects",
-                        text: "Analyze real datasets and build dashboards."
-                    }
-                ],
-
-                opportunities: [
-                    "Business Analyst",
-                    "Data Analyst",
-                    "BI Analyst",
-                    "Analytics Consultant",
-                    "Junior Data Scientist"
-                ],
-
-                workStyle: "Analytical",
-                growth: "High growth potential",
-                environment: "Office / Hybrid / Remote"
-            },
-
-
-            "UX/UI Designer": {
-                icon: "🎨",
-                sector: "Creative & Design",
-
-                overview:
-                    "UX/UI Designers create digital products that are attractive, easy to use and enjoyable for users.",
-
-                responsibilities: [
-                    "Research user needs",
-                    "Create wireframes and prototypes",
-                    "Design application interfaces",
-                    "Test user experiences",
-                    "Work with developers and product teams"
-                ],
-
-                skills: [
-                    "Figma",
-                    "UX Research",
-                    "Wireframing",
-                    "Prototyping",
-                    "Visual Design",
-                    "Communication"
-                ],
-
-                education: [
-                    {
-                        title: "Learn design principles",
-                        text: "Understand color, typography, layout and usability."
-                    },
-                    {
-                        title: "Learn design tools",
-                        text: "Practice using Figma and prototyping tools."
-                    },
-                    {
-                        title: "Build a portfolio",
-                        text: "Create case studies and real design projects."
-                    }
-                ],
-
-                opportunities: [
-                    "UX Designer",
-                    "UI Designer",
-                    "Product Designer",
-                    "Interaction Designer",
-                    "UX Researcher"
-                ],
-
-                workStyle: "Creative & Analytical",
-                growth: "High growth potential",
-                environment: "Office / Hybrid / Freelance"
-            },
-
-
-            "Graphic Designer": {
-                icon: "🖌️",
-                sector: "Creative & Design",
-
-                overview:
-                    "Graphic Designers communicate ideas through visual content such as branding, social media, advertisements and digital designs.",
-
-                responsibilities: [
-                    "Create visual concepts",
-                    "Design brand materials",
-                    "Create social media content",
-                    "Work with typography and colors",
-                    "Collaborate with clients and teams"
-                ],
-
-                skills: [
-                    "Creativity",
-                    "Typography",
-                    "Branding",
-                    "Photoshop",
-                    "Illustration",
-                    "Communication"
-                ],
-
-                education: [
-                    {
-                        title: "Learn design basics",
-                        text: "Understand visual communication and design principles."
-                    },
-                    {
-                        title: "Practice design tools",
-                        text: "Learn tools such as Photoshop and Illustrator."
-                    },
-                    {
-                        title: "Build your portfolio",
-                        text: "Create a collection of your best work."
-                    }
-                ],
-
-                opportunities: [
-                    "Brand Designer",
-                    "Visual Designer",
-                    "Social Media Designer",
-                    "Illustrator",
-                    "Art Director"
-                ],
-
-                workStyle: "Highly Creative",
-                growth: "Growing digital opportunities",
-                environment: "Agency / Freelance / Remote"
             }
 
-        };
+            alert(
+                data.message ||
+                "Unable to save career."
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Save career error:",
+                error
+            );
+
+            alert(
+                "Unable to save career."
+            );
+
+        }
+
+    }
 
 
-        /* =========================================
-           GENERIC CAREER DATA
-           FOR ROLES NOT YET IN FULL DATABASE
-        ========================================= */
+    /* =====================================================
+       REMOVE CAREER
+    ===================================================== */
 
-        const fallbackData = {
+    async function removeCareer(career) {
 
-            icon: "💼",
+        const button =
+            document.getElementById("saveButton");
 
-            sector: "Career Exploration",
+        try {
 
-            overview:
-                "This career offers opportunities to develop professional skills, solve meaningful problems and grow within a specialized field. Explore this role further to understand the education, skills and career paths available.",
+            const response =
+                await fetch(
+                    "/api/remove-career",
+                    {
 
-            responsibilities: [
-                "Perform key responsibilities related to the profession",
-                "Work with people, teams or specialized tools",
-                "Solve problems and make informed decisions",
-                "Continue learning and developing professional skills",
-                "Contribute to organizational or community goals"
-            ],
+                        method: "POST",
 
-            skills: [
-                "Communication",
-                "Problem Solving",
-                "Critical Thinking",
-                "Teamwork",
-                "Professional Skills"
-            ],
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
 
-            education: [
-                {
-                    title: "Explore the field",
-                    text: "Learn about the role and the qualifications commonly required."
-                },
-                {
-                    title: "Develop relevant skills",
-                    text: "Study courses and practice the skills used in this career."
-                },
-                {
-                    title: "Gain experience",
-                    text: "Build projects, complete internships or gain practical experience."
-                }
-            ],
+                        body: JSON.stringify({
 
-            opportunities: [
-                "Entry Level Professional",
-                "Specialist",
-                "Senior Professional",
-                "Team Lead",
-                "Industry Expert"
-            ],
+                            career_title:
+                                career.careerTitle
 
-            workStyle: "Depends on the role",
-            growth: "Career growth opportunities available",
-            environment: "Depends on the organization"
+                        })
 
-        };
+                    }
+                );
+
+            const data =
+                await response.json();
+
+            if (data.success) {
+
+                button.textContent =
+                    "♡ Save";
+
+                button.classList.remove(
+                    "saved"
+                );
+
+                return;
+
+            }
+
+            alert(
+                data.message ||
+                "Unable to remove career."
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Remove career error:",
+                error
+            );
+
+            alert(
+                "Unable to remove career."
+            );
+
+        }
+
+    }
 
 
-        /* =========================================
-           CREATE CAREER PAGE
-        ========================================= */
+    /* =====================================================
+       LOAD CAREER CATALOG
+    ===================================================== */
 
-        const careerContent =
-            document.getElementById("careerContent");
+    async function loadCareerDetails() {
 
-
-        if (
-            !selectedCareer
-        ) {
+        if (!selectedCareer) {
 
             careerContent.innerHTML =
 
                 '<section class="empty-state">' +
 
-                '<div style="font-size: 55px;">🧭</div>' +
+                '<div style="font-size:55px;">🧭</div>' +
 
                 '<h1>No career selected</h1>' +
 
-                '<p>Please explore job roles and select a career first.</p>' +
+                '<p>' +
+                'Please explore career roles and ' +
+                'select a career first.' +
+                '</p>' +
 
-                '<a href="./job-roles.html">' +
-                'Explore Job Roles' +
+                '<a href="./roles.html">' +
+                'Explore Career Roles' +
                 '</a>' +
 
                 '</section>';
 
-        } else {
+            return;
+        }
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/career-catalog"
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                !data.success ||
+                !Array.isArray(data.careers)
+            ) {
+
+                throw new Error(
+                    "Career catalog could not be loaded."
+                );
+
+            }
+
+
+            /* =================================================
+               FIND SELECTED CAREER
+            ================================================= */
 
             const career =
-                careerData[selectedCareer] ||
-                {
-                   ...fallbackData,
-                  name: selectedCareer
-                };
+                data.careers.find(
+                    function(item) {
 
-            const displayScores =
-                  backendCareer && backendCareer.scores
-                             ? backendCareer.scores
-                             : selectedCareerScores;
-            
-             const totalScore =
-                 Object.values(displayScores).reduce(
-                     (total, score) => total + Number(score || 0),
-                     0
-                     );
+                        return (
+                            String(
+                                item.careerTitle
+                            ).toLowerCase() ===
+                            String(
+                                selectedCareer
+                            ).toLowerCase()
+                        );
 
-            const displayPercentages = {
-                R: totalScore ? Math.round((displayScores.R / totalScore) * 100) : 0,
-                I: totalScore ? Math.round((displayScores.I / totalScore) * 100) : 0,
-                A: totalScore ? Math.round((displayScores.A / totalScore) * 100) : 0,
-                S: totalScore ? Math.round((displayScores.S / totalScore) * 100) : 0,
-                E: totalScore ? Math.round((displayScores.E / totalScore) * 100) : 0,
-                C: totalScore ? Math.round((displayScores.C / totalScore) * 100) : 0
-            };
-                
-
-            const savedCareers =
-                JSON.parse(
-                    localStorage.getItem("savedCareers")
-                ) || [];
+                    }
+                );
 
 
-            const isSaved =
-                savedCareers.includes(selectedCareer);
+            if (!career) {
+
+                careerContent.innerHTML =
+
+                    '<section class="empty-state">' +
+
+                    '<div style="font-size:55px;">🔎</div>' +
+
+                    '<h1>Career not found</h1>' +
+
+                    '<p>' +
+                    'We could not find this career in ' +
+                    'the career catalog.' +
+                    '</p>' +
+
+                    '<a href="./roles.html">' +
+                    'Back to Career Roles' +
+                    '</a>' +
+
+                    '</section>';
+
+                return;
+            }
+
+
+            /* =================================================
+               PREPARE DATA
+            ================================================= */
+
+            const skills =
+                toList(
+                    career.importantSkills
+                );
+
+            const courses =
+                toList(
+                    career.recommendedCourses
+                );
+
+            const jobRoles =
+                toList(
+                    career.commonJobRoles
+                );
+
+            const roadmap =
+                toList(
+                    career.careerRoadmap
+                );
 
 
             document.title =
-                selectedCareer +
+                career.careerTitle +
                 " | Career Compass AI";
 
 
-            /* RESPONSIBILITIES */
+            /* =================================================
+               SAVED STATUS
+            ================================================= */
 
-            const responsibilitiesHTML =
-                career.responsibilities.map(
+            const savedCareers =
+                await getSavedCareers();
+
+
+            const isSaved =
+                savedCareers.some(
                     function(item) {
 
+                        const title =
+                            item.career_title ||
+                            item.careerTitle ||
+                            item.title ||
+                            "";
+
                         return (
-                            "<li>" +
-                            item +
-                            "</li>"
+                            String(title).toLowerCase() ===
+                            String(
+                                career.careerTitle
+                            ).toLowerCase()
                         );
 
                     }
-                ).join("");
+                );
 
 
-            /* SKILLS */
+            /* =================================================
+               ROADMAP HTML
+            ================================================= */
 
-            const skillsHTML =
-                career.skills.map(
-                    function(skill) {
-
-                        return (
-                            '<span class="skill-tag">' +
-                            skill +
-                            '</span>'
-                        );
-
-                    }
-                ).join("");
+            let roadmapHTML = "";
 
 
-            /* EDUCATION */
+            if (roadmap.length > 0) {
 
-            const educationHTML =
-                career.education.map(
-                    function(step, index) {
+                roadmapHTML =
+                    roadmap.map(
+                        function(step, index) {
 
-                        return (
+                            return (
 
-                            '<div class="education-step">' +
+                                '<div class="education-step">' +
 
-                            '<div class="step-number">' +
-                            (index + 1) +
-                            '</div>' +
+                                '<div class="step-number">' +
+                                (index + 1) +
+                                '</div>' +
 
-                            '<div>' +
+                                '<div>' +
 
-                            '<h4>' +
-                            step.title +
-                            '</h4>' +
+                                '<h4>' +
+                                "Step " +
+                                (index + 1) +
+                                '</h4>' +
 
-                            '<p>' +
-                            step.text +
-                            '</p>' +
+                                '<p>' +
+                                escapeHTML(step) +
+                                '</p>' +
 
-                            '</div>' +
+                                '</div>' +
 
-                            '</div>'
+                                '</div>'
 
-                        );
+                            );
 
-                    }
-                ).join("");
+                        }
+                    ).join("");
 
+            } else {
 
-            /* OPPORTUNITIES */
+                roadmapHTML =
+                    "<p>No career roadmap available.</p>";
 
-            const opportunitiesHTML =
-                career.opportunities.map(
-                    function(item) {
-
-                        return (
-                            '<div class="opportunity">' +
-                            "→ " +
-                            item +
-                            '</div>'
-                        );
-
-                    }
-                ).join("");
+            }
 
 
-            /* FULL PAGE */
+            /* =================================================
+               BUILD PAGE
+            ================================================= */
 
             careerContent.innerHTML =
 
                 '<section class="career-hero">' +
 
-                '<div class="career-info">' +
+                    '<div class="career-info">' +
 
-                '<div class="career-icon">' +
-                career.icon +
-                '</div>' +
+                        '<div class="career-icon">' +
+                            "💼" +
+                        '</div>' +
 
-                '<div>' +
+                        '<div>' +
 
-                '<div class="sector-label">' +
-                career.sector +
-                '</div>' +
+                            '<div class="sector-label">' +
+                                escapeHTML(
+                                    career.sector
+                                ) +
+                            '</div>' +
 
-                '<h1>' +
-                selectedCareer +
-                '</h1>' +
+                            '<h1>' +
+                                escapeHTML(
+                                    career.careerTitle
+                                ) +
+                            '</h1>' +
 
-                '<p>' +
-                 career.overview +
-                '</p>' +
+                            '<p>' +
+                                escapeHTML(
+                                    career.shortDescription
+                                ) +
+                            '</p>' +
 
-                '<div class="match-score">' +
-                    '<strong>' +
-                    (selectedCareerMatch || "0") +
-                    '% Match' +
-                    '</strong>' +
-                '</div>' +
+                        '</div>' +
 
-                '<div class="riasec-match">' +
-
-            '<h3>Your Career Interest Match</h3>' +
-
-    '<div class="riasec-grid">' +
-
-            '<div>R — Realistic: ' +
-                displayPercentages.R + '%</div>' +
-
-            '<div>I — Investigative: ' +
-                displayPercentages.I + '%</div>' +
-
-            '<div>A — Artistic: ' +
-                displayPercentages.A + '%</div>' +
-
-            '<div>S — Social: ' +
-                displayPercentages.S + '%</div>' +
-
-            '<div>E — Enterprising: ' +
-                displayPercentages.E + '%</div>' +
-
-            '<div>C — Conventional: ' +
-                displayPercentages.C + '%</div>' +
-
-    '</div>' +
-
-'</div>' +
+                    '</div>' +
 
 
-                '<div class="hero-actions">' +
+                    '<div class="hero-actions">' +
 
-                '<button id="saveButton" class="save-btn ' +
-                (isSaved ? "saved" : "") +
-                '">' +
+                        '<button ' +
+                            'id="saveButton" ' +
+                            'class="save-btn ' +
+                            (isSaved ? "saved" : "") +
+                            '">' +
 
-                (isSaved ? "♥ Saved" : "♡ Save") +
+                            (
+                                isSaved
+                                    ? "♥ Saved"
+                                    : "♡ Save"
+                            ) +
 
-                '</button>' +
+                        '</button>' +
 
 
-                '<button class="compare-btn" id="compareButton">' +
-                '⇄ Compare' +
-                '</button>' +
+                        '<button ' +
+                            'class="compare-btn" ' +
+                            'id="compareButton">' +
 
-                '</div>' +
+                            '⇄ Compare' +
+
+                        '</button>' +
+
+                    '</div>' +
 
                 '</section>' +
 
@@ -1188,225 +1055,229 @@ loadCareerFromBackend();
                 '<div class="details-grid">' +
 
 
-                '<div>' +
+                    /* =========================================
+                       LEFT COLUMN
+                    ========================================= */
+
+                    '<div>' +
 
 
-                '<section class="card">' +
+                        /* OVERVIEW */
 
-                '<h2>Career Overview</h2>' +
+                        '<section class="card">' +
 
-                '<p>' +
-                career.overview +
-                '</p>' +
+                            '<h2>Career Overview</h2>' +
 
-                '</section>' +
+                            '<p>' +
+                                escapeHTML(
+                                    career.shortDescription
+                                ) +
+                            '</p>' +
 
-
-                '<section class="card">' +
-
-                '<h2>What will you do?</h2>' +
-
-                '<ul class="responsibility-list">' +
-                responsibilitiesHTML +
-                '</ul>' +
-
-                '</section>' +
+                        '</section>' +
 
 
-                '<section class="card">' +
+                        /* SKILLS */
 
-                '<h2>Skills you will need</h2>' +
+                        '<section class="card">' +
 
-                '<div class="skills-container">' +
-                skillsHTML +
-                '</div>' +
+                            '<h2>Important Skills</h2>' +
 
-                '</section>' +
+                            '<div class="skills-container">' +
 
+                                createSkills(skills) +
 
-                '<section class="card">' +
+                            '</div>' +
 
-                '<h2>Education & Career Path</h2>' +
-
-                educationHTML +
-
-                '</section>' +
+                        '</section>' +
 
 
-                '</div>' +
+                        /* EDUCATION */
+
+                        '<section class="card">' +
+
+                            '<h2>Education & Qualification</h2>' +
+
+                            '<p>' +
+                                escapeHTML(
+                                    career.educationQualification
+                                ) +
+                            '</p>' +
+
+                        '</section>' +
 
 
-                '<aside>' +
+                        /* COURSES */
+
+                        '<section class="card">' +
+
+                            '<h2>Recommended Courses & Certifications</h2>' +
+
+                            '<div>' +
+
+                                createList(courses) +
+
+                            '</div>' +
+
+                        '</section>' +
 
 
-                '<section class="side-card">' +
+                        /* ROADMAP */
 
-                '<h3>Career Snapshot</h3>' +
+                        '<section class="card">' +
 
+                            '<h2>Career Roadmap</h2>' +
 
-                '<div class="info-item">' +
+                            roadmapHTML +
 
-                '<div class="info-label">WORK STYLE</div>' +
-
-                '<div class="info-value">' +
-                career.workStyle +
-                '</div>' +
-
-                '</div>' +
+                        '</section>' +
 
 
-                '<div class="info-item">' +
+                        /* JOB OPPORTUNITIES */
 
-                '<div class="info-label">CAREER GROWTH</div>' +
+                        '<section class="card">' +
 
-                '<div class="info-value">' +
-                career.growth +
-                '</div>' +
+                            '<h2>Common Job Roles & Opportunities</h2>' +
 
-                '</div>' +
+                            createList(jobRoles) +
 
-
-                '<div class="info-item">' +
-
-                '<div class="info-label">WORK ENVIRONMENT</div>' +
-
-                '<div class="info-value">' +
-                career.environment +
-                '</div>' +
-
-                '</div>' +
-
-                '</section>' +
+                        '</section>' +
 
 
-                '<section class="side-card">' +
+                        /* CAREER GROWTH */
 
-                '<h3>Career Opportunities</h3>' +
+                        '<section class="card">' +
 
-                opportunitiesHTML +
+                            '<h2>Career Growth</h2>' +
 
-                '</section>' +
+                            '<p>' +
+                                escapeHTML(
+                                    career.careerGrowth
+                                ) +
+                            '</p>' +
+
+                        '</section>' +
 
 
-                '</aside>' +
+                    '</div>' +
+
+
+                    /* =========================================
+                       RIGHT COLUMN
+                    ========================================= */
+
+                    '<aside>' +
+
+
+                        '<section class="side-card">' +
+
+                            '<h3>Career Snapshot</h3>' +
+
+
+                            '<div class="info-item">' +
+
+                                '<div class="info-label">' +
+                                    'SECTOR / INDUSTRY' +
+                                '</div>' +
+
+                                '<div class="info-value">' +
+                                    escapeHTML(
+                                        career.sector
+                                    ) +
+                                '</div>' +
+
+                            '</div>' +
+
+
+                            '<div class="info-item">' +
+
+                                '<div class="info-label">' +
+                                    'SALARY RANGE' +
+                                '</div>' +
+
+                                '<div class="info-value">' +
+                                    escapeHTML(
+                                        career.salaryRange
+                                    ) +
+                                '</div>' +
+
+                            '</div>' +
+
+
+                            '<div class="info-item">' +
+
+                                '<div class="info-label">' +
+                                    'DEMAND LEVEL' +
+                                '</div>' +
+
+                                '<div class="info-value">' +
+                                    escapeHTML(
+                                        career.demandLevel
+                                    ) +
+                                '</div>' +
+
+                            '</div>' +
+
+
+                            '<div class="info-item">' +
+
+                                '<div class="info-label">' +
+                                    'O*NET-SOC CODE' +
+                                '</div>' +
+
+                                '<div class="info-value">' +
+                                    escapeHTML(
+                                        career.onetSocCode
+                                    ) +
+                                '</div>' +
+
+                            '</div>' +
+
+
+                        '</section>' +
+
+
+                    '</aside>' +
 
 
                 '</div>';
 
-/* =========================================
-   SAVE CAREER - BACKEND
-========================================= */
 
-document
-    .getElementById("saveButton")
-    .addEventListener(
-        "click",
-        async function() {
+            /* =================================================
+               SAVE / REMOVE BUTTON
+            ================================================= */
 
-            const button = this;
+            document
+                .getElementById("saveButton")
+                .addEventListener(
+                    "click",
+                    async function() {
 
-            try {
+                        if (
+                            this.classList.contains(
+                                "saved"
+                            )
+                        ) {
 
-                const isCurrentlySaved =
-                    button.classList.contains("saved");
+                            await removeCareer(
+                                career
+                            );
 
-                if (isCurrentlySaved) {
+                        } else {
 
-                    // REMOVE FROM DATABASE
-                    const response = await fetch(
-                        "/api/remove-career",
-                        {
-                            method: "POST",
-                            headers: {
-                                "Content-Type":
-                                    "application/json"
-                            },
-                            body: JSON.stringify({
-                                careerTitle:
-                                    selectedCareer
-                            })
+                            await saveCareer(
+                                career
+                            );
+
                         }
-                    );
 
-                    const result =
-                        await response.json();
-
-                    if (!result.success) {
-
-                        alert(
-                            result.message ||
-                            "Unable to remove career."
-                        );
-
-                        return;
                     }
-
-                    button.textContent = "♡ Save";
-
-                    button.classList.remove("saved");
-
-                } else {
-
-                    // SAVE TO DATABASE
-                    const response = await fetch(
-                        "/api/save-career",
-                        {
-                            method: "POST",
-                            headers: {
-                                "Content-Type":
-                                    "application/json"
-                            },
-                            body: JSON.stringify({
-                                careerTitle:
-                                    selectedCareer,
-
-                                onetSocCode:
-                                    backendCareer
-                                        ? backendCareer.onetSocCode
-                                        : selectedCareerCode,
-
-                                matchPercentage:
-                                    selectedCareerMatch || 0
-                            })
-                        }
-                    );
-
-                    const result =
-                        await response.json();
-
-                    if (!result.success) {
-
-                        alert(
-                            result.message ||
-                            "Unable to save career."
-                        );
-
-                        return;
-                    }
-
-                    button.textContent = "♥ Saved";
-
-                    button.classList.add("saved");
-
-                }
-
-            } catch (error) {
-
-                console.error(
-                    "Save career error:",
-                    error
                 );
 
-                alert(
-                    "Unable to connect to the server."
-                );
-            }
 
-        }
-    );
-            /* =========================================
-               COMPARE CAREER
-            ========================================= */
+            /* =================================================
+               COMPARE BUTTON
+            ================================================= */
 
             document
                 .getElementById("compareButton")
@@ -1414,24 +1285,56 @@ document
                     "click",
                     function() {
 
-
                         localStorage.setItem(
                             "careerToCompare",
-                            selectedCareer
+                            career.careerTitle
                         );
 
-
                         window.location.href =
-                            "./compare-roles.html";
+                            "./compare.html";
 
                     }
                 );
 
+
+        } catch (error) {
+
+            console.error(
+                "Career detail error:",
+                error
+            );
+
+
+            careerContent.innerHTML =
+
+                '<section class="empty-state">' +
+
+                '<div style="font-size:55px;">⚠️</div>' +
+
+                '<h1>Unable to load career</h1>' +
+
+                '<p>' +
+                'There was a problem loading the career information.' +
+                '</p>' +
+
+                '<a href="./roles.html">' +
+                'Back to Career Roles' +
+                '</a>' +
+
+                '</section>';
+
         }
 
-    </script>
+    }
 
+
+    /* =====================================================
+       START
+    ===================================================== */
+
+    loadCareerDetails();
+
+</script>
 
 </body>
-
 </html>

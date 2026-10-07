@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify, session
 import json
 
 from database import get_db_connection
+from analysis import score_answers
 
 
 # ============================================================
@@ -40,7 +41,7 @@ def save_assessment():
     # GET DATA FROM FRONTEND
     # ========================================================
 
-    data = request.get_json()
+    data = request.get_json(silent=True) or {}
 
     guide_name = data.get(
         "guideName",
@@ -88,6 +89,22 @@ def save_assessment():
 
 
     # ========================================================
+    # CALCULATE RIASEC RESULTS
+    # (same engine as /api/analyze-assessment)
+    # ========================================================
+
+    try:
+        scores, top_types = score_answers(answers)
+
+    except ValueError as error:
+
+        return jsonify({
+            "success": False,
+            "message": str(error)
+        }), 400
+
+
+    # ========================================================
     # CONVERT ANSWERS TO JSON TEXT
     # ========================================================
 
@@ -107,20 +124,24 @@ def save_assessment():
         # SAVE ASSESSMENT FOR LOGGED-IN USER
         # ====================================================
 
-        conn.execute(
+        cursor = conn.execute(
             """
             INSERT INTO assessments
             (
                 user_id,
                 guide_name,
-                answers
+                answers,
+                scores,
+                top_types
             )
-            VALUES (?, ?, ?)
+            VALUES (?, ?, ?, ?, ?)
             """,
             (
                 session["user_id"],
                 guide_name,
-                answers_json
+                answers_json,
+                json.dumps(scores),
+                json.dumps(top_types)
             )
         )
 
@@ -130,7 +151,8 @@ def save_assessment():
 
         return jsonify({
             "success": True,
-            "message": "Assessment saved successfully!"
+            "message": "Assessment saved successfully!",
+            "assessmentId": cursor.lastrowid
         })
 
 

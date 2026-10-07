@@ -396,7 +396,7 @@
 
         <div class="more-area">
 
-            <a href="./job-roles.html" class="more-btn">
+            <a href="./roles.html" class="more-btn">
                 View More Career Recommendations →
             </a>
 
@@ -698,9 +698,7 @@ async function loadCareerMatches() {
    DISPLAY CAREER MATCHES
 ===================================================== */
 
-function displayCareerMatches(
-    matches
-) {
+async function displayCareerMatches(matches) {
 
     const careerGrid =
         document.getElementById(
@@ -717,41 +715,164 @@ function displayCareerMatches(
     ) {
 
         careerGrid.innerHTML = `
+
             <div style="
                 grid-column: 1 / -1;
                 text-align: center;
                 padding: 40px;
             ">
+
                 No career matches found.
+
             </div>
+
         `;
 
         return;
     }
 
 
-    /*
-       Display top 6 careers
-    */
+    /* =================================================
+       LOAD 500 CAREER CATALOG
+    ================================================= */
+
+    let catalog = [];
+
+
+    try {
+
+        const catalogResponse =
+            await fetch(
+                "/api/career-catalog"
+            );
+
+
+        const catalogResult =
+            await catalogResponse.json();
+
+
+        if (
+            catalogResult.success &&
+            Array.isArray(
+                catalogResult.careers
+            )
+        ) {
+
+            catalog =
+                catalogResult.careers;
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Career catalog error:",
+            error
+        );
+
+    }
+
+
+    /* =================================================
+       DISPLAY TOP 6 MATCHES
+    ================================================= */
 
     const topMatches =
         matches.slice(0, 6);
 
 
     topMatches.forEach(
-        function(career, index) {
+        function(matchCareer) {
+
+
+            /* =========================================
+               FIND RICH 500-CAREER DATA
+            ========================================= */
+
+           const catalogCareer =
+    catalog.find(
+        function(career) {
+
+            const catalogCode =
+                String(
+                    career.onetSocCode || ""
+                ).trim();
+
+            const matchCode =
+                String(
+                    matchCareer.onet_soc_code || ""
+                ).trim();
+
+            const catalogTitle =
+                String(
+                    career.careerTitle || ""
+                ).trim()
+                .toLowerCase();
+
+            const matchTitle =
+                String(
+                    matchCareer.title || ""
+                ).trim()
+                .toLowerCase();
+
+            return (
+                (
+                    catalogCode !== "" &&
+                    matchCode !== "" &&
+                    catalogCode === matchCode
+                )
+                ||
+                (
+                    catalogTitle !== "" &&
+                    catalogTitle === matchTitle
+                )
+            );
+
+        }
+    );
+
+            const career =
+                catalogCareer || {
+
+                    careerTitle:
+                        matchCareer.title,
+
+                    sector:
+                        "Career",
+
+                    shortDescription:
+                        "This career matches your RIASEC interests based on your assessment profile.",
+
+                    importantSkills:
+                        "",
+
+                    educationQualification:
+                        "",
+
+                    salaryRange:
+                        "",
+
+                    demandLevel:
+                        "",
+
+                    onetSocCode:
+                        matchCareer.onet_soc_code
+
+                };
+
+
+            const matchPercentage =
+                matchCareer.match;
+
 
             const card =
                 document.createElement(
                     "article"
                 );
 
+
             card.className =
                 "career-card";
-
-
-            const matchPercentage =
-                career.match;
 
 
             card.innerHTML = `
@@ -759,48 +880,104 @@ function displayCareerMatches(
                 <div class="career-top">
 
                     <div class="career-icon">
-                        ${getCareerIcon(career.title)}
+
+                        ${getCareerIcon(
+                            career.careerTitle
+                        )}
+
                     </div>
 
+
                     <div class="match">
-                        ${matchPercentage}% Match
+
+                        ${matchPercentage}%
+                        Match
+
                     </div>
 
                 </div>
 
 
                 <h3>
+
                     ${escapeHtml(
-                        career.title
+                        career.careerTitle
                     )}
+
                 </h3>
 
 
                 <p>
-                    This career matches your
-                    RIASEC interests based on
-                    your assessment profile.
+
+                    ${escapeHtml(
+                        career.shortDescription
+                    )}
+
+                </p>
+
+
+                <p style="
+                    margin-top:10px;
+                    font-size:12px;
+                    color:#9a7182;
+                    font-weight:bold;
+                ">
+
+                    ${escapeHtml(
+                        career.sector
+                    )}
+
                 </p>
 
 
                 <div class="career-actions">
 
+
                     <button
                         class="explore-btn"
-                        onclick='exploreCareer(${JSON.stringify(career)})'
+                        onclick='exploreCareer(
+                            ${JSON.stringify({
+                                title:
+                                    career.careerTitle,
+
+                                match:
+                                    matchCareer.match,
+
+                                scores:
+                                    matchCareer.scores,
+
+                                onet_soc_code:
+                                    career.onetSocCode
+                                    ||
+                                    matchCareer.onet_soc_code
+                            })}
+                        )'
                     >
+
                         Explore Career
+
                     </button>
 
 
                     <button
                         class="save-btn"
                         data-career="${escapeForAttribute(
-                            career.title
+                            career.careerTitle
                         )}"
+                        data-onet="${escapeForAttribute(
+                            career.onetSocCode
+                            ||
+                            matchCareer.onet_soc_code
+                            ||
+                            ""
+                        )}"
+                        data-match="${matchPercentage}"
                     >
+
                         ♡
+
                     </button>
+
 
                 </div>
 
@@ -815,7 +992,6 @@ function displayCareerMatches(
     );
 
 }
-
 
 /* =====================================================
    CAREER ICONS
@@ -1069,8 +1245,7 @@ document.addEventListener(
                                         careerTitle,
 
                                     onetSocCode:
-                                        "",
-
+                                        button.getAttribute("data-onet") || "",
                                     matchPercentage:
                                         matchPercentage
 

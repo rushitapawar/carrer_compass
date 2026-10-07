@@ -1,3 +1,5 @@
+import sqlite3
+
 from flask import Blueprint, request, jsonify, session
 
 from werkzeug.security import (
@@ -90,15 +92,23 @@ def signup():
         })
 
 
-    except Exception as error:
+    except sqlite3.IntegrityError as error:
 
         print("Signup error:", error)
-
 
         return jsonify({
             "success": False,
             "message": "Email already exists"
         }), 400
+
+    except Exception as error:
+
+        print("Signup error:", error)
+
+        return jsonify({
+            "success": False,
+            "message": "Unable to create account. Please try again."
+        }), 500
 
 
     finally:
@@ -311,4 +321,106 @@ def save_profile():
         }), 500
 
     finally:
+        conn.close()
+
+        # ============================================================
+# LOGOUT API
+# ============================================================
+
+@auth_bp.route("/api/logout", methods=["POST"])
+def logout():
+
+    session.clear()
+
+    return jsonify({
+        "success": True,
+        "message": "Logged out successfully."
+    })
+
+
+# =========================================
+# GET PROFILE
+# =========================================
+
+@auth_bp.route("/api/profile", methods=["GET"])
+def get_profile():
+
+    if "user_id" not in session:
+        return jsonify({
+            "success": False,
+            "message": "Please login first."
+        }), 401
+
+    conn = get_db_connection()
+
+    try:
+
+        user = conn.execute(
+            """
+            SELECT
+                id,
+                name,
+                email
+            FROM users
+            WHERE id = ?
+            """,
+            (session["user_id"],)
+        ).fetchone()
+
+        if user is None:
+            return jsonify({
+                "success": False,
+                "message": "User not found."
+            }), 404
+
+        profile = conn.execute(
+            """
+            SELECT *
+            FROM profiles
+            WHERE user_id = ?
+            """,
+            (session["user_id"],)
+        ).fetchone()
+
+        profile_data = None
+
+        if profile is not None:
+
+            interests_text = profile["interests"] or ""
+
+            profile_data = {
+                "fullName": profile["full_name"],
+                "ageGroup": profile["age_group"],
+                "education": profile["education"],
+                "stream": profile["stream"],
+                "interests": [
+                    item.strip()
+                    for item in interests_text.split(",")
+                    if item.strip()
+                ],
+                "careerGoal": profile["career_goal"],
+                "createdAt": profile["created_at"]
+            }
+
+        return jsonify({
+            "success": True,
+            "user": {
+                "id": user["id"],
+                "name": user["name"],
+                "email": user["email"]
+            },
+            "profile": profile_data
+        })
+
+    except Exception as error:
+
+        print("GET PROFILE ERROR:", error)
+
+        return jsonify({
+            "success": False,
+            "message": "Unable to load profile."
+        }), 500
+
+    finally:
+
         conn.close()

@@ -7,7 +7,7 @@ contact_bp = Blueprint("contact", __name__)
 @contact_bp.route("/api/contact", methods=["POST"])
 def submit_contact():
 
-    data = request.get_json()
+    data = request.get_json(silent=True) or {}
 
     name = data.get("name", "").strip()
     email = data.get("email", "").strip()

@@ -37,6 +37,24 @@ def create_users_table():
 # ASSESSMENTS TABLE
 # ============================================================
 
+def ensure_column(conn, table, column, definition):
+    """Add a column to a table if it does not exist yet.
+
+    SQLite has no "ADD COLUMN IF NOT EXISTS", so the current
+    columns are checked first. Safe to run on every start.
+    """
+
+    existing_columns = [
+        row[1]
+        for row in conn.execute(f"PRAGMA table_info({table})")
+    ]
+
+    if column not in existing_columns:
+        conn.execute(
+            f"ALTER TABLE {table} ADD COLUMN {column} {definition}"
+        )
+
+
 def create_assessments_table():
     conn = get_db_connection()
 
@@ -49,6 +67,12 @@ def create_assessments_table():
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)
+
+    # Additive migration: keep the calculated results
+    # next to the raw answers (idempotent).
+    ensure_column(conn, "assessments", "scores", "TEXT")
+    ensure_column(conn, "assessments", "top_types", "TEXT")
+    ensure_column(conn, "assessments", "matches", "TEXT")
 
     conn.commit()
     conn.close()

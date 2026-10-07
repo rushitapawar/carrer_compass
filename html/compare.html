@@ -443,123 +443,150 @@ footer {
 </footer>
 
 <script>
-const careers = [
-    {
-        id: "software",
-        name: "Software Developer",
-        icon: "💻",
-        description: "Designs, builds and maintains software applications and digital solutions.",
-        skills: ["Programming", "Problem solving", "Logical thinking", "Debugging"],
-        education: "Computer Science, IT or related degree; practical coding projects are also valuable.",
-        work: ["Technology companies", "Startups", "IT services", "Remote teams"],
-        areas: ["Web development", "App development", "Software engineering"],
-        growth: "Can progress into senior development, software architecture or technical leadership."
-    },
-    {
-        id: "designer",
-        name: "UI/UX Designer",
-        icon: "🎨",
-        description: "Creates digital experiences that are useful, accessible and easy to navigate.",
-        skills: ["Creativity", "User research", "Visual design", "Prototyping"],
-        education: "Design, interaction design or related studies; a strong portfolio is important.",
-        work: ["Design studios", "Technology companies", "Startups", "Freelance projects"],
-        areas: ["Interface design", "User experience", "Product design"],
-        growth: "Can progress into senior design, product design or design leadership."
-    },
-    {
-        id: "doctor",
-        name: "Doctor",
-        icon: "🩺",
-        description: "Diagnoses, treats and helps prevent illness while supporting patient health.",
-        skills: ["Communication", "Scientific knowledge", "Critical thinking", "Empathy"],
-        education: "Medical education and required clinical training and licensing.",
-        work: ["Hospitals", "Clinics", "Healthcare centers", "Research institutions"],
-        areas: ["Patient care", "Medical research", "Specialized practice"],
-        growth: "May pursue medical specializations, teaching or healthcare research."
-    },
-    {
-        id: "teacher",
-        name: "Teacher",
-        icon: "📚",
-        description: "Helps learners understand concepts and develop knowledge and skills.",
-        skills: ["Communication", "Patience", "Planning", "Subject knowledge"],
-        education: "Relevant subject education and teaching qualifications as required.",
-        work: ["Schools", "Colleges", "Learning centers", "Online education"],
-        areas: ["Classroom teaching", "Curriculum design", "Educational support"],
-        growth: "Can move into academic leadership, curriculum development or education management."
-    },
-    {
-        id: "analyst",
-        name: "Data Analyst",
-        icon: "📊",
-        description: "Studies data to identify patterns and communicate useful findings.",
-        skills: ["Data interpretation", "Statistics", "Critical thinking", "Communication"],
-        education: "Data science, statistics, mathematics, business or related studies.",
-        work: ["Businesses", "Finance", "Technology", "Research teams"],
-        areas: ["Business analytics", "Data visualization", "Research"],
-        growth: "Can progress into senior analytics, business intelligence or data science roles."
-    },
-    {
-        id: "entrepreneur",
-        name: "Entrepreneur",
-        icon: "🚀",
-        description: "Builds and develops a business, product or service around an opportunity.",
-        skills: ["Planning", "Adaptability", "Communication", "Decision making"],
-        education: "No single required degree; business, finance and industry knowledge can help.",
-        work: ["Own business", "Startups", "Small enterprises", "Social ventures"],
-        areas: ["Business development", "Product building", "Operations"],
-        growth: "Growth depends on the business, market, resources and goals."
-    }
-];
 
-const careerOne = document.getElementById("careerOne");
-const careerTwo = document.getElementById("careerTwo");
-const comparisonArea = document.getElementById("comparisonArea");
+const careerOne =
+    document.getElementById("careerOne");
+
+const careerTwo =
+    document.getElementById("careerTwo");
+
+const comparisonArea =
+    document.getElementById("comparisonArea");
+
+
+let careers = [];
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(value) {
+
+    if (value === null || value === undefined) {
+        return "";
+    }
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+/* =====================================================
+   CONVERT TEXT INTO LIST
+===================================================== */
+
+function toList(value) {
+
+    if (!value) {
+        return [];
+    }
+
+    if (Array.isArray(value)) {
+        return value;
+    }
+
+    return String(value)
+        .split(/\n|;|\||,/)
+        .map(function(item) {
+            return item.trim();
+        })
+        .filter(function(item) {
+            return item.length > 0;
+        });
+}
+
+
+/* =====================================================
+   CREATE TAGS
+===================================================== */
+
+function createTags(items) {
+
+    if (!items || items.length === 0) {
+        return "<p>No information available.</p>";
+    }
+
+    return `
+        <div class="tag-list">
+
+            ${items.map(function(item) {
+
+                return `
+                    <span class="tag">
+                        ${escapeHTML(item)}
+                    </span>
+                `;
+
+            }).join("")}
+
+        </div>
+    `;
+}
+
+
+/* =====================================================
+   LOAD 500 CAREERS
+===================================================== */
 
 async function loadCareers() {
 
     try {
 
-        const response = await fetch("/api/careers");
-
-        const result = await response.json();
-
-        if (!result.success) {
-
-            alert(
-                result.message ||
-                "Unable to load careers."
+        const response =
+            await fetch(
+                "/api/career-catalog"
             );
 
-            return;
+
+        const data =
+            await response.json();
+
+
+        if (
+            !data.success ||
+            !Array.isArray(data.careers)
+        ) {
+
+            throw new Error(
+                "Unable to load career catalog."
+            );
+
         }
 
-        // Clear existing options
+
+        careers = data.careers;
+
+
+        /* =============================================
+           CLEAR OLD OPTIONS
+        ============================================= */
+
         careerOne.innerHTML =
             '<option value="">Select a career</option>';
 
         careerTwo.innerHTML =
             '<option value="">Select a career</option>';
 
-        result.careers.forEach(career => {
 
-            // Avoid duplicate career titles
-            if (
-                careerOne.querySelector(
-                    `option[value="${career.title}"]`
-                )
-            ) {
-                return;
-            }
+        /* =============================================
+           ADD 500 CAREERS
+        ============================================= */
+
+        careers.forEach(function(career) {
 
             const optionOne =
                 document.createElement("option");
 
             optionOne.value =
-                career.title;
+                career.careerTitle;
 
             optionOne.textContent =
-                career.title;
+                career.careerTitle;
 
             careerOne.appendChild(
                 optionOne
@@ -570,10 +597,10 @@ async function loadCareers() {
                 document.createElement("option");
 
             optionTwo.value =
-                career.title;
+                career.careerTitle;
 
             optionTwo.textContent =
-                career.title;
+                career.careerTitle;
 
             careerTwo.appendChild(
                 optionTwo
@@ -581,113 +608,310 @@ async function loadCareers() {
 
         });
 
-        console.log(
-            "Careers loaded from backend:",
-            result.careers.length
-        );
+
+        /* =============================================
+           CHECK FOR CAREER FROM DETAIL PAGE
+        ============================================= */
+
+        const careerToCompare =
+            localStorage.getItem(
+                "careerToCompare"
+            );
+
+
+        if (careerToCompare) {
+
+            const matchingCareer =
+                careers.find(
+                    function(career) {
+
+                        return (
+                            career.careerTitle
+                                .toLowerCase() ===
+                            careerToCompare
+                                .toLowerCase()
+                        );
+
+                    }
+                );
+
+
+            if (matchingCareer) {
+
+                careerOne.value =
+                    matchingCareer.careerTitle;
+
+            }
+
+            localStorage.removeItem(
+                "careerToCompare"
+            );
+
+        }
+
 
     } catch (error) {
 
         console.error(
-            "Career loading error:",
+            "Career catalog error:",
             error
         );
 
+
         alert(
-            "Unable to connect to the server."
+            "Unable to load career catalog."
         );
+
     }
+
 }
 
-function createTags(items) {
-    return `<div class="tag-list">
-        ${items.map(item => `<span class="tag">${item}</span>`).join("")}
-    </div>`;
-}
+
+/* =====================================================
+   CREATE CAREER CARD
+===================================================== */
 
 function createCareerCard(career) {
+
+    const skills =
+        toList(
+            career.importantSkills
+        );
+
+    const courses =
+        toList(
+            career.recommendedCourses
+        );
+
+    const jobRoles =
+        toList(
+            career.commonJobRoles
+        );
+
+    const roadmap =
+        toList(
+            career.careerRoadmap
+        );
+
+
+    let roadmapHTML = "";
+
+
+    if (roadmap.length > 0) {
+
+        roadmapHTML = roadmap.map(
+            function(step, index) {
+
+                return `
+                    <p>
+                        <strong>
+                            Step ${index + 1}:
+                        </strong>
+
+                        ${escapeHTML(step)}
+                    </p>
+                `;
+
+            }
+        ).join("");
+
+    } else {
+
+        roadmapHTML =
+            "<p>No roadmap available.</p>";
+
+    }
+
+
     return `
+
         <article class="career-card">
+
             <div class="card-top">
-                <div class="career-icon">${career.icon}</div>
-                <h3>${career.name}</h3>
+
+                <div class="career-icon">
+                    💼
+                </div>
+
+                <h3>
+                    ${escapeHTML(
+                        career.careerTitle
+                    )}
+                </h3>
+
             </div>
+
 
             <div class="card-body">
-                <p class="career-description">${career.description}</p>
 
-                <div class="detail">
-                    <h4>Key Skills</h4>
-                    ${createTags(career.skills)}
-                </div>
-
-                <div class="detail">
-                    <h4>Education Path</h4>
-                    <p>${career.education}</p>
-                </div>
-
-                <div class="detail">
-                    <h4>Work Areas</h4>
-                    <ul>${career.work.map(item => `<li>${item}</li>`).join("")}</ul>
-                </div>
-
-                <div class="detail">
-                    <h4>Specialization Areas</h4>
-                    ${createTags(career.areas)}
-                </div>
-
-                <div class="detail">
-                    <h4>Possible Career Growth</h4>
-                    <p>${career.growth}</p>
-                </div>
-            </div>
-        </article>
-    `;
-}
-    function createBackendCareerCard(career) {
-
-    const scores = career.scores || {};
-
-    return `
-        <article class="career-card">
-
-            <div class="card-top">
-
-                <div class="career-icon">💼</div>
-
-                <h3>${career.title}</h3>
-
-            </div>
-
-            <div class="card-body">
-
-                <p class="career-description">
-                    O*NET-SOC Code:
-                    ${career.onetSocCode || "Not available"}
-                </p>
+                <!-- DESCRIPTION -->
 
                 <div class="detail">
 
-                    <h4>RIASEC Interest Profile</h4>
-
-                    ${createTags([
-                        `Realistic: ${Number(scores.R || 0).toFixed(2)}`,
-                        `Investigative: ${Number(scores.I || 0).toFixed(2)}`,
-                        `Artistic: ${Number(scores.A || 0).toFixed(2)}`,
-                        `Social: ${Number(scores.S || 0).toFixed(2)}`,
-                        `Enterprising: ${Number(scores.E || 0).toFixed(2)}`,
-                        `Conventional: ${Number(scores.C || 0).toFixed(2)}`
-                    ])}
-
-                </div>
-
-                <div class="detail">
-
-                    <h4>Career Database</h4>
+                    <h4>
+                        Career Description
+                    </h4>
 
                     <p>
-                        This career information is loaded
-                        from the Career Compass career database.
+                        ${escapeHTML(
+                            career.shortDescription
+                        )}
+                    </p>
+
+                </div>
+
+
+                <!-- SECTOR -->
+
+                <div class="detail">
+
+                    <h4>
+                        Sector / Industry
+                    </h4>
+
+                    <p>
+                        ${escapeHTML(
+                            career.sector
+                        )}
+                    </p>
+
+                </div>
+
+
+                <!-- SKILLS -->
+
+                <div class="detail">
+
+                    <h4>
+                        Important Skills
+                    </h4>
+
+                    ${createTags(skills)}
+
+                </div>
+
+
+                <!-- EDUCATION -->
+
+                <div class="detail">
+
+                    <h4>
+                        Education / Qualification
+                    </h4>
+
+                    <p>
+                        ${escapeHTML(
+                            career.educationQualification
+                        )}
+                    </p>
+
+                </div>
+
+
+                <!-- COURSES -->
+
+                <div class="detail">
+
+                    <h4>
+                        Recommended Courses /
+                        Certifications
+                    </h4>
+
+                    ${createTags(courses)}
+
+                </div>
+
+
+                <!-- SALARY -->
+
+                <div class="detail">
+
+                    <h4>
+                        Salary Range
+                    </h4>
+
+                    <p>
+                        ${escapeHTML(
+                            career.salaryRange
+                        )}
+                    </p>
+
+                </div>
+
+
+                <!-- DEMAND -->
+
+                <div class="detail">
+
+                    <h4>
+                        Demand Level
+                    </h4>
+
+                    <p>
+                        ${escapeHTML(
+                            career.demandLevel
+                        )}
+                    </p>
+
+                </div>
+
+
+                <!-- ROADMAP -->
+
+                <div class="detail">
+
+                    <h4>
+                        Career Roadmap
+                    </h4>
+
+                    ${roadmapHTML}
+
+                </div>
+
+
+                <!-- JOB ROLES -->
+
+                <div class="detail">
+
+                    <h4>
+                        Common Job Roles /
+                        Work Opportunities
+                    </h4>
+
+                    ${createTags(jobRoles)}
+
+                </div>
+
+
+                <!-- CAREER GROWTH -->
+
+                <div class="detail">
+
+                    <h4>
+                        Career Growth
+                    </h4>
+
+                    <p>
+                        ${escapeHTML(
+                            career.careerGrowth
+                        )}
+                    </p>
+
+                </div>
+
+
+                <!-- ONET -->
+
+                <div class="detail">
+
+                    <h4>
+                        O*NET-SOC Code
+                    </h4>
+
+                    <p>
+                        ${escapeHTML(
+                            career.onetSocCode
+                        )}
                     </p>
 
                 </div>
@@ -695,14 +919,24 @@ function createCareerCard(career) {
             </div>
 
         </article>
+
     `;
+
 }
 
 
+/* =====================================================
+   COMPARE CAREERS
+===================================================== */
+
 async function compareCareers() {
 
-    const firstTitle = careerOne.value;
-    const secondTitle = careerTwo.value;
+    const firstTitle =
+        careerOne.value;
+
+    const secondTitle =
+        careerTwo.value;
+
 
     if (!firstTitle || !secondTitle) {
 
@@ -711,7 +945,9 @@ async function compareCareers() {
         );
 
         return;
+
     }
+
 
     if (
         firstTitle.toLowerCase() ===
@@ -723,49 +959,64 @@ async function compareCareers() {
         );
 
         return;
+
     }
+
 
     try {
 
-        const response = await fetch(
-            "/api/compare-careers?first=" +
-            encodeURIComponent(firstTitle) +
-            "&second=" +
-            encodeURIComponent(secondTitle)
-        );
+        const response =
+            await fetch(
+                "/api/compare-careers?first=" +
+                encodeURIComponent(
+                    firstTitle
+                ) +
+                "&second=" +
+                encodeURIComponent(
+                    secondTitle
+                )
+            );
 
-        const result = await response.json();
 
-        if (!result.success) {
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
 
             alert(
-                result.message ||
+                data.message ||
                 "Unable to compare careers."
             );
 
             return;
+
         }
 
-        console.log(
-            "Career comparison from backend:",
-            result.careers
-        );
+
+        const firstCareer =
+            data.careers[0];
+
+        const secondCareer =
+            data.careers[1];
+
 
         comparisonArea.innerHTML = `
 
             <div class="comparison-grid">
 
-                ${createBackendCareerCard(
-                    result.careers[0]
+                ${createCareerCard(
+                    firstCareer
                 )}
 
-                ${createBackendCareerCard(
-                    result.careers[1]
+                ${createCareerCard(
+                    secondCareer
                 )}
 
             </div>
 
         `;
+
 
     } catch (error) {
 
@@ -774,13 +1025,22 @@ async function compareCareers() {
             error
         );
 
+
         alert(
-            "Unable to connect to the server."
+            "Unable to compare careers."
         );
+
     }
+
 }
 
+
+/* =====================================================
+   START
+===================================================== */
+
 loadCareers();
+
 </script>
 
 </body>

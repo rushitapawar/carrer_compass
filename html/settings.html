@@ -1681,6 +1681,15 @@
              * nahi kar rahe.
              */
 
+            /* Clear the server session first */
+            fetch(
+                "/api/logout",
+                { method: "POST" }
+            ).catch(function () {
+                /* Continue local logout even if the server is down */
+            });
+
+
             localStorage.removeItem(
                 "isLoggedIn"
             );

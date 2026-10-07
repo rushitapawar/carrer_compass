@@ -21,7 +21,7 @@ def save_career():
             "message": "Please login first."
         }), 401
 
-    data = request.get_json()
+    data = request.get_json(silent=True) or {}
 
     career_title = data.get(
         "careerTitle",
@@ -178,7 +178,7 @@ def remove_career():
             "message": "Please login first."
         }), 401
 
-    data = request.get_json()
+    data = request.get_json(silent=True) or {}
 
     career_title = data.get(
         "careerTitle",

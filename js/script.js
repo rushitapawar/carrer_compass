@@ -265,6 +265,130 @@ if (signupForm) {
 }
 
 // ============================================================
+// LOAD SAVED PROFILE (GET /api/profile)
+// Prefills the profile form from the server so saved data
+// comes back after login instead of living only in localStorage.
+// ============================================================
+
+async function loadProfileForm() {
+
+    const fullNameInput =
+        document.getElementById("fullName");
+
+    const profileFormElement =
+        document.getElementById("profileForm");
+
+    /* Only runs on profile.html */
+    if (!profileFormElement || !fullNameInput) {
+        return;
+    }
+
+    let profile = null;
+
+    /* 1) Prefer the profile saved on the server */
+    try {
+
+        const response = await fetch("/api/profile");
+
+        if (response.ok) {
+
+            const result = await response.json();
+
+            if (result.success && result.profile) {
+                profile = result.profile;
+            }
+
+        }
+
+    } catch (error) {
+
+        console.error("Profile load error:", error);
+
+    }
+
+    /* 2) Fallback: saved locally by the existing flow */
+    if (!profile) {
+
+        try {
+            profile = JSON.parse(
+                localStorage.getItem("careerCompassProfile")
+            );
+        } catch (error) {
+            profile = null;
+        }
+
+    }
+
+    if (!profile) {
+        return;
+    }
+
+    function fillIfEmpty(element, value) {
+
+        if (element && !element.value && value) {
+            element.value = value;
+        }
+
+    }
+
+    function checkRadio(name, value) {
+
+        if (!value) {
+            return;
+        }
+
+        const radios = document.querySelectorAll(
+            'input[name="' + name + '"]'
+        );
+
+        radios.forEach(function (radio) {
+
+            if (radio.value === value) {
+                radio.checked = true;
+            }
+
+        });
+
+    }
+
+    /* Text + select fields */
+    fillIfEmpty(fullNameInput, profile.fullName);
+    fillIfEmpty(
+        document.getElementById("ageGroup"),
+        profile.ageGroup
+    );
+    fillIfEmpty(
+        document.getElementById("education"),
+        profile.education
+    );
+
+    /* Radio groups */
+    checkRadio("stream", profile.stream);
+    checkRadio("goal", profile.careerGoal);
+
+    /* Interest checkboxes */
+    if (Array.isArray(profile.interests)) {
+
+        const interestBoxes = document.querySelectorAll(
+            'input[name="interest"]'
+        );
+
+        interestBoxes.forEach(function (box) {
+
+            if (profile.interests.indexOf(box.value) !== -1) {
+                box.checked = true;
+            }
+
+        });
+
+    }
+
+}
+
+loadProfileForm();
+
+
+// ============================================================
 // PROFILE FORM
 // ============================================================
 
@@ -455,7 +579,21 @@ const logoutButton =
 
 if (logoutButton) {
 
-    logoutButton.addEventListener("click", function () {
+    logoutButton.addEventListener("click", async function () {
+
+        /* Clear the server session so protected pages
+           actually require a new login. */
+        try {
+
+            await fetch("/api/logout", {
+                method: "POST"
+            });
+
+        } catch (error) {
+
+            console.error("Logout error:", error);
+
+        }
 
         localStorage.removeItem("careerCompassProfile");
 
