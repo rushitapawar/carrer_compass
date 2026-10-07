@@ -779,12 +779,14 @@
 
     /* ================= SIGNUP ================= */
 
-    form.addEventListener("submit", function(event) {
+    form.addEventListener("submit", async function(event) {
 
         event.preventDefault();
 
 
         errorMessage.style.display = "none";
+
+        successMessage.style.display = "none";
 
 
         const firstName =
@@ -852,41 +854,75 @@
         }
 
 
-        const user = {
+        try {
 
-            name:
-                `${firstName} ${lastName}`.trim(),
+            const res = await fetch("/api/signup", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    password: password
+                })
+            });
 
-            firstName,
-            lastName,
-            email,
-            interest,
-            experience
+            const data = await res.json();
 
-        };
+            if (!res.ok || !data.success) {
+
+                errorMessage.textContent =
+                    data.message || "Could not create account.";
+
+                errorMessage.style.display = "block";
+
+                return;
+
+            }
+
+            const user = {
+
+                name:
+                    `${firstName} ${lastName}`.trim(),
+
+                firstName,
+                lastName,
+                email,
+                interest,
+                experience
+
+            };
 
 
-        localStorage.setItem(
-            "careerCompassUser",
-            JSON.stringify(user)
-        );
+            localStorage.setItem(
+                "careerCompassUser",
+                JSON.stringify(user)
+            );
 
 
-        localStorage.setItem(
-            "isLoggedIn",
-            "true"
-        );
+            successMessage.textContent =
+                "Account created! Please login to continue.";
+
+            successMessage.style.display = "block";
 
 
-        successMessage.style.display = "block";
+            setTimeout(() => {
 
+                window.location.href =
+                    "login.html";
 
-        setTimeout(() => {
+            }, 1000);
 
-            window.location.href =
-                "profile.html";
+        } catch (err) {
 
-        }, 1000);
+            errorMessage.textContent =
+                "Cannot reach server. Is the Flask app running on port 5000?";
+
+            errorMessage.style.display = "block";
+
+        }
 
     });
 

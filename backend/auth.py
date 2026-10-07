@@ -204,7 +204,8 @@ def login():
 
         conn.close()
 
-        # =========================================
+
+# =========================================
 # SAVE PROFILE
 # =========================================
 
@@ -219,16 +220,27 @@ def save_profile():
 
     data = request.get_json() or {}
 
-    full_name = data.get("fullName", "").strip()
-    age_group = data.get("ageGroup", "").strip()
-    education = data.get("education", "").strip()
-    stream = data.get("stream", "").strip()
+    # Accept both backend names and frontend names
+    # frontend: fullName, education, fieldOfStudy, interests, careerGoal
+    # backend:  fullName, ageGroup, education, stream, interests, careerGoal
+    def _str(key, default=""):
+        val = data.get(key, default)
+        if isinstance(val, list):
+            return ", ".join(str(v) for v in val)
+        return str(val or "").strip()
+
+    full_name = _str("fullName") or _str("full_name")
+    age_group = _str("ageGroup") or _str("age_group") or "not-specified"
+    education = _str("education")
+    stream = _str("stream") or _str("fieldOfStudy") or _str("field") or "general"
+    career_goal = _str("careerGoal") or _str("career_goal") or _str("goal")
+
     interests = data.get("interests", [])
-    career_goal = data.get("careerGoal", "").strip()
+    if isinstance(interests, str):
+        interests = [s.strip() for s in interests.split(",") if s.strip()]
 
     if (
         not full_name
-        or not age_group
         or not education
         or not stream
         or not interests
@@ -294,3 +306,27 @@ def save_profile():
 
     finally:
         conn.close()
+
+
+@auth_bp.route("/api/me", methods=["GET"])
+def me():
+    if "user_id" not in session:
+        return jsonify({
+            "success": False,
+            "message": "Not logged in."
+        }), 401
+    return jsonify({
+        "success": True,
+        "userId": session.get("user_id"),
+        "name": session.get("user_name"),
+        "email": session.get("user_email")
+    })
+
+
+@auth_bp.route("/api/logout", methods=["POST", "GET"])
+def logout():
+    session.clear()
+    return jsonify({
+        "success": True,
+        "message": "Logged out."
+    })
