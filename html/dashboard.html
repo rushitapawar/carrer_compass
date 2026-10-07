@@ -1252,6 +1252,8 @@
     <aside class="sidebar" id="sidebar">
 
 
+     
+
         <!-- LOGO -->
 
         <a
@@ -1302,98 +1304,76 @@
 
         <nav class="sidebar-nav">
 
+    <!-- Dashboard -->
+    <a href="dashboard.html" class="active">
+        <div class="nav-icon">◉</div>
+        Dashboard
+    </a>
 
-            <a
-                href="dashboard.html"
-                class="active"
-            >
+    <!-- My Results -->
+    <a href="results.html">
+        <div class="nav-icon">✦</div>
+        My Results
+    </a>
 
-                <div class="nav-icon">
-                    ◉
-                </div>
+    <!-- Saved Careers -->
+    <a href="favourites.html">
+        <div class="nav-icon">♡</div>
+        Saved Careers
+    </a>
 
-                Dashboard
+    <!-- Compare Careers -->
+    <a href="compare.html">
+        <div class="nav-icon">⇄</div>
+        Compare Careers
+    </a>
 
-            </a>
+    <!-- Career Roles -->
+    <a href="roles.html">
+        <div class="nav-icon">◇</div>
+        Career Roles
+    </a>
 
+    <!-- Settings -->
+    <a href="settings.html">
+        <div class="nav-icon">⚙</div>
+        Settings
+    </a>
 
-            <a href="results.html">
+    <!-- Retake Assessment -->
+    <a href="questionnaire.html">
+        <div class="nav-icon">✎</div>
+        Retake Assessment
+    </a>
 
-                <div class="nav-icon">
-                    ✦
-                </div>
-
-                My Results
-
-            </a>
-
-
-            <a href="favourites.html">
-
-                <div class="nav-icon">
-                    ♡
-                </div>
-
-                Saved Careers
-
-            </a>
-
-
-            <a href="compare.html">
-
-                <div class="nav-icon">
-                    ⇄
-                </div>
-
-                Compare Careers
-
-            </a>
-
-
-            <a href="job-roles.html">
-
-                <div class="nav-icon">
-                    ◇
-                </div>
-
-                Explore Careers
-
-            </a>
-
-
-            <a href="questionnaire.html">
-
-                <div class="nav-icon">
-                    ✎
-                </div>
-
-                Retake Assessment
-
-            </a>
-
-        </nav>
+</nav>
 
 
         <!-- BOTTOM -->
 
-        <div class="sidebar-bottom">
+<div class="sidebar-bottom">
 
-            <a href="about.html">
-                <span>◎</span>
-                About Career Compass
-            </a>
+    <a href="index.html">
+        <span>⌂</span>
+        Home
+    </a>
 
-            <a href="contact.html">
-                <span>✉</span>
-                Contact Support
-            </a>
+    <a href="about.html">
+        <span>◎</span>
+        About Career Compass
+    </a>
 
-            <a href="privacy.html">
-                <span>◇</span>
-                Privacy
-            </a>
+    <a href="contact.html">
+        <span>✉</span>
+        Contact Support
+    </a>
 
-        </div>
+    <a href="privacy.html">
+        <span>◇</span>
+        Privacy
+    </a>
+
+</div>
 
     </aside>
 
@@ -2115,29 +2095,56 @@
     /* =====================================================
        SAVED CAREERS
     ===================================================== */
+    function escapeHTML(value) {
 
-    function loadSavedCareers() {
+    return String(value).replace(
+        /[&<>"']/g,
+        function(char) {
 
-        let savedCareers = [];
+            return {
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;"
+            }[char];
 
-        try {
+        }
+    );
 
-            savedCareers =
-                JSON.parse(
-                    localStorage.getItem("savedCareers")
-                ) || [];
+}
+   async function loadSavedCareers() {
 
-        } catch (error) {
+    try {
 
-            savedCareers = [];
+        const response =
+            await fetch(
+                "/api/saved-careers"
+            );
+
+        const result =
+            await response.json();
+
+        if (!result.success) {
+
+            console.error(
+                "Unable to load saved careers:",
+                result.message
+            );
+
+            return;
 
         }
 
+        const savedCareers =
+            result.careers || [];
 
         /* UPDATE COUNT */
 
         const savedCount =
-            document.getElementById("savedCount");
+            document.getElementById(
+                "savedCount"
+            );
 
         if (savedCount) {
 
@@ -2146,16 +2153,22 @@
 
         }
 
-
         /* UPDATE PREVIEW */
 
         const preview =
-            document.getElementById("savedPreview");
+            document.getElementById(
+                "savedPreview"
+            );
 
-        if (!preview) return;
+        if (!preview) {
 
+            return;
 
-        if (savedCareers.length === 0) {
+        }
+
+        if (
+            savedCareers.length === 0
+        ) {
 
             preview.innerHTML = `
 
@@ -2175,7 +2188,7 @@
                     </p>
 
                     <a
-                        href="job-roles.html"
+                        href="roles.html"
                         class="small-btn"
                     >
                         Explore Careers
@@ -2186,92 +2199,108 @@
             `;
 
             return;
-        }
 
+        }
 
         const firstThree =
             savedCareers.slice(0, 3);
 
-
-        preview.innerHTML =
-            firstThree.map(function(career) {
+        preview.innerHTML = firstThree
+            .map(function(career) {
 
                 return `
 
-                    <a
-                        href="job-role-detail.html?career=${encodeURIComponent(career.name)}"
-                        class="match-card"
-                    >
+                    <div class="saved-career-item">
 
-                        <div class="career-icon">
-                            ${career.icon || "✦"}
+                        <div class="saved-career-icon">
+                            ✦
                         </div>
 
-                        <div class="match-info">
+                        <div>
 
-                            <h3>
-                                ${career.name}
-                            </h3>
+                            <strong>
+                                ${escapeHTML(
+                                    career.careerTitle
+                                    || "Career"
+                                )}
+                            </strong>
 
                             <p>
-                                ${career.description || "Explore this career path."}
+                                Saved career
                             </p>
 
                         </div>
 
-                        <div class="match-score">
-                            ♥
-                        </div>
-
-                    </a>
+                    </div>
 
                 `;
 
-            }).join("");
+            })
+            .join("");
+
+    } catch (error) {
+
+        console.error(
+            "Saved careers error:",
+            error
+        );
 
     }
 
+}
 
     /* =====================================================
        ASSESSMENT COUNT
     ===================================================== */
 
-    function loadAssessmentStatus() {
+   async function loadAssessmentStatus() {
 
-        const answers =
-            localStorage.getItem("careerAnswers");
+    try {
 
-        const count =
-            document.getElementById("assessmentCount");
+        const response =
+            await fetch(
+                "/api/dashboard"
+            );
 
-        if (!count) return;
+        const result =
+            await response.json();
 
+        if (!result.success) {
 
-        if (answers) {
+            console.error(
+                "Dashboard error:",
+                result.message
+            );
 
-            try {
-
-                const parsed =
-                    JSON.parse(answers);
-
-                count.textContent =
-                    Array.isArray(parsed) && parsed.length > 0
-                        ? "1"
-                        : "0";
-
-            } catch (error) {
-
-                count.textContent = "0";
-
-            }
-
-        } else {
-
-            count.textContent = "0";
+            return;
 
         }
 
+        const completed =
+            result.assessment_completed === true;
+
+        const count =
+            document.getElementById(
+                "assessmentCount"
+            );
+
+        if (count) {
+
+            count.textContent =
+                completed ? "1" : "0";
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Assessment status error:",
+            error
+        );
+
     }
+
+}
 
 
     /* =====================================================

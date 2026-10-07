@@ -1,11 +1,13 @@
 from flask import Flask, send_from_directory, session, redirect
 import os
+import secrets
 
 from database import (
     create_users_table,
     create_assessments_table,
     create_profiles_table,
-    create_saved_careers_table
+    create_saved_careers_table,
+    create_contact_messages_table
 )
 
 from auth import auth_bp
@@ -15,6 +17,7 @@ from chatbot import chatbot_bp
 from analysis import analysis_bp
 from careers import careers_bp
 from favourites import favourites_bp
+from contact import contact_bp
 
 
 # ============================================================
@@ -23,8 +26,57 @@ from favourites import favourites_bp
 
 app = Flask(__name__)
 
-# Secret key for Flask sessions
-app.secret_key = "career-compass-secret-key"
+
+# ============================================================
+# SESSION SECRET KEY
+# ============================================================
+
+def load_secret_key():
+    """Use the SECRET_KEY environment variable when set.
+
+    Otherwise keep a generated key in backend/.secret_key so
+    login sessions stay valid across application restarts.
+    """
+
+    env_key = os.environ.get("SECRET_KEY")
+
+    if env_key:
+        return env_key
+
+    key_file = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)),
+        ".secret_key"
+    )
+
+    try:
+
+        if os.path.exists(key_file):
+
+            with open(key_file, "r") as file:
+                saved_key = file.read().strip()
+
+            if saved_key:
+                return saved_key
+
+        new_key = secrets.token_hex(32)
+
+        with open(key_file, "w") as file:
+            file.write(new_key)
+
+        return new_key
+
+    except OSError:
+
+        # Fall back to an in-memory key if the file cannot
+        # be written (sessions then reset on every restart)
+        return secrets.token_hex(32)
+
+
+app.secret_key = load_secret_key()
+
+# Cookie hardening for session-based authentication
+app.config["SESSION_COOKIE_HTTPONLY"] = True
+app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 
 
 # ============================================================
@@ -51,6 +103,9 @@ create_users_table()
 create_assessments_table()
 create_profiles_table()
 create_saved_careers_table()
+create_contact_messages_table()
+
+
 
 # ============================================================
 # REGISTER BLUEPRINTS
@@ -63,6 +118,7 @@ app.register_blueprint(chatbot_bp)
 app.register_blueprint(analysis_bp)
 app.register_blueprint(careers_bp)
 app.register_blueprint(favourites_bp)
+app.register_blueprint(contact_bp)
 
 
 # ============================================================
