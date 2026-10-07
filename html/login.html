@@ -2,389 +2,1174 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Login | Career Compass AI</title>
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
-        rel="stylesheet">
+    <style>
 
-    <!-- Main CSS -->
-    <link rel="stylesheet" href="/css/style.css">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+            font-family: "DM Sans", Arial, sans-serif;
+
+            min-height: 100vh;
+
+            background: #f8f5f2;
+
+            color: #342d3b;
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .navbar {
+
+            height: 78px;
+
+            background: white;
+
+            border-bottom: 1px solid #e7dfdb;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 55px;
+        }
+
+
+        .brand {
+
+            width: 175px;
+            height: 55px;
+
+            display: flex;
+            align-items: center;
+
+            text-decoration: none;
+        }
+
+
+        .brand img {
+
+            width: 175px;
+            height: 55px;
+
+            max-width: 175px;
+            max-height: 55px;
+
+            object-fit: contain;
+
+            display: block;
+        }
+
+
+        .back-home {
+
+            text-decoration: none;
+
+            color: #756d76;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            transition: .2s;
+        }
+
+
+        .back-home:hover {
+            color: #443846;
+        }
+
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .login-page {
+
+            min-height:
+                calc(100vh - 78px);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 45px 25px;
+        }
+
+
+        .login-wrapper {
+
+            width: 100%;
+
+            max-width: 1050px;
+
+            min-height: 600px;
+
+            background: white;
+
+            border: 1px solid #e6dedb;
+
+            border-radius: 30px;
+
+            overflow: hidden;
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            box-shadow:
+                0 25px 70px rgba(68,56,70,.10);
+        }
+
+
+        /* =========================
+           LEFT
+        ========================= */
+
+        .login-intro {
+
+            background: #443846;
+
+            padding: 55px;
+
+            color: white;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+
+        .login-intro::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 350px;
+            height: 350px;
+
+            border-radius: 50%;
+
+            background: #6a5969;
+
+            opacity: .45;
+
+            top: -170px;
+            right: -140px;
+        }
+
+
+        .login-intro::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 230px;
+            height: 230px;
+
+            border-radius: 50%;
+
+            background: #b66d87;
+
+            opacity: .15;
+
+            bottom: -100px;
+            left: -80px;
+        }
+
+
+        .intro-content {
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+
+        .intro-badge {
+
+            display: inline-flex;
+
+            padding: 8px 13px;
+
+            border-radius: 30px;
+
+            background: rgba(255,255,255,.10);
+
+            color: #f5c9d6;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            text-transform: uppercase;
+
+            letter-spacing: .8px;
+
+            margin-bottom: 22px;
+        }
+
+
+        .login-intro h1 {
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size: 48px;
+
+            line-height: 1.1;
+
+            margin-bottom: 18px;
+        }
+
+
+        .login-intro h1 span {
+
+            color: #f0afc4;
+        }
+
+
+        .intro-text {
+
+            color: #ddd2d8;
+
+            font-size: 14px;
+
+            line-height: 1.75;
+
+            max-width: 420px;
+
+            margin-bottom: 35px;
+        }
+
+
+        .intro-list {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 16px;
+        }
+
+
+        .intro-item {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+        }
+
+
+        .intro-check {
+
+            width: 31px;
+            height: 31px;
+
+            border-radius: 50%;
+
+            background: rgba(255,255,255,.10);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: #f2b5c8;
+
+            font-size: 13px;
+        }
+
+
+        .intro-item span {
+
+            color: #eee5e9;
+
+            font-size: 13px;
+        }
+
+
+        /* =========================
+           RIGHT FORM
+        ========================= */
+
+        .login-form-area {
+
+            padding: 55px 55px;
+
+            display: flex;
+
+            align-items: center;
+        }
+
+
+        .form-container {
+
+            width: 100%;
+
+            max-width: 390px;
+
+            margin: auto;
+        }
+
+
+        .form-heading {
+
+            margin-bottom: 28px;
+        }
+
+
+        .form-heading h2 {
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            color: #443846;
+
+            font-size: 32px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .form-heading p {
+
+            color: #756d76;
+
+            font-size: 13px;
+
+            line-height: 1.6;
+        }
+
+
+        /* GOOGLE */
+
+        .google-btn {
+
+            width: 100%;
+
+            height: 48px;
+
+            background: white;
+
+            border: 1px solid #ddd5d2;
+
+            border-radius: 12px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 10px;
+
+            color: #443846;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: .2s;
+
+            margin-bottom: 22px;
+        }
+
+
+        .google-btn:hover {
+
+            background: #faf7f5;
+
+            border-color: #cfc4c0;
+        }
+
+
+        .google-icon {
+
+            width: 20px;
+            height: 20px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-weight: 800;
+
+            font-size: 14px;
+
+            color: #4285f4;
+        }
+
+
+        /* DIVIDER */
+
+        .divider {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            color: #a0989e;
+
+            font-size: 11px;
+
+            margin-bottom: 22px;
+        }
+
+
+        .divider::before,
+        .divider::after {
+
+            content: "";
+
+            flex: 1;
+
+            height: 1px;
+
+            background: #e9e1de;
+        }
+
+
+        /* FORM */
+
+        .field {
+
+            margin-bottom: 17px;
+        }
+
+
+        .field label {
+
+            display: block;
+
+            color: #443846;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            margin-bottom: 7px;
+        }
+
+
+        .input-wrapper {
+
+            position: relative;
+        }
+
+
+        .field input {
+
+            width: 100%;
+
+            height: 48px;
+
+            border: 1px solid #ddd5d2;
+
+            border-radius: 11px;
+
+            padding: 0 43px 0 14px;
+
+            outline: none;
+
+            color: #443846;
+
+            background: #fff;
+
+            font-size: 13px;
+
+            transition: .2s;
+        }
+
+
+        .field input:focus {
+
+            border-color: #d99aae;
+
+            box-shadow:
+                0 0 0 3px rgba(217,154,174,.10);
+        }
+
+
+        .toggle-password {
+
+            position: absolute;
+
+            right: 13px;
+
+            top: 13px;
+
+            border: none;
+
+            background: transparent;
+
+            cursor: pointer;
+
+            color: #8a8188;
+
+            font-size: 15px;
+        }
+
+
+        .form-options {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin: 4px 0 22px;
+        }
+
+
+        .remember {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            color: #756d76;
+
+            font-size: 11px;
+        }
+
+
+        .remember input {
+
+            accent-color: #443846;
+        }
+
+
+        .forgot {
+
+            color: #a15e76;
+
+            text-decoration: none;
+
+            font-size: 11px;
+
+            font-weight: 700;
+        }
+
+
+        .login-btn {
+
+            width: 100%;
+
+            height: 49px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            background: #443846;
+
+            color: white;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition: .25s;
+
+            box-shadow:
+                0 8px 20px rgba(68,56,70,.15);
+        }
+
+
+        .login-btn:hover {
+
+            background: #322936;
+
+            transform: translateY(-1px);
+        }
+
+
+        .signup-text {
+
+            text-align: center;
+
+            color: #756d76;
+
+            font-size: 12px;
+
+            margin-top: 22px;
+        }
+
+
+        .signup-text a {
+
+            color: #a15e76;
+
+            text-decoration: none;
+
+            font-weight: 800;
+        }
+
+
+        .message {
+
+            display: none;
+
+            padding: 11px 13px;
+
+            border-radius: 10px;
+
+            background: #f8e9ee;
+
+            color: #8b5368;
+
+            font-size: 12px;
+
+            margin-bottom: 15px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 850px) {
+
+            .navbar {
+                padding: 0 25px;
+            }
+
+            .login-wrapper {
+
+                grid-template-columns: 1fr;
+
+                max-width: 540px;
+            }
+
+            .login-intro {
+
+                padding: 40px;
+
+            }
+
+            .login-intro h1 {
+
+                font-size: 39px;
+            }
+
+            .login-form-area {
+
+                padding: 40px;
+            }
+        }
+
+
+        @media (max-width: 550px) {
+
+            .navbar {
+
+                height: 70px;
+
+                padding: 0 18px;
+            }
+
+            .brand,
+            .brand img {
+
+                width: 145px;
+                height: 48px;
+            }
+
+            .login-page {
+
+                padding: 25px 15px;
+            }
+
+            .login-intro {
+
+                padding: 30px 25px;
+            }
+
+            .login-intro h1 {
+
+                font-size: 35px;
+            }
+
+            .login-form-area {
+
+                padding: 32px 24px;
+            }
+
+            .form-heading h2 {
+
+                font-size: 28px;
+            }
+        }
+
+    </style>
+
 </head>
 
 
-<body class="login-page">
-
-    <!-- Decorative background -->
-    <div class="login-bg-circle circle-one"></div>
-    <div class="login-bg-circle circle-two"></div>
+<body>
 
 
     <!-- =========================
          NAVBAR
-    ========================== -->
+    ========================= -->
 
-    <nav class="navbar login-navbar">
+    <header class="navbar">
 
-        <a href="index.html" class="logo">
+        <a
+            href="index.html"
+            class="brand"
+        >
+
             <img
-                src="/images/logo.png"
+                src="../images/logo.png"
                 alt="Career Compass AI"
             >
+
         </a>
 
 
-        <div class="nav-buttons">
+        <a
+            href="index.html"
+            class="back-home"
+        >
+            ← Back to Home
+        </a>
 
-            <span class="login-question">
-                New here?
-            </span>
-
-            <a href="signup.html" class="nav-signup">
-                Get Started
-            </a>
-
-        </div>
-
-    </nav>
+    </header>
 
 
     <!-- =========================
-         LOGIN MAIN
-    ========================== -->
+         LOGIN
+    ========================= -->
 
-    <main class="creative-login">
+    <main class="login-page">
 
-        <div class="login-wrapper">
-
-
-            <!-- =========================
-                 LEFT CREATIVE AREA
-            ========================== -->
-
-            <section class="login-story">
-
-                <span class="hero-badge">
-                    ✦ Welcome Back
-                </span>
+        <section class="login-wrapper">
 
 
-                <h1>
-                    Your journey
-                    <br>
-                    <span>starts again.</span>
-                </h1>
+            <!-- LEFT -->
 
+            <div class="login-intro">
 
-                <p class="login-story-text">
-                    Continue discovering career possibilities
-                    that match who you are, what you enjoy,
-                    and where you want to go.
-                </p>
+                <div class="intro-content">
 
-
-                <!-- COMPASS VISUAL -->
-
-                <div class="compass-visual">
-
-                    <div class="compass-ring ring-large"></div>
-
-                    <div class="compass-ring ring-small"></div>
-
-
-                    <div class="compass-center">
-                        🧭
+                    <div class="intro-badge">
+                        ✦ Career Compass AI
                     </div>
 
 
-                    <div class="compass-label label-top">
-                        Interests
-                    </div>
-
-                    <div class="compass-label label-right">
-                        Strengths
-                    </div>
-
-                    <div class="compass-label label-bottom">
-                        Goals
-                    </div>
-
-                    <div class="compass-label label-left">
-                        Skills
-                    </div>
-
-                </div>
+                    <h1>
+                        Your future
+                        <span>starts here.</span>
+                    </h1>
 
 
-                <!-- SMALL MESSAGE -->
+                    <p class="intro-text">
 
-                <div class="login-tip">
+                        Sign in to continue your career journey,
+                        complete your profile and discover career
+                        paths that match your interests.
 
-                    <span class="tip-icon">
-                        ✨
-                    </span>
+                    </p>
 
-                    <div>
-                        <strong>
-                            Your direction matters.
-                        </strong>
 
-                        <p>
-                            Let Career Compass help you
-                            explore what's possible.
-                        </p>
+                    <div class="intro-list">
+
+                        <div class="intro-item">
+
+                            <div class="intro-check">
+                                ✓
+                            </div>
+
+                            <span>
+                                Build your personalized profile
+                            </span>
+
+                        </div>
+
+
+                        <div class="intro-item">
+
+                            <div class="intro-check">
+                                ✓
+                            </div>
+
+                            <span>
+                                Discover suitable career paths
+                            </span>
+
+                        </div>
+
+
+                        <div class="intro-item">
+
+                            <div class="intro-check">
+                                ✓
+                            </div>
+
+                            <span>
+                                Save and compare your favourites
+                            </span>
+
+                        </div>
+
                     </div>
 
                 </div>
 
-            </section>
+            </div>
 
 
+            <!-- RIGHT -->
 
-            <!-- =========================
-                 LOGIN CARD
-            ========================== -->
+            <div class="login-form-area">
 
-            <section class="creative-login-card">
-
-
-                <!-- Card top -->
-
-                <div class="login-card-top">
-
-                    <div class="login-icon">
-                        👋
-                    </div>
+                <div class="form-container">
 
 
-                    <div>
+                    <div class="form-heading">
 
                         <h2>
                             Welcome back
                         </h2>
 
                         <p>
-                            Sign in to continue your journey.
+                            Login to continue your Career Compass journey.
                         </p>
 
                     </div>
 
-                </div>
+
+                    <div
+                        class="message"
+                        id="message"
+                    ></div>
 
 
-                <!-- =========================
-                     LOGIN FORM
-                ========================== -->
+                    <!-- GOOGLE -->
 
-                <form id="loginForm">
+                    <button
+                        type="button"
+                        class="google-btn"
+                        id="googleBtn"
+                    >
+
+                        <span class="google-icon">
+                            G
+                        </span>
+
+                        Continue with Google
+
+                    </button>
 
 
-                    <!-- EMAIL -->
+                    <div class="divider">
+                        OR
+                    </div>
 
-                    <div class="creative-form-group">
 
-                        <label for="loginEmail">
-                            Email Address
-                        </label>
+                    <!-- FORM -->
 
-                        <div class="input-wrapper">
+                    <form id="loginForm">
 
-                            <span class="input-icon">
-                                ✉
-                            </span>
+
+                        <div class="field">
+
+                            <label for="loginEmail">
+                                Email Address
+                            </label>
 
                             <input
                                 type="email"
                                 id="loginEmail"
-                                name="email"
-                                placeholder="you@example.com"
-                                autocomplete="email"
+                                placeholder="Enter your email"
                                 required
                             >
 
                         </div>
 
-                    </div>
 
-
-
-                    <!-- PASSWORD -->
-
-                    <div class="creative-form-group">
-
-                        <div class="creative-label-row">
+                        <div class="field">
 
                             <label for="loginPassword">
                                 Password
                             </label>
 
-                            <a href="#" class="forgot-link">
+
+                            <div class="input-wrapper">
+
+                                <input
+                                    type="password"
+                                    id="loginPassword"
+                                    placeholder="Enter your password"
+                                    required
+                                >
+
+                                <button
+                                    type="button"
+                                    class="toggle-password"
+                                    id="togglePassword"
+                                >
+                                    👁
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-options">
+
+                            <label class="remember">
+
+                                <input
+                                    type="checkbox"
+                                    id="rememberMe"
+                                >
+
+                                Remember me
+
+                            </label>
+
+
+                            <a
+                                href="#"
+                                class="forgot"
+                                id="forgotPassword"
+                            >
                                 Forgot password?
                             </a>
 
                         </div>
 
 
-                        <div class="input-wrapper">
+                        <button
+                            type="submit"
+                            class="login-btn"
+                        >
+                            Continue →
+                        </button>
 
-                            <span class="input-icon">
-                                🔒
-                            </span>
-
-                            <input
-                                type="password"
-                                id="loginPassword"
-                                name="password"
-                                placeholder="Enter your password"
-                                autocomplete="current-password"
-                                required
-                            >
-
-                            <button
-                                type="button"
-                                class="show-password"
-                                onclick="togglePassword()"
-                            >
-                                Show
-                            </button>
-
-                        </div>
-
-                    </div>
+                    </form>
 
 
+                    <p class="signup-text">
 
-                    <!-- REMEMBER -->
-
-                    <div class="remember-box">
-
-                        <label>
-
-                            <input
-                                type="checkbox"
-                                id="rememberMe"
-                            >
-
-                            <span>
-                                Remember me
-                            </span>
-
-                        </label>
-
-                    </div>
-
-
-
-                    <!-- LOGIN -->
-
-                    <button
-                        type="submit"
-                        class="creative-login-btn"
-                    >
-
-                        <span>
-                            Login to Career Compass
-                        </span>
-
-                        <strong>
-                            →
-                        </strong>
-
-                    </button>
-
-                </form>
-
-
-
-                <!-- DIVIDER -->
-
-                <div class="creative-divider">
-
-                    <span></span>
-
-                    <p>
-                        OR
-                    </p>
-
-                    <span></span>
-
-                </div>
-
-
-
-                <!-- SIGNUP -->
-
-                <div class="new-user">
-
-                    <p>
                         Don't have an account?
-                    </p>
 
-                    <a href="signup.html">
-                        Create your account →
-                    </a>
+                        <a href="signup.html">
+                            Create one
+                        </a>
+
+                    </p>
 
                 </div>
 
+            </div>
 
-
-                <!-- BACK -->
-
-                <a
-                    href="index.html"
-                    class="login-back-home"
-                >
-                    ← Back to Home
-                </a>
-
-            </section>
-
-        </div>
+        </section>
 
     </main>
 
 
-    <!-- =========================
-         JAVASCRIPT
-    ========================== -->
-
-    <script src="/js/script.js"></script>
-
-
-    <!-- Password visibility -->
     <script>
 
-        function togglePassword() {
+        const loginForm =
+            document.getElementById("loginForm");
 
-            const password =
-                document.getElementById("loginPassword");
+        const message =
+            document.getElementById("message");
 
-            const button =
-                document.querySelector(".show-password");
+        const password =
+            document.getElementById("loginPassword");
+
+        const togglePassword =
+            document.getElementById("togglePassword");
+
+        const googleBtn =
+            document.getElementById("googleBtn");
+
+        const forgotPassword =
+            document.getElementById("forgotPassword");
 
 
-            if (password.type === "password") {
+        function showMessage(text) {
 
-                password.type = "text";
+            message.textContent = text;
 
-                button.textContent = "Hide";
+            message.style.display = "block";
+        }
 
-            } else {
 
-                password.type = "password";
+        /* PASSWORD */
 
-                button.textContent = "Show";
+        togglePassword.addEventListener(
+            "click",
+            function () {
+
+                if (password.type === "password") {
+
+                    password.type = "text";
+
+                    togglePassword.textContent = "🙈";
+
+                } else {
+
+                    password.type = "password";
+
+                    togglePassword.textContent = "👁";
+
+                }
 
             }
+        );
 
-        }
+
+        /* LOGIN */
+
+        loginForm.addEventListener(
+            "submit",
+            function (event) {
+
+                event.preventDefault();
+
+
+                const email =
+                    document
+                        .getElementById("loginEmail")
+                        .value
+                        .trim();
+
+                const pass =
+                    password.value.trim();
+
+
+                if (!email || !pass) {
+
+                    showMessage(
+                        "Please enter your email and password."
+                    );
+
+                    return;
+                }
+
+
+                /* Save login state */
+
+                localStorage.setItem(
+                    "isLoggedIn",
+                    "true"
+                );
+
+
+                localStorage.setItem(
+                    "careerCompassUser",
+                    JSON.stringify({
+                        email: email
+                    })
+                );
+
+
+                showMessage(
+                    "Login successful! Taking you to your profile..."
+                );
+
+
+                setTimeout(
+                    function () {
+
+                        window.location.href =
+                            "profile.html";
+
+                    },
+                    900
+                );
+
+            }
+        );
+
+
+        /* GOOGLE */
+
+        googleBtn.addEventListener(
+            "click",
+            function () {
+
+                showMessage(
+                    "Google sign-in will be connected when the backend authentication is added."
+                );
+
+            }
+        );
+
+
+        /* FORGOT PASSWORD */
+
+        forgotPassword.addEventListener(
+            "click",
+            function (event) {
+
+                event.preventDefault();
+
+                showMessage(
+                    "Password recovery will be connected with the backend."
+                );
+
+            }
+        );
 
     </script>
 

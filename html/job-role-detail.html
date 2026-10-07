@@ -3,1434 +3,1460 @@
 
 <head>
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Career Details | Career Compass AI</title>
 
     <style>
-
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
 
         body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f7f5f2;
-            color: #443846;
+            font-family: "DM Sans", Arial, sans-serif;
+            background: #f8f5f2;
+            color: #342d3b;
+            min-height: 100vh;
         }
 
-
-        /* ================= NAVBAR ================= */
+        /* =========================
+           NAVBAR
+        ========================= */
 
         .navbar {
-            height: 76px;
-            background: white;
-            border-bottom: 1px solid #ebe5e3;
+            height: 82px;
+            background: rgba(255, 255, 255, 0.98);
+            border-bottom: 1px solid #e7dfdb;
 
             display: flex;
             align-items: center;
             justify-content: space-between;
 
-            padding: 0 7%;
+            padding: 0 55px;
+
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         .brand {
+            width: 175px;
+            height: 55px;
+
+            display: flex;
+            align-items: center;
+
             text-decoration: none;
-            color: #443846;
-            font-size: 24px;
-            font-weight: bold;
+            flex-shrink: 0;
         }
 
-        .brand span {
-            color: #e998b3;
+        .brand img {
+            width: 175px;
+            height: 55px;
+
+            max-width: 175px;
+            max-height: 55px;
+
+            object-fit: contain;
+            display: block;
         }
 
         .nav-links {
             display: flex;
-            gap: 24px;
             align-items: center;
+            gap: 28px;
         }
 
         .nav-links a {
             text-decoration: none;
             color: #756d76;
+
             font-size: 14px;
-            font-weight: bold;
+            font-weight: 600;
+
+            transition: 0.25s ease;
         }
 
         .nav-links a:hover {
-            color: #e998b3;
+            color: #443846;
         }
 
+        .profile-btn {
+            width: 43px;
+            height: 43px;
 
-        /* ================= MAIN ================= */
+            border-radius: 50%;
 
-        .page {
-            width: min(1150px, 90%);
-            margin: auto;
-            padding: 45px 0 80px;
-        }
-
-
-        /* ================= BACK BUTTON ================= */
-
-        .back-btn {
-            display: inline-block;
-            text-decoration: none;
-            color: #756d76;
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 30px;
-        }
-
-        .back-btn:hover {
-            color: #e998b3;
-        }
-
-
-        /* ================= HERO ================= */
-
-        .career-hero {
-            background: white;
-            border: 1px solid #ebe5e3;
-            border-radius: 30px;
-
-            padding: 40px;
-
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 30px;
-
-            margin-bottom: 25px;
-        }
-
-        .career-info {
-            display: flex;
-            align-items: center;
-            gap: 25px;
-        }
-
-        .career-icon {
-            width: 100px;
-            height: 100px;
-
-            background: #f4e4ea;
-
-            border-radius: 28px;
+            background: #443846;
+            color: white;
 
             display: flex;
             align-items: center;
             justify-content: center;
 
-            font-size: 52px;
+            text-decoration: none;
+
+            font-size: 15px;
+            font-weight: 700;
+
+            box-shadow: 0 7px 18px rgba(68, 56, 70, 0.18);
+
+            transition: 0.25s ease;
+        }
+
+        .profile-btn:hover {
+            background: #322936;
+            transform: translateY(-2px);
+        }
+
+        /* =========================
+           MAIN PAGE
+        ========================= */
+
+        .page {
+            max-width: 1180px;
+            margin: 0 auto;
+
+            padding: 45px 35px 80px;
+        }
+
+        /* =========================
+           BACK BUTTON
+        ========================= */
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            text-decoration: none;
+
+            color: #756d76;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            margin-bottom: 28px;
+
+            transition: 0.2s ease;
+        }
+
+        .back-btn:hover {
+            color: #443846;
+            transform: translateX(-3px);
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .career-hero {
+            background: white;
+
+            border: 1px solid #e6dedb;
+
+            border-radius: 28px;
+
+            padding: 42px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 35px;
+
+            box-shadow: 0 12px 35px rgba(68, 56, 70, 0.07);
+
+            position: relative;
+            overflow: hidden;
+
+            margin-bottom: 28px;
+        }
+
+        .career-hero::after {
+            content: "";
+
+            position: absolute;
+
+            width: 260px;
+            height: 260px;
+
+            border-radius: 50%;
+
+            background: #f6e4ea;
+
+            right: -100px;
+            top: -110px;
+
+            opacity: 0.65;
+        }
+
+        .career-hero-content {
+            position: relative;
+            z-index: 2;
+
+            max-width: 700px;
         }
 
         .sector-label {
-            display: inline-block;
-
-            background: #faf5f7;
-            color: #c46d8c;
+            display: inline-flex;
 
             padding: 8px 14px;
 
-            border-radius: 20px;
+            border-radius: 30px;
 
-            font-size: 12px;
-            font-weight: bold;
+            background: #f7e8ed;
 
-            margin-bottom: 12px;
+            color: #9a6074;
+
+            font-size: 11px;
+            font-weight: 800;
+
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+
+            margin-bottom: 18px;
         }
 
-        .career-info h1 {
-            font-family: Georgia, serif;
-            font-size: 42px;
-            margin: 0 0 10px;
+        .career-hero h1 {
+            font-family: Georgia, "Times New Roman", serif;
+
+            color: #443846;
+
+            font-size: clamp(38px, 5vw, 58px);
+
+            line-height: 1.1;
+
+            margin-bottom: 16px;
         }
 
-        .career-info p {
+        .career-hero p {
             color: #756d76;
-            margin: 0;
-            line-height: 1.6;
+
+            font-size: 15px;
+
+            line-height: 1.75;
+
+            max-width: 680px;
         }
+
+        .career-icon {
+            width: 120px;
+            height: 120px;
+
+            flex-shrink: 0;
+
+            border-radius: 30px;
+
+            background: #f8e9ee;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 55px;
+
+            position: relative;
+            z-index: 2;
+
+            box-shadow: inset 0 0 0 1px #eedce2;
+        }
+
+        /* =========================
+           ACTIONS
+        ========================= */
 
         .hero-actions {
             display: flex;
-            gap: 10px;
+            align-items: center;
+            gap: 12px;
+
+            margin-top: 25px;
         }
 
-        .save-btn,
-        .compare-btn {
+        .btn {
+            text-decoration: none;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 11px;
+
+            padding: 12px 18px;
+
+            font-size: 13px;
+            font-weight: 700;
+
             border: none;
-            padding: 14px 20px;
-            border-radius: 22px;
-            font-weight: bold;
+
             cursor: pointer;
-            font-size: 14px;
+
+            transition: 0.25s ease;
         }
 
-        .save-btn {
+        .btn-primary {
             background: #443846;
             color: white;
+
+            box-shadow: 0 7px 18px rgba(68, 56, 70, 0.14);
         }
 
-        .save-btn:hover {
-            background: #e998b3;
+        .btn-primary:hover {
+            background: #322936;
+            transform: translateY(-2px);
         }
 
-        .save-btn.saved {
-            background: #e998b3;
+        .btn-secondary {
+            background: #f7f2f0;
+            color: #443846;
+
+            border: 1px solid #e4dcd8;
         }
 
-        .compare-btn {
-            background: #f4e4ea;
-            color: #805269;
+        .btn-secondary:hover {
+            background: #eee7e4;
         }
 
-        .compare-btn:hover {
-            background: #e998b3;
-            color: white;
-        }
-
-
-        /* ================= GRID ================= */
+        /* =========================
+           CONTENT GRID
+        ========================= */
 
         .details-grid {
             display: grid;
+
             grid-template-columns: 2fr 1fr;
+
             gap: 25px;
         }
 
+        .left-column,
+        .right-column {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
 
-        /* ================= CARDS ================= */
+        /* =========================
+           CARD
+        ========================= */
 
         .card {
             background: white;
-            border: 1px solid #ebe5e3;
-            border-radius: 26px;
+
+            border: 1px solid #e6dedb;
+
+            border-radius: 22px;
+
             padding: 30px;
-            margin-bottom: 25px;
+
+            box-shadow: 0 8px 25px rgba(68, 56, 70, 0.05);
         }
 
         .card h2 {
-            font-family: Georgia, serif;
-            font-size: 27px;
-            margin-top: 0;
-            margin-bottom: 16px;
+            font-family: Georgia, "Times New Roman", serif;
+
+            font-size: 24px;
+
+            color: #443846;
+
+            margin-bottom: 20px;
         }
 
         .card p {
             color: #756d76;
-            line-height: 1.8;
-            font-size: 15px;
+
+            font-size: 14px;
+
+            line-height: 1.75;
         }
 
+        /* =========================
+           SKILLS
+        ========================= */
 
-        /* ================= RESPONSIBILITIES ================= */
-
-        .responsibility-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .responsibility-list li {
-            padding: 14px 0;
-            border-bottom: 1px solid #eee8e8;
-            color: #756d76;
-            line-height: 1.5;
-        }
-
-        .responsibility-list li:last-child {
-            border-bottom: none;
-        }
-
-        .responsibility-list li::before {
-            content: "✦";
-            color: #e998b3;
-            margin-right: 12px;
-        }
-
-
-        /* ================= SKILLS ================= */
-
-        .skills-container {
+        .skills {
             display: flex;
+
             flex-wrap: wrap;
+
             gap: 10px;
         }
 
         .skill-tag {
-            background: #f4e4ea;
-            color: #805269;
-            padding: 10px 14px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: bold;
+            background: #f8efec;
+
+            color: #695d65;
+
+            border: 1px solid #eadfdc;
+
+            border-radius: 30px;
+
+            padding: 9px 13px;
+
+            font-size: 12px;
+
+            font-weight: 600;
         }
 
+        /* =========================
+           INFO LIST
+        ========================= */
 
-        /* ================= SIDEBAR ================= */
+        .info-list {
+            display: flex;
+            flex-direction: column;
 
-        .side-card {
-            background: white;
-            border: 1px solid #ebe5e3;
-            border-radius: 26px;
-            padding: 25px;
-            margin-bottom: 25px;
-        }
-
-        .side-card h3 {
-            font-family: Georgia, serif;
-            font-size: 21px;
-            margin-top: 0;
+            gap: 16px;
         }
 
         .info-item {
-            padding: 15px 0;
-            border-bottom: 1px solid #eee8e8;
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 13px;
+
+            padding-bottom: 16px;
+
+            border-bottom: 1px solid #eee7e4;
         }
 
         .info-item:last-child {
             border-bottom: none;
+            padding-bottom: 0;
         }
 
-        .info-label {
-            color: #9a9198;
-            font-size: 12px;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
+        .info-icon {
+            width: 37px;
+            height: 37px;
 
-        .info-value {
-            color: #443846;
-            font-size: 14px;
-            font-weight: bold;
-        }
+            border-radius: 11px;
 
-
-        /* ================= EDUCATION ================= */
-
-        .education-step {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .step-number {
-            min-width: 35px;
-            height: 35px;
-
-            background: #f4e4ea;
-            color: #805269;
-
-            border-radius: 50%;
+            background: #f7e8ed;
 
             display: flex;
             align-items: center;
             justify-content: center;
 
-            font-weight: bold;
+            flex-shrink: 0;
+
+            font-size: 16px;
         }
 
-        .education-step h4 {
-            margin: 0 0 5px;
-            font-size: 15px;
+        .info-text span {
+            display: block;
+
+            color: #91868e;
+
+            font-size: 11px;
+
+            margin-bottom: 3px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.4px;
         }
 
-        .education-step p {
-            margin: 0;
+        .info-text strong {
+            color: #443846;
+
             font-size: 13px;
         }
 
+        /* =========================
+           EDUCATION
+        ========================= */
 
-        /* ================= OPPORTUNITIES ================= */
+        .education-step {
+            display: flex;
+
+            gap: 15px;
+
+            margin-bottom: 20px;
+        }
+
+        .education-step:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-number {
+            width: 35px;
+            height: 35px;
+
+            border-radius: 50%;
+
+            background: #443846;
+
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            flex-shrink: 0;
+        }
+
+        .education-step h3 {
+            font-size: 14px;
+
+            color: #443846;
+
+            margin-bottom: 5px;
+        }
+
+        .education-step p {
+            font-size: 12px;
+            line-height: 1.55;
+        }
+
+        /* =========================
+           OPPORTUNITY BOX
+        ========================= */
 
         .opportunity {
-            padding: 13px 15px;
-            background: #f7f5f2;
-            border-radius: 15px;
-            margin-bottom: 10px;
-            color: #756d76;
-            font-size: 14px;
+            background: #443846;
+
+            color: white;
+
+            border-radius: 22px;
+
+            padding: 28px;
         }
 
+        .opportunity h2 {
+            color: white;
 
-        /* ================= EMPTY STATE ================= */
+            font-family: Georgia, "Times New Roman", serif;
+
+            font-size: 22px;
+
+            margin-bottom: 10px;
+        }
+
+        .opportunity p {
+            color: #ddd2d8;
+
+            font-size: 13px;
+
+            line-height: 1.65;
+
+            margin-bottom: 20px;
+        }
+
+        .opportunity .btn {
+            background: #f2b5c8;
+            color: #443846;
+        }
+
+        .opportunity .btn:hover {
+            background: #f6c7d6;
+        }
+
+        /* =========================
+           EMPTY / ERROR STATE
+        ========================= */
 
         .empty-state {
-            text-align: center;
-            padding: 80px 20px;
             background: white;
-            border-radius: 30px;
-            border: 1px solid #ebe5e3;
+
+            border: 1px solid #e6dedb;
+
+            border-radius: 25px;
+
+            padding: 70px 30px;
+
+            text-align: center;
+
+            box-shadow: 0 10px 30px rgba(68, 56, 70, 0.06);
         }
 
-        .empty-state h1 {
-            font-family: Georgia, serif;
+        .empty-icon {
+            width: 75px;
+            height: 75px;
+
+            margin: 0 auto 20px;
+
+            border-radius: 50%;
+
+            background: #f8e9ee;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 30px;
         }
 
-        .empty-state a {
-            display: inline-block;
-            margin-top: 15px;
-            background: #443846;
-            color: white;
-            text-decoration: none;
-            padding: 14px 22px;
-            border-radius: 22px;
+        .empty-state h2 {
+            font-family: Georgia, "Times New Roman", serif;
+
+            color: #443846;
+
+            margin-bottom: 10px;
         }
 
+        .empty-state p {
+            color: #756d76;
 
-        /* ================= RESPONSIVE ================= */
+            max-width: 520px;
+
+            margin: 0 auto 22px;
+
+            font-size: 14px;
+
+            line-height: 1.7;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            border-top: 1px solid #e4dcd8;
+
+            background: white;
+
+            padding: 25px;
+
+            text-align: center;
+
+            color: #8a8188;
+
+            font-size: 12px;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
 
         @media (max-width: 900px) {
+
+            .navbar {
+                padding: 0 25px;
+            }
+
+            .nav-links {
+                gap: 17px;
+            }
 
             .details-grid {
                 grid-template-columns: 1fr;
             }
 
             .career-hero {
-                align-items: flex-start;
-                flex-direction: column;
+                padding: 32px;
             }
-
         }
 
-        @media (max-width: 650px) {
+        @media (max-width: 700px) {
 
             .navbar {
-                padding: 0 5%;
+                height: 72px;
+                padding: 0 18px;
             }
 
-            .nav-links a:last-child {
+            .brand,
+            .brand img {
+                width: 145px;
+                height: 48px;
+            }
+
+            .nav-links {
                 display: none;
             }
 
-            .career-info {
-                align-items: flex-start;
-                flex-direction: column;
+            .page {
+                padding: 35px 18px 60px;
             }
 
-            .career-info h1 {
-                font-size: 34px;
+            .career-hero {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .career-icon {
+                width: 85px;
+                height: 85px;
+                font-size: 38px;
+            }
+
+            .career-hero h1 {
+                font-size: 39px;
             }
 
             .hero-actions {
-                width: 100%;
-                flex-direction: column;
+                flex-wrap: wrap;
             }
 
-            .save-btn,
-            .compare-btn {
-                width: 100%;
+            .hero-actions .btn {
+                flex: 1;
+            }
+        }
+
+        @media (max-width: 450px) {
+
+            .career-hero {
+                padding: 25px;
             }
 
             .card {
-                padding: 22px;
+                padding: 23px;
             }
 
+            .hero-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .hero-actions .btn {
+                width: 100%;
+            }
         }
-
     </style>
-
 </head>
-
 
 <body>
 
+    <!-- =========================
+         NAVBAR
+    ========================= -->
 
-    <!-- ================= NAVBAR ================= -->
+    <header class="navbar">
 
-    <nav class="navbar">
+        <a href="dashboard.html" class="brand">
 
-        <a href="./index.html" class="brand">
-            Career Compass <span>AI ✦</span>
+            <img
+                src="../images/logo.png"
+                alt="Career Compass AI"
+            >
+
         </a>
 
-        <div class="nav-links">
 
-            <a href="./results.html">
-                My Results
-            </a>
+        <nav class="nav-links">
 
-            <a href="./sectors.html">
-                Explore
-            </a>
-
-            <a href="./dashboard.html">
+            <a href="dashboard.html">
                 Dashboard
             </a>
 
-        </div>
+            <a href="results.html">
+                Results
+            </a>
 
-    </nav>
+            <a href="favourites.html">
+                Favourites
+            </a>
+
+            <a href="compare.html">
+                Compare
+            </a>
+
+            <a href="contact.html">
+                Contact
+            </a>
+
+        </nav>
 
 
+        <a
+            href="profile.html"
+            class="profile-btn"
+        >
+            A
+        </a>
+
+    </header>
+
+
+    <!-- =========================
+         MAIN
+    ========================= -->
 
     <main class="page">
 
-
-        <!-- BACK BUTTON -->
-
-        <a href="./job-roles.html" class="back-btn">
-            ← Back to Job Roles
+        <a
+            href="results.html"
+            class="back-btn"
+        >
+            ← Back to Career Results
         </a>
 
 
-        <!-- ================= CAREER CONTENT ================= -->
+        <!-- =========================
+             CAREER HERO
+        ========================= -->
 
-        <div id="careerContent">
+        <section
+            class="career-hero"
+            id="careerHero"
+        >
 
-            <!-- JavaScript will add career details here -->
+            <div class="career-hero-content">
 
-        </div>
+                <div
+                    class="sector-label"
+                    id="sectorLabel"
+                >
+                    Career
+                </div>
 
+                <h1 id="careerTitle">
+                    Career Details
+                </h1>
+
+                <p id="careerDescription">
+                    Explore this career path and discover
+                    what it could look like for your future.
+                </p>
+
+
+                <div class="hero-actions">
+
+                    <button
+                        class="btn btn-primary"
+                        id="saveBtn"
+                        type="button"
+                    >
+                        ♡ Save Career
+                    </button>
+
+                    <a
+                        href="compare.html"
+                        class="btn btn-secondary"
+                    >
+                        Compare
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="career-icon"
+                id="careerIcon"
+            >
+                ✦
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             DETAILS
+        ========================= -->
+
+        <section
+            class="details-grid"
+            id="detailsSection"
+        >
+
+            <div class="left-column">
+
+                <!-- ABOUT -->
+
+                <article class="card">
+
+                    <h2>
+                        About This Career
+                    </h2>
+
+                    <p id="aboutCareer">
+                        This career offers an opportunity to build
+                        valuable skills and work in a field that
+                        matches your interests.
+                    </p>
+
+                </article>
+
+
+                <!-- SKILLS -->
+
+                <article class="card">
+
+                    <h2>
+                        Skills You May Need
+                    </h2>
+
+                    <div
+                        class="skills"
+                        id="skillsContainer"
+                    >
+
+                        <span class="skill-tag">
+                            Problem Solving
+                        </span>
+
+                        <span class="skill-tag">
+                            Communication
+                        </span>
+
+                        <span class="skill-tag">
+                            Creativity
+                        </span>
+
+                        <span class="skill-tag">
+                            Critical Thinking
+                        </span>
+
+                    </div>
+
+                </article>
+
+
+                <!-- EDUCATION -->
+
+                <article class="card">
+
+                    <h2>
+                        Education Path
+                    </h2>
+
+                    <div class="education-step">
+
+                        <div class="step-number">
+                            1
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Choose a Relevant Stream
+                            </h3>
+
+                            <p>
+                                Select subjects and an educational
+                                path related to the career you want
+                                to explore.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="education-step">
+
+                        <div class="step-number">
+                            2
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Build Your Knowledge
+                            </h3>
+
+                            <p>
+                                Develop the academic knowledge and
+                                practical skills required in the field.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="education-step">
+
+                        <div class="step-number">
+                            3
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Gain Practical Experience
+                            </h3>
+
+                            <p>
+                                Projects, internships and practical
+                                experience can help you understand
+                                the profession better.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <div class="right-column">
+
+                <!-- QUICK INFO -->
+
+                <article class="card">
+
+                    <h2>
+                        Quick Overview
+                    </h2>
+
+                    <div class="info-list">
+
+                        <div class="info-item">
+
+                            <div class="info-icon">
+                                🎓
+                            </div>
+
+                            <div class="info-text">
+
+                                <span>
+                                    Education
+                                </span>
+
+                                <strong id="educationInfo">
+                                    Relevant Degree
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <div class="info-icon">
+                                💼
+                            </div>
+
+                            <div class="info-text">
+
+                                <span>
+                                    Work Style
+                                </span>
+
+                                <strong id="workStyleInfo">
+                                    Professional
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <div class="info-icon">
+                                🌱
+                            </div>
+
+                            <div class="info-text">
+
+                                <span>
+                                    Growth
+                                </span>
+
+                                <strong>
+                                    Explore Opportunities
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <div class="info-icon">
+                                🧭
+                            </div>
+
+                            <div class="info-text">
+
+                                <span>
+                                    Field
+                                </span>
+
+                                <strong id="fieldInfo">
+                                    Career Field
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- CTA -->
+
+                <article class="opportunity">
+
+                    <h2>
+                        Explore Your Next Step
+                    </h2>
+
+                    <p>
+                        Save this career, compare it with other
+                        options or return to your results to explore
+                        more possibilities.
+                    </p>
+
+                    <a
+                        href="results.html"
+                        class="btn"
+                    >
+                        View More Careers →
+                    </a>
+
+                </article>
+
+            </div>
+
+        </section>
 
     </main>
 
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <footer>
+
+        © 2026 Career Compass AI · Explore a future that fits you.
+
+    </footer>
 
 
     <script>
 
         /* =========================================
-           GET SELECTED CAREER
-        ========================================= */
-        const selectedCareer =
-             localStorage.getItem("selectedCareer");
-
-        const selectedCareerMatch =
-            localStorage.getItem("selectedCareerMatch");
-
-        const selectedCareerScores =
-             JSON.parse(
-                 localStorage.getItem("selectedCareerScores")
-             ) || {};
-
-        const selectedCareerCode =
-             localStorage.getItem("selectedCareerCode");
-
-             // =========================================================
-// LOAD CAREER DETAILS FROM BACKEND
-// =========================================================
-
-let backendCareer = null;
-
-async function loadCareerFromBackend() {
-
-    if (!selectedCareer) {
-        return;
-    }
-
-    try {
-
-        const response = await fetch(
-            "/api/career-detail?title=" +
-            encodeURIComponent(selectedCareer)
-        );
-
-        const result = await response.json();
-
-        if (result.success) {
-
-            backendCareer = result.career;
-
-            console.log(
-                "Career loaded from backend:",
-                backendCareer
-            );
-
-        } else {
-
-            console.log(
-                "Backend career not found:",
-                result.message
-            );
-
-        }
-
-    } catch (error) {
-
-        console.error(
-            "Career backend error:",
-            error
-        );
-
-    }
-}
-
-loadCareerFromBackend();
-        /* =========================================
-           CAREER DATABASE
+           CAREER DATA
         ========================================= */
 
-        const careerData = {
+        const careerDatabase = {
 
-            "Software Developer": {
+            software: {
+                title: "Software Developer",
+                category: "Technology",
                 icon: "💻",
-                sector: "Technology & IT",
-
-                overview:
-                    "Software Developers design, build, test and maintain applications and digital systems. They use programming languages and problem-solving skills to create technology that people and businesses use every day.",
-
-                responsibilities: [
-                    "Design and develop software applications",
-                    "Write clean and efficient code",
-                    "Test and debug software",
-                    "Work with designers and other developers",
-                    "Maintain and improve existing applications"
-                ],
-
+                description:
+                    "Design, build and maintain software applications that solve real-world problems.",
+                about:
+                    "Software developers create applications, websites and digital systems. The role combines logical thinking, problem solving and creativity.",
+                education: "Computer Science / IT",
+                workStyle: "Technology & Problem Solving",
                 skills: [
                     "Programming",
                     "Problem Solving",
-                    "JavaScript",
-                    "Python",
-                    "Git",
-                    "Databases"
-                ],
-
-                education: [
-                    {
-                        title: "Build your foundation",
-                        text: "Learn programming fundamentals, logic and problem solving."
-                    },
-                    {
-                        title: "Study technology",
-                        text: "Consider BCA, B.Tech, Computer Science or relevant courses."
-                    },
-                    {
-                        title: "Build projects",
-                        text: "Create websites, applications and software projects for your portfolio."
-                    }
-                ],
-
-                opportunities: [
-                    "Frontend Developer",
-                    "Backend Developer",
-                    "Full Stack Developer",
-                    "Application Developer",
-                    "Software Engineer"
-                ],
-
-                workStyle: "Analytical & Creative",
-                growth: "High growth potential",
-                environment: "Office / Remote / Hybrid"
+                    "Logical Thinking",
+                    "Communication",
+                    "Creativity"
+                ]
             },
 
-
-            "Web Developer": {
-                icon: "🌐",
-                sector: "Technology & IT",
-
-                overview:
-                    "Web Developers create and maintain websites and web applications. They combine programming, design and problem-solving skills to build experiences that work smoothly across different devices.",
-
-                responsibilities: [
-                    "Build responsive websites",
-                    "Develop interactive web applications",
-                    "Work with HTML, CSS and JavaScript",
-                    "Test and improve website performance",
-                    "Collaborate with designers and developers"
-                ],
-
-                skills: [
-                    "HTML",
-                    "CSS",
-                    "JavaScript",
-                    "Responsive Design",
-                    "Git",
-                    "Problem Solving"
-                ],
-
-                education: [
-                    {
-                        title: "Learn web fundamentals",
-                        text: "Start with HTML, CSS and JavaScript."
-                    },
-                    {
-                        title: "Learn frameworks",
-                        text: "Explore modern tools and frameworks."
-                    },
-                    {
-                        title: "Build a portfolio",
-                        text: "Create real projects and publish them online."
-                    }
-                ],
-
-                opportunities: [
-                    "Frontend Developer",
-                    "Backend Developer",
-                    "Full Stack Developer",
-                    "WordPress Developer",
-                    "Web Application Developer"
-                ],
-
-                workStyle: "Creative & Technical",
-                growth: "High growth potential",
-                environment: "Office / Remote / Freelance"
-            },
-
-
-            "AI / ML Engineer": {
-                icon: "🤖",
-                sector: "Technology & IT",
-
-                overview:
-                    "AI and Machine Learning Engineers build systems that can learn from data and make intelligent predictions or decisions.",
-
-                responsibilities: [
-                    "Develop machine learning models",
-                    "Prepare and analyze data",
-                    "Train and test AI systems",
-                    "Improve model performance",
-                    "Deploy intelligent applications"
-                ],
-
-                skills: [
-                    "Python",
-                    "Machine Learning",
-                    "Data Analysis",
-                    "Statistics",
-                    "Deep Learning",
-                    "Problem Solving"
-                ],
-
-                education: [
-                    {
-                        title: "Learn programming",
-                        text: "Build a strong foundation in Python and mathematics."
-                    },
-                    {
-                        title: "Study AI and data",
-                        text: "Learn machine learning and data analysis."
-                    },
-                    {
-                        title: "Build AI projects",
-                        text: "Create models and practical AI applications."
-                    }
-                ],
-
-                opportunities: [
-                    "Machine Learning Engineer",
-                    "AI Engineer",
-                    "Data Scientist",
-                    "NLP Engineer",
-                    "Computer Vision Engineer"
-                ],
-
-                workStyle: "Analytical & Innovative",
-                growth: "Very high growth potential",
-                environment: "Technology / Research / Hybrid"
-            },
-
-
-            "Data Analyst": {
+            data: {
+                title: "Data Scientist",
+                category: "Technology",
                 icon: "📊",
-                sector: "Technology & IT",
-
-                overview:
-                    "Data Analysts collect, organize and analyze data to help organizations make better decisions.",
-
-                responsibilities: [
-                    "Collect and organize data",
-                    "Analyze trends and patterns",
-                    "Create reports and dashboards",
-                    "Use SQL and spreadsheet tools",
-                    "Communicate insights clearly"
-                ],
-
+                description:
+                    "Use data, statistics and technology to discover patterns and support better decisions.",
+                about:
+                    "Data scientists work with large amounts of information to identify useful patterns, create models and communicate insights.",
+                education: "Data Science / Statistics / CS",
+                workStyle: "Analysis & Research",
                 skills: [
-                    "SQL",
-                    "Excel",
-                    "Data Visualization",
                     "Statistics",
                     "Python",
-                    "Communication"
-                ],
-
-                education: [
-                    {
-                        title: "Learn data basics",
-                        text: "Understand spreadsheets, statistics and databases."
-                    },
-                    {
-                        title: "Learn analytics tools",
-                        text: "Practice SQL, Python and visualization tools."
-                    },
-                    {
-                        title: "Create projects",
-                        text: "Analyze real datasets and build dashboards."
-                    }
-                ],
-
-                opportunities: [
-                    "Business Analyst",
-                    "Data Analyst",
-                    "BI Analyst",
-                    "Analytics Consultant",
-                    "Junior Data Scientist"
-                ],
-
-                workStyle: "Analytical",
-                growth: "High growth potential",
-                environment: "Office / Hybrid / Remote"
+                    "Data Analysis",
+                    "Critical Thinking",
+                    "Problem Solving"
+                ]
             },
 
-
-            "UX/UI Designer": {
+            designer: {
+                title: "UX/UI Designer",
+                category: "Creative",
                 icon: "🎨",
-                sector: "Creative & Design",
-
-                overview:
-                    "UX/UI Designers create digital products that are attractive, easy to use and enjoyable for users.",
-
-                responsibilities: [
-                    "Research user needs",
-                    "Create wireframes and prototypes",
-                    "Design application interfaces",
-                    "Test user experiences",
-                    "Work with developers and product teams"
-                ],
-
+                description:
+                    "Design digital experiences that are useful, intuitive and visually engaging.",
+                about:
+                    "UX/UI designers focus on how people interact with digital products and create interfaces that are both useful and enjoyable.",
+                education: "Design / HCI / Related Field",
+                workStyle: "Creative & User Focused",
                 skills: [
-                    "Figma",
-                    "UX Research",
-                    "Wireframing",
-                    "Prototyping",
-                    "Visual Design",
-                    "Communication"
-                ],
-
-                education: [
-                    {
-                        title: "Learn design principles",
-                        text: "Understand color, typography, layout and usability."
-                    },
-                    {
-                        title: "Learn design tools",
-                        text: "Practice using Figma and prototyping tools."
-                    },
-                    {
-                        title: "Build a portfolio",
-                        text: "Create case studies and real design projects."
-                    }
-                ],
-
-                opportunities: [
-                    "UX Designer",
-                    "UI Designer",
-                    "Product Designer",
-                    "Interaction Designer",
-                    "UX Researcher"
-                ],
-
-                workStyle: "Creative & Analytical",
-                growth: "High growth potential",
-                environment: "Office / Hybrid / Freelance"
+                    "Design Thinking",
+                    "Creativity",
+                    "Research",
+                    "Communication",
+                    "Visual Design"
+                ]
             },
 
-
-            "Graphic Designer": {
-                icon: "🖌️",
-                sector: "Creative & Design",
-
-                overview:
-                    "Graphic Designers communicate ideas through visual content such as branding, social media, advertisements and digital designs.",
-
-                responsibilities: [
-                    "Create visual concepts",
-                    "Design brand materials",
-                    "Create social media content",
-                    "Work with typography and colors",
-                    "Collaborate with clients and teams"
-                ],
-
+            teacher: {
+                title: "Teacher",
+                category: "Education",
+                icon: "📚",
+                description:
+                    "Help students learn, grow and develop the knowledge and skills they need.",
+                about:
+                    "Teachers guide students through learning, explain concepts and help create an environment where students can develop their abilities.",
+                education: "Education / Relevant Degree",
+                workStyle: "People & Communication",
                 skills: [
-                    "Creativity",
-                    "Typography",
-                    "Branding",
-                    "Photoshop",
-                    "Illustration",
-                    "Communication"
-                ],
+                    "Communication",
+                    "Patience",
+                    "Leadership",
+                    "Planning",
+                    "Empathy"
+                ]
+            },
 
-                education: [
-                    {
-                        title: "Learn design basics",
-                        text: "Understand visual communication and design principles."
-                    },
-                    {
-                        title: "Practice design tools",
-                        text: "Learn tools such as Photoshop and Illustrator."
-                    },
-                    {
-                        title: "Build your portfolio",
-                        text: "Create a collection of your best work."
-                    }
-                ],
+            doctor: {
+                title: "Doctor",
+                category: "Healthcare",
+                icon: "🩺",
+                description:
+                    "Work with patients to understand health conditions and provide medical care.",
+                about:
+                    "Doctors use medical knowledge, observation and decision-making to diagnose and manage health conditions.",
+                education: "Medicine",
+                workStyle: "Healthcare & People",
+                skills: [
+                    "Communication",
+                    "Decision Making",
+                    "Science",
+                    "Empathy",
+                    "Critical Thinking"
+                ]
+            },
 
-                opportunities: [
-                    "Brand Designer",
-                    "Visual Designer",
-                    "Social Media Designer",
-                    "Illustrator",
-                    "Art Director"
-                ],
-
-                workStyle: "Highly Creative",
-                growth: "Growing digital opportunities",
-                environment: "Agency / Freelance / Remote"
+            lawyer: {
+                title: "Lawyer",
+                category: "Law",
+                icon: "⚖️",
+                description:
+                    "Use legal knowledge and reasoning to advise and represent people or organizations.",
+                about:
+                    "Lawyers research legal issues, analyze information and communicate arguments to help clients navigate legal matters.",
+                education: "Law",
+                workStyle: "Research & Communication",
+                skills: [
+                    "Research",
+                    "Communication",
+                    "Critical Thinking",
+                    "Reasoning",
+                    "Writing"
+                ]
             }
 
         };
 
 
         /* =========================================
-           GENERIC CAREER DATA
-           FOR ROLES NOT YET IN FULL DATABASE
+           GET CAREER
         ========================================= */
 
-        const fallbackData = {
+        const params =
+            new URLSearchParams(window.location.search);
 
-            icon: "💼",
+        const requestedCareer =
+            params.get("id") ||
+            params.get("career") ||
+            "software";
 
-            sector: "Career Exploration",
 
-            overview:
-                "This career offers opportunities to develop professional skills, solve meaningful problems and grow within a specialized field. Explore this role further to understand the education, skills and career paths available.",
+        function findCareer(value) {
 
-            responsibilities: [
-                "Perform key responsibilities related to the profession",
-                "Work with people, teams or specialized tools",
-                "Solve problems and make informed decisions",
-                "Continue learning and developing professional skills",
-                "Contribute to organizational or community goals"
-            ],
+            const search =
+                String(value)
+                    .toLowerCase()
+                    .trim();
 
-            skills: [
-                "Communication",
-                "Problem Solving",
-                "Critical Thinking",
-                "Teamwork",
-                "Professional Skills"
-            ],
+            if (careerDatabase[search]) {
+                return careerDatabase[search];
+            }
 
-            education: [
-                {
-                    title: "Explore the field",
-                    text: "Learn about the role and the qualifications commonly required."
-                },
-                {
-                    title: "Develop relevant skills",
-                    text: "Study courses and practice the skills used in this career."
-                },
-                {
-                    title: "Gain experience",
-                    text: "Build projects, complete internships or gain practical experience."
-                }
-            ],
+            const found =
+                Object.values(careerDatabase)
+                    .find(career =>
+                        career.title
+                            .toLowerCase()
+                            .includes(search)
+                    );
 
-            opportunities: [
-                "Entry Level Professional",
-                "Specialist",
-                "Senior Professional",
-                "Team Lead",
-                "Industry Expert"
-            ],
+            return found || careerDatabase.software;
+        }
 
-            workStyle: "Depends on the role",
-            growth: "Career growth opportunities available",
-            environment: "Depends on the organization"
 
-        };
+        const career =
+            findCareer(requestedCareer);
 
 
         /* =========================================
-           CREATE CAREER PAGE
+           UPDATE PAGE
         ========================================= */
 
-        const careerContent =
-            document.getElementById("careerContent");
+        document.getElementById("careerTitle").textContent =
+            career.title;
+
+        document.getElementById("sectorLabel").textContent =
+            career.category;
+
+        document.getElementById("careerIcon").textContent =
+            career.icon;
+
+        document.getElementById("careerDescription").textContent =
+            career.description;
+
+        document.getElementById("aboutCareer").textContent =
+            career.about;
+
+        document.getElementById("educationInfo").textContent =
+            career.education;
+
+        document.getElementById("workStyleInfo").textContent =
+            career.workStyle;
+
+        document.getElementById("fieldInfo").textContent =
+            career.category;
 
 
-        if (
-            !selectedCareer
-        ) {
+        /* =========================================
+           SKILLS
+        ========================================= */
 
-            careerContent.innerHTML =
+        const skillsContainer =
+            document.getElementById("skillsContainer");
 
-                '<section class="empty-state">' +
+        skillsContainer.innerHTML = "";
 
-                '<div style="font-size: 55px;">🧭</div>' +
+        career.skills.forEach(skill => {
 
-                '<h1>No career selected</h1>' +
+            const tag =
+                document.createElement("span");
 
-                '<p>Please explore job roles and select a career first.</p>' +
+            tag.className = "skill-tag";
 
-                '<a href="./job-roles.html">' +
-                'Explore Job Roles' +
-                '</a>' +
+            tag.textContent = skill;
 
-                '</section>';
+            skillsContainer.appendChild(tag);
 
-        } else {
+        });
 
-            const career =
-                careerData[selectedCareer] ||
-                {
-                   ...fallbackData,
-                  name: selectedCareer
-                };
 
-            const displayScores =
-                  backendCareer && backendCareer.scores
-                             ? backendCareer.scores
-                             : selectedCareerScores;
-            
-             const totalScore =
-                 Object.values(displayScores).reduce(
-                     (total, score) => total + Number(score || 0),
-                     0
-                     );
+        /* =========================================
+           FAVOURITES
+        ========================================= */
 
-            const displayPercentages = {
-                R: totalScore ? Math.round((displayScores.R / totalScore) * 100) : 0,
-                I: totalScore ? Math.round((displayScores.I / totalScore) * 100) : 0,
-                A: totalScore ? Math.round((displayScores.A / totalScore) * 100) : 0,
-                S: totalScore ? Math.round((displayScores.S / totalScore) * 100) : 0,
-                E: totalScore ? Math.round((displayScores.E / totalScore) * 100) : 0,
-                C: totalScore ? Math.round((displayScores.C / totalScore) * 100) : 0
-            };
-                
+        const saveBtn =
+            document.getElementById("saveBtn");
 
-            const savedCareers =
+
+        let savedCareers = [];
+
+        try {
+
+            savedCareers =
                 JSON.parse(
                     localStorage.getItem("savedCareers")
                 ) || [];
 
+        } catch (error) {
 
-            const isSaved =
-                savedCareers.includes(selectedCareer);
+            savedCareers = [];
 
+        }
 
-            document.title =
-                selectedCareer +
-                " | Career Compass AI";
 
+        function isSaved() {
 
-            /* RESPONSIBILITIES */
+            return savedCareers.some(item => {
 
-            const responsibilitiesHTML =
-                career.responsibilities.map(
-                    function(item) {
+                const title =
+                    typeof item === "string"
+                        ? item
+                        : item.title || item.name;
 
-                        return (
-                            "<li>" +
-                            item +
-                            "</li>"
-                        );
+                return title === career.title;
 
-                    }
-                ).join("");
+            });
 
+        }
 
-            /* SKILLS */
 
-            const skillsHTML =
-                career.skills.map(
-                    function(skill) {
+        function updateSaveButton() {
 
-                        return (
-                            '<span class="skill-tag">' +
-                            skill +
-                            '</span>'
-                        );
+            if (isSaved()) {
 
-                    }
-                ).join("");
+                saveBtn.innerHTML =
+                    "♥ Saved";
 
+            } else {
 
-            /* EDUCATION */
+                saveBtn.innerHTML =
+                    "♡ Save Career";
 
-            const educationHTML =
-                career.education.map(
-                    function(step, index) {
-
-                        return (
-
-                            '<div class="education-step">' +
-
-                            '<div class="step-number">' +
-                            (index + 1) +
-                            '</div>' +
-
-                            '<div>' +
-
-                            '<h4>' +
-                            step.title +
-                            '</h4>' +
-
-                            '<p>' +
-                            step.text +
-                            '</p>' +
-
-                            '</div>' +
-
-                            '</div>'
-
-                        );
-
-                    }
-                ).join("");
-
-
-            /* OPPORTUNITIES */
-
-            const opportunitiesHTML =
-                career.opportunities.map(
-                    function(item) {
-
-                        return (
-                            '<div class="opportunity">' +
-                            "→ " +
-                            item +
-                            '</div>'
-                        );
-
-                    }
-                ).join("");
-
-
-            /* FULL PAGE */
-
-            careerContent.innerHTML =
-
-                '<section class="career-hero">' +
-
-                '<div class="career-info">' +
-
-                '<div class="career-icon">' +
-                career.icon +
-                '</div>' +
-
-                '<div>' +
-
-                '<div class="sector-label">' +
-                career.sector +
-                '</div>' +
-
-                '<h1>' +
-                selectedCareer +
-                '</h1>' +
-
-                '<p>' +
-                 career.overview +
-                '</p>' +
-
-                '<div class="match-score">' +
-                    '<strong>' +
-                    (selectedCareerMatch || "0") +
-                    '% Match' +
-                    '</strong>' +
-                '</div>' +
-
-                '<div class="riasec-match">' +
-
-            '<h3>Your Career Interest Match</h3>' +
-
-    '<div class="riasec-grid">' +
-
-            '<div>R — Realistic: ' +
-                displayPercentages.R + '%</div>' +
-
-            '<div>I — Investigative: ' +
-                displayPercentages.I + '%</div>' +
-
-            '<div>A — Artistic: ' +
-                displayPercentages.A + '%</div>' +
-
-            '<div>S — Social: ' +
-                displayPercentages.S + '%</div>' +
-
-            '<div>E — Enterprising: ' +
-                displayPercentages.E + '%</div>' +
-
-            '<div>C — Conventional: ' +
-                displayPercentages.C + '%</div>' +
-
-    '</div>' +
-
-'</div>' +
-
-
-                '<div class="hero-actions">' +
-
-                '<button id="saveButton" class="save-btn ' +
-                (isSaved ? "saved" : "") +
-                '">' +
-
-                (isSaved ? "♥ Saved" : "♡ Save") +
-
-                '</button>' +
-
-
-                '<button class="compare-btn" id="compareButton">' +
-                '⇄ Compare' +
-                '</button>' +
-
-                '</div>' +
-
-                '</section>' +
-
-
-                '<div class="details-grid">' +
-
-
-                '<div>' +
-
-
-                '<section class="card">' +
-
-                '<h2>Career Overview</h2>' +
-
-                '<p>' +
-                career.overview +
-                '</p>' +
-
-                '</section>' +
-
-
-                '<section class="card">' +
-
-                '<h2>What will you do?</h2>' +
-
-                '<ul class="responsibility-list">' +
-                responsibilitiesHTML +
-                '</ul>' +
-
-                '</section>' +
-
-
-                '<section class="card">' +
-
-                '<h2>Skills you will need</h2>' +
-
-                '<div class="skills-container">' +
-                skillsHTML +
-                '</div>' +
-
-                '</section>' +
-
-
-                '<section class="card">' +
-
-                '<h2>Education & Career Path</h2>' +
-
-                educationHTML +
-
-                '</section>' +
-
-
-                '</div>' +
-
-
-                '<aside>' +
-
-
-                '<section class="side-card">' +
-
-                '<h3>Career Snapshot</h3>' +
-
-
-                '<div class="info-item">' +
-
-                '<div class="info-label">WORK STYLE</div>' +
-
-                '<div class="info-value">' +
-                career.workStyle +
-                '</div>' +
-
-                '</div>' +
-
-
-                '<div class="info-item">' +
-
-                '<div class="info-label">CAREER GROWTH</div>' +
-
-                '<div class="info-value">' +
-                career.growth +
-                '</div>' +
-
-                '</div>' +
-
-
-                '<div class="info-item">' +
-
-                '<div class="info-label">WORK ENVIRONMENT</div>' +
-
-                '<div class="info-value">' +
-                career.environment +
-                '</div>' +
-
-                '</div>' +
-
-                '</section>' +
-
-
-                '<section class="side-card">' +
-
-                '<h3>Career Opportunities</h3>' +
-
-                opportunitiesHTML +
-
-                '</section>' +
-
-
-                '</aside>' +
-
-
-                '</div>';
-
-/* =========================================
-   SAVE CAREER - BACKEND
-========================================= */
-
-document
-    .getElementById("saveButton")
-    .addEventListener(
-        "click",
-        async function() {
-
-            const button = this;
-
-            try {
-
-                const isCurrentlySaved =
-                    button.classList.contains("saved");
-
-                if (isCurrentlySaved) {
-
-                    // REMOVE FROM DATABASE
-                    const response = await fetch(
-                        "/api/remove-career",
-                        {
-                            method: "POST",
-                            headers: {
-                                "Content-Type":
-                                    "application/json"
-                            },
-                            body: JSON.stringify({
-                                careerTitle:
-                                    selectedCareer
-                            })
-                        }
-                    );
-
-                    const result =
-                        await response.json();
-
-                    if (!result.success) {
-
-                        alert(
-                            result.message ||
-                            "Unable to remove career."
-                        );
-
-                        return;
-                    }
-
-                    button.textContent = "♡ Save";
-
-                    button.classList.remove("saved");
-
-                } else {
-
-                    // SAVE TO DATABASE
-                    const response = await fetch(
-                        "/api/save-career",
-                        {
-                            method: "POST",
-                            headers: {
-                                "Content-Type":
-                                    "application/json"
-                            },
-                            body: JSON.stringify({
-                                careerTitle:
-                                    selectedCareer,
-
-                                onetSocCode:
-                                    backendCareer
-                                        ? backendCareer.onetSocCode
-                                        : selectedCareerCode,
-
-                                matchPercentage:
-                                    selectedCareerMatch || 0
-                            })
-                        }
-                    );
-
-                    const result =
-                        await response.json();
-
-                    if (!result.success) {
-
-                        alert(
-                            result.message ||
-                            "Unable to save career."
-                        );
-
-                        return;
-                    }
-
-                    button.textContent = "♥ Saved";
-
-                    button.classList.add("saved");
-
-                }
-
-            } catch (error) {
-
-                console.error(
-                    "Save career error:",
-                    error
-                );
-
-                alert(
-                    "Unable to connect to the server."
-                );
             }
 
         }
-    );
-            /* =========================================
-               COMPARE CAREER
-            ========================================= */
-
-            document
-                .getElementById("compareButton")
-                .addEventListener(
-                    "click",
-                    function() {
 
 
-                        localStorage.setItem(
-                            "careerToCompare",
-                            selectedCareer
-                        );
+        saveBtn.addEventListener(
+            "click",
+            function () {
+
+                const existingIndex =
+                    savedCareers.findIndex(item => {
+
+                        const title =
+                            typeof item === "string"
+                                ? item
+                                : item.title || item.name;
+
+                        return title === career.title;
+
+                    });
 
 
-                        window.location.href =
-                            "./compare-roles.html";
+                if (existingIndex !== -1) {
 
-                    }
+                    savedCareers.splice(
+                        existingIndex,
+                        1
+                    );
+
+                } else {
+
+                    savedCareers.push({
+                        title: career.title,
+                        category: career.category,
+                        description: career.description,
+                        icon: career.icon,
+                        id: requestedCareer
+                    });
+
+                }
+
+
+                localStorage.setItem(
+                    "savedCareers",
+                    JSON.stringify(savedCareers)
                 );
 
-        }
+
+                updateSaveButton();
+
+            }
+        );
+
+
+        updateSaveButton();
 
     </script>
-
 
 </body>
 

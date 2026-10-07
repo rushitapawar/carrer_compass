@@ -7,9 +7,21 @@
     <title>Career Details | Career Compass AI</title>
 
     <style>
-        /* =========================
-           GLOBAL
-        ========================== */
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+
+        :root {
+            --plum: #443846;
+            --plum-dark: #302733;
+            --pink: #e998b3;
+            --pink-light: #f7d9e3;
+            --cream: #f8f5f2;
+            --white: #ffffff;
+            --text: #342d3b;
+            --muted: #756d76;
+            --border: #e5dfe0;
+            --green: #5c8b72;
+            --shadow: 0 14px 40px rgba(68, 56, 70, 0.09);
+        }
 
         * {
             margin: 0;
@@ -18,9 +30,9 @@
         }
 
         body {
-            font-family: "DM Sans", Arial, sans-serif;
-            background: #f7f5f2;
-            color: #342d3b;
+            font-family: "DM Sans", sans-serif;
+            background: var(--cream);
+            color: var(--text);
             line-height: 1.6;
         }
 
@@ -33,387 +45,320 @@
             font-family: inherit;
         }
 
-        /* =========================
-           NAVBAR
-        ========================== */
+        /* ================= NAVBAR ================= */
 
         .navbar {
-            height: 76px;
-            background: #ffffff;
-            border-bottom: 1px solid #ded8d4;
-
+            height: 82px;
+            background: rgba(255, 255, 255, 0.96);
+            border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
             justify-content: space-between;
-
-            padding: 0 7%;
+            padding: 0 6%;
             position: sticky;
             top: 0;
             z-index: 100;
         }
 
-        .logo {
-            font-size: 22px;
-            font-weight: 700;
-            color: #443846;
-            letter-spacing: -0.5px;
+        .brand img {
+            width: 125px;
+            height: auto;
+            display: block;
         }
 
-        .logo span {
-            color: #e998b3;
-        }
-
-        .nav-links {
+        .nav-right {
             display: flex;
             align-items: center;
             gap: 28px;
         }
 
-        .nav-links a {
+        .nav-link {
             font-size: 14px;
-            color: #756d76;
-            transition: 0.2s;
+            font-weight: 600;
+            color: var(--muted);
+            transition: 0.25s ease;
         }
 
-        .nav-links a:hover {
-            color: #443846;
+        .nav-link:hover {
+            color: var(--plum);
         }
 
         .profile-btn {
-            width: 38px;
-            height: 38px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
-            background: #f6c4d3;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            font-size: 17px;
-        }
-
-        /* =========================
-           BREADCRUMB
-        ========================== */
-
-        .breadcrumb {
-            max-width: 1180px;
-            margin: 30px auto 0;
-            padding: 0 25px;
-
-            color: #756d76;
-            font-size: 13px;
-        }
-
-        .breadcrumb a {
-            color: #756d76;
-        }
-
-        .breadcrumb a:hover {
-            color: #443846;
-        }
-
-        .breadcrumb span {
-            margin: 0 8px;
-            color: #b3a9b0;
-        }
-
-        /* =========================
-           HERO
-        ========================== */
-
-        .hero {
-            max-width: 1180px;
-            margin: 20px auto 0;
-            padding: 45px;
-
-            background: #443846;
+            background: var(--plum);
             color: white;
-
-            border-radius: 28px;
-
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 40px;
-
-            box-shadow: 0 15px 40px rgba(68, 56, 70, 0.12);
-        }
-
-        .hero-left {
-            display: flex;
-            align-items: flex-start;
-            gap: 25px;
-        }
-
-        .career-icon {
-            min-width: 82px;
-            width: 82px;
-            height: 82px;
-
-            border-radius: 22px;
-            background: #f6c4d3;
-
             display: flex;
             align-items: center;
             justify-content: center;
-
-            font-size: 38px;
+            font-weight: 700;
+            border: 3px solid var(--pink-light);
+            transition: 0.25s ease;
         }
 
-        .category {
-            display: inline-block;
+        .profile-btn:hover {
+            transform: translateY(-2px);
+            background: var(--plum-dark);
+        }
 
-            background: rgba(255,255,255,0.12);
-            color: #f6c4d3;
+        /* ================= PAGE ================= */
 
-            padding: 6px 13px;
-            border-radius: 20px;
+        .page {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 35px 25px 80px;
+        }
 
-            font-size: 12px;
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--muted);
+            font-size: 14px;
             font-weight: 600;
-            letter-spacing: 0.5px;
-
-            margin-bottom: 10px;
+            margin-bottom: 28px;
+            transition: 0.2s ease;
         }
 
-        .hero h1 {
-            font-family: Georgia, "Times New Roman", serif;
-            font-size: 43px;
-            line-height: 1.15;
-            margin-bottom: 13px;
+        .back-link:hover {
+            color: var(--plum);
+            transform: translateX(-3px);
         }
 
-        .hero-description {
-            color: #e7dfe4;
-            max-width: 650px;
-            font-size: 15px;
+        /* ================= HERO ================= */
+
+        .career-hero {
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 90% 10%, rgba(233, 152, 179, 0.45), transparent 28%),
+                linear-gradient(135deg, #443846 0%, #59485a 100%);
+            border-radius: 28px;
+            padding: 55px;
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .career-hero::before {
+            content: "";
+            position: absolute;
+            width: 230px;
+            height: 230px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.12);
+            right: -70px;
+            bottom: -100px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+
+        .category-label {
+            display: inline-block;
+            background: rgba(255,255,255,0.14);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 7px 14px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+
+        .career-title {
+            font-family: "Playfair Display", serif;
+            font-size: clamp(40px, 6vw, 68px);
+            line-height: 1.05;
+            margin-bottom: 18px;
+        }
+
+        .career-short {
+            color: rgba(255,255,255,0.8);
+            max-width: 700px;
+            font-size: 17px;
         }
 
         .hero-actions {
             display: flex;
-            flex-direction: column;
             gap: 12px;
-            min-width: 170px;
+            margin-top: 30px;
+            flex-wrap: wrap;
         }
 
         .btn {
             border: none;
-            cursor: pointer;
-
-            padding: 13px 20px;
             border-radius: 12px;
-
-            font-size: 14px;
-            font-weight: 600;
-
-            transition: 0.2s;
+            padding: 13px 21px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         .btn-primary {
-            background: #e998b3;
-            color: #342d3b;
+            background: white;
+            color: var(--plum);
         }
 
         .btn-primary:hover {
-            background: #f0aac1;
-            transform: translateY(-1px);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
         }
 
-        .btn-secondary {
-            background: transparent;
-            border: 1px solid rgba(255,255,255,0.3);
+        .btn-outline {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.35);
             color: white;
         }
 
-        .btn-secondary:hover {
-            background: rgba(255,255,255,0.08);
+        .btn-outline:hover {
+            background: rgba(255,255,255,0.16);
         }
 
-        /* =========================
-           MAIN CONTENT
-        ========================== */
+        /* ================= MATCH ================= */
 
-        .main-container {
-            max-width: 1180px;
-            margin: 35px auto 70px;
-
-            padding: 0 25px;
-
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 25px;
-        }
-
-        .content-card {
-            background: white;
-            border: 1px solid #ded8d4;
-            border-radius: 22px;
-            padding: 30px;
-            margin-bottom: 25px;
-        }
-
-        .content-card h2 {
-            font-family: Georgia, "Times New Roman", serif;
-            font-size: 25px;
-            color: #443846;
-            margin-bottom: 16px;
-        }
-
-        .content-card h3 {
-            font-size: 17px;
-            color: #443846;
-            margin: 22px 0 9px;
-        }
-
-        .content-card p {
-            color: #756d76;
-            font-size: 14px;
-        }
-
-        /* =========================
-           RESPONSIBILITIES
-        ========================== */
-
-        .responsibilities {
-            list-style: none;
-            margin-top: 15px;
-        }
-
-        .responsibilities li {
-            position: relative;
-            padding-left: 30px;
-            margin-bottom: 12px;
-
-            color: #5f5661;
-            font-size: 14px;
-        }
-
-        .responsibilities li::before {
-            content: "✓";
-
+        .match-card {
             position: absolute;
-            left: 0;
-            top: 0;
-
-            width: 21px;
-            height: 21px;
-
+            right: 50px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 145px;
+            height: 145px;
             border-radius: 50%;
-            background: #f6c4d3;
-            color: #443846;
-
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.25);
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-
-            font-size: 12px;
-            font-weight: bold;
+            backdrop-filter: blur(8px);
         }
 
-        /* =========================
-           SKILLS
-        ========================== */
+        .match-number {
+            font-size: 36px;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .match-text {
+            font-size: 12px;
+            color: rgba(255,255,255,0.75);
+            margin-top: 7px;
+        }
+
+        /* ================= GRID ================= */
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 0.8fr;
+            gap: 25px;
+            margin-top: 28px;
+        }
+
+        .card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            padding: 30px;
+            box-shadow: 0 8px 28px rgba(68, 56, 70, 0.045);
+        }
+
+        .card + .card {
+            margin-top: 25px;
+        }
+
+        .card h2 {
+            font-family: "Playfair Display", serif;
+            font-size: 26px;
+            color: var(--plum);
+            margin-bottom: 14px;
+        }
+
+        .card h3 {
+            color: var(--plum);
+            margin-bottom: 8px;
+            font-size: 17px;
+        }
+
+        .card p {
+            color: var(--muted);
+            font-size: 15px;
+        }
+
+        /* ================= SKILLS ================= */
 
         .skills {
             display: flex;
             flex-wrap: wrap;
-            gap: 9px;
-            margin-top: 15px;
+            gap: 10px;
+            margin-top: 18px;
         }
 
         .skill {
-            padding: 8px 13px;
-
-            background: #f7f5f2;
-            border: 1px solid #ded8d4;
-
-            border-radius: 20px;
-
-            font-size: 12px;
-            color: #5f5661;
-        }
-
-        /* =========================
-           CAREER PATH
-        ========================== */
-
-        .timeline {
-            margin-top: 20px;
-            position: relative;
-        }
-
-        .timeline::before {
-            content: "";
-
-            position: absolute;
-            left: 12px;
-            top: 10px;
-            bottom: 10px;
-
-            width: 2px;
-            background: #eadfe4;
-        }
-
-        .timeline-item {
-            position: relative;
-
-            padding-left: 40px;
-            margin-bottom: 25px;
-        }
-
-        .timeline-dot {
-            position: absolute;
-            left: 5px;
-            top: 4px;
-
-            width: 16px;
-            height: 16px;
-
-            border-radius: 50%;
-            background: #e998b3;
-
-            border: 4px solid #fff;
-            box-shadow: 0 0 0 1px #eadfe4;
-        }
-
-        .timeline-item h4 {
-            font-size: 15px;
-            color: #443846;
-            margin-bottom: 3px;
-        }
-
-        .timeline-item p {
+            background: #faf1f4;
+            border: 1px solid #f0d6df;
+            color: var(--plum);
+            padding: 9px 14px;
+            border-radius: 30px;
             font-size: 13px;
+            font-weight: 600;
         }
 
-        /* =========================
-           SIDEBAR
-        ========================== */
+        /* ================= TASKS ================= */
 
-        .sidebar-card {
-            background: white;
-            border: 1px solid #ded8d4;
-            border-radius: 22px;
-            padding: 25px;
-            margin-bottom: 25px;
+        .task-list {
+            list-style: none;
+            margin-top: 18px;
         }
 
-        .sidebar-card h3 {
-            font-family: Georgia, "Times New Roman", serif;
-            font-size: 20px;
-            color: #443846;
-            margin-bottom: 20px;
+        .task-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 13px 0;
+            border-bottom: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .task-list li:last-child {
+            border-bottom: none;
+        }
+
+        .task-icon {
+            width: 25px;
+            height: 25px;
+            flex: 0 0 25px;
+            border-radius: 50%;
+            background: var(--pink-light);
+            color: var(--plum);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        /* ================= INFO ================= */
+
+        .info-list {
+            margin-top: 8px;
         }
 
         .info-row {
             display: flex;
             justify-content: space-between;
             gap: 15px;
-
-            padding: 13px 0;
-
-            border-bottom: 1px solid #eee9e6;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border);
         }
 
         .info-row:last-child {
@@ -421,186 +366,251 @@
         }
 
         .info-label {
-            font-size: 12px;
-            color: #8a8089;
+            color: var(--muted);
+            font-size: 14px;
         }
 
         .info-value {
-            font-size: 13px;
-            font-weight: 600;
-            color: #443846;
+            color: var(--plum);
+            font-size: 14px;
+            font-weight: 700;
             text-align: right;
         }
 
-        /* =========================
-           WHY SUIT YOU
-        ========================== */
+        /* ================= OUTLOOK ================= */
 
-        .suit-box {
-            background: #fff7f9;
-            border: 1px solid #f1dce3;
-            border-radius: 18px;
-            padding: 20px;
-            margin-top: 15px;
+        .outlook-box {
+            margin-top: 20px;
+            padding: 18px;
+            border-radius: 16px;
+            background: #f3f8f5;
+            border: 1px solid #dcebe2;
         }
 
-        .suit-box p {
-            color: #655b64;
-            font-size: 13px;
-        }
-
-        /* =========================
-           CTA
-        ========================== */
-
-        .bottom-cta {
-            max-width: 1180px;
-            margin: 0 auto 60px;
-            padding: 0 25px;
-        }
-
-        .cta-box {
-            background: #f6c4d3;
-            border-radius: 25px;
-            padding: 35px;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 25px;
-        }
-
-        .cta-box h2 {
-            font-family: Georgia, "Times New Roman", serif;
-            color: #443846;
+        .outlook-title {
+            color: var(--green);
+            font-size: 14px;
+            font-weight: 700;
             margin-bottom: 5px;
         }
 
-        .cta-box p {
-            color: #5f5661;
+        .outlook-box p {
             font-size: 13px;
         }
 
-        .cta-button {
-            background: #443846;
+        /* ================= EDUCATION ================= */
+
+        .education-item {
+            padding: 16px;
+            background: #fbf9f8;
+            border-radius: 14px;
+            margin-top: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .education-item strong {
+            color: var(--plum);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .education-item span {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        /* ================= SAVE ================= */
+
+        .save-card {
+            background: var(--plum);
             color: white;
-
-            border: none;
-            padding: 13px 22px;
-
-            border-radius: 12px;
-
-            font-size: 13px;
-            font-weight: 600;
-
-            cursor: pointer;
+            text-align: center;
         }
 
-        /* =========================
-           FOOTER
-        ========================== */
+        .save-card h2 {
+            color: white;
+        }
 
-        footer {
-            background: #322936;
-            color: #d9d0d6;
+        .save-card p {
+            color: rgba(255,255,255,0.72);
+            margin-bottom: 20px;
+        }
 
-            padding: 30px 7%;
+        .save-btn {
+            width: 100%;
+            background: white;
+            color: var(--plum);
+        }
 
-            text-align: center;
+        .save-btn.saved {
+            background: var(--pink-light);
+        }
+
+        /* ================= RELATED ================= */
+
+        .related {
+            margin-top: 28px;
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 18px;
+        }
+
+        .related-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 18px;
+            transition: 0.25s ease;
+        }
+
+        .related-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .related-card h3 {
+            color: var(--plum);
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+
+        .related-card p {
+            color: var(--muted);
             font-size: 12px;
         }
 
-        footer span {
-            color: #e998b3;
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: var(--plum-dark);
+            color: white;
+            margin-top: 30px;
+            padding: 45px 6% 25px;
         }
 
-        /* =========================
-           RESPONSIVE
-        ========================== */
+        .footer-inner {
+            max-width: 1180px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
+            gap: 40px;
+        }
 
-        @media (max-width: 850px) {
+        .footer-brand img {
+            width: 120px;
+            filter: brightness(0) invert(1);
+            margin-bottom: 14px;
+        }
 
-            .nav-links {
+        .footer-brand p {
+            color: rgba(255,255,255,0.65);
+            font-size: 13px;
+            max-width: 350px;
+        }
+
+        .footer-col h4 {
+            margin-bottom: 14px;
+            font-size: 14px;
+        }
+
+        .footer-col a {
+            display: block;
+            color: rgba(255,255,255,0.62);
+            font-size: 13px;
+            margin: 8px 0;
+            transition: 0.2s;
+        }
+
+        .footer-col a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            max-width: 1180px;
+            margin: 35px auto 0;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.12);
+            color: rgba(255,255,255,0.45);
+            font-size: 12px;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 900px) {
+
+            .nav-right {
+                gap: 15px;
+            }
+
+            .nav-link {
                 display: none;
             }
 
-            .hero {
-                margin-left: 20px;
-                margin-right: 20px;
-                padding: 30px;
-
-                flex-direction: column;
-                align-items: flex-start;
+            .career-hero {
+                padding: 38px 28px;
             }
 
-            .hero-actions {
-                width: 100%;
-                flex-direction: row;
+            .match-card {
+                position: static;
+                transform: none;
+                margin-top: 30px;
             }
 
-            .hero-actions .btn {
-                flex: 1;
-            }
-
-            .hero h1 {
-                font-size: 34px;
-            }
-
-            .main-container {
+            .content-grid {
                 grid-template-columns: 1fr;
             }
 
-            .bottom-cta {
-                margin-left: 0;
-                margin-right: 0;
+            .related-grid {
+                grid-template-columns: 1fr 1fr;
             }
 
-            .cta-box {
-                flex-direction: column;
-                align-items: flex-start;
+            .footer-inner {
+                grid-template-columns: 1fr 1fr;
             }
         }
 
-        @media (max-width: 550px) {
+        @media (max-width: 600px) {
 
             .navbar {
                 padding: 0 20px;
             }
 
-            .breadcrumb {
-                padding: 0 20px;
+            .brand img {
+                width: 105px;
             }
 
-            .hero {
-                margin-left: 15px;
-                margin-right: 15px;
-                padding: 25px;
+            .page {
+                padding: 25px 15px 60px;
+            }
+
+            .career-hero {
                 border-radius: 20px;
+                padding: 30px 22px;
             }
 
-            .hero-left {
-                flex-direction: column;
+            .career-title {
+                font-size: 40px;
             }
 
-            .hero h1 {
-                font-size: 30px;
+            .career-short {
+                font-size: 14px;
             }
 
-            .hero-actions {
-                flex-direction: column;
-            }
-
-            .main-container {
-                padding: 0 15px;
-            }
-
-            .content-card,
-            .sidebar-card {
+            .card {
                 padding: 22px;
+                border-radius: 18px;
             }
 
-            .bottom-cta {
-                padding: 0 15px;
+            .related-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-inner {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -608,931 +618,1628 @@
 
 <body>
 
-    <!-- =========================
-         NAVBAR
-    ========================== -->
+    <!-- ================= NAVBAR ================= -->
 
     <nav class="navbar">
 
-        <a href="index.html" class="logo">
-            Career Compass <span>AI ✦</span>
+        <a href="index.html" class="brand">
+            <img src="../images/logo.png" alt="Career Compass AI">
         </a>
 
-        <div class="nav-links">
-            <a href="dashboard.html">Dashboard</a>
-            <a href="roles.html">Career Roles</a>
-            <a href="favourites.html">Saved Careers</a>
-            <a href="about.html">About</a>
-
-            <a href="profile.html" class="profile-btn">
-                ✦
-            </a>
+        <div class="nav-right">
+            <a href="results.html" class="nav-link">My Results</a>
+            <a href="favourites.html" class="nav-link">Saved Careers</a>
+            <a href="profile.html" class="profile-btn">A</a>
         </div>
 
     </nav>
 
 
-    <!-- =========================
-         BREADCRUMB
-    ========================== -->
+    <main class="page">
 
-    <div class="breadcrumb">
-
-        <a href="dashboard.html">Dashboard</a>
-
-        <span>›</span>
-
-        <a href="roles.html">Career Roles</a>
-
-        <span>›</span>
-
-        <span id="breadcrumbCareer">
-            Career Details
-        </span>
-
-    </div>
+        <a href="results.html" class="back-link">
+            ← Back to Career Results
+        </a>
 
 
-    <!-- =========================
-         HERO
-    ========================== -->
+        <!-- ================= HERO ================= -->
 
-    <section class="hero">
+        <section class="career-hero">
 
-        <div class="hero-left">
+            <div class="hero-content">
 
-            <div class="career-icon" id="careerIcon">
-                💼
-            </div>
-
-            <div>
-
-                <span class="category" id="careerCategory">
+                <span class="category-label" id="careerCategory">
                     Career
                 </span>
 
-                <h1 id="careerTitle">
-                    Career Details
+                <h1 class="career-title" id="careerTitle">
+                    Software Developer
                 </h1>
 
-                <p class="hero-description" id="careerDescription">
-                    Explore this career to understand the skills,
-                    education, responsibilities and opportunities
-                    associated with the role.
+                <p class="career-short" id="careerShort">
+                    Build useful digital products and solve real-world problems through technology.
                 </p>
+
+                <div class="hero-actions">
+
+                    <button class="btn btn-primary" id="saveBtn">
+                        ♡ Save Career
+                    </button>
+
+                    <a href="compare.html" class="btn btn-outline">
+                        ⚖ Compare Career
+                    </a>
+
+                </div>
 
             </div>
 
-        </div>
+            <div class="match-card">
 
-
-        <div class="hero-actions">
-
-            <button
-                class="btn btn-primary"
-                id="saveBtn"
-                onclick="toggleSave()">
-
-                ♡ Save Career
-
-            </button>
-
-            <button
-                class="btn btn-secondary"
-                onclick="goToCompare()">
-
-                ⚖ Compare Career
-
-            </button>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         MAIN
-    ========================== -->
-
-    <main class="main-container">
-
-
-        <!-- LEFT CONTENT -->
-
-        <div>
-
-
-            <!-- ABOUT ROLE -->
-
-            <section class="content-card">
-
-                <h2>About This Career</h2>
-
-                <p id="aboutCareer">
-                    This section provides an overview of the career,
-                    including what professionals in this field generally
-                    work on and the type of problems they may solve.
-                </p>
-
-                <h3>What You May Do</h3>
-
-                <ul class="responsibilities" id="responsibilities">
-
-                    <li>Work on projects related to the field</li>
-                    <li>Apply relevant knowledge and skills</li>
-                    <li>Collaborate with other professionals</li>
-                    <li>Analyse problems and develop solutions</li>
-
-                </ul>
-
-            </section>
-
-
-            <!-- SKILLS -->
-
-            <section class="content-card">
-
-                <h2>Key Skills</h2>
-
-                <p>
-                    The following skills can be useful when building
-                    a career in this field.
-                </p>
-
-                <div class="skills" id="skillsContainer">
-
-                    <span class="skill">Communication</span>
-                    <span class="skill">Problem Solving</span>
-                    <span class="skill">Critical Thinking</span>
-                    <span class="skill">Teamwork</span>
-
+                <div class="match-number" id="matchPercent">
+                    92%
                 </div>
 
-            </section>
-
-
-            <!-- EDUCATION -->
-
-            <section class="content-card">
-
-                <h2>Education & Qualification</h2>
-
-                <p id="educationText">
-                    Educational requirements can vary depending on the
-                    specific role, organisation and career path.
-                    Explore relevant courses and qualifications before
-                    making your decision.
-                </p>
-
-                <h3>Useful Areas to Study</h3>
-
-                <ul class="responsibilities" id="educationList">
-
-                    <li>Relevant undergraduate or professional courses</li>
-                    <li>Practical projects and experience</li>
-                    <li>Industry-relevant certifications where applicable</li>
-
-                </ul>
-
-            </section>
-
-
-            <!-- CAREER PATH -->
-
-            <section class="content-card">
-
-                <h2>Possible Career Path</h2>
-
-                <p>
-                    Career progression can differ based on experience,
-                    specialisation and individual goals.
-                </p>
-
-                <div class="timeline" id="careerTimeline">
-
-                    <div class="timeline-item">
-
-                        <div class="timeline-dot"></div>
-
-                        <h4>Education & Learning</h4>
-
-                        <p>
-                            Build foundational knowledge and relevant skills.
-                        </p>
-
-                    </div>
-
-
-                    <div class="timeline-item">
-
-                        <div class="timeline-dot"></div>
-
-                        <h4>Entry-Level Opportunities</h4>
-
-                        <p>
-                            Gain practical experience through internships,
-                            projects or entry-level roles.
-                        </p>
-
-                    </div>
-
-
-                    <div class="timeline-item">
-
-                        <div class="timeline-dot"></div>
-
-                        <h4>Specialisation</h4>
-
-                        <p>
-                            Develop expertise in a specific area of the field.
-                        </p>
-
-                    </div>
-
-
-                    <div class="timeline-item">
-
-                        <div class="timeline-dot"></div>
-
-                        <h4>Advanced Roles</h4>
-
-                        <p>
-                            Move towards senior, specialist or leadership
-                            opportunities.
-                        </p>
-
-                    </div>
-
+                <div class="match-text">
+                    Your Match
                 </div>
 
-            </section>
+            </div>
+
+        </section>
 
 
-            <!-- WHY THIS CAREER -->
+        <!-- ================= MAIN CONTENT ================= -->
 
-            <section class="content-card">
+        <div class="content-grid">
 
-                <h2>Why This Career May Suit You</h2>
+            <!-- LEFT -->
 
-                <div class="suit-box">
+            <div>
 
-                    <p id="suitText">
-                        This career may be worth exploring if you enjoy
-                        learning, solving problems and developing skills
-                        related to this field. Your interests and strengths
-                        should always be considered when making a career
-                        decision.
+                <section class="card">
+
+                    <h2>About This Career</h2>
+
+                    <p id="careerDescription">
+                        Software developers design, build, test and maintain applications
+                        that help people and organizations solve problems.
                     </p>
 
-                </div>
+                </section>
 
-            </section>
+
+                <section class="card">
+
+                    <h2>What You'll Do</h2>
+
+                    <ul class="task-list" id="taskList"></ul>
+
+                </section>
+
+
+                <section class="card">
+
+                    <h2>Skills You'll Need</h2>
+
+                    <p>
+                        These skills can help you succeed and grow in this career.
+                    </p>
+
+                    <div class="skills" id="skillsList"></div>
+
+                </section>
+
+
+                <section class="card">
+
+                    <h2>Education & Preparation</h2>
+
+                    <div id="educationList"></div>
+
+                </section>
+
+
+                <section class="card">
+
+                    <h2>Career Outlook</h2>
+
+                    <p id="careerOutlook">
+                        Career opportunities can vary depending on experience,
+                        specialization, location and industry.
+                    </p>
+
+                    <div class="outlook-box">
+
+                        <div class="outlook-title">
+                            Keep Learning
+                        </div>
+
+                        <p>
+                            Building practical projects, developing relevant skills
+                            and gaining experience can strengthen your career path.
+                        </p>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+
+            <!-- RIGHT -->
+
+            <aside>
+
+                <section class="card">
+
+                    <h2>Quick Overview</h2>
+
+                    <div class="info-list">
+
+                        <div class="info-row">
+                            <span class="info-label">Career Area</span>
+                            <span class="info-value" id="infoArea">Technology</span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-label">Work Style</span>
+                            <span class="info-value" id="infoStyle">Analytical</span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-label">Experience</span>
+                            <span class="info-value" id="infoExperience">Beginner Friendly</span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-label">Work Setting</span>
+                            <span class="info-value" id="infoSetting">Office / Remote</span>
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <section class="card save-card">
+
+                    <h2>Interested?</h2>
+
+                    <p>
+                        Save this career so you can easily find it later.
+                    </p>
+
+                    <button class="btn save-btn" id="saveBtnSide">
+                        ♡ Save Career
+                    </button>
+
+                </section>
+
+            </aside>
 
         </div>
 
 
-        <!-- RIGHT SIDEBAR -->
+        <!-- ================= RELATED CAREERS ================= -->
 
-        <aside>
+        <section class="card related">
 
+            <h2>Careers You May Also Like</h2>
 
-            <!-- QUICK INFO -->
+            <p>
+                Explore other career paths with similar skills and interests.
+            </p>
 
-            <div class="sidebar-card">
+            <div class="related-grid" id="relatedGrid"></div>
 
-                <h3>Career at a Glance</h3>
-
-
-                <div class="info-row">
-
-                    <span class="info-label">
-                        Career Area
-                    </span>
-
-                    <span
-                        class="info-value"
-                        id="infoCategory">
-                        —
-                    </span>
-
-                </div>
-
-
-                <div class="info-row">
-
-                    <span class="info-label">
-                        Education
-                    </span>
-
-                    <span
-                        class="info-value"
-                        id="infoEducation">
-                        Explore
-                    </span>
-
-                </div>
-
-
-                <div class="info-row">
-
-                    <span class="info-label">
-                        Work Style
-                    </span>
-
-                    <span
-                        class="info-value"
-                        id="infoWorkStyle">
-                        Varies
-                    </span>
-
-                </div>
-
-
-                <div class="info-row">
-
-                    <span class="info-label">
-                        Work Areas
-                    </span>
-
-                    <span
-                        class="info-value"
-                        id="infoWorkAreas">
-                        Multiple
-                    </span>
-
-                </div>
-
-
-                <div class="info-row">
-
-                    <span class="info-label">
-                        Experience
-                    </span>
-
-                    <span
-                        class="info-value"
-                        id="infoExperience">
-                        Varies
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <!-- WORK AREAS -->
-
-            <div class="sidebar-card">
-
-                <h3>Where You Can Work</h3>
-
-                <div
-                    class="skills"
-                    id="workAreas">
-
-                    <span class="skill">
-                        Companies
-                    </span>
-
-                    <span class="skill">
-                        Organisations
-                    </span>
-
-                    <span class="skill">
-                        Startups
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <!-- ACTIONS -->
-
-            <div class="sidebar-card">
-
-                <h3>Explore More</h3>
-
-                <button
-                    class="btn btn-primary"
-                    style="width:100%; margin-bottom:10px;"
-                    onclick="window.location.href='roles.html'">
-
-                    ← Browse Career Roles
-
-                </button>
-
-                <button
-                    class="btn"
-                    style="
-                        width:100%;
-                        background:#f7f5f2;
-                        color:#443846;
-                    "
-                    onclick="window.location.href='questionnaire.html'">
-
-                    Retake Assessment
-
-                </button>
-
-            </div>
-
-        </aside>
+        </section>
 
     </main>
 
 
-    <!-- =========================
-         BOTTOM CTA
-    ========================== -->
+    <!-- ================= FOOTER ================= -->
 
-    <section class="bottom-cta">
+    <footer>
 
-        <div class="cta-box">
+        <div class="footer-inner">
 
-            <div>
+            <div class="footer-brand">
 
-                <h2>Still exploring your options?</h2>
+                <img src="../images/logo.png" alt="Career Compass AI">
 
                 <p>
-                    Discover more career paths that may match
-                    your interests and strengths.
+                    Discover career possibilities that match your interests,
+                    strengths and aspirations.
                 </p>
 
             </div>
 
-            <button
-                class="cta-button"
-                onclick="window.location.href='roles.html'">
 
-                Explore Career Roles →
+            <div class="footer-col">
 
-            </button>
+                <h4>Explore</h4>
+
+                <a href="index.html">Home</a>
+                <a href="results.html">My Results</a>
+                <a href="roles.html">Career Roles</a>
+                <a href="favourites.html">Saved Careers</a>
+
+            </div>
+
+
+            <div class="footer-col">
+
+                <h4>Support</h4>
+
+                <a href="about.html">About Us</a>
+                <a href="how-it-works.html">How It Works</a>
+                <a href="contact.html">Contact</a>
+                <a href="privacy.html">Privacy</a>
+
+            </div>
 
         </div>
 
-    </section>
 
-
-    <!-- =========================
-         FOOTER
-    ========================== -->
-
-    <footer>
-
-        <p>
-            © 2026 Career Compass <span>AI ✦</span>
-            · Explore. Discover. Plan.
-        </p>
+        <div class="footer-bottom">
+            © 2026 Career Compass AI. All rights reserved.
+        </div>
 
     </footer>
 
 
-    <!-- =========================
-         JAVASCRIPT
-    ========================== -->
+    <!-- ================= JAVASCRIPT ================= -->
 
     <script>
 
         /*
-         * ------------------------------------------
-         * CAREER DATA
-         * ------------------------------------------
-         *
-         * Abhi demo data hai.
-         *
-         * Future mein jab tumhare friend ka database
-         * connect hoga, isi structure ko database/API
-         * data se replace kiya ja sakta hai.
-         *
+         * Career database
+         * The IDs support both the newer results page
+         * and the older job-roles page.
          */
 
-        const demoCareers = {
+        const careers = {
 
-            "software-engineer": {
-
-                id: "software-engineer",
-
-                title: "Software Engineer",
-
-                icon: "💻",
-
+            "software-developer": {
+                title: "Software Developer",
                 category: "Technology",
-
-                description:
-                    "A career focused on designing, developing, testing and maintaining software applications and systems.",
-
-                about:
-                    "Software engineers use programming, problem-solving and logical thinking to build software products and digital solutions. They may work on websites, applications, platforms or other technology systems.",
-
-                responsibilities: [
-                    "Design and develop software solutions",
-                    "Write and maintain computer programs",
-                    "Test applications and identify issues",
-                    "Work with other technical and non-technical teams",
-                    "Improve and maintain existing software"
-                ],
-
+                short: "Build useful digital products and solve real-world problems through technology.",
+                description: "Software developers design, build, test and maintain applications, websites and digital systems used by people and organizations.",
+                area: "Technology",
+                style: "Analytical",
+                experience: "Beginner Friendly",
+                setting: "Office / Remote",
                 skills: [
                     "Programming",
                     "Problem Solving",
                     "Logical Thinking",
-                    "Communication",
+                    "Debugging",
                     "Teamwork",
-                    "Debugging"
+                    "Communication"
                 ],
-
-                education:
-                    "A degree or qualification in computer science, information technology, software engineering or a related field can be useful.",
-
-                educationList: [
-                    "Computer Science or related degree",
-                    "Programming and software development practice",
-                    "Projects and practical experience",
-                    "Relevant technical certifications where applicable"
+                tasks: [
+                    "Design and develop software applications.",
+                    "Write and test computer programs.",
+                    "Identify and solve technical problems.",
+                    "Work with designers and other developers.",
+                    "Improve existing applications and systems."
                 ],
-
-                workStyle: "Technical / Collaborative",
-
-                workAreas: [
-                    "Technology Companies",
-                    "Startups",
-                    "IT Services",
-                    "Product Companies",
-                    "Freelance"
+                education: [
+                    {
+                        title: "Bachelor's Degree",
+                        text: "Computer Science, Information Technology or a related field."
+                    },
+                    {
+                        title: "Practical Projects",
+                        text: "Build websites, applications and other software projects."
+                    }
                 ],
+                outlook: "Software development offers opportunities across technology companies, startups, finance, healthcare, education and many other industries.",
+                related: [
+                    ["data-scientist", "Data Scientist", "Technology"],
+                    ["cybersecurity-analyst", "Cybersecurity Analyst", "Technology"],
+                    ["business-analyst", "Business Analyst", "Business"]
+                ]
+            },
 
-                experience: "Varies by role"
 
+            "software": {
+                title: "Software Developer",
+                category: "Technology",
+                short: "Build useful digital products and solve real-world problems through technology.",
+                description: "Software developers design, build, test and maintain applications and digital systems.",
+                area: "Technology",
+                style: "Analytical",
+                experience: "Beginner Friendly",
+                setting: "Office / Remote",
+                skills: [
+                    "Programming",
+                    "Problem Solving",
+                    "Logical Thinking",
+                    "Debugging",
+                    "Teamwork",
+                    "Communication"
+                ],
+                tasks: [
+                    "Develop software applications.",
+                    "Write and test programs.",
+                    "Solve technical problems.",
+                    "Work with development teams.",
+                    "Improve existing software."
+                ],
+                education: [
+                    {
+                        title: "Bachelor's Degree",
+                        text: "Computer Science, IT or a related field."
+                    },
+                    {
+                        title: "Practical Projects",
+                        text: "Build applications and software projects."
+                    }
+                ],
+                outlook: "Technology creates opportunities for software professionals across many industries.",
+                related: [
+                    ["data", "Data Scientist", "Technology"],
+                    ["designer", "UX/UI Designer", "Creative"],
+                    ["business-analyst", "Business Analyst", "Business"]
+                ]
+            },
+
+
+            "data-scientist": {
+                title: "Data Scientist",
+                category: "Technology",
+                short: "Turn data into insights that help organizations make better decisions.",
+                description: "Data scientists analyze large datasets, identify patterns and use statistical and computational methods to solve problems.",
+                area: "Technology",
+                style: "Analytical",
+                experience: "Intermediate",
+                setting: "Office / Remote",
+                skills: [
+                    "Statistics",
+                    "Data Analysis",
+                    "Python",
+                    "Critical Thinking",
+                    "Machine Learning",
+                    "Visualization"
+                ],
+                tasks: [
+                    "Analyze structured and unstructured data.",
+                    "Find patterns and meaningful insights.",
+                    "Build analytical models.",
+                    "Create data visualizations.",
+                    "Communicate findings to stakeholders."
+                ],
+                education: [
+                    {
+                        title: "Relevant Degree",
+                        text: "Computer Science, Mathematics, Statistics, Data Science or a related field."
+                    },
+                    {
+                        title: "Technical Practice",
+                        text: "Develop skills in programming, statistics and data analysis."
+                    }
+                ],
+                outlook: "Data-driven decision making creates opportunities for professionals who can understand and communicate insights from data.",
+                related: [
+                    ["software-developer", "Software Developer", "Technology"],
+                    ["research-scientist", "Research Scientist", "Science"],
+                    ["business-analyst", "Business Analyst", "Business"]
+                ]
+            },
+
+
+            "data": {
+                title: "Data Scientist",
+                category: "Technology",
+                short: "Turn data into useful insights and support smarter decisions.",
+                description: "Data scientists combine analytical thinking, statistics and technology to understand complex datasets.",
+                area: "Technology",
+                style: "Analytical",
+                experience: "Intermediate",
+                setting: "Office / Remote",
+                skills: [
+                    "Statistics",
+                    "Data Analysis",
+                    "Python",
+                    "Critical Thinking",
+                    "Visualization"
+                ],
+                tasks: [
+                    "Analyze datasets.",
+                    "Identify patterns.",
+                    "Build analytical models.",
+                    "Create visualizations.",
+                    "Explain findings."
+                ],
+                education: [
+                    {
+                        title: "Relevant Degree",
+                        text: "Data Science, Statistics, Mathematics, Computer Science or related fields."
+                    }
+                ],
+                outlook: "Organizations across many industries increasingly use data to support decisions.",
+                related: [
+                    ["software", "Software Developer", "Technology"],
+                    ["business-analyst", "Business Analyst", "Business"],
+                    ["research-scientist", "Research Scientist", "Science"]
+                ]
+            },
+
+
+            "cybersecurity-analyst": {
+                title: "Cybersecurity Analyst",
+                category: "Technology",
+                short: "Help protect digital systems, information and organizations from security threats.",
+                description: "Cybersecurity analysts monitor systems, identify security risks and help organizations protect their digital infrastructure.",
+                area: "Technology",
+                style: "Investigative",
+                experience: "Intermediate",
+                setting: "Office / Remote",
+                skills: [
+                    "Cybersecurity",
+                    "Problem Solving",
+                    "Networking",
+                    "Risk Analysis",
+                    "Attention to Detail"
+                ],
+                tasks: [
+                    "Monitor systems for unusual activity.",
+                    "Identify security vulnerabilities.",
+                    "Help investigate security incidents.",
+                    "Maintain security practices.",
+                    "Support risk management."
+                ],
+                education: [
+                    {
+                        title: "Relevant Degree",
+                        text: "Cybersecurity, Computer Science, IT or a related field."
+                    }
+                ],
+                outlook: "Digital security is important across organizations that depend on technology and information systems.",
+                related: [
+                    ["software-developer", "Software Developer", "Technology"],
+                    ["data-scientist", "Data Scientist", "Technology"],
+                    ["business-analyst", "Business Analyst", "Business"]
+                ]
+            },
+
+
+            "ux-ui-designer": {
+                title: "UX/UI Designer",
+                category: "Creative",
+                short: "Create digital experiences that are useful, clear and enjoyable to use.",
+                description: "UX/UI designers research users and design interfaces, layouts and interactions for digital products.",
+                area: "Design",
+                style: "Creative",
+                experience: "Beginner Friendly",
+                setting: "Office / Remote",
+                skills: [
+                    "Visual Design",
+                    "User Research",
+                    "Wireframing",
+                    "Creativity",
+                    "Communication",
+                    "Problem Solving"
+                ],
+                tasks: [
+                    "Research user needs.",
+                    "Create wireframes and prototypes.",
+                    "Design digital interfaces.",
+                    "Test designs with users.",
+                    "Improve user experiences."
+                ],
+                education: [
+                    {
+                        title: "Design Education",
+                        text: "A degree, diploma or structured learning in design can be useful."
+                    },
+                    {
+                        title: "Portfolio",
+                        text: "Create practical design projects demonstrating your skills."
+                    }
+                ],
+                outlook: "Digital products need designers who can combine creativity with user-centered problem solving.",
+                related: [
+                    ["graphic-designer", "Graphic Designer", "Creative"],
+                    ["architect", "Architect", "Design"],
+                    ["software-developer", "Software Developer", "Technology"]
+                ]
+            },
+
+
+            "designer": {
+                title: "UX/UI Designer",
+                category: "Creative",
+                short: "Design digital experiences that are simple, useful and engaging.",
+                description: "UX/UI designers combine creativity and user research to create digital interfaces.",
+                area: "Design",
+                style: "Creative",
+                experience: "Beginner Friendly",
+                setting: "Office / Remote",
+                skills: [
+                    "Visual Design",
+                    "Creativity",
+                    "User Research",
+                    "Wireframing",
+                    "Communication"
+                ],
+                tasks: [
+                    "Research users.",
+                    "Create wireframes.",
+                    "Design interfaces.",
+                    "Build prototypes.",
+                    "Improve user experiences."
+                ],
+                education: [
+                    {
+                        title: "Design Education",
+                        text: "Design courses, degrees or practical learning can help."
+                    }
+                ],
+                outlook: "Digital products continue to create opportunities for designers.",
+                related: [
+                    ["graphic-designer", "Graphic Designer", "Creative"],
+                    ["software", "Software Developer", "Technology"],
+                    ["architect", "Architect", "Design"]
+                ]
+            },
+
+
+            "graphic-designer": {
+                title: "Graphic Designer",
+                category: "Creative",
+                short: "Use visual communication to create engaging designs and brand experiences.",
+                description: "Graphic designers create visual concepts for brands, publications, digital products and communication materials.",
+                area: "Creative",
+                style: "Creative",
+                experience: "Beginner Friendly",
+                setting: "Studio / Remote",
+                skills: [
+                    "Typography",
+                    "Visual Design",
+                    "Creativity",
+                    "Branding",
+                    "Illustration",
+                    "Communication"
+                ],
+                tasks: [
+                    "Create visual concepts.",
+                    "Develop branding materials.",
+                    "Design digital and print content.",
+                    "Work with clients or teams.",
+                    "Refine designs based on feedback."
+                ],
+                education: [
+                    {
+                        title: "Design Learning",
+                        text: "Graphic design courses, diplomas or degrees can provide useful foundations."
+                    },
+                    {
+                        title: "Portfolio",
+                        text: "A strong portfolio can demonstrate your practical design abilities."
+                    }
+                ],
+                outlook: "Graphic design skills are used across marketing, media, publishing, technology and many creative industries.",
+                related: [
+                    ["ux-ui-designer", "UX/UI Designer", "Creative"],
+                    ["content-creator", "Content Creator", "Creative"],
+                    ["architect", "Architect", "Design"]
+                ]
+            },
+
+
+            "teacher": {
+                title: "Teacher",
+                category: "People",
+                short: "Help learners understand ideas, develop skills and grow with confidence.",
+                description: "Teachers plan learning experiences, explain concepts and support students in developing knowledge and skills.",
+                area: "Education",
+                style: "People-Oriented",
+                experience: "Beginner Friendly",
+                setting: "School / Classroom",
+                skills: [
+                    "Communication",
+                    "Patience",
+                    "Planning",
+                    "Leadership",
+                    "Creativity",
+                    "Empathy"
+                ],
+                tasks: [
+                    "Plan lessons and learning activities.",
+                    "Explain concepts clearly.",
+                    "Support different learning needs.",
+                    "Assess student progress.",
+                    "Create a positive learning environment."
+                ],
+                education: [
+                    {
+                        title: "Education Qualification",
+                        text: "Relevant subject and teacher-training qualifications may be required."
+                    },
+                    {
+                        title: "Practical Experience",
+                        text: "Teaching practice and classroom experience help develop confidence."
+                    }
+                ],
+                outlook: "Education provides opportunities in schools, learning organizations, tutoring and other educational settings.",
+                related: [
+                    ["psychologist", "Psychologist", "People"],
+                    ["career-counselor", "Career Counselor", "People"],
+                    ["social-worker", "Social Worker", "People"]
+                ]
+            },
+
+
+            "psychologist": {
+                title: "Psychologist",
+                category: "People",
+                short: "Study human behavior and support people through evidence-based approaches.",
+                description: "Psychologists study behavior, emotions and mental processes and may work in research, education or professional settings depending on their qualifications.",
+                area: "People",
+                style: "People-Oriented",
+                experience: "Advanced",
+                setting: "Clinic / Office / Research",
+                skills: [
+                    "Active Listening",
+                    "Research",
+                    "Communication",
+                    "Critical Thinking",
+                    "Empathy"
+                ],
+                tasks: [
+                    "Study human behavior.",
+                    "Conduct research or assessments within professional scope.",
+                    "Communicate findings clearly.",
+                    "Support people in appropriate professional settings.",
+                    "Maintain ethical standards."
+                ],
+                education: [
+                    {
+                        title: "Psychology Education",
+                        text: "Psychology degrees and relevant professional qualifications are typically required."
+                    }
+                ],
+                outlook: "Psychology offers paths across research, education, organizational settings and professional practice, depending on qualifications.",
+                related: [
+                    ["teacher", "Teacher", "Education"],
+                    ["career-counselor", "Career Counselor", "People"],
+                    ["social-worker", "Social Worker", "People"]
+                ]
+            },
+
+
+            "career-counselor": {
+                title: "Career Counselor",
+                category: "People",
+                short: "Help people understand their strengths and explore suitable career directions.",
+                description: "Career counselors support individuals as they explore education, skills, interests and possible career paths.",
+                area: "People",
+                style: "Supportive",
+                experience: "Intermediate",
+                setting: "Office / Education",
+                skills: [
+                    "Active Listening",
+                    "Communication",
+                    "Empathy",
+                    "Research",
+                    "Planning"
+                ],
+                tasks: [
+                    "Understand a person's interests and goals.",
+                    "Discuss education and career options.",
+                    "Help create career plans.",
+                    "Provide relevant information and resources.",
+                    "Support decision-making."
+                ],
+                education: [
+                    {
+                        title: "Relevant Education",
+                        text: "Psychology, counseling, education or related study can provide useful foundations."
+                    }
+                ],
+                outlook: "Career guidance can be useful in schools, colleges, organizations and counseling settings.",
+                related: [
+                    ["teacher", "Teacher", "Education"],
+                    ["psychologist", "Psychologist", "People"],
+                    ["business-analyst", "Business Analyst", "Business"]
+                ]
+            },
+
+
+            "business-analyst": {
+                title: "Business Analyst",
+                category: "Business",
+                short: "Connect business needs with practical solutions using analysis and communication.",
+                description: "Business analysts examine processes, requirements and business problems to help organizations improve how they work.",
+                area: "Business",
+                style: "Analytical",
+                experience: "Intermediate",
+                setting: "Office / Hybrid",
+                skills: [
+                    "Analysis",
+                    "Communication",
+                    "Problem Solving",
+                    "Research",
+                    "Presentation",
+                    "Planning"
+                ],
+                tasks: [
+                    "Understand business requirements.",
+                    "Analyze existing processes.",
+                    "Identify opportunities for improvement.",
+                    "Communicate with stakeholders.",
+                    "Document requirements and solutions."
+                ],
+                education: [
+                    {
+                        title: "Relevant Degree",
+                        text: "Business, economics, technology or another relevant field can be useful."
+                    }
+                ],
+                outlook: "Business analysts can work across technology, finance, consulting, healthcare and other industries.",
+                related: [
+                    ["data-scientist", "Data Scientist", "Technology"],
+                    ["product-manager", "Product Manager", "Business"],
+                    ["financial-analyst", "Financial Analyst", "Finance"]
+                ]
+            },
+
+
+            "product-manager": {
+                title: "Product Manager",
+                category: "Business",
+                short: "Guide products from ideas to useful solutions for real users.",
+                description: "Product managers help define product goals, understand users, prioritize work and coordinate teams.",
+                area: "Business & Technology",
+                style: "Strategic",
+                experience: "Intermediate",
+                setting: "Office / Hybrid",
+                skills: [
+                    "Leadership",
+                    "Communication",
+                    "Strategy",
+                    "Research",
+                    "Planning",
+                    "Problem Solving"
+                ],
+                tasks: [
+                    "Understand customer needs.",
+                    "Define product goals.",
+                    "Prioritize features and improvements.",
+                    "Coordinate with different teams.",
+                    "Track product progress."
+                ],
+                education: [
+                    {
+                        title: "Relevant Background",
+                        text: "Business, technology, design or related education can be useful."
+                    }
+                ],
+                outlook: "Product roles are common in technology companies and organizations developing digital or physical products.",
+                related: [
+                    ["business-analyst", "Business Analyst", "Business"],
+                    ["software-developer", "Software Developer", "Technology"],
+                    ["ux-ui-designer", "UX/UI Designer", "Creative"]
+                ]
+            },
+
+
+            "financial-analyst": {
+                title: "Financial Analyst",
+                category: "Finance",
+                short: "Use financial information and analysis to support business decisions.",
+                description: "Financial analysts examine financial information, trends and performance to support planning and decision-making.",
+                area: "Finance",
+                style: "Analytical",
+                experience: "Intermediate",
+                setting: "Office / Hybrid",
+                skills: [
+                    "Financial Analysis",
+                    "Mathematics",
+                    "Excel",
+                    "Research",
+                    "Critical Thinking"
+                ],
+                tasks: [
+                    "Analyze financial information.",
+                    "Study business performance.",
+                    "Prepare reports and forecasts.",
+                    "Research market information.",
+                    "Communicate financial insights."
+                ],
+                education: [
+                    {
+                        title: "Relevant Degree",
+                        text: "Finance, accounting, economics or related fields can be useful."
+                    }
+                ],
+                outlook: "Financial analysis roles exist across banks, companies, investment organizations and other institutions.",
+                related: [
+                    ["business-analyst", "Business Analyst", "Business"],
+                    ["accountant", "Accountant", "Finance"],
+                    ["product-manager", "Product Manager", "Business"]
+                ]
+            },
+
+
+            "accountant": {
+                title: "Accountant",
+                category: "Finance",
+                short: "Manage financial records and help organizations understand their finances.",
+                description: "Accountants record, organize and analyze financial information and help organizations maintain accurate financial records.",
+                area: "Finance",
+                style: "Detail-Oriented",
+                experience: "Beginner Friendly",
+                setting: "Office / Hybrid",
+                skills: [
+                    "Numeracy",
+                    "Attention to Detail",
+                    "Organization",
+                    "Analysis",
+                    "Communication"
+                ],
+                tasks: [
+                    "Maintain financial records.",
+                    "Prepare financial information.",
+                    "Check transactions and documentation.",
+                    "Support financial reporting.",
+                    "Communicate financial information."
+                ],
+                education: [
+                    {
+                        title: "Relevant Education",
+                        text: "Accounting, commerce, finance or related study can provide useful foundations."
+                    }
+                ],
+                outlook: "Accounting skills are used by businesses and organizations across many sectors.",
+                related: [
+                    ["financial-analyst", "Financial Analyst", "Finance"],
+                    ["business-analyst", "Business Analyst", "Business"],
+                    ["project-manager", "Project Manager", "Business"]
+                ]
+            },
+
+
+            "civil-engineer": {
+                title: "Civil Engineer",
+                category: "Engineering",
+                short: "Design and develop infrastructure that supports communities and everyday life.",
+                description: "Civil engineers work on infrastructure projects such as buildings, transportation systems, water systems and other structures.",
+                area: "Engineering",
+                style: "Technical",
+                experience: "Intermediate",
+                setting: "Office / Field",
+                skills: [
+                    "Mathematics",
+                    "Problem Solving",
+                    "Technical Design",
+                    "Planning",
+                    "Project Management"
+                ],
+                tasks: [
+                    "Plan and design infrastructure projects.",
+                    "Analyze technical requirements.",
+                    "Work with project teams.",
+                    "Monitor project progress.",
+                    "Apply safety and engineering standards."
+                ],
+                education: [
+                    {
+                        title: "Engineering Degree",
+                        text: "A degree in civil engineering is the typical educational foundation."
+                    }
+                ],
+                outlook: "Civil engineering supports infrastructure development across cities, transportation and construction.",
+                related: [
+                    ["mechanical-engineer", "Mechanical Engineer", "Engineering"],
+                    ["architect", "Architect", "Design"],
+                    ["project-manager", "Project Manager", "Business"]
+                ]
+            },
+
+
+            "mechanical-engineer": {
+                title: "Mechanical Engineer",
+                category: "Engineering",
+                short: "Design, develop and improve machines, systems and mechanical products.",
+                description: "Mechanical engineers apply engineering principles to design, analyze and improve machines and mechanical systems.",
+                area: "Engineering",
+                style: "Technical",
+                experience: "Intermediate",
+                setting: "Office / Laboratory / Field",
+                skills: [
+                    "Mathematics",
+                    "Physics",
+                    "CAD",
+                    "Problem Solving",
+                    "Technical Design"
+                ],
+                tasks: [
+                    "Design mechanical systems.",
+                    "Analyze engineering problems.",
+                    "Create technical models.",
+                    "Test and improve designs.",
+                    "Work with engineering teams."
+                ],
+                education: [
+                    {
+                        title: "Engineering Degree",
+                        text: "Mechanical engineering is the typical academic foundation."
+                    }
+                ],
+                outlook: "Mechanical engineers work across manufacturing, automotive, energy, robotics and other industries.",
+                related: [
+                    ["civil-engineer", "Civil Engineer", "Engineering"],
+                    ["robotics-engineer", "Robotics Engineer", "Technology"],
+                    ["architect", "Architect", "Design"]
+                ]
+            },
+
+
+            "architect": {
+                title: "Architect",
+                category: "Design",
+                short: "Combine creativity and technical thinking to design spaces and structures.",
+                description: "Architects plan and design buildings and spaces while considering function, aesthetics, safety and practical requirements.",
+                area: "Design & Construction",
+                style: "Creative + Technical",
+                experience: "Advanced",
+                setting: "Studio / Site",
+                skills: [
+                    "Design",
+                    "Creativity",
+                    "Technical Drawing",
+                    "Planning",
+                    "Visualization"
+                ],
+                tasks: [
+                    "Develop architectural concepts.",
+                    "Create drawings and models.",
+                    "Work with clients and project teams.",
+                    "Coordinate design requirements.",
+                    "Review project development."
+                ],
+                education: [
+                    {
+                        title: "Architecture Education",
+                        text: "A recognized architecture degree and relevant professional requirements are typically needed."
+                    }
+                ],
+                outlook: "Architecture connects design, technology, construction and planning across many types of projects.",
+                related: [
+                    ["civil-engineer", "Civil Engineer", "Engineering"],
+                    ["ux-ui-designer", "UX/UI Designer", "Creative"],
+                    ["graphic-designer", "Graphic Designer", "Creative"]
+                ]
+            },
+
+
+            "robotics-engineer": {
+                title: "Robotics Engineer",
+                category: "Technology",
+                short: "Combine engineering, software and automation to create intelligent machines.",
+                description: "Robotics engineers work with mechanical systems, electronics and software to develop robotic systems.",
+                area: "Technology & Engineering",
+                style: "Technical",
+                experience: "Advanced",
+                setting: "Laboratory / Engineering",
+                skills: [
+                    "Programming",
+                    "Robotics",
+                    "Mathematics",
+                    "Engineering",
+                    "Problem Solving"
+                ],
+                tasks: [
+                    "Design robotic systems.",
+                    "Program robotic behavior.",
+                    "Test hardware and software.",
+                    "Analyze system performance.",
+                    "Improve automation solutions."
+                ],
+                education: [
+                    {
+                        title: "Technical Education",
+                        text: "Engineering, robotics, computer science or related study can provide a foundation."
+                    }
+                ],
+                outlook: "Robotics is used in manufacturing, research, healthcare, logistics and other technology-driven fields.",
+                related: [
+                    ["software-developer", "Software Developer", "Technology"],
+                    ["mechanical-engineer", "Mechanical Engineer", "Engineering"],
+                    ["data-scientist", "Data Scientist", "Technology"]
+                ]
+            },
+
+
+            "research-scientist": {
+                title: "Research Scientist",
+                category: "Science",
+                short: "Investigate questions, test ideas and contribute to new knowledge.",
+                description: "Research scientists conduct structured investigations, analyze evidence and communicate findings in scientific fields.",
+                area: "Science",
+                style: "Investigative",
+                experience: "Advanced",
+                setting: "Laboratory / Research",
+                skills: [
+                    "Research",
+                    "Critical Thinking",
+                    "Data Analysis",
+                    "Observation",
+                    "Communication"
+                ],
+                tasks: [
+                    "Develop research questions.",
+                    "Collect and analyze evidence.",
+                    "Conduct experiments or investigations.",
+                    "Interpret findings.",
+                    "Communicate research results."
+                ],
+                education: [
+                    {
+                        title: "Science Education",
+                        text: "Advanced study in a relevant scientific field is commonly required for research careers."
+                    }
+                ],
+                outlook: "Research careers exist across universities, laboratories, industry and scientific organizations.",
+                related: [
+                    ["data-scientist", "Data Scientist", "Technology"],
+                    ["robotics-engineer", "Robotics Engineer", "Technology"],
+                    ["psychologist", "Psychologist", "People"]
+                ]
+            },
+
+
+            "content-creator": {
+                title: "Content Creator",
+                category: "Creative",
+                short: "Create useful and engaging content for digital audiences.",
+                description: "Content creators develop written, visual or video content for audiences across digital platforms.",
+                area: "Creative & Media",
+                style: "Creative",
+                experience: "Beginner Friendly",
+                setting: "Remote / Studio",
+                skills: [
+                    "Writing",
+                    "Creativity",
+                    "Communication",
+                    "Visual Storytelling",
+                    "Research"
+                ],
+                tasks: [
+                    "Research content topics.",
+                    "Create written or visual content.",
+                    "Plan content ideas.",
+                    "Understand audience needs.",
+                    "Review content performance."
+                ],
+                education: [
+                    {
+                        title: "Creative Skills",
+                        text: "Writing, design, media or communication learning can be useful."
+                    },
+                    {
+                        title: "Portfolio",
+                        text: "A collection of original content can demonstrate practical skills."
+                    }
+                ],
+                outlook: "Organizations, brands and independent creators use digital content to communicate with audiences.",
+                related: [
+                    ["graphic-designer", "Graphic Designer", "Creative"],
+                    ["ux-ui-designer", "UX/UI Designer", "Creative"],
+                    ["marketing-manager", "Marketing Manager", "Business"]
+                ]
+            },
+
+
+            "fashion-designer": {
+                title: "Fashion Designer",
+                category: "Creative",
+                short: "Develop clothing and fashion concepts through creativity and design.",
+                description: "Fashion designers develop concepts, sketches and designs for clothing and fashion products.",
+                area: "Creative",
+                style: "Creative",
+                experience: "Intermediate",
+                setting: "Studio",
+                skills: [
+                    "Creativity",
+                    "Sketching",
+                    "Visual Design",
+                    "Research",
+                    "Attention to Detail"
+                ],
+                tasks: [
+                    "Develop design concepts.",
+                    "Create sketches and mood boards.",
+                    "Research trends and materials.",
+                    "Develop product ideas.",
+                    "Work with production teams."
+                ],
+                education: [
+                    {
+                        title: "Fashion Education",
+                        text: "Fashion design courses, diplomas or degrees can provide useful foundations."
+                    }
+                ],
+                outlook: "Fashion designers can work with brands, studios, manufacturers or independently.",
+                related: [
+                    ["graphic-designer", "Graphic Designer", "Creative"],
+                    ["content-creator", "Content Creator", "Creative"],
+                    ["ux-ui-designer", "UX/UI Designer", "Creative"]
+                ]
+            },
+
+
+            "social-worker": {
+                title: "Social Worker",
+                category: "People",
+                short: "Support individuals and communities through guidance, resources and advocacy.",
+                description: "Social workers help individuals, families and communities access support and navigate challenging circumstances.",
+                area: "People & Community",
+                style: "Supportive",
+                experience: "Advanced",
+                setting: "Community / Office",
+                skills: [
+                    "Empathy",
+                    "Communication",
+                    "Active Listening",
+                    "Problem Solving",
+                    "Advocacy"
+                ],
+                tasks: [
+                    "Understand people's needs.",
+                    "Connect people with appropriate resources.",
+                    "Provide guidance within professional scope.",
+                    "Work with communities and organizations.",
+                    "Maintain professional and ethical standards."
+                ],
+                education: [
+                    {
+                        title: "Social Work Education",
+                        text: "Social work education and relevant professional requirements are typically needed."
+                    }
+                ],
+                outlook: "Social workers can work in community services, education, healthcare and other support settings.",
+                related: [
+                    ["psychologist", "Psychologist", "People"],
+                    ["career-counselor", "Career Counselor", "People"],
+                    ["teacher", "Teacher", "Education"]
+                ]
+            },
+
+
+            "project-manager": {
+                title: "Project Manager",
+                category: "Business",
+                short: "Plan and coordinate projects so teams can achieve clear goals.",
+                description: "Project managers coordinate people, timelines, resources and requirements to help projects move toward completion.",
+                area: "Business",
+                style: "Organized",
+                experience: "Intermediate",
+                setting: "Office / Hybrid",
+                skills: [
+                    "Planning",
+                    "Leadership",
+                    "Communication",
+                    "Organization",
+                    "Problem Solving"
+                ],
+                tasks: [
+                    "Define project goals.",
+                    "Create plans and timelines.",
+                    "Coordinate team members.",
+                    "Track progress and risks.",
+                    "Communicate project updates."
+                ],
+                education: [
+                    {
+                        title: "Relevant Background",
+                        text: "Business, technology, engineering or another relevant field can be useful."
+                    }
+                ],
+                outlook: "Project management skills are useful across technology, construction, consulting, business and many other industries.",
+                related: [
+                    ["business-analyst", "Business Analyst", "Business"],
+                    ["product-manager", "Product Manager", "Business"],
+                    ["operations-manager", "Operations Manager", "Business"]
+                ]
+            },
+
+
+            "operations-manager": {
+                title: "Operations Manager",
+                category: "Business",
+                short: "Improve processes and coordinate operations so organizations work effectively.",
+                description: "Operations managers help organizations plan, coordinate and improve everyday processes and resources.",
+                area: "Business",
+                style: "Organized",
+                experience: "Intermediate",
+                setting: "Office / Operations",
+                skills: [
+                    "Planning",
+                    "Leadership",
+                    "Organization",
+                    "Analysis",
+                    "Communication"
+                ],
+                tasks: [
+                    "Coordinate operational activities.",
+                    "Monitor processes.",
+                    "Identify improvement opportunities.",
+                    "Manage resources.",
+                    "Support team performance."
+                ],
+                education: [
+                    {
+                        title: "Relevant Education",
+                        text: "Business, management or related education can provide a useful foundation."
+                    }
+                ],
+                outlook: "Operations roles exist across companies, organizations, manufacturing, services and other sectors.",
+                related: [
+                    ["project-manager", "Project Manager", "Business"],
+                    ["business-analyst", "Business Analyst", "Business"],
+                    ["product-manager", "Product Manager", "Business"]
+                ]
+            },
+
+            "marketing-manager": {
+                title: "Marketing Manager",
+                category: "Business",
+                short: "Plan marketing strategies that help organizations connect with their audiences.",
+                description: "Marketing managers help plan campaigns, understand audiences and coordinate marketing activities.",
+                area: "Business & Creative",
+                style: "Strategic",
+                experience: "Intermediate",
+                setting: "Office / Hybrid",
+                skills: [
+                    "Communication",
+                    "Strategy",
+                    "Research",
+                    "Creativity",
+                    "Planning"
+                ],
+                tasks: [
+                    "Understand target audiences.",
+                    "Plan marketing activities.",
+                    "Coordinate campaigns.",
+                    "Analyze campaign performance.",
+                    "Work with creative teams."
+                ],
+                education: [
+                    {
+                        title: "Relevant Education",
+                        text: "Marketing, business, communication or related education can be useful."
+                    }
+                ],
+                outlook: "Marketing roles are found across technology, retail, media, finance and many other industries.",
+                related: [
+                    ["content-creator", "Content Creator", "Creative"],
+                    ["business-analyst", "Business Analyst", "Business"],
+                    ["product-manager", "Product Manager", "Business"]
+                ]
             }
 
         };
 
 
-        /*
-         * ------------------------------------------
-         * GET CAREER ID FROM URL
-         * ------------------------------------------
-         *
-         * Example:
-         *
-         * role-detail.html?id=software-engineer
-         *
-         */
+        /* ================= GET CAREER ID ================= */
 
         const params = new URLSearchParams(window.location.search);
 
-        const careerId =
-            params.get("id") ||
-            params.get("career");
+        let careerId = params.get("id") || "software-developer";
+
+        const career = careers[careerId];
 
 
-        /*
-         * ------------------------------------------
-         * LOAD CAREER
-         * ------------------------------------------
-         */
-
-        let career = demoCareers[careerId];
-
-
-        /*
-         * If no matching career is found,
-         * use a generic fallback.
-         */
+        /* ================= FALLBACK ================= */
 
         if (!career) {
 
-            career = {
+            document.getElementById("careerTitle").textContent = "Career Not Found";
 
-                id: careerId || "career",
+            document.getElementById("careerShort").textContent =
+                "We could not find the career you were looking for.";
 
-                title: "Career Details",
+            document.getElementById("careerDescription").textContent =
+                "Please return to your career results and select another career.";
 
-                icon: "💼",
+            document.getElementById("careerCategory").textContent =
+                "Career";
 
-                category: "Career",
-
-                description:
-                    "Explore this career and learn more about its skills, education, responsibilities and possible opportunities.",
-
-                about:
-                    "Career information will appear here once the career database is connected to Career Compass AI.",
-
-                responsibilities: [
-                    "Explore the responsibilities associated with this career",
-                    "Develop relevant skills",
-                    "Gain practical knowledge and experience",
-                    "Explore education and training options"
-                ],
-
-                skills: [
-                    "Communication",
-                    "Problem Solving",
-                    "Critical Thinking",
-                    "Teamwork"
-                ],
-
-                education:
-                    "Education requirements will depend on the specific career and role.",
-
-                educationList: [
-                    "Relevant education",
-                    "Practical learning",
-                    "Projects and experience"
-                ],
-
-                workStyle: "Varies",
-
-                workAreas: [
-                    "Organisations",
-                    "Companies",
-                    "Other Workplaces"
-                ],
-
-                experience: "Varies"
-
-            };
+            document.getElementById("matchPercent").textContent = "--";
 
         }
 
 
-        /*
-         * ------------------------------------------
-         * DISPLAY CAREER INFORMATION
-         * ------------------------------------------
-         */
+        /* ================= LOAD CAREER ================= */
 
-        document.title =
-            career.title + " | Career Compass AI";
+        if (career) {
+
+            document.title =
+                career.title + " | Career Compass AI";
 
 
-        document.getElementById("careerTitle").textContent =
-            career.title;
+            document.getElementById("careerTitle").textContent =
+                career.title;
 
-        document.getElementById("careerIcon").textContent =
-            career.icon;
+            document.getElementById("careerCategory").textContent =
+                career.category;
 
-        document.getElementById("careerCategory").textContent =
-            career.category;
+            document.getElementById("careerShort").textContent =
+                career.short;
 
-        document.getElementById("careerDescription").textContent =
-            career.description;
-
-        document.getElementById("breadcrumbCareer").textContent =
-            career.title;
-
-        document.getElementById("aboutCareer").textContent =
-            career.about;
-
-        document.getElementById("infoCategory").textContent =
-            career.category;
-
-        document.getElementById("infoEducation").textContent =
-            career.education
-                ? "Available"
-                : "Explore";
-
-        document.getElementById("infoWorkStyle").textContent =
-            career.workStyle;
-
-        document.getElementById("infoWorkAreas").textContent =
-            career.workAreas.length + " Areas";
-
-        document.getElementById("infoExperience").textContent =
-            career.experience;
+            document.getElementById("careerDescription").textContent =
+                career.description;
 
 
-        /*
-         * ------------------------------------------
-         * RESPONSIBILITIES
-         * ------------------------------------------
-         */
+            document.getElementById("infoArea").textContent =
+                career.area;
 
-        const responsibilities =
-            document.getElementById("responsibilities");
+            document.getElementById("infoStyle").textContent =
+                career.style;
 
-        responsibilities.innerHTML = "";
+            document.getElementById("infoExperience").textContent =
+                career.experience;
 
-        career.responsibilities.forEach(item => {
-
-            const li =
-                document.createElement("li");
-
-            li.textContent = item;
-
-            responsibilities.appendChild(li);
-
-        });
+            document.getElementById("infoSetting").textContent =
+                career.setting;
 
 
-        /*
-         * ------------------------------------------
-         * SKILLS
-         * ------------------------------------------
-         */
-
-        const skillsContainer =
-            document.getElementById("skillsContainer");
-
-        skillsContainer.innerHTML = "";
-
-        career.skills.forEach(skill => {
-
-            const span =
-                document.createElement("span");
-
-            span.className = "skill";
-
-            span.textContent = skill;
-
-            skillsContainer.appendChild(span);
-
-        });
+            document.getElementById("careerOutlook").textContent =
+                career.outlook;
 
 
-        /*
-         * ------------------------------------------
-         * EDUCATION
-         * ------------------------------------------
-         */
+            /* ================= MATCH PERCENT ================= */
 
-        document.getElementById("educationText")
-            .textContent = career.education;
+            const storedMatches =
+                JSON.parse(localStorage.getItem("careerMatches") || "{}");
 
+            let match = storedMatches[careerId];
 
-        const educationList =
-            document.getElementById("educationList");
+            if (!match) {
 
-        educationList.innerHTML = "";
+                const savedResults =
+                    JSON.parse(localStorage.getItem("careerResults") || "[]");
 
-        career.educationList.forEach(item => {
+                const found =
+                    savedResults.find(item => item.id === careerId);
 
-            const li =
-                document.createElement("li");
-
-            li.textContent = item;
-
-            educationList.appendChild(li);
-
-        });
-
-
-        /*
-         * ------------------------------------------
-         * WORK AREAS
-         * ------------------------------------------
-         */
-
-        const workAreas =
-            document.getElementById("workAreas");
-
-        workAreas.innerHTML = "";
-
-        career.workAreas.forEach(area => {
-
-            const span =
-                document.createElement("span");
-
-            span.className = "skill";
-
-            span.textContent = area;
-
-            workAreas.appendChild(span);
-
-        });
-
-
-        /*
-         * ------------------------------------------
-         * SAVE CAREER
-         * ------------------------------------------
-         *
-         * Same localStorage key used by
-         * favourites.html:
-         *
-         * savedCareers
-         *
-         */
-
-        function getSavedCareers() {
-
-            try {
-
-                return JSON.parse(
-                    localStorage.getItem("savedCareers")
-                ) || [];
-
-            } catch (error) {
-
-                return [];
+                if (found && found.match) {
+                    match = found.match;
+                }
 
             }
 
+            if (!match) {
+                match = 85;
+            }
+
+            document.getElementById("matchPercent").textContent =
+                match + "%";
+
+
+            /* ================= SKILLS ================= */
+
+            const skillsList =
+                document.getElementById("skillsList");
+
+            skillsList.innerHTML = "";
+
+            career.skills.forEach(skill => {
+
+                const span =
+                    document.createElement("span");
+
+                span.className = "skill";
+
+                span.textContent = skill;
+
+                skillsList.appendChild(span);
+
+            });
+
+
+            /* ================= TASKS ================= */
+
+            const taskList =
+                document.getElementById("taskList");
+
+            taskList.innerHTML = "";
+
+            career.tasks.forEach(task => {
+
+                const li =
+                    document.createElement("li");
+
+                li.innerHTML = `
+                    <span class="task-icon">✓</span>
+                    <span>${task}</span>
+                `;
+
+                taskList.appendChild(li);
+
+            });
+
+
+            /* ================= EDUCATION ================= */
+
+            const educationList =
+                document.getElementById("educationList");
+
+            educationList.innerHTML = "";
+
+            career.education.forEach(item => {
+
+                const div =
+                    document.createElement("div");
+
+                div.className = "education-item";
+
+                div.innerHTML = `
+                    <strong>${item.title}</strong>
+                    <span>${item.text}</span>
+                `;
+
+                educationList.appendChild(div);
+
+            });
+
+
+            /* ================= RELATED CAREERS ================= */
+
+            const relatedGrid =
+                document.getElementById("relatedGrid");
+
+            relatedGrid.innerHTML = "";
+
+            career.related.forEach(item => {
+
+                const id = item[0];
+                const title = item[1];
+                const category = item[2];
+
+                const card =
+                    document.createElement("a");
+
+                card.href =
+                    `role-detail.html?id=${id}`;
+
+                card.className =
+                    "related-card";
+
+                card.innerHTML = `
+                    <h3>${title}</h3>
+                    <p>${category}</p>
+                `;
+
+                relatedGrid.appendChild(card);
+
+            });
+
         }
 
 
-        function isCareerSaved() {
+        /* ================= SAVE CAREER ================= */
 
-            const saved =
-                getSavedCareers();
+        function getSavedCareers() {
 
-            return saved.some(item =>
-                item.id === career.id
+            return JSON.parse(
+                localStorage.getItem("savedCareers") || "[]"
             );
 
         }
 
 
-        function updateSaveButton() {
+        function saveCareers(list) {
 
-            const button =
-                document.getElementById("saveBtn");
+            localStorage.setItem(
+                "savedCareers",
+                JSON.stringify(list)
+            );
 
-            if (isCareerSaved()) {
+        }
 
-                button.innerHTML =
-                    "♥ Saved Career";
 
-            } else {
+        function isSaved() {
 
-                button.innerHTML =
-                    "♡ Save Career";
+            const saved =
+                getSavedCareers();
 
-            }
+            return saved.some(
+                item => item.id === careerId
+            );
+
+        }
+
+
+        function updateSaveButtons() {
+
+            const saved = isSaved();
+
+            const buttons = [
+                document.getElementById("saveBtn"),
+                document.getElementById("saveBtnSide")
+            ];
+
+            buttons.forEach(button => {
+
+                if (!button) return;
+
+                if (saved) {
+
+                    button.innerHTML =
+                        "♥ Saved Career";
+
+                    button.classList.add("saved");
+
+                } else {
+
+                    button.innerHTML =
+                        "♡ Save Career";
+
+                    button.classList.remove("saved");
+
+                }
+
+            });
 
         }
 
 
         function toggleSave() {
 
+            if (!career) return;
+
             let saved =
                 getSavedCareers();
 
-            const index =
-                saved.findIndex(item =>
-                    item.id === career.id
+            const exists =
+                saved.some(
+                    item => item.id === careerId
                 );
 
 
-            if (index === -1) {
+            if (exists) {
 
-                saved.push({
-
-                    id: career.id,
-
-                    title: career.title,
-
-                    name: career.title,
-
-                    icon: career.icon,
-
-                    category: career.category,
-
-                    description: career.description
-
-                });
+                saved =
+                    saved.filter(
+                        item => item.id !== careerId
+                    );
 
             } else {
 
-                saved.splice(index, 1);
+                saved.push({
+                    id: careerId,
+                    title: career.title,
+                    category: career.category,
+                    match:
+                        document.getElementById(
+                            "matchPercent"
+                        ).textContent
+                });
 
             }
 
 
-            localStorage.setItem(
-                "savedCareers",
-                JSON.stringify(saved)
-            );
+            saveCareers(saved);
 
-
-            updateSaveButton();
+            updateSaveButtons();
 
         }
 
 
-        /*
-         * ------------------------------------------
-         * COMPARE
-         * ------------------------------------------
-         */
+        document.getElementById("saveBtn")
+            .addEventListener("click", toggleSave);
 
-        function goToCompare() {
-
-            window.location.href =
-                "compare.html?career=" +
-                encodeURIComponent(career.id);
-
-        }
+        document.getElementById("saveBtnSide")
+            .addEventListener("click", toggleSave);
 
 
-        /*
-         * ------------------------------------------
-         * INITIAL BUTTON STATE
-         * ------------------------------------------
-         */
-
-        updateSaveButton();
+        updateSaveButtons();
 
     </script>
 

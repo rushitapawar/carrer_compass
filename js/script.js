@@ -1,687 +1,515 @@
-// ============================================================
-// CAREER COMPASS AI - MAIN JAVASCRIPT
-// ============================================================
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* ================= GET ELEMENTS ================= */
+
+    const profileForm = document.getElementById("profileForm");
+
+    const fullName = document.getElementById("fullName");
+    const email = document.getElementById("email");
+    const location = document.getElementById("location");
+
+    const education = document.getElementById("education");
+    const fieldOfStudy = document.getElementById("fieldOfStudy");
+
+    const careerGoal = document.getElementById("careerGoal");
+    const careerDescription = document.getElementById("careerDescription");
+
+    const avatarPreview = document.getElementById("avatarPreview");
+
+    const previewName = document.getElementById("previewName");
+    const previewEmail = document.getElementById("previewEmail");
+
+    const previewEducation = document.getElementById("previewEducation");
+    const previewField = document.getElementById("previewField");
+    const previewGoal = document.getElementById("previewGoal");
+
+    const completionPercent = document.getElementById("completionPercent");
+    const progressFill = document.getElementById("progressFill");
+
+    const clearBtn = document.getElementById("clearBtn");
+
+    const interestCheckboxes =
+        document.querySelectorAll(".interest-option input");
 
 
-// ============================================================
-// LOGIN FORM
-// ============================================================
+    /* ================= LOAD SAVED PROFILE ================= */
 
-const loginForm = document.getElementById("loginForm");
+    function loadProfile() {
 
-if (loginForm) {
+        const savedProfile =
+            JSON.parse(localStorage.getItem("careerProfile"));
 
-    loginForm.addEventListener("submit", async function (event) {
+        if (!savedProfile) {
 
-        event.preventDefault();
+            const loggedInUser =
+                JSON.parse(localStorage.getItem("careerCompassUser"));
 
-        const emailInput =
-            document.getElementById("loginEmail");
+            if (loggedInUser && loggedInUser.email) {
+                email.value = loggedInUser.email;
+            }
 
-        const passwordInput =
-            document.getElementById("loginPassword");
-
-        const email =
-            emailInput ? emailInput.value.trim() : "";
-
-        const password =
-            passwordInput ? passwordInput.value : "";
-
-
-        // Check empty fields
-
-        if (email === "" || password === "") {
-
-            alert("Please fill in all fields.");
-
+            updatePreview();
             return;
         }
 
 
-        try {
+        fullName.value = savedProfile.fullName || "";
 
-            const response = await fetch("/api/login", {
+        email.value = savedProfile.email || "";
 
-                method: "POST",
+        location.value = savedProfile.location || "";
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
+        education.value = savedProfile.education || "";
 
-                body: JSON.stringify({
+        fieldOfStudy.value =
+            savedProfile.fieldOfStudy || "";
 
-                    email: email,
+        careerGoal.value =
+            savedProfile.careerGoal || "";
 
-                    password: password
+        careerDescription.value =
+            savedProfile.careerDescription || "";
 
-                })
+
+        /* Restore interests */
+
+        if (Array.isArray(savedProfile.interests)) {
+
+            interestCheckboxes.forEach(function (checkbox) {
+
+                checkbox.checked =
+                    savedProfile.interests.includes(
+                        checkbox.value
+                    );
 
             });
 
+        }
 
-            const result = await response.json();
+
+        updatePreview();
+
+    }
 
 
-            if (result.success) {
+    /* ================= UPDATE PREVIEW ================= */
 
-                // Save logged-in user's name
-                localStorage.setItem(
-                    "loggedInUser",
-                    result.name
-                );
+    function updatePreview() {
 
-                alert(result.message);
+        const name =
+            fullName.value.trim();
 
-                // Go to the correct page after login
+        const userEmail =
+            email.value.trim();
 
-            if (result.nextPage === "profile") {
+        const educationValue =
+            education.value;
 
-                 window.location.href =
-                       "./profile.html";
+        const fieldValue =
+            fieldOfStudy.value.trim();
 
-            } else {
+        const goalValue =
+            careerGoal.value.trim();
 
-                window.location.href =
-                         "./dashboard.html";
+
+        /* Name */
+
+        if (name) {
+
+            previewName.textContent = name;
+
+        } else {
+
+            previewName.textContent = "Your Name";
 
         }
 
-            } else {
 
-                alert(result.message);
+        /* Email */
+
+        if (userEmail) {
+
+            previewEmail.textContent = userEmail;
+
+        } else {
+
+            previewEmail.textContent = "your@email.com";
+
+        }
+
+
+        /* Education */
+
+        if (educationValue) {
+
+            const selectedOption =
+                education.options[
+                    education.selectedIndex
+                ];
+
+            previewEducation.textContent =
+                selectedOption.textContent;
+
+        } else {
+
+            previewEducation.textContent =
+                "Not added";
+
+        }
+
+
+        /* Field */
+
+        if (fieldValue) {
+
+            previewField.textContent =
+                fieldValue;
+
+        } else {
+
+            previewField.textContent =
+                "Not added";
+
+        }
+
+
+        /* Career Goal */
+
+        if (goalValue) {
+
+            previewGoal.textContent =
+                goalValue;
+
+        } else {
+
+            previewGoal.textContent =
+                "Not added";
+
+        }
+
+
+        /* Avatar */
+
+        if (name) {
+
+            avatarPreview.textContent =
+                name.charAt(0).toUpperCase();
+
+        } else {
+
+            avatarPreview.textContent = "✨";
+
+        }
+
+
+        updateProgress();
+
+    }
+
+
+    /* ================= PROFILE PROGRESS ================= */
+
+    function updateProgress() {
+
+        const fields = [
+
+            fullName.value.trim(),
+
+            email.value.trim(),
+
+            location.value.trim(),
+
+            education.value,
+
+            fieldOfStudy.value.trim(),
+
+            careerGoal.value.trim(),
+
+            careerDescription.value.trim()
+
+        ];
+
+
+        const completed =
+            fields.filter(function (value) {
+
+                return value !== "";
+
+            }).length;
+
+
+        const percentage =
+            Math.round(
+                (completed / fields.length) * 100
+            );
+
+
+        completionPercent.textContent =
+            percentage + "%";
+
+        progressFill.style.width =
+            percentage + "%";
+
+    }
+
+
+    /* ================= LIVE UPDATE ================= */
+
+    fullName.addEventListener(
+        "input",
+        updatePreview
+    );
+
+    email.addEventListener(
+        "input",
+        updatePreview
+    );
+
+    location.addEventListener(
+        "input",
+        updatePreview
+    );
+
+    education.addEventListener(
+        "change",
+        updatePreview
+    );
+
+    fieldOfStudy.addEventListener(
+        "input",
+        updatePreview
+    );
+
+    careerGoal.addEventListener(
+        "input",
+        updatePreview
+    );
+
+    careerDescription.addEventListener(
+        "input",
+        updatePreview
+    );
+
+
+    interestCheckboxes.forEach(
+        function (checkbox) {
+
+            checkbox.addEventListener(
+                "change",
+                updatePreview
+            );
+
+        }
+    );
+
+
+    /* ================= SAVE PROFILE ================= */
+
+    profileForm.addEventListener(
+        "submit",
+        function (event) {
+
+            event.preventDefault();
+
+
+            const name =
+                fullName.value.trim();
+
+            const userEmail =
+                email.value.trim();
+
+            const userLocation =
+                location.value.trim();
+
+            const selectedEducation =
+                education.value;
+
+            const studyField =
+                fieldOfStudy.value.trim();
+
+            const goal =
+                careerGoal.value.trim();
+
+            const description =
+                careerDescription.value.trim();
+
+
+            /* Basic validation */
+
+            if (!name) {
+
+                alert("Please enter your full name.");
+
+                fullName.focus();
+
+                return;
 
             }
 
 
-        } catch (error) {
+            if (!userEmail) {
 
-            console.error(
-                "Login error:",
-                error
-            );
+                alert("Please enter your email address.");
 
-            alert(
-                "Unable to connect to the server. Please make sure Flask is running."
-            );
+                email.focus();
 
-        }
-
-    });
-
-}
-
-// ============================================================
-// GET STARTED BUTTON
-// ============================================================
-
-const getStartedButton = document.getElementById("getStarted");
-
-if (getStartedButton) {
-
-    getStartedButton.addEventListener("click", function () {
-
-        window.location.href = "signup.html";
-
-    });
-
-}
-
-
-
-// ============================================================
-// SIGNUP FORM
-// ============================================================
-
-const signupForm = document.getElementById("signupForm");
-
-if (signupForm) {
-
-    signupForm.addEventListener("submit", async function (event) {
-
-        event.preventDefault();
-
-        const nameInput = document.getElementById("signupName");
-        const emailInput = document.getElementById("signupEmail");
-        const passwordInput = document.getElementById("signupPassword");
-        const confirmPasswordInput =
-            document.getElementById("confirmPassword");
-
-        const name = nameInput ? nameInput.value.trim() : "";
-        const email = emailInput ? emailInput.value.trim() : "";
-        const password =
-            passwordInput ? passwordInput.value : "";
-        const confirmPassword =
-            confirmPasswordInput
-                ? confirmPasswordInput.value
-                : "";
-
-
-        // Check empty fields
-        if (
-            name === "" ||
-            email === "" ||
-            password === "" ||
-            confirmPassword === ""
-        ) {
-
-            alert("Please fill in all fields.");
-
-            return;
-        }
-
-
-        // Check password length
-        if (password.length < 6) {
-
-            alert("Password must contain at least 6 characters.");
-
-            return;
-        }
-
-
-        // Check passwords
-        if (password !== confirmPassword) {
-
-            alert("Passwords do not match!");
-
-            return;
-        }
-
-
-        // Split full name into first name and last name
-        const nameParts = name.split(/\s+/);
-
-        const firstName = nameParts[0];
-
-        const lastName =
-            nameParts.length > 1
-                ? nameParts.slice(1).join(" ")
-                : "";
-
-
-        // Last name is required by the backend
-        if (lastName === "") {
-
-            alert("Please enter your first name and last name.");
-
-            return;
-        }
-
-
-        try {
-
-            const response = await fetch("/api/signup", {
-
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
-                body: JSON.stringify({
-
-                    firstName: firstName,
-
-                    lastName: lastName,
-
-                    email: email,
-
-                    password: password
-
-                })
-
-            });
-
-
-            const result = await response.json();
-
-
-            if (result.success) {
-
-                alert(result.message);
-
-                // After successful signup
-                window.location.href = "login.html";
-
-            } else {
-
-                alert(result.message);
+                return;
 
             }
 
 
-        } catch (error) {
+            if (!selectedEducation) {
 
-            console.error("Signup error:", error);
+                alert("Please select your current education.");
 
-            alert(
-                "Unable to connect to the server. Please make sure Flask is running."
-            );
+                education.focus();
 
-        }
+                return;
 
-    });
+            }
 
-}
 
-// ============================================================
-// PROFILE FORM
-// ============================================================
+            /* Collect interests */
 
-const profileForm = document.getElementById("profileForm");
+            const selectedInterests = [];
 
-if (profileForm) {
+            interestCheckboxes.forEach(
+                function (checkbox) {
 
-    profileForm.addEventListener("submit", async function (event) {
+                    if (checkbox.checked) {
 
-        event.preventDefault();
+                        selectedInterests.push(
+                            checkbox.value
+                        );
 
-        // Get basic information
-        const fullName =
-            document.getElementById("fullName").value.trim();
+                    }
 
-        const ageGroup =
-            document.getElementById("ageGroup").value;
-
-        const education =
-            document.getElementById("education").value;
-
-        // Get stream
-        const selectedStream =
-            document.querySelector('input[name="stream"]:checked');
-
-        // Get career goal
-        const selectedGoal =
-            document.querySelector('input[name="goal"]:checked');
-
-        // Get interests
-        const selectedInterests =
-            document.querySelectorAll(
-                'input[name="interest"]:checked'
-            );
-
-        // Validation
-        if (!fullName || !ageGroup || !education) {
-            alert("Please complete your basic profile information.");
-            return;
-        }
-
-        if (!selectedStream) {
-            alert("Please select your education stream.");
-            return;
-        }
-
-        if (!selectedGoal) {
-            alert("Please select your career goal.");
-            return;
-        }
-
-        if (selectedInterests.length === 0) {
-            alert("Please select at least one interest.");
-            return;
-        }
-
-        // Create profile data
-        const profileData = {
-
-            fullName: fullName,
-
-            ageGroup: ageGroup,
-
-            education: education,
-
-            stream: selectedStream.value,
-
-            interests: Array.from(selectedInterests).map(
-                item => item.value
-            ),
-
-            careerGoal: selectedGoal.value
-        };
-
-        console.log("Profile data:", profileData);
-
-        try {
-
-            const response = await fetch(
-                "/api/profile",
-                {
-                    method: "POST",
-
-                    credentials: "include",
-
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-
-                    body: JSON.stringify(profileData)
                 }
             );
 
-            // Read response as text first
-            const responseText = await response.text();
 
-            console.log(
-                "Profile server response:",
-                responseText
+            /* Profile object */
+
+            const profileData = {
+
+                fullName: name,
+
+                email: userEmail,
+
+                location: userLocation,
+
+                education: selectedEducation,
+
+                fieldOfStudy: studyField,
+
+                interests: selectedInterests,
+
+                careerGoal: goal,
+
+                careerDescription: description
+
+            };
+
+
+            /* Save profile */
+
+            localStorage.setItem(
+                "careerProfile",
+                JSON.stringify(profileData)
             );
 
-          let result;
 
-            try {
+            /* Keep login information updated */
 
-                result = JSON.parse(responseText);
+            const existingUser =
+                JSON.parse(
+                    localStorage.getItem(
+                        "careerCompassUser"
+                    )
+                ) || {};
 
-            } catch (jsonError) {
 
-                console.error(
-                    "REAL SERVER RESPONSE:",
-                    responseText
-                );
+            existingUser.name = name;
 
-                alert(
-                    "FLASK RESPONSE:\n\n" +
-                    responseText.substring(0, 1000)
-                );
+            existingUser.email = userEmail;
 
-                return;
-            }
 
-            // Backend success
-            if (response.ok && result.success) {
-
-                localStorage.setItem(
-                    "careerCompassProfile",
-                    JSON.stringify(profileData)
-                );
-
-                alert(
-                    "Profile saved! Let's discover your career."
-                );
-
-                window.location.href =
-                    "questionnaire.html";
-
-                return;
-            }
-
-            // Backend error
-            alert(
-                result.message ||
-                "Unable to save your profile."
+            localStorage.setItem(
+                "careerCompassUser",
+                JSON.stringify(existingUser)
             );
 
-        } catch (error) {
 
-            console.error(
-                "Profile request error:",
-                error
-            );
+            /* Success */
 
             alert(
-                "Unable to save the profile. " +
-                "Please try again."
+                "Your profile has been saved successfully!"
             );
+
+
+            /* Continue to assessment */
+
+            window.location.href =
+                "questionnaire.html";
+
         }
+    );
 
-    });
 
-}
+    /* ================= CLEAR FORM ================= */
 
-// ============================================================
-// BACK TO HOME BUTTONS
-// ============================================================
+    clearBtn.addEventListener(
+        "click",
+        function () {
 
-const homeButtons =
-    document.querySelectorAll("[data-home]");
+            const confirmClear =
+                confirm(
+                    "Are you sure you want to clear your profile?"
+                );
 
-homeButtons.forEach(function (button) {
 
-    button.addEventListener("click", function () {
+            if (!confirmClear) {
+                return;
+            }
 
-        window.location.href = "index.html";
 
-    });
+            profileForm.reset();
+
+
+            localStorage.removeItem(
+                "careerProfile"
+            );
+
+
+            /* Restore email from logged-in user */
+
+            const loggedInUser =
+                JSON.parse(
+                    localStorage.getItem(
+                        "careerCompassUser"
+                    )
+                );
+
+
+            if (
+                loggedInUser &&
+                loggedInUser.email
+            ) {
+
+                email.value =
+                    loggedInUser.email;
+
+            }
+
+
+            updatePreview();
+
+        }
+    );
+
+
+    /* ================= INITIAL LOAD ================= */
+
+    loadProfile();
 
 });
-
-
-// ============================================================
-// LOGOUT
-// ============================================================
-
-const logoutButton =
-    document.getElementById("logoutButton");
-
-if (logoutButton) {
-
-    logoutButton.addEventListener("click", function () {
-
-        localStorage.removeItem("careerCompassProfile");
-
-        window.location.href = "index.html";
-
-    });
-
-}
-
-
-// ============================================================
-// MOBILE MENU
-// ============================================================
-
-const menuButton =
-    document.getElementById("menuButton");
-
-const mobileMenu =
-    document.getElementById("mobileMenu");
-
-if (menuButton && mobileMenu) {
-
-    menuButton.addEventListener("click", function () {
-
-        mobileMenu.classList.toggle("active");
-
-    });
-
-}
-
-
-// ============================================================
-// CURRENT YEAR
-// ============================================================
-
-const currentYear =
-    document.getElementById("currentYear");
-
-if (currentYear) {
-
-    currentYear.textContent =
-        new Date().getFullYear();
-
-}
-
-
-// ============================================================
-// END OF SCRIPT
-// ============================================================
-// ============================================================
-// AI CHATBOT
-// Works on every page: injects UI if missing, guards nulls,
-// falls back to /api/chat if /chat fails.
-// ============================================================
-
-function initChatbot() {
-    let chatbotButton = document.getElementById("chatbot-button");
-    let chatbotBox = document.getElementById("chatbot-box");
-    let closeChat = document.getElementById("close-chat");
-    let userInput = document.getElementById("user-input");
-    let sendButton = document.getElementById("send-button");
-    let chatMessages = document.getElementById("chat-messages");
-
-    // Inject chatbot UI on pages that don't have it
-    if (!chatbotButton || !chatbotBox) {
-        const btn = document.createElement("button");
-        btn.id = "chatbot-button";
-        btn.textContent = "💬";
-        btn.setAttribute("aria-label", "Open chat");
-        document.body.appendChild(btn);
-
-        const box = document.createElement("div");
-        box.id = "chatbot-box";
-        box.innerHTML =
-            '<div id="chatbot-header">Career Assistant <span id="close-chat">×</span></div>' +
-            '<div id="chat-messages"><div class="bot-message">Hi! I\'m your Career Assistant. How can I help you?</div>' +
-            '<div class="chat-quick-options">' +
-            '<button class="chat-quick-btn" data-msg="Suggest careers for artistic people">🎨 Artistic careers</button>' +
-            '<button class="chat-quick-btn" data-msg="What is investigative?">🔍 What is Investigative?</button>' +
-            '<button class="chat-quick-btn" data-msg="How does the assessment work?">📝 Assessment help</button>' +
-            '<button class="chat-quick-btn" data-msg="How it works">✨ How it works</button>' +
-            '</div></div>' +
-            '<div id="chat-input-area"><input type="text" id="user-input" placeholder="Type your message..."><button id="send-button">Send</button></div>';
-        document.body.appendChild(box);
-
-        chatbotButton = btn;
-        chatbotBox = box;
-        closeChat = box.querySelector("#close-chat");
-        userInput = box.querySelector("#user-input");
-        sendButton = box.querySelector("#send-button");
-        chatMessages = box.querySelector("#chat-messages");
-    }
-
-    if (!chatbotButton || !chatbotBox || !userInput || !sendButton || !chatMessages) {
-        return;
-    }
-
-    chatbotButton.addEventListener("click", function () {
-        chatbotBox.style.display = "flex";
-        userInput.focus();
-    });
-
-    if (closeChat) {
-        closeChat.addEventListener("click", function () {
-            chatbotBox.style.display = "none";
-        });
-    }
-
-    function addMessage(text, cls) {
-        const el = document.createElement("div");
-        el.className = cls;
-        el.style.whiteSpace = "pre-line";
-        el.textContent = text;
-        chatMessages.appendChild(el);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-
-    // Show quick-option buttons (after every bot reply)
-    function showQuickOptions() {
-        // Avoid duplicates if user typed instead of clicking
-        const old = chatMessages.querySelector(".chat-quick-options");
-        if (old) {
-            old.remove();
-        }
-        const wrap = document.createElement("div");
-        wrap.className = "chat-quick-options";
-        [
-            ["🎨 Artistic careers", "Suggest careers for artistic people"],
-            ["🔍 What is Investigative?", "What is investigative?"],
-            ["📝 Assessment help", "How does the assessment work?"],
-            ["✨ How it works", "How it works"]
-        ].forEach(function (pair) {
-            const b = document.createElement("button");
-            b.className = "chat-quick-btn";
-            b.textContent = pair[0];
-            b.setAttribute("data-msg", pair[1]);
-            wrap.appendChild(b);
-        });
-        chatMessages.appendChild(wrap);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-
-    function sendMessage() {
-        const message = userInput.value.trim();
-
-        if (message === "") {
-            return;
-        }
-
-        sendText(message);
-        userInput.value = "";
-    }
-
-    // Send any text (typed or from a quick button)
-    function sendText(message) {
-        addMessage(message, "user-message");
-
-        // Show typing indicator
-        const typing = document.createElement("div");
-        typing.className = "bot-message";
-        typing.textContent = "Typing...";
-        chatMessages.appendChild(typing);
-
-        function postMessage(url) {
-            return fetch(url, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    message: message
-                })
-            }).then(function (response) {
-                if (!response.ok) {
-                    throw new Error("HTTP " + response.status);
-                }
-                return response.json();
-            });
-        }
-
-        postMessage("/api/chat")
-            .catch(function () {
-                return postMessage("/chat");
-            })
-            .then(function (data) {
-                typing.remove();
-                addMessage(data.response || "Sorry, I got an empty reply.", "bot-message");
-                showQuickOptions();
-            })
-            .catch(function (error) {
-                console.error("Chat error:", error);
-                typing.remove();
-                addMessage(
-                    "Sorry, I can't reach the server. Please make sure Flask (backend/app.py) is running.",
-                    "bot-message"
-                );
-                showQuickOptions();
-            });
-    }
-
-    sendButton.addEventListener("click", sendMessage);
-
-    userInput.addEventListener("keypress", function (event) {
-        if (event.key === "Enter") {
-            sendMessage();
-        }
-    });
-
-    // Quick-option buttons: one click = send + answer
-    chatMessages.addEventListener("click", function (event) {
-        const btn = event.target.closest(".chat-quick-btn");
-        if (!btn) {
-            return;
-        }
-        const preset = btn.getAttribute("data-msg") || btn.textContent.trim();
-        // Remove the buttons after first use so chat stays clean
-        const wrap = btn.closest(".chat-quick-options");
-        sendText(preset);
-        if (wrap) {
-            wrap.remove();
-        }
-    });
-}
-
-if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initChatbot);
-} else {
-    initChatbot();
-}

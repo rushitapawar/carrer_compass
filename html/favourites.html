@@ -4,25 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Saved Careers | Career Compass AI</title>
-
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <title>Favourites | Career Compass AI</title>
 
     <style>
-
-        :root {
-            --plum: #443846;
-            --plum-dark: #322936;
-            --pink: #e998b3;
-            --pink-light: #f6c4d3;
-            --cream: #f7f5f2;
-            --white: #ffffff;
-            --text: #342d3b;
-            --muted: #756d76;
-            --border: #e4dfe2;
-            --soft-pink: #fff0f5;
-        }
-
         * {
             margin: 0;
             padding: 0;
@@ -30,14 +14,10 @@
         }
 
         body {
-            font-family: "DM Sans", sans-serif;
-            background: var(--cream);
-            color: var(--text);
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
+            font-family: "DM Sans", Arial, sans-serif;
+            background: #f8f5f2;
+            color: #342d3b;
+            min-height: 100vh;
         }
 
         /* =========================
@@ -45,59 +25,86 @@
         ========================= */
 
         .navbar {
-            min-height: 76px;
-            background: var(--white);
-            border-bottom: 1px solid var(--border);
-
+            height: 82px;
+            background: rgba(255, 255, 255, 0.97);
+            border-bottom: 1px solid #e7dfdb;
             display: flex;
             align-items: center;
             justify-content: space-between;
-
-            padding: 0 7%;
+            padding: 0 55px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
-        .logo {
-            font-family: "Playfair Display", serif;
-            font-size: 23px;
-            font-weight: 700;
-            color: var(--plum);
-            white-space: nowrap;
+        .brand {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            width: 175px;
+            height: 55px;
         }
 
-        .logo span {
-            color: var(--pink);
+        .brand img {
+            width: 175px;
+            height: 55px;
+            object-fit: contain;
+            display: block;
         }
 
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 28px;
+            gap: 30px;
         }
 
         .nav-links a {
-            color: var(--muted);
+            text-decoration: none;
+            color: #756d76;
             font-size: 14px;
             font-weight: 600;
-            transition: 0.2s;
+            transition: 0.25s ease;
         }
 
-        .nav-links a:hover,
+        .nav-links a:hover {
+            color: #443846;
+        }
+
         .nav-links a.active {
-            color: var(--plum);
+            color: #443846;
+            position: relative;
         }
 
-        .profile {
-            width: 38px;
-            height: 38px;
+        .nav-links a.active::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -10px;
+            height: 2px;
+            background: #e998b3;
+            border-radius: 10px;
+        }
+
+        .profile-btn {
+            width: 43px;
+            height: 43px;
             border-radius: 50%;
-
-            background: var(--soft-pink);
-            color: var(--plum);
-
-            display: grid;
-            place-items: center;
-
+            background: #443846;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 15px;
             font-weight: 700;
+            box-shadow: 0 6px 16px rgba(68, 56, 70, 0.18);
+            transition: 0.25s ease;
+        }
+
+        .profile-btn:hover {
+            transform: translateY(-2px);
+            background: #322936;
         }
 
         /* =========================
@@ -106,73 +113,79 @@
 
         .page {
             max-width: 1180px;
-            margin: auto;
-            padding: 55px 25px 80px;
-        }
-
-        .eyebrow {
-            color: #b66d89;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 12px;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-
-        .page-title {
-            font-family: "Playfair Display", serif;
-            color: var(--plum);
-            font-size: cl
-            amp(34px, 5vw, 46px);
-            margin-bottom: 12px;
-        }
-
-        .page-description {
-            max-width: 650px;
-            color: var(--muted);
-            font-size: 15px;
-            line-height: 1.75;
+            margin: 0 auto;
+            padding: 65px 35px 80px;
         }
 
         /* =========================
-           TOP BAR
+           HERO
         ========================= */
 
-        .top-bar {
-            margin-top: 35px;
+        .hero {
+            text-align: center;
+            margin-bottom: 48px;
+        }
 
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            background: #f6e6eb;
+            color: #8c566b;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+
+        .hero h1 {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 46px;
+            line-height: 1.15;
+            color: #443846;
+            margin-bottom: 15px;
+        }
+
+        .hero h1 span {
+            color: #b66d87;
+        }
+
+        .hero p {
+            max-width: 620px;
+            margin: auto;
+            color: #756d76;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        /* =========================
+           SAVED COUNT
+        ========================= */
+
+        .saved-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-
-            gap: 20px;
+            margin-bottom: 22px;
         }
 
-        .saved-count {
-            color: var(--muted);
-            font-size: 14px;
+        .saved-header h2 {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 25px;
+            color: #443846;
         }
 
-        .saved-count strong {
-            color: var(--plum);
-        }
-
-        .browse-btn {
-            background: var(--plum);
-            color: white;
-
-            padding: 12px 20px;
-            border-radius: 10px;
-
+        .count {
+            background: white;
+            border: 1px solid #e4dcda;
+            color: #756d76;
+            padding: 8px 14px;
+            border-radius: 30px;
             font-size: 13px;
             font-weight: 700;
-
-            transition: 0.2s;
-        }
-
-        .browse-btn:hover {
-            background: var(--plum-dark);
-            transform: translateY(-1px);
         }
 
         /* =========================
@@ -180,197 +193,112 @@
         ========================= */
 
         .career-grid {
-            margin-top: 25px;
-
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-
-            gap: 22px;
+            gap: 24px;
         }
 
         .career-card {
-            background: var(--white);
-            border: 1px solid var(--border);
-            border-radius: 18px;
-
-            overflow: hidden;
-
-            box-shadow: 0 7px 25px rgba(68, 56, 70, 0.05);
-
-            transition: 0.25s;
+            background: white;
+            border: 1px solid #e7dfdb;
+            border-radius: 22px;
+            padding: 27px;
+            position: relative;
+            min-height: 260px;
+            box-shadow: 0 8px 25px rgba(68, 56, 70, 0.06);
+            transition: 0.3s ease;
         }
 
         .career-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(68, 56, 70, 0.09);
+            transform: translateY(-5px);
+            box-shadow: 0 16px 35px rgba(68, 56, 70, 0.11);
         }
 
-        .card-top {
-            background: linear-gradient(
-                135deg,
-                #fff0f5,
-                #f9e9ef
-            );
+        .heart {
+            position: absolute;
+            right: 20px;
+            top: 19px;
+            width: 37px;
+            height: 37px;
+            border-radius: 50%;
+            border: 1px solid #eadfe1;
+            background: #fff8fa;
+            color: #b66d87;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            transition: 0.2s ease;
+        }
 
-            padding: 24px;
-
-            position: relative;
+        .heart:hover {
+            transform: scale(1.08);
+            background: #f6e6eb;
         }
 
         .career-icon {
-            width: 52px;
-            height: 52px;
-
-            background: white;
-            border-radius: 15px;
-
-            display: grid;
-            place-items: center;
-
-            font-size: 25px;
-
-            margin-bottom: 15px;
+            width: 58px;
+            height: 58px;
+            border-radius: 17px;
+            background: #f7e8ed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 27px;
+            margin-bottom: 20px;
         }
 
-        .heart-btn {
-            position: absolute;
-
-            top: 20px;
-            right: 20px;
-
-            width: 38px;
-            height: 38px;
-
-            border: none;
-            border-radius: 50%;
-
-            background: white;
-
-            color: #d56f91;
-
-            font-size: 19px;
-
-            cursor: pointer;
-
-            box-shadow: 0 3px 10px rgba(68, 56, 70, 0.08);
-
-            transition: 0.2s;
+        .career-card h3 {
+            font-family: Georgia, "Times New Roman", serif;
+            color: #443846;
+            font-size: 21px;
+            margin-bottom: 10px;
+            padding-right: 40px;
         }
 
-        .heart-btn:hover {
-            transform: scale(1.08);
-        }
-
-        .career-card h2 {
-            font-family: "Playfair Display", serif;
-            color: var(--plum);
-            font-size: 22px;
-            line-height: 1.25;
-        }
-
-        .card-body {
-            padding: 22px;
-        }
-
-        .career-description {
-            color: var(--muted);
-            font-size: 13px;
-            line-height: 1.75;
-
-            min-height: 70px;
-        }
-
-        .details {
-            margin-top: 18px;
-
-            padding-top: 17px;
-
-            border-top: 1px solid var(--border);
-        }
-
-        .detail-label {
-            font-size: 11px;
-            color: #9a8791;
-
-            text-transform: uppercase;
-            letter-spacing: 1px;
-
-            font-weight: 700;
-
-            margin-bottom: 7px;
-        }
-
-        .detail-text {
-            color: var(--text);
+        .career-card p {
+            color: #756d76;
             font-size: 13px;
             line-height: 1.6;
-        }
-
-        .tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 7px;
-        }
-
-        .tag {
-            background: var(--soft-pink);
-            color: #89566b;
-
-            padding: 6px 9px;
-
-            border-radius: 20px;
-
-            font-size: 11px;
-            font-weight: 600;
+            min-height: 42px;
         }
 
         .card-actions {
-            margin-top: 20px;
-
             display: flex;
-            gap: 9px;
+            gap: 10px;
+            margin-top: 21px;
         }
 
-        .details-btn {
-            flex: 1;
+        .btn {
+            text-decoration: none;
+            border-radius: 11px;
+            padding: 10px 14px;
+            font-size: 12px;
+            font-weight: 700;
+            transition: 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-            background: var(--plum);
+        .btn-primary {
+            background: #443846;
             color: white;
-
-            text-align: center;
-
-            padding: 11px;
-
-            border-radius: 9px;
-
-            font-size: 12px;
-            font-weight: 700;
-
-            transition: 0.2s;
         }
 
-        .details-btn:hover {
-            background: var(--plum-dark);
+        .btn-primary:hover {
+            background: #322936;
         }
 
-        .compare-btn {
-            padding: 11px 13px;
-
-            border: 1px solid var(--border);
-            background: white;
-
-            color: var(--plum);
-
-            border-radius: 9px;
-
-            font-size: 12px;
-            font-weight: 700;
-
-            cursor: pointer;
+        .btn-secondary {
+            background: #f7f2f0;
+            color: #443846;
+            border: 1px solid #e5deda;
         }
 
-        .compare-btn:hover {
-            background: var(--soft-pink);
+        .btn-secondary:hover {
+            background: #eee7e4;
         }
 
         /* =========================
@@ -378,78 +306,40 @@
         ========================= */
 
         .empty-state {
-            display: none;
-
-            margin-top: 30px;
-
             background: white;
-
-            border: 1px dashed #d9cbd2;
-
-            border-radius: 20px;
-
+            border: 1px solid #e7dfdb;
+            border-radius: 25px;
+            padding: 65px 30px;
             text-align: center;
-
-            padding: 70px 25px;
+            box-shadow: 0 8px 25px rgba(68, 56, 70, 0.05);
         }
 
         .empty-icon {
-            width: 72px;
-            height: 72px;
-
-            background: var(--soft-pink);
-
-            border-radius: 22px;
-
-            display: grid;
-            place-items: center;
-
-            margin: 0 auto 20px;
-
-            font-size: 30px;
+            width: 78px;
+            height: 78px;
+            margin: 0 auto 22px;
+            border-radius: 50%;
+            background: #f8e9ee;
+            color: #b66d87;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
         }
 
         .empty-state h2 {
-            font-family: "Playfair Display", serif;
-
-            color: var(--plum);
-
-            font-size: 28px;
-
-            margin-bottom: 10px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 27px;
+            color: #443846;
+            margin-bottom: 12px;
         }
 
         .empty-state p {
+            color: #756d76;
             max-width: 500px;
-
-            margin: auto;
-
-            color: var(--muted);
-
+            margin: 0 auto 25px;
+            line-height: 1.7;
             font-size: 14px;
-
-            line-height: 1.8;
-        }
-
-        .empty-btn {
-            display: inline-block;
-
-            margin-top: 24px;
-
-            background: var(--plum);
-            color: white;
-
-            padding: 13px 22px;
-
-            border-radius: 10px;
-
-            font-size: 13px;
-
-            font-weight: 700;
-        }
-
-        .empty-btn:hover {
-            background: var(--plum-dark);
         }
 
         /* =========================
@@ -457,16 +347,10 @@
         ========================= */
 
         footer {
-            background: white;
-
-            border-top: 1px solid var(--border);
-
-            padding: 28px 7%;
-
+            border-top: 1px solid #e5ddda;
             text-align: center;
-
-            color: var(--muted);
-
+            padding: 25px;
+            color: #8a8188;
             font-size: 12px;
         }
 
@@ -476,65 +360,65 @@
 
         @media (max-width: 950px) {
 
+            .navbar {
+                padding: 0 25px;
+            }
+
+            .nav-links {
+                gap: 16px;
+            }
+
+            .nav-links a:nth-child(n+5) {
+                display: none;
+            }
+
             .career-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-
         }
 
         @media (max-width: 650px) {
 
             .navbar {
-                padding: 15px 5%;
-
-                flex-wrap: wrap;
-
-                gap: 12px;
+                height: 72px;
+                padding: 0 18px;
             }
 
-            .logo {
-                font-size: 19px;
+            .brand,
+            .brand img {
+                width: 145px;
+                height: 48px;
             }
 
             .nav-links {
-                order: 3;
-
-                width: 100%;
-
-                justify-content: space-between;
-
-                gap: 10px;
-            }
-
-            .nav-links a {
-                font-size: 12px;
-            }
-
-            .profile {
-                margin-left: auto;
+                display: none;
             }
 
             .page {
-                padding: 40px 17px 60px;
+                padding: 45px 18px 60px;
+            }
+
+            .hero h1 {
+                font-size: 35px;
+            }
+
+            .hero p {
+                font-size: 14px;
+            }
+
+            .saved-header {
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .saved-header h2 {
+                font-size: 22px;
             }
 
             .career-grid {
                 grid-template-columns: 1fr;
             }
-
-            .top-bar {
-                align-items: flex-start;
-
-                flex-direction: column;
-            }
-
-            .browse-btn {
-                width: 100%;
-                text-align: center;
-            }
-
         }
-
     </style>
 </head>
 
@@ -546,8 +430,11 @@
 
     <header class="navbar">
 
-        <a href="index.html" class="logo">
-            Career Compass <span>AI ✦</span>
+        <a href="dashboard.html" class="brand">
+            <img
+                src="../images/logo.png"
+                alt="Career Compass AI"
+            >
         </a>
 
         <nav class="nav-links">
@@ -557,77 +444,82 @@
             </a>
 
             <a href="results.html">
-                My Results
+                Results
             </a>
 
             <a href="favourites.html" class="active">
-                Saved
+                Favourites
             </a>
 
             <a href="compare.html">
                 Compare
             </a>
 
+            <a href="contact.html">
+                Contact
+            </a>
+
         </nav>
 
-        <div class="profile">
+        <a href="profile.html" class="profile-btn">
             A
-        </div>
+        </a>
 
     </header>
 
 
     <!-- =========================
-         MAIN CONTENT
+         MAIN
     ========================= -->
 
     <main class="page">
 
-        <p class="eyebrow">
-            Your career collection
-        </p>
+        <section class="hero">
 
-        <h1 class="page-title">
-            Saved Careers
-        </h1>
+            <div class="hero-badge">
+                ♡ Your saved careers
+            </div>
 
-        <p class="page-description">
-            Keep track of the career paths that caught your interest.
-            Save careers from your results and come back whenever you
-            want to explore them again.
-        </p>
+            <h1>
+                Your Career
+                <span>Favourites</span>
+            </h1>
 
-
-        <!-- TOP BAR -->
-
-        <div class="top-bar">
-
-            <p class="saved-count">
-                <strong id="savedCount">0</strong>
-                saved career(s)
+            <p>
+                Keep the career paths that caught your attention
+                in one place and explore them whenever you're ready.
             </p>
 
-            <a href="job-roles.html" class="browse-btn">
-                Explore More Careers →
-            </a>
+        </section>
+
+
+        <div class="saved-header">
+
+            <h2>
+                Saved Careers
+            </h2>
+
+            <div class="count" id="savedCount">
+                0 saved
+            </div>
 
         </div>
 
 
-        <!-- CAREER CARDS -->
+        <!-- CAREERS WILL APPEAR HERE -->
 
         <section
-            id="careerGrid"
             class="career-grid"
-        >
-        </section>
+            id="careerGrid"
+        ></section>
 
 
         <!-- EMPTY STATE -->
 
         <section
-            id="emptyState"
             class="empty-state"
+            id="emptyState"
+            style="display:none;"
         >
 
             <div class="empty-icon">
@@ -635,21 +527,19 @@
             </div>
 
             <h2>
-                No saved careers yet
+                No favourite careers yet
             </h2>
 
             <p>
-                When you find a career that interests you,
-                save it from your career results. Your saved
-                careers will appear here so you can easily
-                explore them later.
+                Explore your career recommendations and save
+                the ones that interest you. They will appear here.
             </p>
 
             <a
                 href="results.html"
-                class="empty-btn"
+                class="btn btn-primary"
             >
-                Explore My Results →
+                Explore Career Results
             </a>
 
         </section>
@@ -662,761 +552,239 @@
     ========================= -->
 
     <footer>
-
-        © 2026 Career Compass AI ·
-        Explore your future with confidence.
-
+        © 2026 Career Compass AI · Find a career that feels right.
     </footer>
 
 
-    <!-- =========================
-         JAVASCRIPT
-    ========================= -->
+    <script>
 
-   <script>
+        /* ==========================================
+           SAVED CAREERS
+        ========================================== */
 
-/* =====================================================
-   FAVOURITES - BACKEND CONNECTION
-===================================================== */
+        const careerGrid =
+            document.getElementById("careerGrid");
 
-const careerGrid =
-    document.getElementById("careerGrid");
+        const emptyState =
+            document.getElementById("emptyState");
 
-const emptyState =
-    document.getElementById("emptyState");
-
-const savedCount =
-    document.getElementById("savedCount");
+        const savedCount =
+            document.getElementById("savedCount");
 
 
-/* =====================================================
-   ESCAPE HTML
-===================================================== */
+        let savedCareers = [];
 
-function escapeHTML(value) {
-
-    return String(value).replace(
-        /[&<>"']/g,
-        function(char) {
-
-            return {
-                "&": "&amp;",
-                "<": "&lt;",
-                ">": "&gt;",
-                '"': "&quot;",
-                "'": "&#39;"
-            }[char];
-
+        try {
+            savedCareers =
+                JSON.parse(
+                    localStorage.getItem("savedCareers")
+                ) || [];
+        } catch (error) {
+            savedCareers = [];
         }
-    );
-}
-
-
-/* =====================================================
-   GET CAREER NAME
-===================================================== */
-
-function getCareerName(career) {
-
-    return (
-        career.careerTitle ||
-        career.name ||
-        career.title ||
-        "Career"
-    );
-
-}
-
-
-/* =====================================================
-   GET CAREER ID
-===================================================== */
-
-function getCareerId(career) {
-
-    return (
-        career.onetSocCode ||
-        career.careerTitle ||
-        career.name ||
-        career.title ||
-        ""
-    );
-
-}
-
-
-/* =====================================================
-   LOAD SAVED CAREERS FROM BACKEND
-===================================================== */
-
-async function loadSavedCareers() {
-
-    try {
-
-        const response =
-            await fetch(
-                "/api/saved-careers"
-            );
-
-
-        const result =
-            await response.json();
-
-
-        if (!result.success) {
-
-            if (response.status === 401) {
-
-                alert(
-                    "Please login first."
-                );
-
-                window.location.href =
-                    "./login.html";
-
-                return;
-            }
-
-
-            throw new Error(
-                result.message ||
-                "Unable to load saved careers."
-            );
-        }
-
-
-        let backendCareers =
-            result.careers || [];
 
 
         /* ==========================================
-           MIGRATE OLD LOCALSTORAGE CAREERS
-           ========================================== */
+           ICONS
+        ========================================== */
 
-        const oldSaved =
-            JSON.parse(
-                localStorage.getItem(
-                    "savedCareers"
-                ) || "[]"
-            );
-
-
-        if (
-            Array.isArray(oldSaved) &&
-            oldSaved.length > 0
-        ) {
-
-            for (
-                const oldCareer of oldSaved
-            ) {
-
-                const careerTitle =
-                    oldCareer.name ||
-                    oldCareer.title ||
-                    oldCareer.career ||
-                    oldCareer.role;
+        const icons = {
+            technology: "💻",
+            creative: "🎨",
+            business: "📊",
+            people: "👥",
+            science: "🔬",
+            healthcare: "🩺",
+            education: "📚",
+            engineering: "⚙️",
+            law: "⚖️",
+            finance: "💰",
+            default: "✦"
+        };
 
 
-                if (!careerTitle) {
-                    continue;
-                }
+        /* ==========================================
+           NORMALIZE CAREER DATA
+        ========================================== */
 
+        function normalizeCareer(career) {
 
-                const alreadyExists =
-                    backendCareers.some(
-                        function(item) {
+            if (typeof career === "string") {
 
-                            return (
-                                getCareerName(item)
-                                    .toLowerCase() ===
-                                careerTitle
-                                    .toLowerCase()
-                            );
-
-                        }
-                    );
-
-
-                if (!alreadyExists) {
-
-                    try {
-
-                        await fetch(
-                            "/api/save-career",
-                            {
-                                method: "POST",
-
-                                headers: {
-                                    "Content-Type":
-                                        "application/json"
-                                },
-
-                                body:
-                                    JSON.stringify({
-
-                                        careerTitle:
-                                            careerTitle,
-
-                                        onetSocCode:
-                                            oldCareer.onetSocCode ||
-                                            oldCareer.onet_soc_code ||
-                                            "",
-
-                                        matchPercentage:
-                                            oldCareer.matchPercentage ||
-                                            oldCareer.match ||
-                                            0
-
-                                    })
-                            }
-                        );
-
-                    } catch (error) {
-
-                        console.error(
-                            "Migration error:",
-                            error
-                        );
-
-                    }
-
-                }
+                return {
+                    title: career,
+                    description:
+                        "Explore this career path and discover whether it matches your interests.",
+                    category: "Career"
+                };
 
             }
 
+            return {
+                title:
+                    career.title ||
+                    career.name ||
+                    "Career",
 
-            /* Reload backend after migration */
+                description:
+                    career.description ||
+                    career.desc ||
+                    "Explore this career path and discover whether it matches your interests.",
 
-            const refreshedResponse =
-                await fetch(
-                    "/api/saved-careers"
-                );
+                category:
+                    career.category ||
+                    career.field ||
+                    "Career",
 
-
-            const refreshedResult =
-                await refreshedResponse.json();
-
-
-            if (refreshedResult.success) {
-
-                backendCareers =
-                    refreshedResult.careers || [];
-
-            }
-
+                id:
+                    career.id ||
+                    career.title ||
+                    career.name ||
+                    ""
+            };
         }
 
 
         /* ==========================================
            RENDER
-           ========================================== */
+        ========================================== */
 
-        renderSavedCareers(
-            backendCareers,
-            oldSaved
-        );
+        function renderCareers() {
 
+            careerGrid.innerHTML = "";
 
-    } catch (error) {
-
-        console.error(
-            "Favourites error:",
-            error
-        );
+            savedCount.textContent =
+                `${savedCareers.length} ${
+                    savedCareers.length === 1
+                        ? "saved"
+                        : "saved"
+                }`;
 
 
-        alert(
-            "Unable to load saved careers. Please make sure Flask is running."
-        );
+            if (savedCareers.length === 0) {
 
-    }
+                careerGrid.style.display = "none";
+                emptyState.style.display = "block";
 
-}
-
-
-/* =====================================================
-   RENDER SAVED CAREERS
-===================================================== */
-
-function renderSavedCareers(
-    careers,
-    oldSaved
-) {
-
-    savedCount.textContent =
-        careers.length;
+                return;
+            }
 
 
-    if (
-        !careers ||
-        careers.length === 0
-    ) {
-
-        careerGrid.innerHTML = "";
-
-        careerGrid.style.display =
-            "none";
-
-        emptyState.style.display =
-            "block";
-
-        return;
-
-    }
+            careerGrid.style.display = "grid";
+            emptyState.style.display = "none";
 
 
-    emptyState.style.display =
-        "none";
+            savedCareers.forEach(
+                (career, index) => {
 
-    careerGrid.style.display =
-        "grid";
+                    const item =
+                        normalizeCareer(career);
 
+                    const category =
+                        String(item.category)
+                            .toLowerCase()
+                            .trim();
 
-    careerGrid.innerHTML =
-        careers
-            .map(
-                function(career, index) {
-
-                    return createCareerCard(
-                        career,
-                        index,
-                        oldSaved
-                    );
-
-                }
-            )
-            .join("");
-
-}
+                    const icon =
+                        icons[category] ||
+                        icons.default;
 
 
-/* =====================================================
-   CREATE CAREER CARD
-===================================================== */
+                    const card =
+                        document.createElement("article");
 
-function createCareerCard(
-    career,
-    index,
-    oldSaved
-) {
-
-    const name =
-        getCareerName(career);
+                    card.className =
+                        "career-card";
 
 
-    const careerId =
-        getCareerId(career);
+                    card.innerHTML = `
+
+                        <button
+                            class="heart"
+                            title="Remove from favourites"
+                            onclick="removeCareer(${index})"
+                        >
+                            ♥
+                        </button>
+
+                        <div class="career-icon">
+                            ${icon}
+                        </div>
+
+                        <h3>
+                            ${escapeHTML(item.title)}
+                        </h3>
+
+                        <p>
+                            ${escapeHTML(item.description)}
+                        </p>
+
+                        <div class="card-actions">
+
+                            <a
+                                href="role-detail.html?id=${encodeURIComponent(item.id || item.title)}"
+                                class="btn btn-primary"
+                            >
+                                View Details
+                            </a>
+
+                            <a
+                                href="compare.html?career=${encodeURIComponent(item.title)}"
+                                class="btn btn-secondary"
+                            >
+                                Compare
+                            </a>
+
+                        </div>
+                    `;
 
 
-    const matchPercentage =
-        career.matchPercentage || 0;
-
-
-    /*
-       Find old localStorage data so the
-       existing page can still use any
-       extra information it had.
-    */
-
-    let oldData = null;
-
-
-    if (Array.isArray(oldSaved)) {
-
-        oldData =
-            oldSaved.find(
-                function(item) {
-
-                    const oldName =
-                        item.name ||
-                        item.title ||
-                        item.career ||
-                        item.role ||
-                        "";
-
-
-                    return (
-                        oldName.toLowerCase() ===
-                        name.toLowerCase()
-                    );
+                    careerGrid.appendChild(card);
 
                 }
             );
-
-    }
-
-
-    const description =
-        oldData?.description ||
-        oldData?.desc ||
-        oldData?.overview ||
-        "Explore this career path to learn more about its opportunities, skills and requirements.";
-
-
-    const skills =
-        getCareerSkills(
-            oldData || {}
-        );
-
-
-    const education =
-        oldData?.education ||
-        oldData?.educationPath ||
-        oldData?.study ||
-        "Explore the recommended education path for this career.";
-
-
-    const icon =
-        oldData?.icon ||
-        oldData?.emoji ||
-        "✦";
-
-
-    const skillsHTML =
-        skills.length > 0
-
-            ?
-
-            `
-                <div class="tags">
-
-                    ${skills
-                        .slice(0, 5)
-                        .map(
-                            function(skill) {
-
-                                return `
-                                    <span class="tag">
-                                        ${escapeHTML(skill)}
-                                    </span>
-                                `;
-
-                            }
-                        )
-                        .join("")}
-
-                </div>
-            `
-
-            :
-
-            `
-                <p class="detail-text">
-                    Skills information will be available soon.
-                </p>
-            `;
-
-
-    return `
-
-        <article
-            class="career-card"
-            data-index="${index}"
-        >
-
-            <div class="card-top">
-
-                <button
-                    class="heart-btn"
-                    onclick="removeCareer('${escapeForAttribute(name)}')"
-                    title="Remove from saved careers"
-                >
-                    ♥
-                </button>
-
-
-                <div class="career-icon">
-                    ${icon}
-                </div>
-
-
-                <h2>
-                    ${escapeHTML(name)}
-                </h2>
-
-            </div>
-
-
-            <div class="card-body">
-
-                <p class="career-description">
-                    ${escapeHTML(description)}
-                </p>
-
-
-                <div class="details">
-
-                    <p class="detail-label">
-                        Match
-                    </p>
-
-                    <p class="detail-text">
-                        ${matchPercentage}% Match
-                    </p>
-
-                </div>
-
-
-                <div class="details">
-
-                    <p class="detail-label">
-                        Key Skills
-                    </p>
-
-                    ${skillsHTML}
-
-                </div>
-
-
-                <div class="details">
-
-                    <p class="detail-label">
-                        Education
-                    </p>
-
-                    <p class="detail-text">
-                        ${escapeHTML(education)}
-                    </p>
-
-                </div>
-
-
-                <div class="card-actions">
-
-                    <a
-                        href="role-detail.html?id=${encodeURIComponent(careerId)}"
-                        class="details-btn"
-                    >
-                        View Details
-                    </a>
-
-
-                    <button
-                        class="compare-btn"
-                        onclick="compareCareer('${encodeURIComponent(careerId)}')"
-                    >
-                        Compare
-                    </button>
-
-                </div>
-
-            </div>
-
-        </article>
-
-    `;
-
-}
-
-
-/* =====================================================
-   GET SKILLS
-===================================================== */
-
-function getCareerSkills(career) {
-
-    if (
-        Array.isArray(
-            career.skills
-        )
-    ) {
-
-        return career.skills;
-
-    }
-
-
-    if (
-        Array.isArray(
-            career.keySkills
-        )
-    ) {
-
-        return career.keySkills;
-
-    }
-
-
-    if (
-        typeof career.skills ===
-        "string"
-    ) {
-
-        return career.skills
-            .split(",")
-            .map(
-                function(skill) {
-                    return skill.trim();
-                }
-            )
-            .filter(Boolean);
-
-    }
-
-
-    return [];
-
-}
-
-
-/* =====================================================
-   REMOVE CAREER
-===================================================== */
-
-async function removeCareer(
-    careerName
-) {
-
-    const confirmed =
-        confirm(
-            `Remove "${careerName}" from your saved careers?`
-        );
-
-
-    if (!confirmed) {
-        return;
-    }
-
-
-    try {
-
-        const response =
-            await fetch(
-                "/api/remove-career",
-                {
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type":
-                            "application/json"
-                    },
-
-                    body:
-                        JSON.stringify({
-
-                            careerTitle:
-                                careerName
-
-                        })
-                }
-            );
-
-
-        const result =
-            await response.json();
-
-
-        if (!result.success) {
-
-            alert(
-                result.message ||
-                "Unable to remove career."
-            );
-
-            return;
         }
 
 
-        /* Remove old localStorage copy too */
+        /* ==========================================
+           REMOVE CAREER
+        ========================================== */
 
-        const oldSaved =
-            JSON.parse(
-                localStorage.getItem(
-                    "savedCareers"
-                ) || "[]"
+        function removeCareer(index) {
+
+            savedCareers.splice(index, 1);
+
+            localStorage.setItem(
+                "savedCareers",
+                JSON.stringify(savedCareers)
             );
 
-
-        const updatedOldSaved =
-            oldSaved.filter(
-                function(item) {
-
-                    const name =
-                        item.name ||
-                        item.title ||
-                        item.career ||
-                        item.role ||
-                        "";
+            renderCareers();
+        }
 
 
-                    return (
-                        name.toLowerCase() !==
-                        careerName.toLowerCase()
-                    );
+        /* ==========================================
+           HTML SAFETY
+        ========================================== */
 
-                }
-            );
+        function escapeHTML(value) {
 
-
-        localStorage.setItem(
-            "savedCareers",
-            JSON.stringify(
-                updatedOldSaved
-            )
-        );
+            return String(value)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
 
 
-        /* Reload page data */
+        /* ==========================================
+           INITIAL LOAD
+        ========================================== */
 
-        await loadSavedCareers();
+        renderCareers();
 
+    </script>
 
-    } catch (error) {
-
-        console.error(
-            "Remove career error:",
-            error
-        );
-
-
-        alert(
-            "Unable to connect to the server."
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   COMPARE CAREER
-===================================================== */
-
-function compareCareer(id) {
-
-    window.location.href =
-        `compare.html?career=${id}`;
-
-}
-
-
-/* =====================================================
-   ESCAPE ATTRIBUTE
-===================================================== */
-
-function escapeForAttribute(
-    text
-) {
-
-    return String(text)
-        .replace(
-            /\\/g,
-            "\\\\"
-        )
-        .replace(
-            /'/g,
-            "\\'"
-        );
-
-}
-
-
-/* =====================================================
-   START
-===================================================== */
-
-loadSavedCareers();
-
-</script>
 </body>
 </html>

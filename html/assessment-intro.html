@@ -2,380 +2,1399 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Career Assessment | Career Compass AI</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="stylesheet" href="/css/style.css">
+    <title>Your Career Journey | Career Compass AI</title>
+
+
+    <!-- Google Fonts -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
 
     <style>
 
-        .assessment-page {
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+
             min-height: 100vh;
-            background: #f7f5f2;
-        }
 
-        /* ================= NAVBAR ================= */
+            font-family: "DM Sans", sans-serif;
 
-        .assessment-nav {
-            height: 76px;
-            padding: 0 6%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: white;
-            border-bottom: 1px solid #ebe5e3;
-        }
-
-        .assessment-brand {
-            font-size: 24px;
-            font-weight: bold;
             color: #443846;
+
+            background:
+                radial-gradient(
+                    circle at 8% 10%,
+                    rgba(233, 152, 179, 0.10),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 92% 90%,
+                    rgba(68, 56, 70, 0.05),
+                    transparent 28%
+                ),
+                #f7f5f2;
+
+            overflow-x: hidden;
         }
 
-        .assessment-brand span {
+
+        a {
+            text-decoration: none;
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .journey-navbar {
+
+            width: 100%;
+
+            height: 82px;
+
+            padding: 0 7%;
+
+            background: rgba(255, 255, 255, 0.97);
+
+            border-bottom: 1px solid #ebe5e3;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            position: relative;
+
+            z-index: 20;
+
+            box-shadow:
+                0 4px 18px
+                rgba(68, 56, 70, 0.04);
+        }
+
+
+        /* LOGO */
+
+        .journey-logo {
+
+            width: 190px;
+
+            height: 58px;
+
+            display: flex;
+
+            align-items: center;
+
+            flex-shrink: 0;
+        }
+
+
+        .journey-logo img {
+
+            width: 190px;
+
+            height: 58px;
+
+            max-width: 190px;
+
+            max-height: 58px;
+
+            object-fit: contain;
+
+            object-position: left center;
+
+            display: block;
+        }
+
+
+        /* NAVIGATION */
+
+        .journey-nav {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 28px;
+        }
+
+
+        .journey-nav a {
+
+            color: #756d76;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            transition:
+                color 0.25s ease;
+        }
+
+
+        .journey-nav a:hover {
+
             color: #e998b3;
         }
 
-        .nav-user {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #756d76;
-            font-size: 14px;
+
+        /* ACTIVE LINK */
+
+        .journey-nav .active {
+
+            color: #443846;
+
+            position: relative;
         }
 
-        .user-circle {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: #f4e4ea;
+
+        .journey-nav .active::after {
+
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+
+            right: 0;
+
+            bottom: -9px;
+
+            height: 2px;
+
+            border-radius: 10px;
+
+            background: #e998b3;
+        }
+
+
+        .nav-login {
+
+            padding:
+                10px 18px;
+
+            border:
+                1px solid #ded8d4;
+
+            border-radius: 50px;
+
+            background: #ffffff;
+
+            color: #443846 !important;
+        }
+
+
+        .nav-login:hover {
+
+            border-color: #e998b3;
+
+            color: #e998b3 !important;
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .journey-main {
+
+            min-height:
+                calc(100vh - 82px);
+
+            padding:
+                55px 20px 75px;
+
             display: flex;
-            align-items: center;
+
             justify-content: center;
-            font-size: 18px;
+
+            position: relative;
         }
 
-        /* ================= MAIN ================= */
 
-        .assessment-container {
-            width: min(1050px, 90%);
-            margin: auto;
-            padding: 70px 0;
+        .journey-container {
+
+            width: min(1050px, 100%);
         }
 
-        .intro-header {
-            max-width: 700px;
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .journey-hero {
+
             text-align: center;
-            margin: 0 auto 55px;
+
+            margin-bottom: 38px;
         }
 
-        .intro-label {
-            display: inline-block;
-            padding: 8px 16px;
-            border-radius: 30px;
-            background: #f0e7eb;
-            color: #805269;
+
+        .journey-badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            padding:
+                9px 17px;
+
+            background: #f4e4ea;
+
+            border:
+                1px solid #efd2dd;
+
+            border-radius: 50px;
+
+            color: #7a5867;
+
             font-size: 12px;
-            font-weight: bold;
+
+            font-weight: 700;
+
+            letter-spacing: 0.8px;
+
+            text-transform: uppercase;
+
             margin-bottom: 20px;
         }
 
-        .intro-header h1 {
-            font-family: Georgia, serif;
+
+        .journey-hero h1 {
+
+            font-family:
+                "Playfair Display",
+                Georgia,
+                serif;
+
+            font-size:
+                clamp(42px, 6vw, 68px);
+
+            line-height: 1.08;
+
             color: #443846;
-            font-size: 54px;
-            line-height: 1.15;
+
             margin-bottom: 18px;
         }
 
-        .intro-header h1 span {
+
+        .journey-hero h1 span {
+
             color: #e998b3;
         }
 
-        .intro-header p {
+
+        .journey-hero p {
+
+            max-width: 650px;
+
+            margin: 0 auto;
+
             color: #756d76;
-            font-size: 17px;
+
+            font-size: 16px;
+
             line-height: 1.7;
         }
 
-        /* ================= INFO CARDS ================= */
 
-        .assessment-info {
+        /* =====================================================
+           CONTENT GRID
+        ===================================================== */
+
+        .journey-grid {
+
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-bottom: 50px;
+
+            grid-template-columns:
+                1.05fr 0.95fr;
+
+            gap: 25px;
+
+            align-items: stretch;
         }
 
-        .info-card {
-            background: white;
-            border: 1px solid #eee8e7;
-            border-radius: 22px;
-            padding: 28px;
+
+        /* =====================================================
+           LEFT CARD
+        ===================================================== */
+
+        .journey-card {
+
+            background: #ffffff;
+
+            border:
+                1px solid #ebe4e4;
+
+            border-radius: 28px;
+
+            padding: 34px;
+
+            box-shadow:
+                0 20px 55px
+                rgba(68, 56, 70, 0.08);
+        }
+
+
+        .card-heading {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 14px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .card-icon {
+
+            width: 48px;
+
+            height: 48px;
+
+            border-radius: 15px;
+
+            background: #f4e4ea;
+
+            display: grid;
+
+            place-items: center;
+
+            font-size: 23px;
+        }
+
+
+        .card-heading h2 {
+
+            font-family:
+                "Playfair Display",
+                Georgia,
+                serif;
+
+            font-size: 25px;
+
+            color: #443846;
+        }
+
+
+        .card-heading p {
+
+            margin-top: 3px;
+
+            color: #91868f;
+
+            font-size: 12px;
+        }
+
+
+        /* =====================================================
+           STEPS
+        ===================================================== */
+
+        .journey-steps {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 15px;
+        }
+
+
+        .journey-step {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 15px;
+
+            padding: 16px;
+
+            border:
+                1px solid #eee8e9;
+
+            background: #faf8f8;
+
+            border-radius: 17px;
+
+            transition:
+                transform 0.25s ease,
+                border-color 0.25s ease,
+                background 0.25s ease;
+        }
+
+
+        .journey-step:hover {
+
+            transform:
+                translateX(4px);
+
+            background: #fdf8fa;
+
+            border-color: #efd2dd;
+        }
+
+
+        .step-icon {
+
+            width: 39px;
+
+            height: 39px;
+
+            flex: 0 0 39px;
+
+            border-radius: 50%;
+
+            background: #443846;
+
+            color: #ffffff;
+
+            display: grid;
+
+            place-items: center;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+
+        .journey-step:nth-child(2)
+        .step-icon {
+
+            background: #e998b3;
+        }
+
+
+        .journey-step:nth-child(3)
+        .step-icon {
+
+            background: #443846;
+        }
+
+
+        .journey-step:nth-child(4)
+        .step-icon {
+
+            background: #e998b3;
+        }
+
+
+        .step-text {
+
+            flex: 1;
+        }
+
+
+        .step-text h3 {
+
+            font-size: 14px;
+
+            color: #443846;
+
+            margin-bottom: 4px;
+        }
+
+
+        .step-text p {
+
+            color: #91868f;
+
+            font-size: 12px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =====================================================
+           RIGHT CARD
+        ===================================================== */
+
+        .start-card {
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #443846,
+                    #554656
+                );
+
+            color: #ffffff;
+
+            border-radius: 28px;
+
+            padding: 36px;
+
+            min-height: 100%;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: space-between;
+
+            box-shadow:
+                0 25px 60px
+                rgba(68, 56, 70, 0.20);
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+
+        .start-card::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 220px;
+
+            height: 220px;
+
+            border-radius: 50%;
+
+            right: -90px;
+
+            top: -90px;
+
+            background:
+                rgba(233, 152, 179, 0.15);
+        }
+
+
+        .start-card::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 170px;
+
+            height: 170px;
+
+            border-radius: 50%;
+
+            left: -80px;
+
+            bottom: -80px;
+
+            background:
+                rgba(255, 255, 255, 0.05);
+        }
+
+
+        .start-content {
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+
+        .start-small {
+
+            color: #f6c4d3;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            letter-spacing: 1px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 16px;
+        }
+
+
+        .start-card h2 {
+
+            font-family:
+                "Playfair Display",
+                Georgia,
+                serif;
+
+            font-size: 37px;
+
+            line-height: 1.15;
+
+            margin-bottom: 16px;
+        }
+
+
+        .start-card h2 span {
+
+            color: #f1a9c1;
+        }
+
+
+        .start-card > .start-content > p {
+
+            color: #dcd4dc;
+
+            font-size: 14px;
+
+            line-height: 1.7;
+
+            margin-bottom: 28px;
+        }
+
+
+        /* =====================================================
+           QUICK INFO
+        ===================================================== */
+
+        .quick-info {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 12px;
+
+            margin-bottom: 28px;
+        }
+
+
+        .quick-item {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+
+            color: #eee8ee;
+
+            font-size: 13px;
+        }
+
+
+        .quick-item span:first-child {
+
+            width: 29px;
+
+            height: 29px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255, 255, 255, 0.10);
+
+            display: grid;
+
+            place-items: center;
+
+            font-size: 12px;
+        }
+
+
+        /* =====================================================
+           BUTTONS
+        ===================================================== */
+
+        .start-button {
+
+            width: 100%;
+
+            min-height: 54px;
+
+            border: none;
+
+            border-radius: 14px;
+
+            background: #e998b3;
+
+            color: #ffffff;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 10px;
+
+            font-family:
+                "DM Sans",
+                sans-serif;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.25s ease,
+                background 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+
+        .start-button:hover {
+
+            background: #df86a5;
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 10px 25px
+                rgba(233, 152, 179, 0.25);
+        }
+
+
+        .back-home {
+
+            display: block;
+
+            text-align: center;
+
+            margin-top: 17px;
+
+            color: #cfc5cf;
+
+            font-size: 12px;
+
+            transition:
+                color 0.2s ease;
+        }
+
+
+        .back-home:hover {
+
+            color: #ffffff;
+        }
+
+
+        /* =====================================================
+           BOTTOM NOTE
+        ===================================================== */
+
+        .journey-note {
+
+            margin-top: 24px;
+
+            padding:
+                15px 20px;
+
+            border:
+                1px solid #ebe4e4;
+
+            border-radius: 15px;
+
+            background: rgba(255, 255, 255, 0.72);
+
+            color: #756d76;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+
             text-align: center;
         }
 
-        .info-icon {
-            width: 65px;
-            height: 65px;
-            margin: 0 auto 16px;
-            border-radius: 20px;
-            background: #f4e4ea;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-        }
 
-        .info-card h3 {
+        .journey-note strong {
+
             color: #443846;
-            margin-bottom: 8px;
-            font-size: 18px;
         }
 
-        .info-card p {
-            color: #756d76;
-            font-size: 14px;
-            line-height: 1.6;
-        }
 
-        /* ================= ASSESSMENT BOX ================= */
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
 
-        .assessment-box {
-            background: #443846;
-            color: white;
-            border-radius: 30px;
-            padding: 50px;
-        }
+        @media (max-width: 850px) {
 
-        .assessment-box h2 {
-            font-family: Georgia, serif;
-            font-size: 36px;
-            margin-bottom: 25px;
-        }
+            .journey-navbar {
 
-        .assessment-box p {
-            color: #ddd2dc;
-            margin-bottom: 25px;
-            line-height: 1.7;
-        }
+                padding:
+                    0 5%;
+            }
 
-        .instruction-list {
-            list-style: none;
-            margin-bottom: 30px;
-        }
 
-        .instruction-list li {
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.12);
-            color: #eee6ed;
-            font-size: 15px;
-        }
+            .journey-grid {
 
-        .instruction-list li:last-child {
-            border-bottom: none;
-        }
-
-        .start-btn {
-            display: inline-block;
-            background: #e998b3;
-            color: white;
-            padding: 16px 30px;
-            border-radius: 30px;
-            font-weight: bold;
-            transition: 0.2s;
-        }
-
-        .start-btn:hover {
-            transform: translateY(-2px);
-            background: #d986a5;
-        }
-
-        /* ================= RESPONSIVE ================= */
-
-        @media (max-width: 800px) {
-
-            .assessment-info {
                 grid-template-columns: 1fr;
             }
 
-            .intro-header h1 {
-                font-size: 42px;
-            }
 
-            .assessment-box {
-                padding: 35px 25px;
+            .start-card {
+
+                min-height: auto;
             }
 
         }
 
-        @media (max-width: 500px) {
 
-            .assessment-nav {
-                padding: 0 5%;
+        @media (max-width: 650px) {
+
+            .journey-navbar {
+
+                height: 72px;
             }
 
-            .nav-user span {
+
+            .journey-logo {
+
+                width: 155px;
+
+                height: 48px;
+            }
+
+
+            .journey-logo img {
+
+                width: 155px;
+
+                height: 48px;
+            }
+
+
+            .journey-nav {
+
+                gap: 8px;
+            }
+
+
+            .journey-nav > a:not(.nav-login) {
+
                 display: none;
             }
 
-            .intro-header h1 {
+
+            .nav-login {
+
+                padding:
+                    8px 14px;
+
+                font-size: 12px !important;
+            }
+
+
+            .journey-main {
+
+                padding:
+                    38px 15px 55px;
+            }
+
+
+            .journey-hero h1 {
+
+                font-size: 42px;
+            }
+
+
+            .journey-hero p {
+
+                font-size: 14px;
+            }
+
+
+            .journey-card,
+            .start-card {
+
+                padding: 25px 20px;
+
+                border-radius: 23px;
+            }
+
+
+            .start-card h2 {
+
+                font-size: 32px;
+            }
+
+        }
+
+
+        @media (max-width: 420px) {
+
+            .journey-hero h1 {
+
                 font-size: 36px;
             }
 
-            .assessment-container {
-                padding: 50px 0;
+
+            .journey-badge {
+
+                font-size: 10px;
+            }
+
+
+            .journey-step {
+
+                padding: 13px;
+            }
+
+
+            .step-icon {
+
+                width: 35px;
+
+                height: 35px;
+
+                flex-basis: 35px;
             }
 
         }
 
     </style>
+
 </head>
 
 
 <body>
 
-    <div class="assessment-page">
 
-        <!-- ================= NAVBAR ================= -->
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
 
-        <nav class="assessment-nav">
+    <header class="journey-navbar">
 
-            <a href="./index.html" class="assessment-brand">
-                Career Compass <span>AI ✦</span>
+
+        <!-- LOGO -->
+
+        <a
+            href="index.html"
+            class="journey-logo"
+            aria-label="Career Compass AI Home"
+        >
+
+            <img
+                src="../images/logo.png"
+                alt="Career Compass AI"
+            >
+
+        </a>
+
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="journey-nav">
+
+            <!-- THIS IS THE IMPORTANT LINK -->
+
+            <a
+                href="assessment-intro.html"
+                class="active"
+            >
+                Your Career Journey
             </a>
 
-            <div class="nav-user">
-                <span>Your Career Journey</span>
 
-                <div class="user-circle">
-                    👤
-                </div>
-            </div>
+            <a href="how-it-works.html">
+                How It Works
+            </a>
+
+
+            <a
+                href="login.html"
+                class="nav-login"
+            >
+                Login
+            </a>
 
         </nav>
 
+    </header>
 
-        <!-- ================= MAIN ================= -->
 
-        <main class="assessment-container">
 
-            <!-- HEADER -->
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
 
-            <section class="intro-header">
+    <main class="journey-main">
 
-                <span class="intro-label">
-                    CAREER ASSESSMENT
-                </span>
+
+        <div class="journey-container">
+
+
+            <!-- =================================================
+                 HERO
+            ================================================== -->
+
+            <section class="journey-hero">
+
+
+                <div class="journey-badge">
+
+                    ✦ Your personalized journey
+
+                </div>
+
 
                 <h1>
-                    Let's discover what
-                    <span>fits you best.</span>
+
+                    Your Career
+                    <span>Journey</span>
+
                 </h1>
 
-                <p>
-                    This short assessment helps us understand your interests,
-                    strengths and work preferences so we can recommend career
-                    paths that are better suited to you.
-                </p>
-
-            </section>
-
-
-            <!-- INFO CARDS -->
-
-            <section class="assessment-info">
-
-                <div class="info-card">
-
-                    <div class="info-icon">
-                        ⏱️
-                    </div>
-
-                    <h3>10–15 Minutes</h3>
-
-                    <p>
-                        Take your time and answer each question honestly.
-                    </p>
-
-                </div>
-
-
-                <div class="info-card">
-
-                    <div class="info-icon">
-                        🧠
-                    </div>
-
-                    <h3>3 Key Areas</h3>
-
-                    <p>
-                        Explore your interests, strengths and career values.
-                    </p>
-
-                </div>
-
-
-                <div class="info-card">
-
-                    <div class="info-icon">
-                        🎯
-                    </div>
-
-                    <h3>Personalized Results</h3>
-
-                    <p>
-                        Get career recommendations based on your answers.
-                    </p>
-
-                </div>
-
-            </section>
-
-
-            <!-- INSTRUCTIONS -->
-
-            <section class="assessment-box">
-
-                <h2>Before you begin</h2>
 
                 <p>
-                    There are no right or wrong answers. The goal is to
-                    understand you better and help you explore possible
-                    career directions.
+
+                    Discover what makes you unique,
+                    understand your strengths, and explore
+                    career paths that could fit your future.
+
                 </p>
 
-                <ul class="instruction-list">
-
-                    <li>
-                        ✓ Answer based on what genuinely interests you.
-                    </li>
-
-                    <li>
-                        ✓ Choose the option that feels most natural to you.
-                    </li>
-
-                    <li>
-                        ✓ Don't overthink your answers.
-                    </li>
-
-                    <li>
-                        ✓ You can move between questions before submitting.
-                    </li>
-
-                </ul>
-
-                <a href="./questionnaire.html" class="start-btn">
-                    Start Assessment →
-                </a>
 
             </section>
 
-        </main>
 
-    </div>
+
+            <!-- =================================================
+                 CONTENT
+            ================================================== -->
+
+            <section class="journey-grid">
+
+
+                <!-- =================================================
+                     LEFT — HOW IT WORKS
+                ================================================== -->
+
+                <div class="journey-card">
+
+
+                    <div class="card-heading">
+
+
+                        <div class="card-icon">
+                            🧭
+                        </div>
+
+
+                        <div>
+
+                            <h2>
+                                How your journey works
+                            </h2>
+
+                            <p>
+                                A simple process designed around you
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="journey-steps">
+
+
+                        <!-- STEP 1 -->
+
+                        <div class="journey-step">
+
+
+                            <div class="step-icon">
+                                1
+                            </div>
+
+
+                            <div class="step-text">
+
+                                <h3>
+                                    Tell us about yourself
+                                </h3>
+
+                                <p>
+                                    Share your interests,
+                                    favourite subjects and
+                                    things you enjoy doing.
+                                </p>
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- STEP 2 -->
+
+                        <div class="journey-step">
+
+
+                            <div class="step-icon">
+                                2
+                            </div>
+
+
+                            <div class="step-text">
+
+                                <h3>
+                                    Discover your strengths
+                                </h3>
+
+                                <p>
+                                    Explore the skills and
+                                    qualities that make your
+                                    profile unique.
+                                </p>
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- STEP 3 -->
+
+                        <div class="journey-step">
+
+
+                            <div class="step-icon">
+                                3
+                            </div>
+
+
+                            <div class="step-text">
+
+                                <h3>
+                                    Explore career possibilities
+                                </h3>
+
+                                <p>
+                                    Get career suggestions
+                                    based on your interests,
+                                    strengths and goals.
+                                </p>
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- STEP 4 -->
+
+                        <div class="journey-step">
+
+
+                            <div class="step-icon">
+                                4
+                            </div>
+
+
+                            <div class="step-text">
+
+                                <h3>
+                                    Plan your next step
+                                </h3>
+
+                                <p>
+                                    Compare opportunities,
+                                    explore roles and start
+                                    planning your future.
+                                </p>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     RIGHT — START ASSESSMENT
+                ================================================== -->
+
+                <div class="start-card">
+
+
+                    <div class="start-content">
+
+
+                        <div class="start-small">
+
+                            ✦ READY WHEN YOU ARE
+
+                        </div>
+
+
+                        <h2>
+
+                            Let's find your
+                            <span>direction.</span>
+
+                        </h2>
+
+
+                        <p>
+
+                            Take a short career assessment
+                            designed to understand your
+                            interests, strengths and goals.
+
+                        </p>
+
+
+
+                        <!-- QUICK INFO -->
+
+                        <div class="quick-info">
+
+
+                            <div class="quick-item">
+
+                                <span>
+                                    ✓
+                                </span>
+
+                                <span>
+                                    Personalized questions
+                                </span>
+
+                            </div>
+
+
+                            <div class="quick-item">
+
+                                <span>
+                                    ⏱
+                                </span>
+
+                                <span>
+                                    Takes only a few minutes
+                                </span>
+
+                            </div>
+
+
+                            <div class="quick-item">
+
+                                <span>
+                                    ✦
+                                </span>
+
+                                <span>
+                                    Career recommendations
+                                </span>
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- START BUTTON -->
+
+                        <a
+                            href="questionnaire.html"
+                            class="start-button"
+                        >
+
+                            Start Your Assessment
+
+                            <span>
+                                →
+                            </span>
+
+                        </a>
+
+
+                        <a
+                            href="index.html"
+                            class="back-home"
+                        >
+
+                            ← Back to Home
+
+                        </a>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- =================================================
+                 NOTE
+            ================================================== -->
+
+            <div class="journey-note">
+
+                <strong>
+                    Your answers matter.
+                </strong>
+
+                There are no right or wrong answers —
+                just choose what feels most like you.
+
+            </div>
+
+
+        </div>
+
+    </main>
+
 
 </body>
 

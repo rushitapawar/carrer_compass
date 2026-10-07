@@ -1,14 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us | Career Compass AI</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <title>About | Career Compass AI</title>
 
     <style>
         * {
@@ -17,530 +13,563 @@
             box-sizing: border-box;
         }
 
-        :root {
-            --plum: #443846;
-            --plum-dark: #322936;
-            --pink: #e998b3;
-            --pink-light: #f6c4d3;
-            --cream: #f7f5f2;
-            --white: #ffffff;
-            --text: #342d3b;
-            --muted: #756d76;
-            --border: #ded8d4;
-        }
-
         body {
-            font-family: "DM Sans", sans-serif;
-            background: var(--cream);
-            color: var(--text);
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f8f5f3;
+            color: #342d3b;
             line-height: 1.6;
         }
 
-        /* NAVBAR */
+        /* =========================
+           NAVBAR
+        ========================= */
+
         .navbar {
-            height: 78px;
-            background: rgba(255, 255, 255, 0.96);
-            border-bottom: 1px solid #ebe5e3;
+            width: 100%;
+            min-height: 78px;
+            background: #ffffff;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 7%;
+            padding: 0 6%;
+            border-bottom: 1px solid #e8e1df;
             position: sticky;
             top: 0;
-            z-index: 10;
+            z-index: 1000;
         }
 
         .brand {
+            display: flex;
+            align-items: center;
             text-decoration: none;
-            color: var(--plum);
-            font-size: 23px;
-            font-weight: 700;
         }
 
-        .brand span {
-            color: var(--pink);
+        .brand img {
+            width: 110px;
+            height: 55px;
+            object-fit: contain;
+            display: block;
         }
 
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 30px;
+            gap: 26px;
         }
 
         .nav-links a {
-            color: var(--muted);
             text-decoration: none;
+            color: #5f5662;
             font-size: 14px;
             font-weight: 600;
-            transition: 0.2s;
+            transition: 0.25s ease;
         }
 
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: var(--plum);
+        .nav-links a:hover {
+            color: #c96f91;
         }
 
-        .nav-cta {
-            background: var(--plum);
-            color: white !important;
-            padding: 11px 22px;
-            border-radius: 25px;
-        }
-
-        .nav-cta:hover {
-            background: var(--plum-dark);
-        }
-
-        /* HERO */
-        .hero {
-            padding: 95px 7% 85px;
-            background:
-                radial-gradient(circle at 85% 20%, #f8dce5 0, transparent 30%),
-                linear-gradient(135deg, #fffaf8, #f8edf0);
-            overflow: hidden;
-        }
-
-        .hero-inner {
-            max-width: 1150px;
-            margin: auto;
-            display: grid;
-            grid-template-columns: 1.15fr 0.85fr;
+        .profile-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #443846;
+            color: #ffffff !important;
+            display: flex;
             align-items: center;
-            gap: 60px;
+            justify-content: center;
+            font-weight: 700 !important;
         }
 
-        .eyebrow {
+        .profile-btn:hover {
+            background: #d87999;
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            min-height: 440px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 80px 20px;
+
+            background:
+                radial-gradient(
+                    circle at 15% 20%,
+                    rgba(233, 152, 179, 0.18),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 85% 80%,
+                    rgba(68, 56, 70, 0.08),
+                    transparent 30%
+                ),
+                #f8f5f3;
+        }
+
+        .hero-content {
+            max-width: 850px;
+        }
+
+        .hero-label {
             display: inline-block;
-            background: #f5e5eb;
-            color: #87536a;
-            padding: 8px 16px;
-            border-radius: 30px;
+            color: #c96f91;
             font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            margin-bottom: 22px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-bottom: 18px;
         }
 
         .hero h1 {
-            font-family: "Playfair Display", Georgia, serif;
-            font-size: clamp(40px, 5vw, 62px);
-            line-height: 1.15;
-            color: var(--plum);
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(42px, 6vw, 70px);
+            line-height: 1.05;
+            color: #443846;
             margin-bottom: 22px;
         }
 
         .hero h1 span {
-            color: #d981a1;
+            color: #d87999;
         }
 
         .hero p {
-            max-width: 590px;
-            color: var(--muted);
-            font-size: 16px;
-            line-height: 1.9;
-            margin-bottom: 30px;
-        }
-
-        .primary-btn {
-            display: inline-block;
-            text-decoration: none;
-            background: var(--plum);
-            color: white;
-            padding: 15px 27px;
-            border-radius: 30px;
-            font-weight: 700;
-            transition: 0.25s;
-            box-shadow: 0 8px 20px rgba(68, 56, 70, 0.12);
-        }
-
-        .primary-btn:hover {
-            transform: translateY(-3px);
-            background: var(--plum-dark);
-        }
-
-        .hero-art {
-            min-height: 350px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
-
-        .art-circle {
-            width: 310px;
-            height: 310px;
-            border-radius: 50%;
-            background: linear-gradient(145deg, #f5c9d8, #eaa5bd);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 120px;
-            box-shadow: 0 25px 60px rgba(184, 117, 145, 0.18);
-            position: relative;
-        }
-
-        .floating-note {
-            position: absolute;
-            background: white;
-            border: 1px solid #f0e5e8;
-            padding: 15px 18px;
-            border-radius: 17px;
-            box-shadow: 0 12px 30px rgba(68, 56, 70, 0.09);
-            color: var(--plum);
-            font-size: 13px;
-            font-weight: 700;
-        }
-
-        .note-one {
-            top: 45px;
-            right: 0;
-        }
-
-        .note-two {
-            bottom: 40px;
-            left: 0;
-        }
-
-        /* COMMON SECTION */
-        .section {
-            max-width: 1150px;
+            max-width: 680px;
             margin: auto;
-            padding: 85px 0;
-        }
-
-        .section-heading {
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto 45px;
-        }
-
-        .section-heading .eyebrow {
-            margin-bottom: 14px;
-        }
-
-        .section-heading h2 {
-            font-family: "Playfair Display", Georgia, serif;
-            font-size: 38px;
-            color: var(--plum);
-            margin-bottom: 13px;
-        }
-
-        .section-heading p {
-            color: var(--muted);
+            color: #756d76;
+            font-size: 17px;
             line-height: 1.8;
         }
 
-        /* ABOUT */
-        .about-grid {
+        /* =========================
+           GENERAL
+        ========================= */
+
+        .container {
+            width: min(1120px, 90%);
+            margin: auto;
+        }
+
+        .section {
+            padding: 85px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .section-title small {
+            color: #c96f91;
+            font-size: 12px;
+            letter-spacing: 2px;
+            font-weight: 800;
+        }
+
+        .section-title h2 {
+            font-family: Georgia, "Times New Roman", serif;
+            color: #443846;
+            font-size: 38px;
+            margin-top: 10px;
+        }
+
+        .section-title p {
+            max-width: 650px;
+            margin: 12px auto 0;
+            color: #756d76;
+        }
+
+        /* =========================
+           STORY
+        ========================= */
+
+        .story {
             display: grid;
-            grid-template-columns: 0.9fr 1.1fr;
+            grid-template-columns: 1fr 1fr;
             gap: 55px;
             align-items: center;
         }
 
-        .about-visual {
-            min-height: 350px;
-            background: linear-gradient(145deg, #f4dbe4, #f9e9ed);
-            border-radius: 30px;
+        .story-card {
+            background: #443846;
+            color: white;
+            border-radius: 28px;
+            padding: 48px;
+            min-height: 360px;
             display: flex;
+            flex-direction: column;
             justify-content: center;
-            align-items: center;
-            font-size: 115px;
             position: relative;
             overflow: hidden;
         }
 
-        .about-visual::before,
-        .about-visual::after {
+        .story-card::before {
             content: "";
             position: absolute;
-            border: 1px solid rgba(255,255,255,0.6);
+            width: 180px;
+            height: 180px;
             border-radius: 50%;
+            background: rgba(233, 152, 179, 0.2);
+            top: -70px;
+            right: -50px;
         }
 
-        .about-visual::before {
-            width: 260px;
-            height: 260px;
+        .story-card::after {
+            content: "";
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.15);
+            bottom: -35px;
+            left: -30px;
         }
 
-        .about-visual::after {
-            width: 340px;
-            height: 340px;
-        }
-
-        .about-content h2 {
-            font-family: "Playfair Display", Georgia, serif;
-            font-size: 36px;
-            line-height: 1.25;
-            color: var(--plum);
-            margin-bottom: 20px;
-        }
-
-        .about-content p {
-            color: var(--muted);
-            margin-bottom: 15px;
-            line-height: 1.9;
-        }
-
-        /* MISSION */
-        .mission-section {
-            background: var(--plum);
+        .story-icon {
+            width: 65px;
+            height: 65px;
+            border-radius: 20px;
+            background: #e998b3;
             color: white;
-            padding: 75px 7%;
-            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 2;
         }
 
-        .mission-inner {
-            max-width: 850px;
-            margin: auto;
-        }
-
-        .mission-icon {
-            font-size: 42px;
+        .story-card h3 {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 30px;
             margin-bottom: 15px;
+            position: relative;
+            z-index: 2;
         }
 
-        .mission-section h2 {
-            font-family: "Playfair Display", Georgia, serif;
-            font-size: 40px;
+        .story-card p {
+            color: #eee6ea;
+            position: relative;
+            z-index: 2;
+        }
+
+        .story-text h3 {
+            font-family: Georgia, "Times New Roman", serif;
+            color: #443846;
+            font-size: 32px;
             margin-bottom: 18px;
         }
 
-        .mission-section p {
-            color: #e7dfe5;
-            line-height: 1.9;
-            font-size: 16px;
+        .story-text p {
+            color: #756d76;
+            margin-bottom: 18px;
         }
 
-        /* STEPS */
-        .steps-grid {
+        /* =========================
+           FEATURES
+        ========================= */
+
+        .features-section {
+            background: #ffffff;
+        }
+
+        .feature-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 22px;
         }
 
-        .step-card {
-            background: white;
-            border: 1px solid #ebe5e3;
-            border-radius: 24px;
-            padding: 30px 25px;
-            transition: 0.25s;
+        .feature-card {
+            background: #faf7f6;
+            border: 1px solid #e8e1df;
+            border-radius: 22px;
+            padding: 32px;
+            transition: 0.3s ease;
         }
 
-        .step-card:hover {
+        .feature-card:hover {
             transform: translateY(-6px);
-            box-shadow: 0 15px 35px rgba(68, 56, 70, 0.08);
-        }
-
-        .step-number {
-            width: 52px;
-            height: 52px;
-            background: #f6e4eb;
-            color: #a45f7b;
-            border-radius: 16px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 22px;
-        }
-
-        .step-card h3 {
-            color: var(--plum);
-            font-size: 20px;
-            margin-bottom: 12px;
-        }
-
-        .step-card p {
-            color: var(--muted);
-            font-size: 14px;
-            line-height: 1.8;
-        }
-
-        /* FEATURES */
-        .features-section {
-            background: #fffaf8;
-            padding: 80px 7%;
-        }
-
-        .features-inner {
-            max-width: 1150px;
-            margin: auto;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-        }
-
-        .feature {
-            display: flex;
-            gap: 18px;
-            background: white;
-            padding: 25px;
-            border: 1px solid #eee5e5;
-            border-radius: 20px;
+            box-shadow: 0 16px 35px rgba(68, 56, 70, 0.09);
         }
 
         .feature-icon {
-            flex-shrink: 0;
             width: 52px;
             height: 52px;
             border-radius: 16px;
-            background: #f7e6ec;
+            background: #f6c4d3;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 23px;
+            margin-bottom: 20px;
         }
 
-        .feature h3 {
-            color: var(--plum);
-            margin-bottom: 7px;
+        .feature-card h3 {
+            color: #443846;
+            font-size: 19px;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: #756d76;
+            font-size: 14px;
+        }
+
+        /* =========================
+           VALUES
+        ========================= */
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+        }
+
+        .value-card {
+            background: #ffffff;
+            border: 1px solid #e8e1df;
+            border-radius: 20px;
+            padding: 28px 22px;
+            text-align: center;
+        }
+
+        .value-number {
+            color: #d87999;
+            font-size: 25px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .value-card h3 {
+            color: #443846;
+            margin-bottom: 8px;
             font-size: 17px;
         }
 
-        .feature p {
-            color: var(--muted);
-            font-size: 14px;
-            line-height: 1.7;
-        }
-
-        /* CTA */
-        .cta-section {
-            padding: 85px 7%;
-            text-align: center;
-        }
-
-        .cta-box {
-            max-width: 1000px;
-            margin: auto;
-            background: linear-gradient(135deg, #f6dce5, #fff0f3);
-            border: 1px solid #f0dbe3;
-            border-radius: 30px;
-            padding: 60px 25px;
-        }
-
-        .cta-box h2 {
-            font-family: "Playfair Display", Georgia, serif;
-            font-size: 40px;
-            color: var(--plum);
-            margin-bottom: 14px;
-        }
-
-        .cta-box p {
-            color: var(--muted);
-            margin-bottom: 25px;
-        }
-
-        /* FOOTER */
-        footer {
-            background: #322936;
-            color: white;
-            padding: 35px 7%;
-            text-align: center;
-        }
-
-        footer p {
-            color: #d8cfd7;
+        .value-card p {
+            color: #756d76;
             font-size: 13px;
         }
 
-        footer a {
-            color: #f2b6ca;
+        /* =========================
+           CTA
+        ========================= */
+
+        .cta {
+            padding: 80px 0;
+        }
+
+        .cta-box {
+            background: #443846;
+            border-radius: 30px;
+            padding: 60px 40px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-box::before {
+            content: "";
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            background: rgba(233, 152, 179, 0.15);
+            left: -100px;
+            top: -120px;
+        }
+
+        .cta-box::after {
+            content: "";
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: rgba(233, 152, 179, 0.12);
+            right: -80px;
+            bottom: -120px;
+        }
+
+        .cta-box h2 {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 38px;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-box p {
+            color: #eee6ea;
+            max-width: 620px;
+            margin: 0 auto 28px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background: #e998b3;
+            color: white;
+            text-decoration: none;
+            padding: 14px 28px;
+            border-radius: 30px;
+            font-weight: 700;
+            position: relative;
+            z-index: 2;
+            transition: 0.25s ease;
+        }
+
+        .cta-btn:hover {
+            background: #f1aec4;
+            transform: translateY(-2px);
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            background: #322936;
+            color: white;
+            padding: 55px 0 25px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand {
+            display: inline-flex;
+            align-items: center;
             text-decoration: none;
         }
 
-        /* RESPONSIVE */
-        @media (max-width: 850px) {
-            .hero-inner,
-            .about-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .hero {
-                padding-top: 65px;
-            }
-
-            .hero-art {
-                min-height: 300px;
-            }
-
-            .art-circle {
-                width: 250px;
-                height: 250px;
-                font-size: 95px;
-            }
-
-            .steps-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .section {
-                width: 86%;
-                padding: 65px 0;
-            }
+        .footer-brand img {
+            width: 110px;
+            height: 55px;
+            object-fit: contain;
         }
 
-        @media (max-width: 650px) {
-            .navbar {
-                height: auto;
-                min-height: 70px;
-                padding: 15px 5%;
-                flex-wrap: wrap;
-                gap: 12px;
-            }
+        .footer-about {
+            color: #cfc5ce;
+            font-size: 14px;
+            max-width: 320px;
+            margin-top: 15px;
+        }
 
-            .brand {
-                font-size: 20px;
-            }
+        .footer-column h4 {
+            font-size: 15px;
+            margin-bottom: 16px;
+            color: white;
+        }
+
+        .footer-column a {
+            display: block;
+            color: #cfc5ce;
+            text-decoration: none;
+            font-size: 13px;
+            margin-bottom: 10px;
+            transition: 0.2s;
+        }
+
+        .footer-column a:hover {
+            color: #e998b3;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.12);
+            padding-top: 22px;
+            text-align: center;
+            color: #aaa0aa;
+            font-size: 12px;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 900px) {
 
             .nav-links {
-                width: 100%;
-                justify-content: space-between;
-                gap: 10px;
+                gap: 14px;
             }
 
             .nav-links a {
                 font-size: 12px;
             }
 
-            .nav-cta {
-                padding: 8px 13px;
-            }
-
-            .hero {
-                padding: 55px 6%;
-            }
-
-            .hero h1 {
-                font-size: 40px;
-            }
-
-            .note-one {
-                right: -5px;
-            }
-
-            .note-two {
-                left: -5px;
-            }
-
-            .section-heading h2,
-            .about-content h2,
-            .mission-section h2,
-            .cta-box h2 {
-                font-size: 31px;
-            }
-
-            .features-grid {
+            .story {
                 grid-template-columns: 1fr;
             }
 
-            .about-visual {
-                min-height: 280px;
-                font-size: 90px;
+            .feature-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .values-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 650px) {
+
+            .navbar {
+                padding: 15px 5%;
+                flex-wrap: wrap;
+                gap: 14px;
+            }
+
+            .nav-links {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 13px;
+            }
+
+            .profile-btn {
+                display: none !important;
+            }
+
+            .hero {
+                padding: 65px 20px;
+            }
+
+            .hero h1 {
+                font-size: 42px;
+            }
+
+            .section {
+                padding: 60px 0;
+            }
+
+            .feature-grid,
+            .values-grid,
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .story-card {
+                padding: 35px;
+            }
+
+            .cta-box {
+                padding: 45px 25px;
+            }
+
+            .cta-box h2 {
+                font-size: 30px;
             }
         }
     </style>
@@ -548,233 +577,370 @@
 
 <body>
 
+    <!-- NAVBAR -->
+
     <nav class="navbar">
-        <a href="./index.html" class="brand">
-            Career Compass <span>AI ✦</span>
+
+        <a href="index.html" class="brand">
+            <img src="../images/logo.png" alt="Career Compass AI">
         </a>
 
         <div class="nav-links">
-            <a href="./index.html">Home</a>
-            <a href="./about.html" class="active">About</a>
-            <a href="./questionnaire.html">Assessment</a>
-            <a href="./login.html" class="nav-cta">Get Started</a>
+
+            <a href="index.html">Home</a>
+
+            <a href="about.html">About</a>
+
+            <a href="how-it-works.html">How It Works</a>
+
+            <a href="job-roles.html">Careers</a>
+
+            <a href="contact.html">Contact</a>
+
+            <a href="profile.html" class="profile-btn">A</a>
+
         </div>
+
     </nav>
 
+
     <!-- HERO -->
-    <header class="hero">
-        <div class="hero-inner">
 
-            <div class="hero-content">
-                <span class="eyebrow">ABOUT CAREER COMPASS AI</span>
+    <section class="hero">
 
-                <h1>
-                    Discover your path.<br>
-                    <span>Shape your future.</span>
-                </h1>
+        <div class="hero-content">
 
-                <p>
-                    Choosing a career is an important journey. Career Compass AI
-                    helps you explore your interests, recognize your strengths
-                    and discover career paths that may match your aspirations.
-                </p>
+            <span class="hero-label">
+                ABOUT CAREER COMPASS AI
+            </span>
 
-                <a href="./questionnaire.html" class="primary-btn">
-                    Explore Your Career →
-                </a>
-            </div>
-
-            <div class="hero-art">
-                <div class="art-circle">🧭</div>
-                <div class="floating-note note-one">✨ Explore possibilities</div>
-                <div class="floating-note note-two">🎯 Find your direction</div>
-            </div>
-
-        </div>
-    </header>
-
-    <!-- ABOUT -->
-    <section class="section">
-        <div class="about-grid">
-
-            <div class="about-visual">
-                🌸
-            </div>
-
-            <div class="about-content">
-                <span class="eyebrow">WHO WE ARE</span>
-
-                <h2>A little guidance can open up a world of possibilities.</h2>
-
-                <p>
-                    Career Compass AI is a career exploration platform designed
-                    to make the process of discovering career options more
-                    approachable and organized.
-                </p>
-
-                <p>
-                    Through a simple assessment, the platform considers your
-                    responses and presents career suggestions connected to
-                    different interests and strengths.
-                </p>
-
-                <p>
-                    Our goal is to help students begin exploring possibilities
-                    with more clarity and confidence.
-                </p>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- MISSION -->
-    <section class="mission-section">
-        <div class="mission-inner">
-            <div class="mission-icon">✦</div>
-
-            <h2>Our Mission</h2>
+            <h1>
+                Your future deserves a
+                <span>clear direction.</span>
+            </h1>
 
             <p>
-                Our mission is to make career exploration simple, accessible
-                and encouraging. We aim to help students understand their
-                interests, discover different professional fields and take
-                informed steps toward their future.
+                Career Compass AI is designed to help students explore
+                their interests, understand their strengths and discover
+                career paths that match their potential.
             </p>
+
         </div>
+
     </section>
 
-    <!-- HOW IT WORKS -->
+
+    <!-- OUR STORY -->
+
     <section class="section">
-        <div class="section-heading">
-            <span class="eyebrow">YOUR JOURNEY</span>
-            <h2>How Career Compass AI works</h2>
-            <p>
-                A simple process to help you begin exploring your career options.
-            </p>
+
+        <div class="container">
+
+            <div class="story">
+
+                <div class="story-card">
+
+                    <div class="story-icon">
+                        ✦
+                    </div>
+
+                    <h3>
+                        Find direction.<br>
+                        Build confidence.
+                    </h3>
+
+                    <p>
+                        Career decisions can feel overwhelming.
+                        We created Career Compass AI to make the
+                        exploration process simpler and more engaging.
+                    </p>
+
+                </div>
+
+
+                <div class="story-text">
+
+                    <h3>
+                        What is Career Compass AI?
+                    </h3>
+
+                    <p>
+                        Career Compass AI is a student-focused career
+                        exploration platform that brings career discovery,
+                        self-assessment and career information together
+                        in one place.
+                    </p>
+
+                    <p>
+                        Instead of choosing a career based only on trends
+                        or suggestions from others, students can explore
+                        different possibilities and learn more about what
+                        each career involves.
+                    </p>
+
+                    <p>
+                        The goal is simple: help you understand your
+                        options before making important decisions about
+                        your future.
+                    </p>
+
+                </div>
+
+            </div>
+
         </div>
 
-        <div class="steps-grid">
-
-            <article class="step-card">
-                <div class="step-number">01</div>
-                <h3>Share Your Interests</h3>
-                <p>
-                    Answer a set of questions about your interests,
-                    preferences and the activities you enjoy.
-                </p>
-            </article>
-
-            <article class="step-card">
-                <div class="step-number">02</div>
-                <h3>Explore Your Profile</h3>
-                <p>
-                    Review the career profile generated from your answers
-                    and understand the interests reflected in your responses.
-                </p>
-            </article>
-
-            <article class="step-card">
-                <div class="step-number">03</div>
-                <h3>Discover Career Paths</h3>
-                <p>
-                    Explore suggested career options, learn about different
-                    roles and continue researching the paths that interest you.
-                </p>
-            </article>
-
-        </div>
     </section>
+
 
     <!-- FEATURES -->
-    <section class="features-section">
-        <div class="features-inner">
 
-            <div class="section-heading">
-                <span class="eyebrow">WHAT YOU CAN DO</span>
-                <h2>Explore the possibilities</h2>
+    <section class="section features-section">
+
+        <div class="container">
+
+            <div class="section-title">
+
+                <small>WHAT WE OFFER</small>
+
+                <h2>
+                    Everything you need to explore
+                </h2>
+
                 <p>
-                    Tools and features designed to support your career
-                    exploration journey.
+                    A simple journey from self-discovery to career exploration.
                 </p>
+
             </div>
 
-            <div class="features-grid">
 
-                <article class="feature">
-                    <div class="feature-icon">📝</div>
-                    <div>
-                        <h3>Career Assessment</h3>
-                        <p>
-                            Answer guided questions to explore your interests
-                            and preferences.
-                        </p>
-                    </div>
-                </article>
+            <div class="feature-grid">
 
-                <article class="feature">
+                <div class="feature-card">
                     <div class="feature-icon">🧭</div>
-                    <div>
-                        <h3>Personalized Suggestions</h3>
-                        <p>
-                            View career recommendations based on the answers
-                            you provide.
-                        </p>
-                    </div>
-                </article>
+                    <h3>Career Discovery</h3>
+                    <p>
+                        Explore different career paths and discover
+                        opportunities that match your interests.
+                    </p>
+                </div>
 
-                <article class="feature">
-                    <div class="feature-icon">💼</div>
-                    <div>
-                        <h3>Career Information</h3>
-                        <p>
-                            Discover different job roles and learn more
-                            about professional opportunities.
-                        </p>
-                    </div>
-                </article>
 
-                <article class="feature">
-                    <div class="feature-icon">♡</div>
-                    <div>
-                        <h3>Save Your Interests</h3>
-                        <p>
-                            Keep track of career options you want to revisit
-                            and explore further.
-                        </p>
-                    </div>
-                </article>
+                <div class="feature-card">
+                    <div class="feature-icon">✨</div>
+                    <h3>Personalized Results</h3>
+                    <p>
+                        Complete the assessment and receive career
+                        suggestions based on your responses.
+                    </p>
+                </div>
+
+
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <h3>Career Information</h3>
+                    <p>
+                        Learn about roles, skills, education and other
+                        important aspects of different careers.
+                    </p>
+                </div>
+
+
+                <div class="feature-card">
+                    <div class="feature-icon">❤️</div>
+                    <h3>Save Your Careers</h3>
+                    <p>
+                        Keep interesting career options saved so you
+                        can come back and explore them later.
+                    </p>
+                </div>
+
+
+                <div class="feature-card">
+                    <div class="feature-icon">⚖️</div>
+                    <h3>Compare Careers</h3>
+                    <p>
+                        Compare different career options and understand
+                        how they differ from each other.
+                    </p>
+                </div>
+
+
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Explore Your Future</h3>
+                    <p>
+                        Use your results as a starting point for deeper
+                        research and future planning.
+                    </p>
+                </div>
 
             </div>
+
         </div>
+
     </section>
+
+
+    <!-- APPROACH -->
+
+    <section class="section">
+
+        <div class="container">
+
+            <div class="section-title">
+
+                <small>OUR APPROACH</small>
+
+                <h2>Built around you</h2>
+
+                <p>
+                    Career exploration should feel understandable,
+                    personal and empowering.
+                </p>
+
+            </div>
+
+
+            <div class="values-grid">
+
+                <div class="value-card">
+                    <div class="value-number">01</div>
+                    <h3>Discover</h3>
+                    <p>
+                        Understand your interests and explore possibilities.
+                    </p>
+                </div>
+
+
+                <div class="value-card">
+                    <div class="value-number">02</div>
+                    <h3>Explore</h3>
+                    <p>
+                        Learn about careers that could fit your interests.
+                    </p>
+                </div>
+
+
+                <div class="value-card">
+                    <div class="value-number">03</div>
+                    <h3>Compare</h3>
+                    <p>
+                        Look at different career paths before deciding.
+                    </p>
+                </div>
+
+
+                <div class="value-card">
+                    <div class="value-number">04</div>
+                    <h3>Decide</h3>
+                    <p>
+                        Make informed choices about your next steps.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
 
     <!-- CTA -->
-    <section class="cta-section">
-        <div class="cta-box">
-            <span class="eyebrow">YOUR NEXT STEP</span>
 
-            <h2>Your journey starts with curiosity.</h2>
+    <section class="cta">
 
-            <p>
-                Take the first step toward discovering career possibilities
-                that match your interests.
-            </p>
+        <div class="container">
 
-            <a href="./questionnaire.html" class="primary-btn">
-                Start Assessment →
-            </a>
+            <div class="cta-box">
+
+                <h2>
+                    Ready to explore your future?
+                </h2>
+
+                <p>
+                    Start your career journey and discover possibilities
+                    that could be waiting for you.
+                </p>
+
+                <a href="assessment-intro.html" class="cta-btn">
+                    Start Your Journey →
+                </a>
+
+            </div>
+
         </div>
+
     </section>
 
+
     <!-- FOOTER -->
+
     <footer>
-        <p>
-            © 2026 Career Compass AI. Made to help you explore your future.
-            <br><br>
-            <a href="./index.html">Home</a> &nbsp; · &nbsp;
-            <a href="./about.html">About</a> &nbsp; · &nbsp;
-            <a href="./questionnaire.html">Assessment</a>
-        </p>
+
+        <div class="container">
+
+            <div class="footer-grid">
+
+                <div>
+
+                    <a href="index.html" class="footer-brand">
+                        <img src="../images/logo.png" alt="Career Compass AI">
+                    </a>
+
+                    <p class="footer-about">
+                        Helping students explore careers, understand
+                        possibilities and move toward a more confident future.
+                    </p>
+
+                </div>
+
+
+                <div class="footer-column">
+
+                    <h4>Explore</h4>
+
+                    <a href="index.html">Home</a>
+                    <a href="about.html">About</a>
+                    <a href="how-it-works.html">How It Works</a>
+                    <a href="job-roles.html">Career Roles</a>
+
+                </div>
+
+
+                <div class="footer-column">
+
+                    <h4>Your Journey</h4>
+
+                    <a href="assessment-intro.html">Start Assessment</a>
+                    <a href="questionnaire.html">Questionnaire</a>
+                    <a href="results.html">Results</a>
+                    <a href="favourites.html">Favourites</a>
+                    <a href="compare.html">Compare Careers</a>
+
+                </div>
+
+
+                <div class="footer-column">
+
+                    <h4>Support</h4>
+
+                    <a href="contact.html">Contact</a>
+                    <a href="profile.html">Profile</a>
+                    <a href="dashboard.html">Dashboard</a>
+                    <a href="privacy.html">Privacy</a>
+
+                </div>
+
+            </div>
+
+
+            <div class="footer-bottom">
+                © 2026 Career Compass AI. All rights reserved.
+            </div>
+
+        </div>
+
     </footer>
 
 </body>

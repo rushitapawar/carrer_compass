@@ -1,787 +1,1633 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Compare Careers | Career Compass AI</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <title>Compare Careers | Career Compass AI</title>
 
-<style>
-:root {
-    --plum: #443846;
-    --plum-dark: #322936;
-    --pink: #e998b3;
-    --pink-light: #f6c4d3;
-    --cream: #f7f5f2;
-    --white: #fff;
-    --text: #342d3b;
-    --muted: #756d76;
-    --border: #e7dfe2;
-    --soft-pink: #fff0f5;
-}
+    <style>
+        /* =========================================================
+           CAREER COMPASS AI — COMPARE PAGE
+        ========================================================= */
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-body {
-    font-family: "DM Sans", sans-serif;
-    background: var(--cream);
-    color: var(--text);
-}
+        html {
+            scroll-behavior: smooth;
+        }
 
-a {
-    text-decoration: none;
-    color: inherit;
-}
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f8f5f2;
+            color: #342d3b;
+            min-height: 100vh;
+        }
 
-/* NAVBAR */
-.navbar {
-    height: 76px;
-    background: var(--white);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 7%;
-    border-bottom: 1px solid var(--border);
-}
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
 
-.logo {
-    font-family: "Playfair Display", serif;
-    font-size: 23px;
-    font-weight: 700;
-    color: var(--plum);
-}
+        button,
+        input,
+        select {
+            font: inherit;
+        }
 
-.logo span {
-    color: var(--pink);
-}
+        /* =========================================================
+           NAVBAR
+        ========================================================= */
 
-.nav-links {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-}
+        .navbar {
+            width: 100%;
+            height: 76px;
+            background: rgba(255, 255, 255, 0.96);
+            border-bottom: 1px solid #e5dedb;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 42px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(68, 56, 70, 0.05);
+        }
 
-.nav-links a {
-    color: var(--muted);
-    font-size: 14px;
-    font-weight: 600;
-    transition: 0.2s;
-}
+        /* LOGO — SAME STYLE AS PROFILE */
 
-.nav-links a:hover,
-.nav-links a.active {
-    color: var(--plum);
-}
+        .brand {
+            width: 175px;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+        }
 
-.profile {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background: var(--soft-pink);
-    color: var(--plum);
-    display: grid;
-    place-items: center;
-    font-weight: 700;
-}
+        .brand img {
+            width: 175px;
+            height: 55px;
+            max-width: 175px;
+            max-height: 55px;
+            min-width: 0;
+            min-height: 0;
+            object-fit: contain;
+            display: block;
+        }
 
-/* MAIN */
-.container {
-    max-width: 1200px;
-    margin: auto;
-    padding: 55px 25px 80px;
-}
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-left: auto;
+            margin-right: 28px;
+        }
 
-.eyebrow {
-    color: #b66d89;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-size: 12px;
-    font-weight: 700;
-    margin-bottom: 12px;
-}
+        .nav-links a {
+            font-size: 14px;
+            color: #655c66;
+            font-weight: 600;
+            padding: 8px 2px;
+            position: relative;
+            transition: 0.25s ease;
+        }
 
-.page-heading {
-    font-family: "Playfair Display", serif;
-    font-size: clamp(32px, 5vw, 44px);
-    color: var(--plum);
-    margin-bottom: 12px;
-}
+        .nav-links a:hover {
+            color: #443846;
+        }
 
-.subtitle {
-    color: var(--muted);
-    font-size: 15px;
-    line-height: 1.7;
-    max-width: 650px;
-}
+        .nav-links a.active {
+            color: #443846;
+        }
 
-/* SELECTOR */
-.selector-section {
-    margin-top: 38px;
-    padding: 25px;
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 18px;
-    box-shadow: 0 5px 20px rgba(68, 56, 70, 0.04);
-}
+        .nav-links a.active::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -8px;
+            height: 2px;
+            background: #e998b3;
+            border-radius: 10px;
+        }
 
-.selector-title {
-    font-family: "Playfair Display", serif;
-    font-size: 21px;
-    margin-bottom: 20px;
-    color: var(--plum);
-}
+        /* PROFILE A CIRCLE */
 
-.selector-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
-}
+        .profile-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-.field label {
-    display: block;
-    font-size: 13px;
-    font-weight: 700;
-    margin-bottom: 9px;
-    color: var(--plum);
-}
+        .profile-circle {
+            width: 43px;
+            height: 43px;
+            border-radius: 50%;
+            background: #443846;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 700;
+            border: 3px solid #f6c4d3;
+            box-shadow: 0 4px 12px rgba(68, 56, 70, 0.15);
+            transition: 0.25s ease;
+        }
 
-.field select {
-    width: 100%;
-    padding: 14px;
-    border: 1px solid var(--border);
-    border-radius: 11px;
-    background: #fff;
-    color: var(--text);
-    font-family: inherit;
-    font-size: 14px;
-    outline: none;
-}
+        .profile-circle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 18px rgba(68, 56, 70, 0.2);
+        }
 
-.field select:focus {
-    border-color: var(--pink);
-    box-shadow: 0 0 0 3px rgba(233, 152, 179, 0.14);
-}
+        /* =========================================================
+           PAGE HEADER
+        ========================================================= */
 
-.compare-btn {
-    margin-top: 20px;
-    border: none;
-    background: var(--plum);
-    color: white;
-    padding: 13px 25px;
-    border-radius: 10px;
-    font-family: inherit;
-    font-weight: 700;
-    cursor: pointer;
-    transition: 0.2s;
-}
+        .page {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 58px 30px 80px;
+        }
 
-.compare-btn:hover {
-    background: var(--plum-dark);
-    transform: translateY(-1px);
-}
+        .top-section {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 42px;
+        }
 
-/* COMPARISON */
-.comparison-section {
-    margin-top: 45px;
-}
+        .eyebrow {
+            display: inline-block;
+            background: #f6c4d3;
+            color: #443846;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1.8px;
+            padding: 9px 17px;
+            border-radius: 30px;
+            margin-bottom: 17px;
+        }
 
-.section-heading {
-    font-family: "Playfair Display", serif;
-    color: var(--plum);
-    font-size: 27px;
-    margin-bottom: 20px;
-}
+        .top-section h1 {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 48px;
+            line-height: 1.1;
+            color: #443846;
+            margin-bottom: 14px;
+        }
 
-.comparison-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 22px;
-}
+        .top-section h1 span {
+            color: #c87591;
+        }
 
-.career-card {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 18px;
-    overflow: hidden;
-    box-shadow: 0 7px 25px rgba(68, 56, 70, 0.05);
-}
+        .top-section p {
+            color: #756d76;
+            font-size: 16px;
+            line-height: 1.7;
+            max-width: 680px;
+            margin: auto;
+        }
 
-.card-top {
-    background: linear-gradient(135deg, #fff0f5, #f9e9ef);
-    padding: 25px;
-    min-height: 145px;
-}
+        /* =========================================================
+           SEARCH PANEL
+        ========================================================= */
 
-.career-icon {
-    width: 48px;
-    height: 48px;
-    background: white;
-    border-radius: 14px;
-    display: grid;
-    place-items: center;
-    font-size: 24px;
-    margin-bottom: 14px;
-}
+        .selection-panel {
+            background: white;
+            border: 1px solid #e6dedb;
+            border-radius: 24px;
+            padding: 28px;
+            box-shadow: 0 14px 40px rgba(68, 56, 70, 0.07);
+            margin-bottom: 34px;
+        }
 
-.career-card h3 {
-    font-family: "Playfair Display", serif;
-    font-size: 23px;
-    color: var(--plum);
-}
+        .selection-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 20px;
+        }
 
-.card-body {
-    padding: 23px;
-}
+        .selection-heading h2 {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 25px;
+            color: #443846;
+        }
 
-.career-description {
-    font-size: 14px;
-    line-height: 1.7;
-    color: var(--muted);
-    min-height: 72px;
-    margin-bottom: 20px;
-}
+        .selection-heading p {
+            color: #817780;
+            font-size: 13px;
+        }
 
-.detail {
-    padding: 16px 0;
-    border-top: 1px solid var(--border);
-}
+        .search-box {
+            position: relative;
+            margin-bottom: 22px;
+        }
 
-.detail h4 {
-    font-size: 13px;
-    color: var(--plum);
-    margin-bottom: 9px;
-}
+        .search-box input {
+            width: 100%;
+            height: 54px;
+            border: 1px solid #ddd5d2;
+            border-radius: 14px;
+            padding: 0 18px 0 48px;
+            outline: none;
+            color: #342d3b;
+            background: #fcfaf9;
+            transition: 0.25s ease;
+        }
 
-.detail p,
-.detail li {
-    font-size: 13px;
-    line-height: 1.7;
-    color: var(--muted);
-}
+        .search-box input:focus {
+            border-color: #d895aa;
+            box-shadow: 0 0 0 4px rgba(233, 152, 179, 0.12);
+            background: white;
+        }
 
-.detail ul {
-    padding-left: 18px;
-}
+        .search-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            color: #887b84;
+        }
 
-.tag-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 7px;
-}
+        .career-options {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 13px;
+        }
 
-.tag {
-    font-size: 11px;
-    padding: 6px 10px;
-    background: var(--soft-pink);
-    color: #89566b;
-    border-radius: 20px;
-    font-weight: 600;
-}
+        .career-option {
+            border: 1px solid #e5dedb;
+            background: #fffdfc;
+            border-radius: 14px;
+            padding: 15px;
+            cursor: pointer;
+            transition: 0.25s ease;
+            text-align: left;
+        }
 
-/* EMPTY STATE */
-.empty-state {
-    text-align: center;
-    padding: 55px 20px;
-    background: white;
-    border: 1px dashed #d9cbd2;
-    border-radius: 18px;
-    margin-top: 25px;
-}
+        .career-option:hover {
+            transform: translateY(-3px);
+            border-color: #dfa0b4;
+            box-shadow: 0 8px 20px rgba(68, 56, 70, 0.08);
+        }
 
-.empty-icon {
-    font-size: 40px;
-    margin-bottom: 15px;
-}
+        .career-option.selected {
+            border-color: #c87591;
+            background: #fff3f7;
+            box-shadow: 0 6px 18px rgba(200, 117, 145, 0.13);
+        }
 
-.empty-state h3 {
-    font-family: "Playfair Display", serif;
-    color: var(--plum);
-    font-size: 23px;
-    margin-bottom: 8px;
-}
+        .career-icon {
+            width: 40px;
+            height: 40px;
+            background: #f7e1e8;
+            border-radius: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
 
-.empty-state p {
-    color: var(--muted);
-    font-size: 14px;
-    line-height: 1.6;
-}
+        .career-option strong {
+            display: block;
+            font-size: 14px;
+            color: #443846;
+            margin-bottom: 4px;
+        }
 
-footer {
-    text-align: center;
-    padding: 25px;
-    color: var(--muted);
-    font-size: 12px;
-    border-top: 1px solid var(--border);
-    background: white;
-}
+        .career-option small {
+            color: #847981;
+            font-size: 11px;
+        }
 
-/* RESPONSIVE */
-@media (max-width: 750px) {
-    .navbar {
-        padding: 0 5%;
-    }
+        /* =========================================================
+           SELECTED CAREERS
+        ========================================================= */
 
-    .nav-links {
-        gap: 13px;
-    }
+        .selected-area {
+            margin-top: 26px;
+        }
 
-    .nav-links a {
-        font-size: 12px;
-    }
+        .selected-label {
+            color: #6f626b;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
 
-    .selector-grid,
-    .comparison-grid {
-        grid-template-columns: 1fr;
-    }
+        .selected-careers {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
 
-    .container {
-        padding: 38px 18px 60px;
-    }
-}
+        .selected-chip {
+            background: #443846;
+            color: white;
+            padding: 10px 14px;
+            border-radius: 30px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-@media (max-width: 480px) {
-    .navbar {
-        height: auto;
-        min-height: 70px;
-        flex-wrap: wrap;
-        gap: 12px;
-        padding: 15px 5%;
-    }
+        .selected-chip button {
+            border: none;
+            background: transparent;
+            color: #f6c4d3;
+            cursor: pointer;
+            font-size: 16px;
+            line-height: 1;
+        }
 
-    .logo {
-        font-size: 19px;
-    }
+        /* =========================================================
+           COMPARE HEADER
+        ========================================================= */
 
-    .nav-links {
-        order: 3;
-        width: 100%;
-        justify-content: space-between;
-    }
+        .comparison-section {
+            margin-top: 38px;
+        }
 
-    .profile {
-        margin-left: auto;
-    }
-}
-</style>
+        .comparison-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            gap: 20px;
+        }
+
+        .comparison-header h2 {
+            font-family: Georgia, "Times New Roman", serif;
+            color: #443846;
+            font-size: 30px;
+        }
+
+        .comparison-header p {
+            color: #817780;
+            font-size: 13px;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 180px repeat(2, 1fr);
+            background: white;
+            border: 1px solid #e4dcda;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(68, 56, 70, 0.07);
+        }
+
+        .comparison-cell {
+            min-height: 88px;
+            padding: 22px;
+            border-right: 1px solid #ebe4e1;
+            border-bottom: 1px solid #ebe4e1;
+            display: flex;
+            align-items: center;
+        }
+
+        .comparison-cell:nth-child(3n) {
+            border-right: none;
+        }
+
+        .comparison-cell.label {
+            background: #faf7f5;
+            color: #756d76;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .career-heading {
+            min-height: 150px;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            background: #fff8fa;
+        }
+
+        .career-heading .big-icon {
+            width: 58px;
+            height: 58px;
+            background: #f6d9e2;
+            border-radius: 17px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 27px;
+            margin-bottom: 11px;
+        }
+
+        .career-heading h3 {
+            color: #443846;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 21px;
+        }
+
+        .career-heading small {
+            color: #8b7e87;
+            margin-top: 5px;
+        }
+
+        .comparison-value {
+            color: #443846;
+            font-size: 14px;
+            line-height: 1.55;
+        }
+
+        .comparison-value strong {
+            color: #443846;
+        }
+
+        .salary {
+            font-size: 18px;
+            font-weight: 800;
+            color: #a65d78;
+        }
+
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .tag {
+            padding: 6px 9px;
+            background: #f8edf1;
+            color: #685762;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        /* =========================================================
+           BUTTONS
+        ========================================================= */
+
+        .action-cell {
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 11px;
+            padding: 11px 17px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.25s ease;
+        }
+
+        .btn-primary {
+            background: #443846;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #322936;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #f7e5eb;
+            color: #443846;
+        }
+
+        .btn-secondary:hover {
+            background: #f2d4df;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            border: 1px solid #d9cfd0;
+            background: white;
+            color: #5d515b;
+        }
+
+        .btn-outline:hover {
+            border-color: #c88aa0;
+            color: #443846;
+        }
+
+        /* =========================================================
+           EMPTY STATE
+        ========================================================= */
+
+        .empty-state {
+            text-align: center;
+            background: white;
+            border: 1px dashed #d9cecd;
+            border-radius: 22px;
+            padding: 50px 25px;
+            color: #756d76;
+        }
+
+        .empty-state .empty-icon {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 16px;
+            border-radius: 50%;
+            background: #f8e5eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .empty-state h3 {
+            font-family: Georgia, "Times New Roman", serif;
+            color: #443846;
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            font-size: 14px;
+            line-height: 1.6;
+            max-width: 500px;
+            margin: auto;
+        }
+
+        /* =========================================================
+           FOOTER
+        ========================================================= */
+
+        .footer {
+            margin-top: 55px;
+            padding-top: 24px;
+            border-top: 1px solid #e3dbd8;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #877b83;
+            font-size: 12px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-links a:hover {
+            color: #443846;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 1000px) {
+
+            .navbar {
+                padding: 0 22px;
+            }
+
+            .nav-links {
+                gap: 18px;
+            }
+
+            .career-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .comparison-grid {
+                grid-template-columns: 140px repeat(2, 1fr);
+            }
+
+            .comparison-cell {
+                padding: 16px;
+            }
+        }
+
+        @media (max-width: 760px) {
+
+            .navbar {
+                height: auto;
+                min-height: 72px;
+                padding: 10px 18px;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .brand {
+                width: 145px;
+                height: 48px;
+            }
+
+            .brand img {
+                width: 145px;
+                height: 48px;
+            }
+
+            .nav-links {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                margin: 0;
+                padding: 7px 0 3px;
+                overflow-x: auto;
+            }
+
+            .nav-links a {
+                font-size: 12px;
+                white-space: nowrap;
+            }
+
+            .top-section h1 {
+                font-size: 36px;
+            }
+
+            .page {
+                padding: 40px 16px 60px;
+            }
+
+            .selection-panel {
+                padding: 20px;
+            }
+
+            .selection-heading {
+                display: block;
+            }
+
+            .selection-heading p {
+                margin-top: 7px;
+            }
+
+            .career-options {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .comparison-section {
+                overflow-x: auto;
+            }
+
+            .comparison-grid {
+                min-width: 720px;
+            }
+
+            .footer {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            .career-options {
+                grid-template-columns: 1fr;
+            }
+
+            .top-section h1 {
+                font-size: 31px;
+            }
+
+            .profile-circle {
+                width: 39px;
+                height: 39px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
-<header class="navbar">
-    <a href="index.html" class="logo">Career Compass <span>AI ✦</span></a>
+    <!-- =========================================================
+         NAVBAR
+    ========================================================= -->
 
-    <nav class="nav-links">
-        <a href="dashboard.html">Dashboard</a>
-        <a href="results.html">My Results</a>
-        <a href="favourites.html">Saved</a>
-        <a href="compare.html" class="active">Compare</a>
-    </nav>
+    <header class="navbar">
 
-    <div class="profile">A</div>
-</header>
+        <!-- PROFILE PAGE JAISE ACTUAL LOGO -->
+        <a href="index.html" class="brand">
+            <img
+                src="../images/logo.png"
+                alt="Career Compass AI"
+            >
+        </a>
 
-<main class="container">
+        <nav class="nav-links">
 
-    <p class="eyebrow">Make an informed choice</p>
-    <h1 class="page-heading">Compare Your Career Paths</h1>
-    <p class="subtitle">
-        Explore different career options side by side. Understand their
-        skills, work areas, education paths and opportunities before
-        deciding which direction interests you.
-    </p>
+            <a href="dashboard.html">
+                Dashboard
+            </a>
 
-    <!-- CAREER SELECTOR -->
-    <section class="selector-section">
-        <h2 class="selector-title">Choose careers to compare</h2>
+            <a href="results.html">
+                My Results
+            </a>
 
-        <div class="selector-grid">
-            <div class="field">
-                <label for="careerOne">First career</label>
-                <select id="careerOne">
-                    <option value="">Select a career</option>
-                </select>
+            <a href="favourites.html">
+                Saved
+            </a>
+
+            <a href="compare.html" class="active">
+                Compare
+            </a>
+
+        </nav>
+
+        <!-- A PROFILE CIRCLE -->
+        <a href="profile.html" class="profile-link" title="My Profile">
+            <div class="profile-circle">
+                A
+            </div>
+        </a>
+
+    </header>
+
+
+    <!-- =========================================================
+         MAIN PAGE
+    ========================================================= -->
+
+    <main class="page">
+
+        <!-- PAGE INTRO -->
+
+        <section class="top-section">
+
+            <div class="eyebrow">
+                CAREER COMPARISON
             </div>
 
-            <div class="field">
-                <label for="careerTwo">Second career</label>
-                <select id="careerTwo">
-                    <option value="">Select a career</option>
-                </select>
-            </div>
-        </div>
+            <h1>
+                Compare your
+                <span>career choices.</span>
+            </h1>
 
-        <button class="compare-btn" onclick="compareCareers()">
-            Compare Careers →
-        </button>
-    </section>
+            <p>
+                Explore different career paths side by side and understand
+                the differences in skills, education, salary, work style and
+                future opportunities.
+            </p>
 
-    <!-- COMPARISON RESULTS -->
-    <section class="comparison-section">
-        <h2 class="section-heading">Career Comparison</h2>
-
-        <div id="comparisonArea">
-            <div class="empty-state">
-                <div class="empty-icon">✦</div>
-                <h3>Your comparison starts here</h3>
-                <p>Select two careers above and click “Compare Careers”<br>
-                to see their details side by side.</p>
-            </div>
-        </div>
-    </section>
-
-</main>
-
-<footer>
-    © 2026 Career Compass AI · Explore your future with confidence.
-</footer>
-
-<script>
-const careers = [
-    {
-        id: "software",
-        name: "Software Developer",
-        icon: "💻",
-        description: "Designs, builds and maintains software applications and digital solutions.",
-        skills: ["Programming", "Problem solving", "Logical thinking", "Debugging"],
-        education: "Computer Science, IT or related degree; practical coding projects are also valuable.",
-        work: ["Technology companies", "Startups", "IT services", "Remote teams"],
-        areas: ["Web development", "App development", "Software engineering"],
-        growth: "Can progress into senior development, software architecture or technical leadership."
-    },
-    {
-        id: "designer",
-        name: "UI/UX Designer",
-        icon: "🎨",
-        description: "Creates digital experiences that are useful, accessible and easy to navigate.",
-        skills: ["Creativity", "User research", "Visual design", "Prototyping"],
-        education: "Design, interaction design or related studies; a strong portfolio is important.",
-        work: ["Design studios", "Technology companies", "Startups", "Freelance projects"],
-        areas: ["Interface design", "User experience", "Product design"],
-        growth: "Can progress into senior design, product design or design leadership."
-    },
-    {
-        id: "doctor",
-        name: "Doctor",
-        icon: "🩺",
-        description: "Diagnoses, treats and helps prevent illness while supporting patient health.",
-        skills: ["Communication", "Scientific knowledge", "Critical thinking", "Empathy"],
-        education: "Medical education and required clinical training and licensing.",
-        work: ["Hospitals", "Clinics", "Healthcare centers", "Research institutions"],
-        areas: ["Patient care", "Medical research", "Specialized practice"],
-        growth: "May pursue medical specializations, teaching or healthcare research."
-    },
-    {
-        id: "teacher",
-        name: "Teacher",
-        icon: "📚",
-        description: "Helps learners understand concepts and develop knowledge and skills.",
-        skills: ["Communication", "Patience", "Planning", "Subject knowledge"],
-        education: "Relevant subject education and teaching qualifications as required.",
-        work: ["Schools", "Colleges", "Learning centers", "Online education"],
-        areas: ["Classroom teaching", "Curriculum design", "Educational support"],
-        growth: "Can move into academic leadership, curriculum development or education management."
-    },
-    {
-        id: "analyst",
-        name: "Data Analyst",
-        icon: "📊",
-        description: "Studies data to identify patterns and communicate useful findings.",
-        skills: ["Data interpretation", "Statistics", "Critical thinking", "Communication"],
-        education: "Data science, statistics, mathematics, business or related studies.",
-        work: ["Businesses", "Finance", "Technology", "Research teams"],
-        areas: ["Business analytics", "Data visualization", "Research"],
-        growth: "Can progress into senior analytics, business intelligence or data science roles."
-    },
-    {
-        id: "entrepreneur",
-        name: "Entrepreneur",
-        icon: "🚀",
-        description: "Builds and develops a business, product or service around an opportunity.",
-        skills: ["Planning", "Adaptability", "Communication", "Decision making"],
-        education: "No single required degree; business, finance and industry knowledge can help.",
-        work: ["Own business", "Startups", "Small enterprises", "Social ventures"],
-        areas: ["Business development", "Product building", "Operations"],
-        growth: "Growth depends on the business, market, resources and goals."
-    }
-];
-
-const careerOne = document.getElementById("careerOne");
-const careerTwo = document.getElementById("careerTwo");
-const comparisonArea = document.getElementById("comparisonArea");
-
-async function loadCareers() {
-
-    try {
-
-        const response = await fetch("/api/careers");
-
-        const result = await response.json();
-
-        if (!result.success) {
-
-            alert(
-                result.message ||
-                "Unable to load careers."
-            );
-
-            return;
-        }
-
-        // Clear existing options
-        careerOne.innerHTML =
-            '<option value="">Select a career</option>';
-
-        careerTwo.innerHTML =
-            '<option value="">Select a career</option>';
-
-        result.careers.forEach(career => {
-
-            // Avoid duplicate career titles
-            if (
-                careerOne.querySelector(
-                    `option[value="${career.title}"]`
-                )
-            ) {
-                return;
-            }
-
-            const optionOne =
-                document.createElement("option");
-
-            optionOne.value =
-                career.title;
-
-            optionOne.textContent =
-                career.title;
-
-            careerOne.appendChild(
-                optionOne
-            );
+        </section>
 
 
-            const optionTwo =
-                document.createElement("option");
+        <!-- =====================================================
+             CAREER SELECTION
+        ===================================================== -->
 
-            optionTwo.value =
-                career.title;
+        <section class="selection-panel">
 
-            optionTwo.textContent =
-                career.title;
+            <div class="selection-heading">
 
-            careerTwo.appendChild(
-                optionTwo
-            );
-
-        });
-
-        console.log(
-            "Careers loaded from backend:",
-            result.careers.length
-        );
-
-    } catch (error) {
-
-        console.error(
-            "Career loading error:",
-            error
-        );
-
-        alert(
-            "Unable to connect to the server."
-        );
-    }
-}
-
-function createTags(items) {
-    return `<div class="tag-list">
-        ${items.map(item => `<span class="tag">${item}</span>`).join("")}
-    </div>`;
-}
-
-function createCareerCard(career) {
-    return `
-        <article class="career-card">
-            <div class="card-top">
-                <div class="career-icon">${career.icon}</div>
-                <h3>${career.name}</h3>
-            </div>
-
-            <div class="card-body">
-                <p class="career-description">${career.description}</p>
-
-                <div class="detail">
-                    <h4>Key Skills</h4>
-                    ${createTags(career.skills)}
+                <div>
+                    <h2>Select careers to compare</h2>
+                    <p>
+                        Choose up to two careers for a detailed comparison.
+                    </p>
                 </div>
 
-                <div class="detail">
-                    <h4>Education Path</h4>
-                    <p>${career.education}</p>
-                </div>
-
-                <div class="detail">
-                    <h4>Work Areas</h4>
-                    <ul>${career.work.map(item => `<li>${item}</li>`).join("")}</ul>
-                </div>
-
-                <div class="detail">
-                    <h4>Specialization Areas</h4>
-                    ${createTags(career.areas)}
-                </div>
-
-                <div class="detail">
-                    <h4>Possible Career Growth</h4>
-                    <p>${career.growth}</p>
-                </div>
-            </div>
-        </article>
-    `;
-}
-    function createBackendCareerCard(career) {
-
-    const scores = career.scores || {};
-
-    return `
-        <article class="career-card">
-
-            <div class="card-top">
-
-                <div class="career-icon">💼</div>
-
-                <h3>${career.title}</h3>
+                <button
+                    class="btn btn-outline"
+                    onclick="clearSelection()"
+                >
+                    Clear All
+                </button>
 
             </div>
 
-            <div class="card-body">
 
-                <p class="career-description">
-                    O*NET-SOC Code:
-                    ${career.onetSocCode || "Not available"}
-                </p>
+            <!-- SEARCH -->
 
-                <div class="detail">
+            <div class="search-box">
 
-                    <h4>RIASEC Interest Profile</h4>
+                <span class="search-icon">
+                    🔎
+                </span>
 
-                    ${createTags([
-                        `Realistic: ${Number(scores.R || 0).toFixed(2)}`,
-                        `Investigative: ${Number(scores.I || 0).toFixed(2)}`,
-                        `Artistic: ${Number(scores.A || 0).toFixed(2)}`,
-                        `Social: ${Number(scores.S || 0).toFixed(2)}`,
-                        `Enterprising: ${Number(scores.E || 0).toFixed(2)}`,
-                        `Conventional: ${Number(scores.C || 0).toFixed(2)}`
-                    ])}
+                <input
+                    type="text"
+                    id="careerSearch"
+                    placeholder="Search careers like Software Developer, Designer..."
+                    oninput="filterCareers()"
+                >
 
+            </div>
+
+
+            <!-- CAREER OPTIONS -->
+
+            <div class="career-options" id="careerOptions">
+
+                <div
+                    class="career-option"
+                    data-career="Software Developer"
+                    onclick="selectCareer(this)"
+                >
+                    <div class="career-icon">💻</div>
+
+                    <strong>Software Developer</strong>
+
+                    <small>Technology</small>
                 </div>
 
-                <div class="detail">
 
-                    <h4>Career Database</h4>
+                <div
+                    class="career-option"
+                    data-career="UI/UX Designer"
+                    onclick="selectCareer(this)"
+                >
+                    <div class="career-icon">🎨</div>
+
+                    <strong>UI/UX Designer</strong>
+
+                    <small>Creative Technology</small>
+                </div>
+
+
+                <div
+                    class="career-option"
+                    data-career="Data Scientist"
+                    onclick="selectCareer(this)"
+                >
+                    <div class="career-icon">📊</div>
+
+                    <strong>Data Scientist</strong>
+
+                    <small>Data & Technology</small>
+                </div>
+
+
+                <div
+                    class="career-option"
+                    data-career="Digital Marketer"
+                    onclick="selectCareer(this)"
+                >
+                    <div class="career-icon">📱</div>
+
+                    <strong>Digital Marketer</strong>
+
+                    <small>Business</small>
+                </div>
+
+
+                <div
+                    class="career-option"
+                    data-career="Teacher"
+                    onclick="selectCareer(this)"
+                >
+                    <div class="career-icon">📚</div>
+
+                    <strong>Teacher</strong>
+
+                    <small>Education</small>
+                </div>
+
+
+                <div
+                    class="career-option"
+                    data-career="Psychologist"
+                    onclick="selectCareer(this)"
+                >
+                    <div class="career-icon">🧠</div>
+
+                    <strong>Psychologist</strong>
+
+                    <small>People & Science</small>
+                </div>
+
+
+                <div
+                    class="career-option"
+                    data-career="Business Analyst"
+                    onclick="selectCareer(this)"
+                >
+                    <div class="career-icon">📈</div>
+
+                    <strong>Business Analyst</strong>
+
+                    <small>Business & Data</small>
+                </div>
+
+
+                <div
+                    class="career-option"
+                    data-career="Content Creator"
+                    onclick="selectCareer(this)"
+                >
+                    <div class="career-icon">✍️</div>
+
+                    <strong>Content Creator</strong>
+
+                    <small>Media & Creative</small>
+                </div>
+
+            </div>
+
+
+            <!-- SELECTED CAREERS -->
+
+            <div class="selected-area">
+
+                <div class="selected-label">
+                    Selected careers
+                </div>
+
+                <div
+                    class="selected-careers"
+                    id="selectedCareers"
+                >
+                    <span style="color:#958991;font-size:13px;">
+                        Select two careers above to begin comparison.
+                    </span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             COMPARISON
+        ===================================================== -->
+
+        <section class="comparison-section">
+
+            <div class="comparison-header">
+
+                <div>
+                    <h2>Career comparison</h2>
+                    <p>
+                        See what makes each career different.
+                    </p>
+                </div>
+
+                <a
+                    href="results.html"
+                    class="btn btn-secondary"
+                >
+                    ← Back to Results
+                </a>
+
+            </div>
+
+
+            <div id="comparisonContainer">
+
+                <!-- JS WILL INSERT COMPARISON HERE -->
+
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+                        ⚖️
+                    </div>
+
+                    <h3>
+                        Ready to compare?
+                    </h3>
 
                     <p>
-                        This career information is loaded
-                        from the Career Compass career database.
+                        Select two careers from the options above and
+                        we'll show you their key differences side by side.
                     </p>
 
                 </div>
 
             </div>
 
-        </article>
-    `;
-}
+        </section>
 
 
-async function compareCareers() {
+        <!-- =====================================================
+             FOOTER
+        ===================================================== -->
 
-    const firstTitle = careerOne.value;
-    const secondTitle = careerTwo.value;
+        <footer class="footer">
 
-    if (!firstTitle || !secondTitle) {
+            <div>
+                © 2026 Career Compass AI
+            </div>
 
-        alert(
-            "Please select both careers to compare."
-        );
+            <div class="footer-links">
 
-        return;
-    }
+                <a href="about.html">
+                    About
+                </a>
 
-    if (
-        firstTitle.toLowerCase() ===
-        secondTitle.toLowerCase()
-    ) {
+                <a href="how-it-works.html">
+                    How It Works
+                </a>
 
-        alert(
-            "Please select two different careers."
-        );
+                <a href="contact.html">
+                    Contact
+                </a>
 
-        return;
-    }
-
-    try {
-
-        const response = await fetch(
-            "/api/compare-careers?first=" +
-            encodeURIComponent(firstTitle) +
-            "&second=" +
-            encodeURIComponent(secondTitle)
-        );
-
-        const result = await response.json();
-
-        if (!result.success) {
-
-            alert(
-                result.message ||
-                "Unable to compare careers."
-            );
-
-            return;
-        }
-
-        console.log(
-            "Career comparison from backend:",
-            result.careers
-        );
-
-        comparisonArea.innerHTML = `
-
-            <div class="comparison-grid">
-
-                ${createBackendCareerCard(
-                    result.careers[0]
-                )}
-
-                ${createBackendCareerCard(
-                    result.careers[1]
-                )}
+                <a href="privacy.html">
+                    Privacy
+                </a>
 
             </div>
 
-        `;
+        </footer>
 
-    } catch (error) {
+    </main>
 
-        console.error(
-            "Compare careers error:",
-            error
-        );
 
-        alert(
-            "Unable to connect to the server."
-        );
-    }
-}
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================= -->
 
-loadCareers();
-</script>
+    <script>
+
+        /* =========================================================
+           CAREER DATA
+        ========================================================= */
+
+        const careers = {
+
+            "Software Developer": {
+                icon: "💻",
+                sector: "Technology",
+                salary: "₹4–12 LPA",
+                education: "B.Tech / BCA / B.Sc. Computer Science",
+                work: "Coding, problem solving & software development",
+                demand: "Very High",
+                skills: [
+                    "Programming",
+                    "Problem Solving",
+                    "Algorithms",
+                    "Teamwork"
+                ],
+                environment: "Office / Remote / Hybrid"
+            },
+
+            "UI/UX Designer": {
+                icon: "🎨",
+                sector: "Creative Technology",
+                salary: "₹3–10 LPA",
+                education: "Design / UX / HCI / Related Degree",
+                work: "Designing digital experiences and interfaces",
+                demand: "High",
+                skills: [
+                    "Figma",
+                    "Visual Design",
+                    "Research",
+                    "Creativity"
+                ],
+                environment: "Studio / Office / Remote"
+            },
+
+            "Data Scientist": {
+                icon: "📊",
+                sector: "Data & Technology",
+                salary: "₹6–18 LPA",
+                education: "Statistics / Computer Science / Data Science",
+                work: "Data analysis, modelling & machine learning",
+                demand: "Very High",
+                skills: [
+                    "Python",
+                    "Statistics",
+                    "Machine Learning",
+                    "Analytics"
+                ],
+                environment: "Office / Remote / Hybrid"
+            },
+
+            "Digital Marketer": {
+                icon: "📱",
+                sector: "Business",
+                salary: "₹3–9 LPA",
+                education: "Marketing / Business / Communications",
+                work: "Online marketing, campaigns & brand growth",
+                demand: "High",
+                skills: [
+                    "SEO",
+                    "Content",
+                    "Analytics",
+                    "Communication"
+                ],
+                environment: "Agency / Office / Remote"
+            },
+
+            "Teacher": {
+                icon: "📚",
+                sector: "Education",
+                salary: "₹2.5–8 LPA",
+                education: "Bachelor's / Master's + Teaching Qualification",
+                work: "Teaching, mentoring & student development",
+                demand: "High",
+                skills: [
+                    "Communication",
+                    "Patience",
+                    "Planning",
+                    "Leadership"
+                ],
+                environment: "School / College / Online"
+            },
+
+            "Psychologist": {
+                icon: "🧠",
+                sector: "People & Science",
+                salary: "₹3–10 LPA",
+                education: "Psychology Degree + Further Qualification",
+                work: "Understanding behaviour and supporting people",
+                demand: "Growing",
+                skills: [
+                    "Listening",
+                    "Research",
+                    "Empathy",
+                    "Communication"
+                ],
+                environment: "Clinic / Institution / Private Practice"
+            },
+
+            "Business Analyst": {
+                icon: "📈",
+                sector: "Business & Data",
+                salary: "₹4–12 LPA",
+                education: "Business / Economics / IT / Related Degree",
+                work: "Analysing business problems and improving processes",
+                demand: "High",
+                skills: [
+                    "Analytics",
+                    "Communication",
+                    "Business Strategy",
+                    "Problem Solving"
+                ],
+                environment: "Office / Hybrid"
+            },
+
+            "Content Creator": {
+                icon: "✍️",
+                sector: "Media & Creative",
+                salary: "₹2–10 LPA+",
+                education: "Any relevant degree + Portfolio",
+                work: "Creating digital content for audiences and brands",
+                demand: "Growing",
+                skills: [
+                    "Writing",
+                    "Video",
+                    "Creativity",
+                    "Social Media"
+                ],
+                environment: "Remote / Studio / Freelance"
+            }
+
+        };
+
+
+        /* =========================================================
+           SELECTED CAREERS
+        ========================================================= */
+
+        let selectedCareers = [];
+
+
+        function selectCareer(element) {
+
+            const careerName = element.dataset.career;
+
+            /* REMOVE */
+
+            if (selectedCareers.includes(careerName)) {
+
+                selectedCareers =
+                    selectedCareers.filter(
+                        career => career !== careerName
+                    );
+
+                element.classList.remove("selected");
+
+                updateSelected();
+
+                renderComparison();
+
+                return;
+            }
+
+
+            /* MAX TWO */
+
+            if (selectedCareers.length >= 2) {
+
+                alert(
+                    "You can compare only two careers at a time."
+                );
+
+                return;
+            }
+
+
+            selectedCareers.push(careerName);
+
+            element.classList.add("selected");
+
+            updateSelected();
+
+            renderComparison();
+        }
+
+
+        /* =========================================================
+           UPDATE SELECTED CHIPS
+        ========================================================= */
+
+        function updateSelected() {
+
+            const container =
+                document.getElementById("selectedCareers");
+
+            if (selectedCareers.length === 0) {
+
+                container.innerHTML = `
+                    <span style="color:#958991;font-size:13px;">
+                        Select two careers above to begin comparison.
+                    </span>
+                `;
+
+                return;
+            }
+
+
+            container.innerHTML =
+                selectedCareers.map(career => `
+
+                    <div class="selected-chip">
+
+                        ${career}
+
+                        <button
+                            onclick="removeCareer('${career}')"
+                            title="Remove"
+                        >
+                            ×
+                        </button>
+
+                    </div>
+
+                `).join("");
+        }
+
+
+        /* =========================================================
+           REMOVE CAREER
+        ========================================================= */
+
+        function removeCareer(careerName) {
+
+            selectedCareers =
+                selectedCareers.filter(
+                    career => career !== careerName
+                );
+
+
+            document
+                .querySelectorAll(".career-option")
+                .forEach(option => {
+
+                    if (
+                        option.dataset.career === careerName
+                    ) {
+                        option.classList.remove("selected");
+                    }
+
+                });
+
+
+            updateSelected();
+
+            renderComparison();
+        }
+
+
+        /* =========================================================
+           CLEAR ALL
+        ========================================================= */
+
+        function clearSelection() {
+
+            selectedCareers = [];
+
+            document
+                .querySelectorAll(".career-option")
+                .forEach(option => {
+                    option.classList.remove("selected");
+                });
+
+            updateSelected();
+
+            renderComparison();
+        }
+
+
+        /* =========================================================
+           SEARCH
+        ========================================================= */
+
+        function filterCareers() {
+
+            const query =
+                document
+                    .getElementById("careerSearch")
+                    .value
+                    .toLowerCase()
+                    .trim();
+
+
+            document
+                .querySelectorAll(".career-option")
+                .forEach(option => {
+
+                    const name =
+                        option.dataset.career
+                            .toLowerCase();
+
+                    option.style.display =
+                        name.includes(query)
+                            ? "block"
+                            : "none";
+
+                });
+        }
+
+
+        /* =========================================================
+           RENDER COMPARISON
+        ========================================================= */
+
+        function renderComparison() {
+
+            const container =
+                document.getElementById(
+                    "comparisonContainer"
+                );
+
+
+            if (selectedCareers.length < 2) {
+
+                container.innerHTML = `
+
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            ⚖️
+                        </div>
+
+                        <h3>
+                            Ready to compare?
+                        </h3>
+
+                        <p>
+                            Select two careers from the options above
+                            and we'll show you their key differences
+                            side by side.
+                        </p>
+
+                    </div>
+
+                `;
+
+                return;
+            }
+
+
+            const career1 =
+                careers[selectedCareers[0]];
+
+            const career2 =
+                careers[selectedCareers[1]];
+
+
+            container.innerHTML = `
+
+                <div class="comparison-grid">
+
+
+                    <!-- HEADER LABEL -->
+
+                    <div class="comparison-cell label career-heading">
+                        <strong>Career</strong>
+                    </div>
+
+
+                    <!-- CAREER ONE -->
+
+                    <div class="comparison-cell career-heading">
+
+                        <div class="big-icon">
+                            ${career1.icon}
+                        </div>
+
+                        <h3>
+                            ${selectedCareers[0]}
+                        </h3>
+
+                        <small>
+                            ${career1.sector}
+                        </small>
+
+                    </div>
+
+
+                    <!-- CAREER TWO -->
+
+                    <div class="comparison-cell career-heading">
+
+                        <div class="big-icon">
+                            ${career2.icon}
+                        </div>
+
+                        <h3>
+                            ${selectedCareers[1]}
+                        </h3>
+
+                        <small>
+                            ${career2.sector}
+                        </small>
+
+                    </div>
+
+
+                    <!-- SALARY -->
+
+                    <div class="comparison-cell label">
+                        Typical salary
+                    </div>
+
+                    <div class="comparison-cell">
+                        <div class="comparison-value">
+                            <div class="salary">
+                                ${career1.salary}
+                            </div>
+                            <small>Indicative range</small>
+                        </div>
+                    </div>
+
+                    <div class="comparison-cell">
+                        <div class="comparison-value">
+                            <div class="salary">
+                                ${career2.salary}
+                            </div>
+                            <small>Indicative range</small>
+                        </div>
+                    </div>
+
+
+                    <!-- EDUCATION -->
+
+                    <div class="comparison-cell label">
+                        Education
+                    </div>
+
+                    <div class="comparison-cell">
+                        <div class="comparison-value">
+                            ${career1.education}
+                        </div>
+                    </div>
+
+                    <div class="comparison-cell">
+                        <div class="comparison-value">
+                            ${career2.education}
+                        </div>
+                    </div>
+
+
+                    <!-- WORK -->
+
+                    <div class="comparison-cell label">
+                        What you do
+                    </div>
+
+                    <div class="comparison-cell">
+                        <div class="comparison-value">
+                            ${career1.work}
+                        </div>
+                    </div>
+
+                    <div class="comparison-cell">
+                        <div class="comparison-value">
+                            ${career2.work}
+                        </div>
+                    </div>
+
+
+                    <!-- SKILLS -->
+
+                    <div class="comparison-cell label">
+                        Key skills
+                    </div>
+
+                    <div class="comparison-cell">
+
+                        <div class="tag-list">
+
+                            ${career1.skills.map(
+                                skill => `
+                                    <span class="tag">
+                                        ${skill}
+                                    </span>
+                                `
+                            ).join("")}
+
+                        </div>
+
+                    </div>
+
+                    <div class="comparison-cell">
+
+                        <div class="tag-list">
+
+                            ${career2.skills.map(
+                                skill => `
+                                    <span class="tag">
+                                        ${skill}
+                                    </span>
+                                `
+                            ).join("")}
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- DEMAND -->
+
+                    <div class="comparison-cell label">
+                        Career demand
+                    </div>
+
+                    <div class="comparison-cell">
+                        <div class="comparison-value">
+                            <strong>
+                                ${career1.demand}
+                            </strong>
+                        </div>
+                    </div>
+
+                    <div class="comparison-cell">
+                        <div class="comparison-value">
+                            <strong>
+                                ${career2.demand}
+                            </strong>
+                        </div>
+                    </div>
+
+
+                    <!-- WORK ENVIRONMENT -->
+
+                    <div class="comparison-cell label">
+                        Work environment
+                    </div>
+
+                    <div class="comparison-cell">
+                        <div class="comparison-value">
+                            ${career1.environment}
+                        </div>
+                    </div>
+
+                    <div class="comparison-cell">
+                        <div class="comparison-value">
+                            ${career2.environment}
+                        </div>
+                    </div>
+
+
+                    <!-- ACTIONS -->
+
+                    <div class="comparison-cell label">
+                        Explore
+                    </div>
+
+                    <div class="comparison-cell action-cell">
+
+                        <a
+                            href="role-detail.html?career=${encodeURIComponent(selectedCareers[0])}"
+                            class="btn btn-primary"
+                        >
+                            View Details
+                        </a>
+
+                    </div>
+
+                    <div class="comparison-cell action-cell">
+
+                        <a
+                            href="role-detail.html?career=${encodeURIComponent(selectedCareers[1])}"
+                            class="btn btn-primary"
+                        >
+                            View Details
+                        </a>
+
+                    </div>
+
+                </div>
+
+            `;
+        }
+
+    </script>
 
 </body>
 </html>

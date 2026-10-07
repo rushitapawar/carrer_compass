@@ -4,13 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Favourites | Career Compass AI</title>
+    <title>Career Compass AI | Discover Your Career</title>
 
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
@@ -26,28 +30,38 @@
 
         .navbar {
             height: 82px;
-            background: rgba(255, 255, 255, 0.97);
+            background: rgba(255,255,255,0.97);
             border-bottom: 1px solid #e7dfdb;
+
             display: flex;
             align-items: center;
             justify-content: space-between;
+
             padding: 0 55px;
+
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
         }
 
         .brand {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
             width: 175px;
             height: 55px;
+
+            display: flex;
+            align-items: center;
+
+            text-decoration: none;
+            flex-shrink: 0;
         }
 
         .brand img {
             width: 175px;
             height: 55px;
+
+            max-width: 175px;
+            max-height: 55px;
+
             object-fit: contain;
             display: block;
         }
@@ -61,8 +75,10 @@
         .nav-links a {
             text-decoration: none;
             color: #756d76;
+
             font-size: 14px;
             font-weight: 600;
+
             transition: 0.25s ease;
         }
 
@@ -70,51 +86,23 @@
             color: #443846;
         }
 
-        .nav-links a.active {
-            color: #443846;
-            position: relative;
+        .nav-login {
+            color: #443846 !important;
         }
 
-        .nav-links a.active::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: -10px;
-            height: 2px;
-            background: #e998b3;
-            border-radius: 10px;
-        }
-
-        .profile-btn {
-            width: 43px;
-            height: 43px;
-            border-radius: 50%;
+        .nav-get-started {
             background: #443846;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: 700;
-            box-shadow: 0 6px 16px rgba(68, 56, 70, 0.18);
-            transition: 0.25s ease;
+            color: white !important;
+
+            padding: 11px 20px;
+            border-radius: 10px;
+
+            box-shadow: 0 6px 16px rgba(68,56,70,0.15);
         }
 
-        .profile-btn:hover {
-            transform: translateY(-2px);
+        .nav-get-started:hover {
             background: #322936;
-        }
-
-        /* =========================
-           PAGE
-        ========================= */
-
-        .page {
-            max-width: 1180px;
-            margin: 0 auto;
-            padding: 65px 35px 80px;
+            transform: translateY(-1px);
         }
 
         /* =========================
@@ -122,224 +110,544 @@
         ========================= */
 
         .hero {
-            text-align: center;
-            margin-bottom: 48px;
+            min-height: calc(100vh - 82px);
+
+            display: flex;
+            align-items: center;
+
+            padding: 70px 8%;
+
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+
+            position: absolute;
+
+            width: 430px;
+            height: 430px;
+
+            border-radius: 50%;
+
+            background: #f4dce4;
+
+            top: -150px;
+            right: -120px;
+
+            opacity: 0.65;
+        }
+
+        .hero::after {
+            content: "";
+
+            position: absolute;
+
+            width: 300px;
+            height: 300px;
+
+            border-radius: 50%;
+
+            background: #eee4df;
+
+            bottom: -130px;
+            left: -100px;
+
+            opacity: 0.75;
+        }
+
+        .hero-content {
+            width: 56%;
+            position: relative;
+            z-index: 2;
         }
 
         .hero-badge {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 8px 15px;
+
+            padding: 9px 16px;
+
             background: #f6e6eb;
             color: #8c566b;
+
             border-radius: 30px;
+
             font-size: 12px;
             font-weight: 700;
+
             letter-spacing: 0.5px;
-            text-transform: uppercase;
-            margin-bottom: 18px;
+
+            margin-bottom: 24px;
         }
 
         .hero h1 {
             font-family: Georgia, "Times New Roman", serif;
-            font-size: 46px;
-            line-height: 1.15;
+
+            font-size: clamp(48px, 6vw, 76px);
+
+            line-height: 1.04;
+
             color: #443846;
-            margin-bottom: 15px;
+
+            margin-bottom: 25px;
         }
 
         .hero h1 span {
             color: #b66d87;
         }
 
-        .hero p {
-            max-width: 620px;
-            margin: auto;
+        .hero-description {
+            max-width: 610px;
+
             color: #756d76;
-            font-size: 16px;
-            line-height: 1.7;
+
+            font-size: 17px;
+            line-height: 1.75;
+
+            margin-bottom: 34px;
         }
 
-        /* =========================
-           SAVED COUNT
-        ========================= */
-
-        .saved-header {
+        .hero-buttons {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            margin-bottom: 22px;
-        }
-
-        .saved-header h2 {
-            font-family: Georgia, "Times New Roman", serif;
-            font-size: 25px;
-            color: #443846;
-        }
-
-        .count {
-            background: white;
-            border: 1px solid #e4dcda;
-            color: #756d76;
-            padding: 8px 14px;
-            border-radius: 30px;
-            font-size: 13px;
-            font-weight: 700;
-        }
-
-        /* =========================
-           CAREER GRID
-        ========================= */
-
-        .career-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-        }
-
-        .career-card {
-            background: white;
-            border: 1px solid #e7dfdb;
-            border-radius: 22px;
-            padding: 27px;
-            position: relative;
-            min-height: 260px;
-            box-shadow: 0 8px 25px rgba(68, 56, 70, 0.06);
-            transition: 0.3s ease;
-        }
-
-        .career-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 16px 35px rgba(68, 56, 70, 0.11);
-        }
-
-        .heart {
-            position: absolute;
-            right: 20px;
-            top: 19px;
-            width: 37px;
-            height: 37px;
-            border-radius: 50%;
-            border: 1px solid #eadfe1;
-            background: #fff8fa;
-            color: #b66d87;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 18px;
-            transition: 0.2s ease;
-        }
-
-        .heart:hover {
-            transform: scale(1.08);
-            background: #f6e6eb;
-        }
-
-        .career-icon {
-            width: 58px;
-            height: 58px;
-            border-radius: 17px;
-            background: #f7e8ed;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 27px;
-            margin-bottom: 20px;
-        }
-
-        .career-card h3 {
-            font-family: Georgia, "Times New Roman", serif;
-            color: #443846;
-            font-size: 21px;
-            margin-bottom: 10px;
-            padding-right: 40px;
-        }
-
-        .career-card p {
-            color: #756d76;
-            font-size: 13px;
-            line-height: 1.6;
-            min-height: 42px;
-        }
-
-        .card-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 21px;
+            gap: 14px;
         }
 
         .btn {
             text-decoration: none;
-            border-radius: 11px;
-            padding: 10px 14px;
-            font-size: 12px;
-            font-weight: 700;
-            transition: 0.25s ease;
+
             display: inline-flex;
             align-items: center;
             justify-content: center;
+
+            padding: 14px 23px;
+
+            border-radius: 12px;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            transition: 0.25s ease;
         }
 
         .btn-primary {
             background: #443846;
             color: white;
+
+            box-shadow: 0 9px 22px rgba(68,56,70,0.17);
         }
 
         .btn-primary:hover {
             background: #322936;
+            transform: translateY(-2px);
         }
 
         .btn-secondary {
-            background: #f7f2f0;
+            background: white;
             color: #443846;
-            border: 1px solid #e5deda;
+
+            border: 1px solid #ddd4d1;
         }
 
         .btn-secondary:hover {
-            background: #eee7e4;
+            background: #f5efed;
+            transform: translateY(-2px);
         }
 
         /* =========================
-           EMPTY STATE
+           HERO VISUAL
         ========================= */
 
-        .empty-state {
-            background: white;
-            border: 1px solid #e7dfdb;
-            border-radius: 25px;
-            padding: 65px 30px;
-            text-align: center;
-            box-shadow: 0 8px 25px rgba(68, 56, 70, 0.05);
+        .hero-visual {
+            width: 44%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            position: relative;
+            z-index: 2;
         }
 
-        .empty-icon {
-            width: 78px;
-            height: 78px;
-            margin: 0 auto 22px;
+        .visual-card {
+            width: 410px;
+            min-height: 440px;
+
+            background: rgba(255,255,255,0.92);
+
+            border: 1px solid #e7dfdb;
+
+            border-radius: 30px;
+
+            padding: 35px;
+
+            box-shadow:
+                0 25px 70px rgba(68,56,70,0.12);
+
+            position: relative;
+        }
+
+        .visual-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 35px;
+        }
+
+        .visual-title {
+            font-family: Georgia, "Times New Roman", serif;
+
+            font-size: 22px;
+            color: #443846;
+        }
+
+        .visual-dot {
+            width: 11px;
+            height: 11px;
+
             border-radius: 50%;
-            background: #f8e9ee;
-            color: #b66d87;
+
+            background: #e998b3;
+
+            box-shadow: 0 0 0 7px #f8e9ee;
+        }
+
+        .compass {
+            width: 190px;
+            height: 190px;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    #f8e9ee 0%,
+                    #f4dce4 55%,
+                    #ead1da 100%
+                );
+
+            margin: 0 auto 32px;
+
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 32px;
+
+            position: relative;
+
+            border: 8px solid white;
+
+            box-shadow:
+                0 12px 30px rgba(68,56,70,0.10);
         }
 
-        .empty-state h2 {
-            font-family: Georgia, "Times New Roman", serif;
-            font-size: 27px;
+        .compass::before {
+            content: "✦";
+
+            font-size: 75px;
+
             color: #443846;
+
+            position: absolute;
+        }
+
+        .compass::after {
+            content: "";
+
+            width: 135px;
+            height: 135px;
+
+            border: 1px dashed #c18a9d;
+
+            border-radius: 50%;
+
+            position: absolute;
+        }
+
+        .visual-lines {
+            display: flex;
+            flex-direction: column;
+            gap: 13px;
+        }
+
+        .visual-line {
+            height: 12px;
+
+            background: #f0e9e6;
+
+            border-radius: 20px;
+
+            overflow: hidden;
+        }
+
+        .visual-line span {
+            display: block;
+
+            height: 100%;
+
+            border-radius: 20px;
+
+            background: #e3a0b6;
+        }
+
+        .visual-line:nth-child(1) span {
+            width: 82%;
+        }
+
+        .visual-line:nth-child(2) span {
+            width: 65%;
+        }
+
+        .visual-line:nth-child(3) span {
+            width: 91%;
+        }
+
+        .visual-line:nth-child(4) span {
+            width: 72%;
+        }
+
+        .visual-note {
+            text-align: center;
+
+            margin-top: 25px;
+
+            font-size: 13px;
+
+            color: #8a8188;
+        }
+
+        /* =========================
+           FEATURES
+        ========================= */
+
+        .features {
+            padding: 95px 8%;
+
+            background: #fff;
+        }
+
+        .section-heading {
+            text-align: center;
+
+            max-width: 650px;
+
+            margin: 0 auto 55px;
+        }
+
+        .section-label {
+            color: #b66d87;
+
+            font-size: 12px;
+            font-weight: 800;
+
+            letter-spacing: 1.4px;
+
+            text-transform: uppercase;
+
             margin-bottom: 12px;
         }
 
-        .empty-state p {
+        .section-heading h2 {
+            font-family: Georgia, "Times New Roman", serif;
+
+            font-size: 42px;
+
+            color: #443846;
+
+            margin-bottom: 14px;
+        }
+
+        .section-heading p {
             color: #756d76;
-            max-width: 500px;
-            margin: 0 auto 25px;
+
+            font-size: 15px;
             line-height: 1.7;
-            font-size: 14px;
+        }
+
+        .feature-grid {
+            max-width: 1100px;
+
+            margin: 0 auto;
+
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 22px;
+        }
+
+        .feature-card {
+            background: #fdfaf8;
+
+            border: 1px solid #e9e1de;
+
+            border-radius: 22px;
+
+            padding: 30px;
+
+            transition: 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 15px 35px rgba(68,56,70,0.08);
+        }
+
+        .feature-icon {
+            width: 55px;
+            height: 55px;
+
+            border-radius: 16px;
+
+            background: #f7e7ec;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 25px;
+
+            margin-bottom: 22px;
+        }
+
+        .feature-card h3 {
+            font-family: Georgia, "Times New Roman", serif;
+
+            color: #443846;
+
+            font-size: 21px;
+
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: #756d76;
+
+            font-size: 13px;
+
+            line-height: 1.7;
+        }
+
+        /* =========================
+           HOW IT WORKS
+        ========================= */
+
+        .journey {
+            padding: 95px 8%;
+
+            background: #f8f5f2;
+        }
+
+        .steps {
+            max-width: 1050px;
+
+            margin: 0 auto;
+
+            display: grid;
+
+            grid-template-columns: repeat(4, 1fr);
+
+            gap: 18px;
+        }
+
+        .step {
+            background: white;
+
+            border: 1px solid #e6dedb;
+
+            border-radius: 20px;
+
+            padding: 25px;
+
+            text-align: center;
+        }
+
+        .step-number {
+            width: 43px;
+            height: 43px;
+
+            border-radius: 50%;
+
+            background: #443846;
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin: 0 auto 17px;
+
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .step h3 {
+            font-family: Georgia, "Times New Roman", serif;
+
+            font-size: 18px;
+
+            color: #443846;
+
+            margin-bottom: 8px;
+        }
+
+        .step p {
+            color: #756d76;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+        }
+
+        /* =========================
+           CTA
+        ========================= */
+
+        .cta {
+            padding: 90px 8%;
+
+            background: #443846;
+
+            text-align: center;
+
+            color: white;
+        }
+
+        .cta h2 {
+            font-family: Georgia, "Times New Roman", serif;
+
+            font-size: 42px;
+
+            margin-bottom: 14px;
+        }
+
+        .cta p {
+            color: #ddd2d8;
+
+            max-width: 580px;
+
+            margin: 0 auto 28px;
+
+            line-height: 1.7;
+
+            font-size: 15px;
+        }
+
+        .cta .btn-primary {
+            background: #f2b5c8;
+
+            color: #443846;
+
+            box-shadow: none;
+        }
+
+        .cta .btn-primary:hover {
+            background: #f5c5d4;
         }
 
         /* =========================
@@ -347,37 +655,70 @@
         ========================= */
 
         footer {
-            border-top: 1px solid #e5ddda;
-            text-align: center;
-            padding: 25px;
-            color: #8a8188;
+            background: #322936;
+
+            color: #c9bdc4;
+
+            padding: 25px 8%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
             font-size: 12px;
         }
 
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: #c9bdc4;
+
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
         /* =========================
-           RESPONSIVE
+           MOBILE
         ========================= */
 
-        @media (max-width: 950px) {
+        @media (max-width: 1000px) {
 
             .navbar {
-                padding: 0 25px;
+                padding: 0 28px;
             }
 
             .nav-links {
-                gap: 16px;
+                gap: 17px;
             }
 
-            .nav-links a:nth-child(n+5) {
-                display: none;
+            .hero {
+                padding: 65px 6%;
             }
 
-            .career-grid {
+            .hero-content {
+                width: 55%;
+            }
+
+            .hero-visual {
+                width: 45%;
+            }
+
+            .visual-card {
+                width: 350px;
+            }
+
+            .steps {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
 
-        @media (max-width: 650px) {
+        @media (max-width: 760px) {
 
             .navbar {
                 height: 72px;
@@ -390,33 +731,101 @@
                 height: 48px;
             }
 
-            .nav-links {
+            .nav-links a:nth-child(1),
+            .nav-links a:nth-child(2),
+            .nav-links a:nth-child(3) {
                 display: none;
             }
 
-            .page {
-                padding: 45px 18px 60px;
+            .nav-links {
+                gap: 10px;
+            }
+
+            .nav-login {
+                font-size: 13px !important;
+            }
+
+            .nav-get-started {
+                padding: 9px 13px;
+                font-size: 12px !important;
+            }
+
+            .hero {
+                min-height: auto;
+
+                padding: 65px 22px 75px;
+
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-content {
+                width: 100%;
             }
 
             .hero h1 {
-                font-size: 35px;
+                font-size: 48px;
             }
 
-            .hero p {
-                font-size: 14px;
+            .hero-description {
+                font-size: 15px;
             }
 
-            .saved-header {
-                align-items: flex-start;
-                gap: 12px;
+            .hero-buttons {
+                justify-content: center;
+                flex-wrap: wrap;
             }
 
-            .saved-header h2 {
-                font-size: 22px;
+            .hero-visual {
+                width: 100%;
+
+                margin-top: 55px;
             }
 
-            .career-grid {
+            .visual-card {
+                width: min(100%, 380px);
+            }
+
+            .feature-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .section-heading h2 {
+                font-size: 34px;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+            }
+
+            .cta h2 {
+                font-size: 34px;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 15px;
+
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 450px) {
+
+            .hero h1 {
+                font-size: 41px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .hero-buttons .btn {
+                width: 100%;
+            }
+
+            .visual-card {
+                padding: 25px;
             }
         }
     </style>
@@ -430,7 +839,7 @@
 
     <header class="navbar">
 
-        <a href="dashboard.html" class="brand">
+        <a href="index.html" class="brand">
             <img
                 src="../images/logo.png"
                 alt="Career Compass AI"
@@ -439,107 +848,340 @@
 
         <nav class="nav-links">
 
-            <a href="dashboard.html">
-                Dashboard
+            <a href="#features">
+                Explore
             </a>
 
-            <a href="results.html">
-                Results
+            <a href="how-it-works.html">
+                How It Works
             </a>
 
-            <a href="favourites.html" class="active">
-                Favourites
+            <a href="about.html">
+                About
             </a>
 
-            <a href="compare.html">
-                Compare
+            <a
+                href="login.html"
+                class="nav-login"
+            >
+                Login
             </a>
 
-            <a href="contact.html">
-                Contact
+            <a
+                href="login.html"
+                class="nav-get-started"
+            >
+                Get Started
             </a>
 
         </nav>
-
-        <a href="profile.html" class="profile-btn">
-            A
-        </a>
 
     </header>
 
 
     <!-- =========================
-         MAIN
+         HERO
     ========================= -->
 
-    <main class="page">
+    <main>
 
         <section class="hero">
 
-            <div class="hero-badge">
-                ♡ Your saved careers
+            <div class="hero-content">
+
+                <div class="hero-badge">
+                    ✦ Your future starts here
+                </div>
+
+                <h1>
+                    Find a career
+                    <span>that feels right.</span>
+                </h1>
+
+                <p class="hero-description">
+                    Career Compass AI helps you understand your
+                    strengths, interests and preferences to discover
+                    career paths that match who you are.
+                </p>
+
+                <div class="hero-buttons">
+
+                    <a
+                        href="login.html"
+                        class="btn btn-primary"
+                    >
+                        Get Started
+                        <span style="margin-left:8px;">→</span>
+                    </a>
+
+                    <a
+                        href="#features"
+                        class="btn btn-secondary"
+                    >
+                        Explore Careers
+                    </a>
+
+                </div>
+
             </div>
 
-            <h1>
-                Your Career
-                <span>Favourites</span>
-            </h1>
 
-            <p>
-                Keep the career paths that caught your attention
-                in one place and explore them whenever you're ready.
-            </p>
+            <!-- HERO VISUAL -->
+
+            <div class="hero-visual">
+
+                <div class="visual-card">
+
+                    <div class="visual-top">
+
+                        <div class="visual-title">
+                            Your Career Compass
+                        </div>
+
+                        <div class="visual-dot"></div>
+
+                    </div>
+
+
+                    <div class="compass"></div>
+
+
+                    <div class="visual-lines">
+
+                        <div class="visual-line">
+                            <span></span>
+                        </div>
+
+                        <div class="visual-line">
+                            <span></span>
+                        </div>
+
+                        <div class="visual-line">
+                            <span></span>
+                        </div>
+
+                        <div class="visual-line">
+                            <span></span>
+                        </div>
+
+                    </div>
+
+                    <p class="visual-note">
+                        Discover possibilities based on your unique profile.
+                    </p>
+
+                </div>
+
+            </div>
 
         </section>
 
 
-        <div class="saved-header">
-
-            <h2>
-                Saved Careers
-            </h2>
-
-            <div class="count" id="savedCount">
-                0 saved
-            </div>
-
-        </div>
-
-
-        <!-- CAREERS WILL APPEAR HERE -->
+        <!-- =========================
+             FEATURES
+        ========================= -->
 
         <section
-            class="career-grid"
-            id="careerGrid"
-        ></section>
-
-
-        <!-- EMPTY STATE -->
-
-        <section
-            class="empty-state"
-            id="emptyState"
-            style="display:none;"
+            class="features"
+            id="features"
         >
 
-            <div class="empty-icon">
-                ♡
+            <div class="section-heading">
+
+                <div class="section-label">
+                    Why Career Compass AI
+                </div>
+
+                <h2>
+                    A clearer way to explore your future.
+                </h2>
+
+                <p>
+                    Instead of choosing a career based only on marks
+                    or trends, understand what actually fits you.
+                </p>
+
             </div>
 
+
+            <div class="feature-grid">
+
+                <article class="feature-card">
+
+                    <div class="feature-icon">
+                        ✦
+                    </div>
+
+                    <h3>
+                        Know Yourself
+                    </h3>
+
+                    <p>
+                        Build your personal career profile by sharing
+                        your interests, strengths and preferences.
+                    </p>
+
+                </article>
+
+
+                <article class="feature-card">
+
+                    <div class="feature-icon">
+                        ◇
+                    </div>
+
+                    <h3>
+                        Discover Careers
+                    </h3>
+
+                    <p>
+                        Explore career paths across technology,
+                        science, business, creativity and more.
+                    </p>
+
+                </article>
+
+
+                <article class="feature-card">
+
+                    <div class="feature-icon">
+                        ♡
+                    </div>
+
+                    <h3>
+                        Save Your Favourites
+                    </h3>
+
+                    <p>
+                        Keep interesting career options saved so
+                        you can compare and revisit them later.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             JOURNEY
+        ========================= -->
+
+        <section class="journey">
+
+            <div class="section-heading">
+
+                <div class="section-label">
+                    Your Journey
+                </div>
+
+                <h2>
+                    From curiosity to direction.
+                </h2>
+
+                <p>
+                    A simple journey designed to help you move
+                    from exploring possibilities to making informed choices.
+                </p>
+
+            </div>
+
+
+            <div class="steps">
+
+                <article class="step">
+
+                    <div class="step-number">
+                        01
+                    </div>
+
+                    <h3>
+                        Get Started
+                    </h3>
+
+                    <p>
+                        Create your account and begin your career journey.
+                    </p>
+
+                </article>
+
+
+                <article class="step">
+
+                    <div class="step-number">
+                        02
+                    </div>
+
+                    <h3>
+                        Build Profile
+                    </h3>
+
+                    <p>
+                        Tell us about your education, interests and strengths.
+                    </p>
+
+                </article>
+
+
+                <article class="step">
+
+                    <div class="step-number">
+                        03
+                    </div>
+
+                    <h3>
+                        Take Assessment
+                    </h3>
+
+                    <p>
+                        Answer questions designed around your career preferences.
+                    </p>
+
+                </article>
+
+
+                <article class="step">
+
+                    <div class="step-number">
+                        04
+                    </div>
+
+                    <h3>
+                        Explore Results
+                    </h3>
+
+                    <p>
+                        Discover career recommendations made for your profile.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             CTA
+        ========================= -->
+
+        <section class="cta">
+
             <h2>
-                No favourite careers yet
+                Ready to explore your direction?
             </h2>
 
             <p>
-                Explore your career recommendations and save
-                the ones that interest you. They will appear here.
+                Start your Career Compass journey and discover
+                possibilities that match you.
             </p>
 
             <a
-                href="results.html"
+                href="login.html"
                 class="btn btn-primary"
             >
-                Explore Career Results
+                Get Started →
             </a>
 
         </section>
@@ -552,239 +1194,28 @@
     ========================= -->
 
     <footer>
-        © 2026 Career Compass AI · Find a career that feels right.
+
+        <div>
+            © 2026 Career Compass AI
+        </div>
+
+        <div class="footer-links">
+
+            <a href="about.html">
+                About
+            </a>
+
+            <a href="privacy.html">
+                Privacy
+            </a>
+
+            <a href="contact.html">
+                Contact
+            </a>
+
+        </div>
+
     </footer>
-
-
-    <script>
-
-        /* ==========================================
-           SAVED CAREERS
-        ========================================== */
-
-        const careerGrid =
-            document.getElementById("careerGrid");
-
-        const emptyState =
-            document.getElementById("emptyState");
-
-        const savedCount =
-            document.getElementById("savedCount");
-
-
-        let savedCareers = [];
-
-        try {
-            savedCareers =
-                JSON.parse(
-                    localStorage.getItem("savedCareers")
-                ) || [];
-        } catch (error) {
-            savedCareers = [];
-        }
-
-
-        /* ==========================================
-           ICONS
-        ========================================== */
-
-        const icons = {
-            technology: "💻",
-            creative: "🎨",
-            business: "📊",
-            people: "👥",
-            science: "🔬",
-            healthcare: "🩺",
-            education: "📚",
-            engineering: "⚙️",
-            law: "⚖️",
-            finance: "💰",
-            default: "✦"
-        };
-
-
-        /* ==========================================
-           NORMALIZE CAREER DATA
-        ========================================== */
-
-        function normalizeCareer(career) {
-
-            if (typeof career === "string") {
-
-                return {
-                    title: career,
-                    description:
-                        "Explore this career path and discover whether it matches your interests.",
-                    category: "Career"
-                };
-
-            }
-
-            return {
-                title:
-                    career.title ||
-                    career.name ||
-                    "Career",
-
-                description:
-                    career.description ||
-                    career.desc ||
-                    "Explore this career path and discover whether it matches your interests.",
-
-                category:
-                    career.category ||
-                    career.field ||
-                    "Career",
-
-                id:
-                    career.id ||
-                    career.title ||
-                    career.name ||
-                    ""
-            };
-        }
-
-
-        /* ==========================================
-           RENDER
-        ========================================== */
-
-        function renderCareers() {
-
-            careerGrid.innerHTML = "";
-
-            savedCount.textContent =
-                `${savedCareers.length} ${
-                    savedCareers.length === 1
-                        ? "saved"
-                        : "saved"
-                }`;
-
-
-            if (savedCareers.length === 0) {
-
-                careerGrid.style.display = "none";
-                emptyState.style.display = "block";
-
-                return;
-            }
-
-
-            careerGrid.style.display = "grid";
-            emptyState.style.display = "none";
-
-
-            savedCareers.forEach(
-                (career, index) => {
-
-                    const item =
-                        normalizeCareer(career);
-
-                    const category =
-                        String(item.category)
-                            .toLowerCase()
-                            .trim();
-
-                    const icon =
-                        icons[category] ||
-                        icons.default;
-
-
-                    const card =
-                        document.createElement("article");
-
-                    card.className =
-                        "career-card";
-
-
-                    card.innerHTML = `
-
-                        <button
-                            class="heart"
-                            title="Remove from favourites"
-                            onclick="removeCareer(${index})"
-                        >
-                            ♥
-                        </button>
-
-                        <div class="career-icon">
-                            ${icon}
-                        </div>
-
-                        <h3>
-                            ${escapeHTML(item.title)}
-                        </h3>
-
-                        <p>
-                            ${escapeHTML(item.description)}
-                        </p>
-
-                        <div class="card-actions">
-
-                            <a
-                                href="role-detail.html?id=${encodeURIComponent(item.id || item.title)}"
-                                class="btn btn-primary"
-                            >
-                                View Details
-                            </a>
-
-                            <a
-                                href="compare.html?career=${encodeURIComponent(item.title)}"
-                                class="btn btn-secondary"
-                            >
-                                Compare
-                            </a>
-
-                        </div>
-                    `;
-
-
-                    careerGrid.appendChild(card);
-
-                }
-            );
-        }
-
-
-        /* ==========================================
-           REMOVE CAREER
-        ========================================== */
-
-        function removeCareer(index) {
-
-            savedCareers.splice(index, 1);
-
-            localStorage.setItem(
-                "savedCareers",
-                JSON.stringify(savedCareers)
-            );
-
-            renderCareers();
-        }
-
-
-        /* ==========================================
-           HTML SAFETY
-        ========================================== */
-
-        function escapeHTML(value) {
-
-            return String(value)
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
-        }
-
-
-        /* ==========================================
-           INITIAL LOAD
-        ========================================== */
-
-        renderCareers();
-
-    </script>
 
 </body>
 </html>
