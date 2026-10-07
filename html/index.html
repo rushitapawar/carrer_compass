@@ -26,7 +26,7 @@
 
         /* =========================
            NAVBAR
-        ========================= */
+        ========================== */
 
         .navbar {
             width: 100%;
@@ -73,25 +73,36 @@
             color: #c96f91;
         }
 
+        /* =========================
+           PROFILE AVATAR
+        ========================== */
+
         .profile-btn {
-            width: 40px;
-            height: 40px;
+            width: 43px;
+            height: 43px;
             border-radius: 50%;
-            background: #443846;
-            color: #ffffff !important;
+            background: #f6c4d3;
+            color: #443846 !important;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700 !important;
+            text-decoration: none;
+            font-size: 22px !important;
+            font-weight: 400 !important;
+            border: 3px solid #f6c4d3;
+            box-shadow: 0 5px 14px rgba(68, 56, 70, 0.12);
+            transition: 0.25s ease;
         }
 
         .profile-btn:hover {
-            background: #d87999;
+            background: #e998b3;
+            border-color: #e998b3;
+            transform: translateY(-2px);
         }
 
         /* =========================
            HERO
-        ========================= */
+        ========================== */
 
         .hero {
             min-height: calc(100vh - 78px);
@@ -238,10 +249,10 @@
 
         /* =========================
            HERO VISUAL
-        ========================= */
+        ========================== */
 
         .hero-visual {
-            min-height: 470px;
+            min-height: 500px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -250,7 +261,7 @@
 
         .visual-card {
             width: 390px;
-            min-height: 420px;
+            min-height: 450px;
             background: #443846;
             border-radius: 35px;
             padding: 35px;
@@ -289,7 +300,7 @@
             justify-content: space-between;
             position: relative;
             z-index: 2;
-            margin-bottom: 55px;
+            margin-bottom: 0;
         }
 
         .visual-small {
@@ -300,18 +311,26 @@
         }
 
         .visual-dot {
-            width: 35px;
-            height: 35px;
+            width: 45px;
+            height: 45px;
             background: #e998b3;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 20px;
         }
 
+        /* =========================
+           CENTER CONTENT
+        ========================== */
+
         .visual-center {
+            position: absolute;
+            top: 145px;
+            left: 35px;
+            right: 35px;
             text-align: center;
-            position: relative;
             z-index: 2;
         }
 
@@ -324,22 +343,29 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 30px;
+            margin: 0 auto 28px;
             font-size: 54px;
         }
 
         .visual-center h3 {
             font-family: Georgia, "Times New Roman", serif;
             font-size: 30px;
-            margin-bottom: 10px;
+            line-height: 1.25;
+            margin-bottom: 14px;
         }
 
+        /* CHANGED: SHORT TEXT */
         .visual-center p {
             color: #ddd2d9;
             font-size: 13px;
-            max-width: 260px;
-            margin: auto;
+            line-height: 1.4;
+            max-width: 270px;
+            margin: 0 auto;
         }
+
+        /* =========================
+           BOTTOM PILLS
+        ========================== */
 
         .visual-bottom {
             position: absolute;
@@ -348,7 +374,7 @@
             bottom: 30px;
             display: flex;
             gap: 10px;
-            z-index: 2;
+            z-index: 3;
         }
 
         .mini-pill {
@@ -363,7 +389,7 @@
 
         /* =========================
            STATS
-        ========================= */
+        ========================== */
 
         .stats {
             background: #ffffff;
@@ -403,7 +429,7 @@
 
         /* =========================
            WHY SECTION
-        ========================= */
+        ========================== */
 
         .section {
             padding: 90px 0;
@@ -483,7 +509,7 @@
 
         /* =========================
            JOURNEY
-        ========================= */
+        ========================== */
 
         .journey-section {
             background: #ffffff;
@@ -526,7 +552,7 @@
 
         /* =========================
            CTA
-        ========================= */
+        ========================== */
 
         .cta {
             padding: 85px 0;
@@ -600,7 +626,7 @@
 
         /* =========================
            FOOTER
-        ========================= */
+        ========================== */
 
         footer {
             background: #322936;
@@ -662,7 +688,7 @@
 
         /* =========================
            RESPONSIVE
-        ========================= */
+        ========================== */
 
         @media (max-width: 900px) {
 
@@ -680,7 +706,7 @@
             }
 
             .hero-visual {
-                min-height: 420px;
+                min-height: 500px;
             }
 
             .why-grid {
@@ -720,7 +746,7 @@
             }
 
             .profile-btn {
-                display: none !important;
+                display: flex !important;
             }
 
             .hero {
@@ -734,6 +760,28 @@
             .visual-card {
                 width: 100%;
                 max-width: 360px;
+                min-height: 440px;
+            }
+
+            .visual-center {
+                top: 140px;
+                left: 25px;
+                right: 25px;
+            }
+
+            .visual-center h3 {
+                font-size: 27px;
+            }
+
+            .visual-center p {
+                font-size: 12px;
+                max-width: 250px;
+            }
+
+            .visual-bottom {
+                left: 25px;
+                right: 25px;
+                bottom: 25px;
             }
 
             .stats-grid {
@@ -799,7 +847,9 @@
 
             <a href="contact.html">Contact</a>
 
-            <a href="profile.html" class="profile-btn">A</a>
+            <a href="profile.html" class="profile-btn" title="My Profile">
+                👩🏻‍💻
+            </a>
 
         </div>
 
@@ -846,7 +896,9 @@
             </div>
 
 
-            <!-- VISUAL -->
+            <!-- =========================
+                 VISUAL CARD
+            ========================== -->
 
             <div class="hero-visual">
 
@@ -876,8 +928,7 @@
                         </h3>
 
                         <p>
-                            Explore your interests, strengths and
-                            possibilities for the future.
+                            Explore. Discover. Choose.
                         </p>
 
                     </div>
@@ -917,35 +968,18 @@
         <div class="stats-grid">
 
             <div class="stat">
-
                 <strong>Explore</strong>
-
-                <span>
-                    Different career paths
-                </span>
-
+                <span>Different career paths</span>
             </div>
 
-
             <div class="stat">
-
                 <strong>Discover</strong>
-
-                <span>
-                    Your interests & strengths
-                </span>
-
+                <span>Your interests & strengths</span>
             </div>
 
-
             <div class="stat">
-
                 <strong>Decide</strong>
-
-                <span>
-                    With greater confidence
-                </span>
-
+                <span>With greater confidence</span>
             </div>
 
         </div>
@@ -1206,9 +1240,13 @@
 
                     <a href="about.html">About</a>
 
-                    <a href="how-it-works.html">How It Works</a>
+                    <a href="how-it-works.html">
+                        How It Works
+                    </a>
 
-                    <a href="job-roles.html">Career Roles</a>
+                    <a href="job-roles.html">
+                        Career Roles
+                    </a>
 
                 </div>
 

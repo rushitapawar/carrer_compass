@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -141,7 +142,7 @@
             justify-content: center;
 
             font-weight: 800;
-            font-size: 15px;
+            font-size: 21px;
 
             flex-shrink: 0;
         }
@@ -307,111 +308,37 @@
         .topbar {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: flex-end;
 
             gap: 20px;
 
             margin-bottom: 34px;
         }
 
-        .welcome-area small {
-            display: block;
-
-            color: #897c85;
-
-            font-size: 12px;
-
-            margin-bottom: 5px;
-        }
-
-        .welcome-area h1 {
-            font-family: Georgia, "Times New Roman", serif;
-
-            font-size: 34px;
-
-            color: #443846;
-
-            line-height: 1.15;
-        }
-
-        .welcome-area h1 span {
-            color: #c87591;
-        }
-
-        .welcome-area p {
-            color: #817780;
-
-            font-size: 13px;
-
-            margin-top: 7px;
+        .welcome-area {
+            display: none;
         }
 
 
         /* =====================================================
-           TOP PROFILE BUTTON
+           MOBILE MENU BUTTON
         ===================================================== */
 
-        .top-actions {
-            display: flex;
-            align-items: center;
+        .mobile-menu {
+            display: none;
 
-            gap: 12px;
-        }
+            width: 40px;
+            height: 40px;
 
-        .profile-button {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            border: 1px solid #ddd5d3;
 
             background: white;
 
-            border: 1px solid #e3dbd8;
-
-            padding: 7px 12px 7px 7px;
-
-            border-radius: 30px;
+            border-radius: 10px;
 
             cursor: pointer;
 
-            transition: 0.25s ease;
-
-            box-shadow:
-                0 4px 15px rgba(68,56,70,0.05);
-        }
-
-        .profile-button:hover {
-            border-color: #d7a2b4;
-
-            transform: translateY(-2px);
-
-            box-shadow:
-                0 8px 20px rgba(68,56,70,0.09);
-        }
-
-        .top-avatar {
-            width: 37px;
-            height: 37px;
-
-            border-radius: 50%;
-
-            background: #443846;
-            color: white;
-
-            border: 2px solid #f6c4d3;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            font-weight: 800;
-            font-size: 14px;
-        }
-
-        .profile-button span {
-            color: #5d515b;
-
-            font-size: 12px;
-            font-weight: 700;
+            font-size: 18px;
         }
 
 
@@ -1080,28 +1007,6 @@
 
 
         /* =====================================================
-           MOBILE MENU BUTTON
-        ===================================================== */
-
-        .mobile-menu {
-            display: none;
-
-            width: 40px;
-            height: 40px;
-
-            border: 1px solid #ddd5d3;
-
-            background: white;
-
-            border-radius: 10px;
-
-            cursor: pointer;
-
-            font-size: 18px;
-        }
-
-
-        /* =====================================================
            RESPONSIVE
         ===================================================== */
 
@@ -1168,18 +1073,6 @@
 
             .stats-grid {
                 grid-template-columns: 1fr 1fr;
-            }
-
-            .welcome-area h1 {
-                font-size: 27px;
-            }
-
-            .welcome-area p {
-                display: none;
-            }
-
-            .profile-button span {
-                display: none;
             }
 
             .dashboard-hero {
@@ -1252,9 +1145,7 @@
     <aside class="sidebar" id="sidebar">
 
 
-     
-
-        <!-- LOGO -->
+        <!-- LOGO — ONLY ONE LOGO -->
 
         <a
             href="index.html"
@@ -1269,7 +1160,7 @@
         </a>
 
 
-        <!-- PROFILE -->
+        <!-- PROFILE — ONLY ONE PROFILE -->
 
         <a
             href="profile.html"
@@ -1277,7 +1168,7 @@
         >
 
             <div class="sidebar-avatar">
-                A
+                👩🏻‍💻
             </div>
 
             <div class="sidebar-profile-text">
@@ -1304,76 +1195,76 @@
 
         <nav class="sidebar-nav">
 
-    <!-- Dashboard -->
-    <a href="dashboard.html" class="active">
-        <div class="nav-icon">◉</div>
-        Dashboard
-    </a>
+            <!-- Dashboard -->
+            <a href="dashboard.html" class="active">
+                <div class="nav-icon">◉</div>
+                Dashboard
+            </a>
 
-    <!-- My Results -->
-    <a href="results.html">
-        <div class="nav-icon">✦</div>
-        My Results
-    </a>
+            <!-- My Results -->
+            <a href="results.html">
+                <div class="nav-icon">✦</div>
+                My Results
+            </a>
 
-    <!-- Saved Careers -->
-    <a href="favourites.html">
-        <div class="nav-icon">♡</div>
-        Saved Careers
-    </a>
+            <!-- Saved Careers -->
+            <a href="favourites.html">
+                <div class="nav-icon">♡</div>
+                Saved Careers
+            </a>
 
-    <!-- Compare Careers -->
-    <a href="compare.html">
-        <div class="nav-icon">⇄</div>
-        Compare Careers
-    </a>
+            <!-- Compare Careers -->
+            <a href="compare.html">
+                <div class="nav-icon">⇄</div>
+                Compare Careers
+            </a>
 
-    <!-- Career Roles -->
-    <a href="roles.html">
-        <div class="nav-icon">◇</div>
-        Career Roles
-    </a>
+            <!-- Career Roles -->
+            <a href="roles.html">
+                <div class="nav-icon">◇</div>
+                Career Roles
+            </a>
 
-    <!-- Settings -->
-    <a href="settings.html">
-        <div class="nav-icon">⚙</div>
-        Settings
-    </a>
+            <!-- Settings -->
+            <a href="settings.html">
+                <div class="nav-icon">⚙</div>
+                Settings
+            </a>
 
-    <!-- Retake Assessment -->
-    <a href="questionnaire.html">
-        <div class="nav-icon">✎</div>
-        Retake Assessment
-    </a>
+            <!-- Retake Assessment -->
+            <a href="questionnaire.html">
+                <div class="nav-icon">✎</div>
+                Retake Assessment
+            </a>
 
-</nav>
+        </nav>
 
 
         <!-- BOTTOM -->
 
-<div class="sidebar-bottom">
+        <div class="sidebar-bottom">
 
-    <a href="index.html">
-        <span>⌂</span>
-        Home
-    </a>
+            <a href="index.html">
+                <span>⌂</span>
+                Home
+            </a>
 
-    <a href="about.html">
-        <span>◎</span>
-        About Career Compass
-    </a>
+            <a href="about.html">
+                <span>◎</span>
+                About Career Compass
+            </a>
 
-    <a href="contact.html">
-        <span>✉</span>
-        Contact Support
-    </a>
+            <a href="contact.html">
+                <span>✉</span>
+                Contact Support
+            </a>
 
-    <a href="privacy.html">
-        <span>◇</span>
-        Privacy
-    </a>
+            <a href="privacy.html">
+                <span>◇</span>
+                Privacy
+            </a>
 
-</div>
+        </div>
 
     </aside>
 
@@ -1390,25 +1281,11 @@
 
         <header class="topbar">
 
-
-            <div class="welcome-area">
-
-                <small>
-                    YOUR CAREER SPACE
-                </small>
-
-                
-
-                <p>
-                    Keep exploring. Your future has more than one possibility.
-                </p>
-
-            </div>
-
+            <!-- No duplicate logo or profile here -->
 
             <div class="top-actions">
 
-                <!-- MOBILE MENU -->
+                <!-- MOBILE MENU ONLY -->
 
                 <button
                     class="mobile-menu"
@@ -1417,25 +1294,6 @@
                 >
                     ☰
                 </button>
-
-
-                <!-- PROFILE BUTTON -->
-
-                <a
-                    href="profile.html"
-                    class="profile-button"
-                    title="Open My Profile"
-                >
-
-                    <div class="top-avatar">
-                        A
-                    </div>
-
-                    <span>
-                        My Profile
-                    </span>
-
-                </a>
 
             </div>
 
@@ -2095,212 +1953,222 @@
     /* =====================================================
        SAVED CAREERS
     ===================================================== */
+
     function escapeHTML(value) {
 
-    return String(value).replace(
-        /[&<>"']/g,
-        function(char) {
+        return String(value).replace(
+            /[&<>"']/g,
+            function(char) {
 
-            return {
-                "&": "&amp;",
-                "<": "&lt;",
-                ">": "&gt;",
-                '"': "&quot;",
-                "'": "&#39;"
-            }[char];
+                return {
+                    "&": "&amp;",
+                    "<": "&lt;",
+                    ">": "&gt;",
+                    '"': "&quot;",
+                    "'": "&#39;"
+                }[char];
 
-        }
-    );
+            }
+        );
 
-}
-   async function loadSavedCareers() {
+    }
 
-    try {
 
-        const response =
-            await fetch(
-                "/api/saved-careers"
-            );
+    async function loadSavedCareers() {
 
-        const result =
-            await response.json();
+        try {
 
-        if (!result.success) {
+            const response =
+                await fetch(
+                    "/api/saved-careers"
+                );
 
-            console.error(
-                "Unable to load saved careers:",
-                result.message
-            );
+            const result =
+                await response.json();
 
-            return;
+            if (!result.success) {
 
-        }
+                console.error(
+                    "Unable to load saved careers:",
+                    result.message
+                );
 
-        const savedCareers =
-            result.careers || [];
+                return;
 
-        /* UPDATE COUNT */
+            }
 
-        const savedCount =
-            document.getElementById(
-                "savedCount"
-            );
+            const savedCareers =
+                result.careers || [];
 
-        if (savedCount) {
 
-            savedCount.textContent =
-                savedCareers.length;
+            /* UPDATE COUNT */
 
-        }
+            const savedCount =
+                document.getElementById(
+                    "savedCount"
+                );
 
-        /* UPDATE PREVIEW */
+            if (savedCount) {
 
-        const preview =
-            document.getElementById(
-                "savedPreview"
-            );
+                savedCount.textContent =
+                    savedCareers.length;
 
-        if (!preview) {
+            }
 
-            return;
 
-        }
+            /* UPDATE PREVIEW */
 
-        if (
-            savedCareers.length === 0
-        ) {
+            const preview =
+                document.getElementById(
+                    "savedPreview"
+                );
 
-            preview.innerHTML = `
+            if (!preview) {
 
-                <div class="saved-empty">
+                return;
 
-                    <div class="saved-empty-icon">
-                        ♡
-                    </div>
+            }
 
-                    <strong>
-                        Your shortlist is waiting
-                    </strong>
 
-                    <p>
-                        Save careers you find interesting
-                        while exploring your results.
-                    </p>
+            if (
+                savedCareers.length === 0
+            ) {
 
-                    <a
-                        href="roles.html"
-                        class="small-btn"
-                    >
-                        Explore Careers
-                    </a>
+                preview.innerHTML = `
 
-                </div>
+                    <div class="saved-empty">
 
-            `;
-
-            return;
-
-        }
-
-        const firstThree =
-            savedCareers.slice(0, 3);
-
-        preview.innerHTML = firstThree
-            .map(function(career) {
-
-                return `
-
-                    <div class="saved-career-item">
-
-                        <div class="saved-career-icon">
-                            ✦
+                        <div class="saved-empty-icon">
+                            ♡
                         </div>
 
-                        <div>
+                        <strong>
+                            Your shortlist is waiting
+                        </strong>
 
-                            <strong>
-                                ${escapeHTML(
-                                    career.careerTitle
-                                    || "Career"
-                                )}
-                            </strong>
+                        <p>
+                            Save careers you find interesting
+                            while exploring your results.
+                        </p>
 
-                            <p>
-                                Saved career
-                            </p>
-
-                        </div>
+                        <a
+                            href="roles.html"
+                            class="small-btn"
+                        >
+                            Explore Careers
+                        </a>
 
                     </div>
 
                 `;
 
-            })
-            .join("");
+                return;
 
-    } catch (error) {
+            }
 
-        console.error(
-            "Saved careers error:",
-            error
-        );
+
+            const firstThree =
+                savedCareers.slice(0, 3);
+
+
+            preview.innerHTML = firstThree
+                .map(function(career) {
+
+                    return `
+
+                        <div class="saved-career-item">
+
+                            <div class="saved-career-icon">
+                                ✦
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    ${escapeHTML(
+                                        career.careerTitle
+                                        || "Career"
+                                    )}
+                                </strong>
+
+                                <p>
+                                    Saved career
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    `;
+
+                })
+                .join("");
+
+
+        } catch (error) {
+
+            console.error(
+                "Saved careers error:",
+                error
+            );
+
+        }
 
     }
 
-}
 
     /* =====================================================
        ASSESSMENT COUNT
     ===================================================== */
 
-   async function loadAssessmentStatus() {
+    async function loadAssessmentStatus() {
 
-    try {
+        try {
 
-        const response =
-            await fetch(
-                "/api/dashboard"
-            );
+            const response =
+                await fetch(
+                    "/api/dashboard"
+                );
 
-        const result =
-            await response.json();
+            const result =
+                await response.json();
 
-        if (!result.success) {
+            if (!result.success) {
+
+                console.error(
+                    "Dashboard error:",
+                    result.message
+                );
+
+                return;
+
+            }
+
+            const completed =
+                result.assessment_completed === true;
+
+            const count =
+                document.getElementById(
+                    "assessmentCount"
+                );
+
+            if (count) {
+
+                count.textContent =
+                    completed ? "1" : "0";
+
+            }
+
+        } catch (error) {
 
             console.error(
-                "Dashboard error:",
-                result.message
+                "Assessment status error:",
+                error
             );
 
-            return;
-
         }
-
-        const completed =
-            result.assessment_completed === true;
-
-        const count =
-            document.getElementById(
-                "assessmentCount"
-            );
-
-        if (count) {
-
-            count.textContent =
-                completed ? "1" : "0";
-
-        }
-
-    } catch (error) {
-
-        console.error(
-            "Assessment status error:",
-            error
-        );
 
     }
-
-}
 
 
     /* =====================================================

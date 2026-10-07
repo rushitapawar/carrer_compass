@@ -45,7 +45,6 @@
             height: 100%;
         }
 
-        /* SAME LARGE LOGO STYLE */
         .brand img {
             width: 125px;
             height: 62px;
@@ -76,22 +75,37 @@
             color: #d77f9f;
         }
 
+        /* =========================
+           PROFILE AVATAR
+        ========================= */
+
         .profile-btn {
             width: 42px;
             height: 42px;
             border-radius: 50%;
-            background: #443846;
-            color: white !important;
+
+            background: #f6c4d3;
+            color: #443846 !important;
+
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
-            font-size: 14px !important;
+
+            text-decoration: none;
+
+            font-weight: 400;
+            font-size: 22px !important;
+
+            border: 3px solid #f6c4d3;
+
+            box-shadow: 0 7px 18px rgba(68, 56, 70, 0.12);
+
             transition: 0.25s ease;
         }
 
         .profile-btn:hover {
-            background: #d77f9f;
+            background: #e998b3;
+            border-color: #e998b3;
             transform: translateY(-2px);
         }
 
@@ -105,10 +119,24 @@
             overflow: hidden;
             padding: 85px 20px 90px;
             text-align: center;
+
             background:
-                radial-gradient(circle at 15% 30%, rgba(233, 152, 179, 0.18), transparent 28%),
-                radial-gradient(circle at 85% 20%, rgba(233, 152, 179, 0.15), transparent 25%),
-                linear-gradient(135deg, #f8eef2, #fffaf8);
+                radial-gradient(
+                    circle at 15% 30%,
+                    rgba(233, 152, 179, 0.18),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 85% 20%,
+                    rgba(233, 152, 179, 0.15),
+                    transparent 25%
+                ),
+                linear-gradient(
+                    135deg,
+                    #f8eef2,
+                    #fffaf8
+                );
+
             border-bottom: 1px solid #eadfe3;
         }
 
@@ -205,9 +233,11 @@
             margin: 0 auto 12px;
             border-radius: 14px;
             background: #fff0f5;
+
             display: flex;
             align-items: center;
             justify-content: center;
+
             font-size: 21px;
         }
 
@@ -326,9 +356,11 @@
             border-radius: 20px;
             background: #443846;
             color: white;
+
             display: flex;
             align-items: center;
             gap: 20px;
+
             box-shadow: 0 12px 30px rgba(68, 56, 70, 0.14);
         }
 
@@ -337,9 +369,11 @@
             height: 52px;
             border-radius: 16px;
             background: #e998b3;
+
             display: flex;
             align-items: center;
             justify-content: center;
+
             font-size: 23px;
         }
 
@@ -372,11 +406,16 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
+
             padding: 13px 23px;
+
             border-radius: 10px;
+
             text-decoration: none;
+
             font-size: 13px;
             font-weight: 700;
+
             transition: 0.25s ease;
         }
 
@@ -415,9 +454,12 @@
         .footer-content {
             max-width: 1100px;
             margin: auto;
+
             display: grid;
             grid-template-columns: 1.5fr 1fr 1fr;
+
             gap: 50px;
+
             padding-bottom: 35px;
         }
 
@@ -461,9 +503,13 @@
         .footer-bottom {
             max-width: 1100px;
             margin: auto;
+
             border-top: 1px solid rgba(255,255,255,0.12);
+
             padding-top: 22px;
+
             text-align: center;
+
             color: #bdb2b9;
             font-size: 12px;
         }
@@ -534,6 +580,7 @@
                 gap: 30px;
             }
         }
+
     </style>
 </head>
 
@@ -546,22 +593,47 @@
     <nav class="navbar">
 
         <a href="index.html" class="brand">
-            <img src="../images/logo.png" alt="Career Compass AI">
+
+            <img
+                src="../images/logo.png"
+                alt="Career Compass AI"
+            >
+
         </a>
+
 
         <div class="nav-links">
 
-            <a href="index.html">Home</a>
+            <a href="index.html">
+                Home
+            </a>
 
-            <a href="about.html">About</a>
+            <a href="about.html">
+                About
+            </a>
 
-            <a href="how-it-works.html">How It Works</a>
+            <a href="how-it-works.html">
+                How It Works
+            </a>
 
-            <a href="questionnaire.html">Assessment</a>
+            <a href="questionnaire.html">
+                Assessment
+            </a>
 
-            <a href="contact.html">Contact</a>
+            <a href="contact.html">
+                Contact
+            </a>
 
-            <a href="profile.html" class="profile-btn">A</a>
+
+            <!-- AVATAR -->
+
+            <a
+                href="profile.html"
+                class="profile-btn"
+                title="My Profile"
+            >
+                👩🏻‍💻
+            </a>
 
         </div>
 
@@ -575,7 +647,9 @@
     <section class="hero">
 
         <div class="hero-decoration circle-one"></div>
+
         <div class="hero-decoration circle-two"></div>
+
 
         <div class="hero-content">
 
@@ -584,7 +658,8 @@
             </div>
 
             <h1>
-                Your privacy, <span>our priority.</span>
+                Your privacy,
+                <span>our priority.</span>
             </h1>
 
             <p>
@@ -606,22 +681,55 @@
 
         <div class="quick-grid">
 
-            <div class="quick-card">
-                <div class="quick-icon">🔒</div>
-                <h3>Privacy First</h3>
-                <p>Your information is handled responsibly.</p>
-            </div>
 
             <div class="quick-card">
-                <div class="quick-icon">✨</div>
-                <h3>Transparent</h3>
-                <p>We explain how information may be used.</p>
+
+                <div class="quick-icon">
+                    🔒
+                </div>
+
+                <h3>
+                    Privacy First
+                </h3>
+
+                <p>
+                    Your information is handled responsibly.
+                </p>
+
             </div>
 
+
             <div class="quick-card">
-                <div class="quick-icon">🧭</div>
-                <h3>Career Guidance</h3>
-                <p>Your data supports your career exploration.</p>
+
+                <div class="quick-icon">
+                    ✨
+                </div>
+
+                <h3>
+                    Transparent
+                </h3>
+
+                <p>
+                    We explain how information may be used.
+                </p>
+
+            </div>
+
+
+            <div class="quick-card">
+
+                <div class="quick-icon">
+                    🧭
+                </div>
+
+                <h3>
+                    Career Guidance
+                </h3>
+
+                <p>
+                    Your data supports your career exploration.
+                </p>
+
             </div>
 
         </div>
@@ -635,11 +743,16 @@
 
     <main class="container">
 
+
         <div class="section-heading">
 
-            <span>OUR PRIVACY APPROACH</span>
+            <span>
+                OUR PRIVACY APPROACH
+            </span>
 
-            <h2>What you should know</h2>
+            <h2>
+                What you should know
+            </h2>
 
             <p>
                 A simple overview of how information can be used
@@ -656,9 +769,13 @@
 
             <article class="policy-card">
 
-                <div class="policy-number">01 — INTRODUCTION</div>
+                <div class="policy-number">
+                    01 — INTRODUCTION
+                </div>
 
-                <h3>Your information matters</h3>
+                <h3>
+                    Your information matters
+                </h3>
 
                 <p>
                     Career Compass AI is designed to help students and
@@ -678,9 +795,13 @@
 
             <article class="policy-card">
 
-                <div class="policy-number">02 — INFORMATION</div>
+                <div class="policy-number">
+                    02 — INFORMATION
+                </div>
 
-                <h3>What information may be collected?</h3>
+                <h3>
+                    What information may be collected?
+                </h3>
 
                 <p>
                     Depending on the features you use, the platform may
@@ -688,10 +809,23 @@
                 </p>
 
                 <ul>
-                    <li>Name or profile information.</li>
-                    <li>Email address.</li>
-                    <li>Questionnaire responses.</li>
-                    <li>Saved career preferences.</li>
+
+                    <li>
+                        Name or profile information.
+                    </li>
+
+                    <li>
+                        Email address.
+                    </li>
+
+                    <li>
+                        Questionnaire responses.
+                    </li>
+
+                    <li>
+                        Saved career preferences.
+                    </li>
+
                 </ul>
 
             </article>
@@ -701,9 +835,13 @@
 
             <article class="policy-card">
 
-                <div class="policy-number">03 — USAGE</div>
+                <div class="policy-number">
+                    03 — USAGE
+                </div>
 
-                <h3>How information may be used</h3>
+                <h3>
+                    How information may be used
+                </h3>
 
                 <p>
                     Information may help us provide a more personalized
@@ -711,10 +849,23 @@
                 </p>
 
                 <ul>
-                    <li>Personalized career recommendations.</li>
-                    <li>Career profile creation.</li>
-                    <li>Saved career preferences.</li>
-                    <li>Improving the platform experience.</li>
+
+                    <li>
+                        Personalized career recommendations.
+                    </li>
+
+                    <li>
+                        Career profile creation.
+                    </li>
+
+                    <li>
+                        Saved career preferences.
+                    </li>
+
+                    <li>
+                        Improving the platform experience.
+                    </li>
+
                 </ul>
 
             </article>
@@ -724,9 +875,13 @@
 
             <article class="policy-card">
 
-                <div class="policy-number">04 — ASSESSMENT</div>
+                <div class="policy-number">
+                    04 — ASSESSMENT
+                </div>
 
-                <h3>Career assessment data</h3>
+                <h3>
+                    Career assessment data
+                </h3>
 
                 <p>
                     Answers provided through the career assessment may
@@ -746,9 +901,13 @@
 
             <article class="policy-card">
 
-                <div class="policy-number">05 — LOCAL STORAGE</div>
+                <div class="policy-number">
+                    05 — LOCAL STORAGE
+                </div>
 
-                <h3>Browser storage</h3>
+                <h3>
+                    Browser storage
+                </h3>
 
                 <p>
                     Some features may use browser local storage to
@@ -768,9 +927,13 @@
 
             <article class="policy-card">
 
-                <div class="policy-number">06 — SECURITY</div>
+                <div class="policy-number">
+                    06 — SECURITY
+                </div>
 
-                <h3>Keeping information safe</h3>
+                <h3>
+                    Keeping information safe
+                </h3>
 
                 <p>
                     We aim to handle information responsibly and
@@ -789,9 +952,13 @@
 
             <article class="policy-card">
 
-                <div class="policy-number">07 — THIRD PARTIES</div>
+                <div class="policy-number">
+                    07 — THIRD PARTIES
+                </div>
 
-                <h3>External services</h3>
+                <h3>
+                    External services
+                </h3>
 
                 <p>
                     Future versions of Career Compass AI may use
@@ -810,9 +977,13 @@
 
             <article class="policy-card">
 
-                <div class="policy-number">08 — UPDATES</div>
+                <div class="policy-number">
+                    08 — UPDATES
+                </div>
 
-                <h3>Changes to this policy</h3>
+                <h3>
+                    Changes to this policy
+                </h3>
 
                 <p>
                     As Career Compass AI grows and new features are
@@ -837,13 +1008,17 @@
             </div>
 
             <div>
-                <h3>A quick reminder</h3>
+
+                <h3>
+                    A quick reminder
+                </h3>
 
                 <p>
                     Career Compass AI is a career exploration and guidance
                     platform. Avoid sharing unnecessary sensitive or private
                     information while using the website.
                 </p>
+
             </div>
 
         </div>
@@ -853,15 +1028,24 @@
 
         <div class="bottom-navigation">
 
-            <a href="index.html" class="btn btn-primary">
+            <a
+                href="index.html"
+                class="btn btn-primary"
+            >
                 ← Back to Home
             </a>
 
-            <a href="about.html" class="btn btn-secondary">
+            <a
+                href="about.html"
+                class="btn btn-secondary"
+            >
                 Learn About Us
             </a>
 
-            <a href="contact.html" class="btn btn-secondary">
+            <a
+                href="contact.html"
+                class="btn btn-secondary"
+            >
                 Contact Us
             </a>
 
@@ -878,10 +1062,12 @@
 
         <div class="footer-content">
 
+
             <div>
 
                 <div class="footer-brand">
-                    Career Compass <span>AI ✦</span>
+                    Career Compass
+                    <span>AI ✦</span>
                 </div>
 
                 <p class="footer-about">
@@ -894,30 +1080,50 @@
 
             <div class="footer-column">
 
-                <h4>EXPLORE</h4>
+                <h4>
+                    EXPLORE
+                </h4>
 
-                <a href="index.html">Home</a>
+                <a href="index.html">
+                    Home
+                </a>
 
-                <a href="about.html">About</a>
+                <a href="about.html">
+                    About
+                </a>
 
-                <a href="how-it-works.html">How It Works</a>
+                <a href="how-it-works.html">
+                    How It Works
+                </a>
 
-                <a href="questionnaire.html">Career Assessment</a>
+                <a href="questionnaire.html">
+                    Career Assessment
+                </a>
 
             </div>
 
 
             <div class="footer-column">
 
-                <h4>SUPPORT</h4>
+                <h4>
+                    SUPPORT
+                </h4>
 
-                <a href="contact.html">Contact</a>
+                <a href="contact.html">
+                    Contact
+                </a>
 
-                <a href="profile.html">My Profile</a>
+                <a href="profile.html">
+                    My Profile
+                </a>
 
-                <a href="privacy.html">Privacy Policy</a>
+                <a href="privacy.html">
+                    Privacy Policy
+                </a>
 
-                <a href="dashboard.html">Dashboard</a>
+                <a href="dashboard.html">
+                    Dashboard
+                </a>
 
             </div>
 

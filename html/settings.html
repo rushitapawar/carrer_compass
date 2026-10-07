@@ -46,6 +46,8 @@
             font-family: inherit;
         }
 
+        /* ================= NAVBAR ================= */
+
         .navbar {
             height: 82px;
             background: white;
@@ -70,20 +72,38 @@
             color: var(--muted);
             font-size: 14px;
             font-weight: 600;
+            transition: 0.2s;
         }
+
+        .nav-link:hover {
+            color: var(--plum);
+        }
+
+        /* ================= PROFILE AVATAR ================= */
 
         .profile-btn {
             width: 42px;
             height: 42px;
             border-radius: 50%;
-            background: var(--plum);
-            color: white;
+            background: var(--pink-light);
+            color: var(--plum);
             display: flex;
             justify-content: center;
             align-items: center;
-            font-weight: 700;
+            font-weight: 400;
+            font-size: 22px;
             border: 3px solid var(--pink-light);
+            box-shadow: 0 7px 18px rgba(68, 56, 70, 0.12);
+            transition: 0.25s ease;
         }
+
+        .profile-btn:hover {
+            background: var(--pink);
+            border-color: var(--pink);
+            transform: translateY(-2px);
+        }
+
+        /* ================= PAGE ================= */
 
         .page {
             max-width: 1050px;
@@ -105,6 +125,8 @@
             color: var(--muted);
             margin-top: 8px;
         }
+
+        /* ================= SETTINGS LAYOUT ================= */
 
         .settings-layout {
             display: grid;
@@ -128,6 +150,7 @@
             font-size: 13px;
             font-weight: 600;
             margin-bottom: 4px;
+            transition: 0.2s;
         }
 
         .side-item.active,
@@ -139,6 +162,8 @@
         .settings-content {
             min-width: 0;
         }
+
+        /* ================= SETTING CARD ================= */
 
         .setting-card {
             background: white;
@@ -187,6 +212,8 @@
             font-size: 12px;
         }
 
+        /* ================= TOGGLE ================= */
+
         .toggle {
             width: 48px;
             height: 27px;
@@ -217,6 +244,8 @@
             transform: translateX(21px);
         }
 
+        /* ================= SELECT ================= */
+
         .select-control {
             border: 1px solid var(--border);
             border-radius: 10px;
@@ -225,6 +254,8 @@
             background: #fcfaf9;
             outline: none;
         }
+
+        /* ================= ACCOUNT ================= */
 
         .account-box {
             background: #faf6f7;
@@ -245,6 +276,8 @@
             font-size: 13px;
         }
 
+        /* ================= DANGER ================= */
+
         .danger-card {
             border-color: #efd5da;
         }
@@ -261,11 +294,14 @@
             padding: 11px 17px;
             font-weight: 700;
             cursor: pointer;
+            transition: 0.2s;
         }
 
         .danger-btn:hover {
             background: #fbecef;
         }
+
+        /* ================= SAVE MESSAGE ================= */
 
         .save-message {
             position: fixed;
@@ -280,12 +316,15 @@
             transform: translateY(15px);
             pointer-events: none;
             transition: 0.25s;
+            z-index: 200;
         }
 
         .save-message.show {
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* ================= FOOTER ================= */
 
         footer {
             background: var(--plum-dark);
@@ -324,6 +363,7 @@
         .footer-col a {
             display: block;
             margin: 8px 0;
+            transition: 0.2s;
         }
 
         .footer-col a:hover {
@@ -338,6 +378,8 @@
             color: rgba(255,255,255,0.4);
             font-size: 12px;
         }
+
+        /* ================= RESPONSIVE ================= */
 
         @media(max-width:750px) {
 
@@ -395,6 +437,8 @@
 
 <body>
 
+<!-- ================= NAVBAR ================= -->
+
 <nav class="navbar">
 
     <a href="index.html" class="brand">
@@ -402,13 +446,25 @@
     </a>
 
     <div class="nav-right">
-        <a href="results.html" class="nav-link">My Results</a>
-        <a href="favourites.html" class="nav-link">Saved Careers</a>
-        <a href="profile.html" class="profile-btn">A</a>
+
+        <a href="results.html" class="nav-link">
+            My Results
+        </a>
+
+        <a href="favourites.html" class="nav-link">
+            Saved Careers
+        </a>
+
+        <a href="profile.html" class="profile-btn" title="My Profile">
+            👩🏻‍💻
+        </a>
+
     </div>
 
 </nav>
 
+
+<!-- ================= MAIN PAGE ================= -->
 
 <main class="page">
 
@@ -424,6 +480,8 @@
 
 
     <div class="settings-layout">
+
+        <!-- ================= SIDEBAR ================= -->
 
         <aside class="sidebar">
 
@@ -446,6 +504,8 @@
         </aside>
 
 
+        <!-- ================= SETTINGS CONTENT ================= -->
+
         <section class="settings-content">
 
 
@@ -463,9 +523,17 @@
                 <div class="setting-row">
 
                     <div class="setting-info">
-                        <strong>Theme</strong>
-                        <span>Choose your preferred interface theme.</span>
+
+                        <strong>
+                            Theme
+                        </strong>
+
+                        <span>
+                            Choose your preferred interface theme.
+                        </span>
+
                     </div>
+
 
                     <select class="select-control" id="themeSelect">
 
@@ -485,13 +553,21 @@
                 <div class="setting-row">
 
                     <div class="setting-info">
-                        <strong>Show career match percentages</strong>
+
+                        <strong>
+                            Show career match percentages
+                        </strong>
+
                         <span>
                             Display match percentages on career recommendations.
                         </span>
+
                     </div>
 
-                    <button class="toggle active" data-setting="matchPercent"></button>
+                    <button
+                        class="toggle active"
+                        data-setting="matchPercent">
+                    </button>
 
                 </div>
 
@@ -499,13 +575,21 @@
                 <div class="setting-row">
 
                     <div class="setting-info">
-                        <strong>Personalized recommendations</strong>
+
+                        <strong>
+                            Personalized recommendations
+                        </strong>
+
                         <span>
                             Use your assessment preferences for recommendations.
                         </span>
+
                     </div>
 
-                    <button class="toggle active" data-setting="recommendations"></button>
+                    <button
+                        class="toggle active"
+                        data-setting="recommendations">
+                    </button>
 
                 </div>
 
@@ -526,13 +610,21 @@
                 <div class="setting-row">
 
                     <div class="setting-info">
-                        <strong>Career updates</strong>
+
+                        <strong>
+                            Career updates
+                        </strong>
+
                         <span>
                             Receive useful career-related updates.
                         </span>
+
                     </div>
 
-                    <button class="toggle active" data-setting="careerUpdates"></button>
+                    <button
+                        class="toggle active"
+                        data-setting="careerUpdates">
+                    </button>
 
                 </div>
 
@@ -540,13 +632,21 @@
                 <div class="setting-row">
 
                     <div class="setting-info">
-                        <strong>Assessment reminders</strong>
+
+                        <strong>
+                            Assessment reminders
+                        </strong>
+
                         <span>
                             Get reminders when your assessment needs attention.
                         </span>
+
                     </div>
 
-                    <button class="toggle" data-setting="reminders"></button>
+                    <button
+                        class="toggle"
+                        data-setting="reminders">
+                    </button>
 
                 </div>
 
@@ -567,13 +667,21 @@
                 <div class="setting-row">
 
                     <div class="setting-info">
-                        <strong>Save assessment history</strong>
+
+                        <strong>
+                            Save assessment history
+                        </strong>
+
                         <span>
                             Keep your assessment information available in this browser.
                         </span>
+
                     </div>
 
-                    <button class="toggle active" data-setting="history"></button>
+                    <button
+                        class="toggle active"
+                        data-setting="history">
+                    </button>
 
                 </div>
 
@@ -581,13 +689,21 @@
                 <div class="setting-row">
 
                     <div class="setting-info">
-                        <strong>Save career preferences</strong>
+
+                        <strong>
+                            Save career preferences
+                        </strong>
+
                         <span>
                             Remember careers that you save or explore.
                         </span>
+
                     </div>
 
-                    <button class="toggle active" data-setting="careerPreferences"></button>
+                    <button
+                        class="toggle active"
+                        data-setting="careerPreferences">
+                    </button>
 
                 </div>
 
@@ -634,8 +750,7 @@
 
                     <a
                         href="profile.html"
-                        class="select-control"
-                    >
+                        class="select-control">
                         Open Profile
                     </a>
 
@@ -648,14 +763,18 @@
 
             <div class="setting-card danger-card">
 
-                <h2>Reset Website Data</h2>
+                <h2>
+                    Reset Website Data
+                </h2>
 
                 <p>
                     Remove locally saved preferences, saved careers and assessment data
                     from this browser.
                 </p>
 
-                <button class="danger-btn" id="resetBtn">
+                <button
+                    class="danger-btn"
+                    id="resetBtn">
                     Reset Local Data
                 </button>
 
@@ -668,10 +787,14 @@
 </main>
 
 
+<!-- ================= SAVE MESSAGE ================= -->
+
 <div class="save-message" id="saveMessage">
     Settings saved
 </div>
 
+
+<!-- ================= FOOTER ================= -->
 
 <footer>
 
@@ -679,7 +802,9 @@
 
         <div class="footer-brand">
 
-            <img src="../images/logo.png" alt="Career Compass AI">
+            <img
+                src="../images/logo.png"
+                alt="Career Compass AI">
 
             <p>
                 Discover career possibilities that match your interests,
@@ -693,10 +818,21 @@
 
             <h4>Explore</h4>
 
-            <a href="index.html">Home</a>
-            <a href="results.html">My Results</a>
-            <a href="roles.html">Career Roles</a>
-            <a href="sectors.html">Career Sectors</a>
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="results.html">
+                My Results
+            </a>
+
+            <a href="roles.html">
+                Career Roles
+            </a>
+
+            <a href="sectors.html">
+                Career Sectors
+            </a>
 
         </div>
 
@@ -705,10 +841,21 @@
 
             <h4>Support</h4>
 
-            <a href="about.html">About Us</a>
-            <a href="how-it-works.html">How It Works</a>
-            <a href="contact.html">Contact</a>
-            <a href="privacy.html">Privacy</a>
+            <a href="about.html">
+                About Us
+            </a>
+
+            <a href="how-it-works.html">
+                How It Works
+            </a>
+
+            <a href="contact.html">
+                Contact
+            </a>
+
+            <a href="privacy.html">
+                Privacy
+            </a>
 
         </div>
 
@@ -716,21 +863,32 @@
 
 
     <div class="footer-bottom">
+
         © 2026 Career Compass AI. All rights reserved.
+
     </div>
 
 </footer>
 
 
+<!-- ================= JAVASCRIPT ================= -->
+
 <script>
 
     const defaultSettings = {
+
         matchPercent: true,
+
         recommendations: true,
+
         careerUpdates: true,
+
         reminders: false,
+
         history: true,
+
         careerPreferences: true
+
     };
 
 
@@ -760,21 +918,30 @@
         message.classList.add("show");
 
         setTimeout(() => {
+
             message.classList.remove("show");
+
         }, 1800);
 
     }
 
+
+    /* ================= TOGGLE SETTINGS ================= */
 
     document.querySelectorAll(".toggle").forEach(toggle => {
 
         const key =
             toggle.dataset.setting;
 
+
         if (settings[key]) {
+
             toggle.classList.add("active");
+
         } else {
+
             toggle.classList.remove("active");
+
         }
 
 
@@ -783,10 +950,12 @@
             settings[key] =
                 !settings[key];
 
+
             toggle.classList.toggle(
                 "active",
                 settings[key]
             );
+
 
             saveSettings();
 
@@ -795,6 +964,8 @@
     });
 
 
+    /* ================= THEME ================= */
+
     const themeSelect =
         document.getElementById("themeSelect");
 
@@ -802,7 +973,9 @@
     const savedTheme =
         localStorage.getItem("careerCompassTheme") || "light";
 
-    themeSelect.value = savedTheme;
+
+    themeSelect.value =
+        savedTheme;
 
 
     themeSelect.addEventListener("change", () => {
@@ -817,7 +990,7 @@
     });
 
 
-    /* Account information */
+    /* ================= ACCOUNT INFORMATION ================= */
 
     const user =
         JSON.parse(
@@ -831,6 +1004,7 @@
             .textContent =
             user.name || "Career Compass User";
 
+
         document.getElementById("accountEmail")
             .textContent =
             user.email || "Account connected";
@@ -838,7 +1012,7 @@
     }
 
 
-    /* Reset */
+    /* ================= RESET ================= */
 
     document.getElementById("resetBtn")
         .addEventListener("click", () => {
@@ -848,20 +1022,43 @@
                     "Are you sure you want to reset your locally saved Career Compass data?"
                 );
 
+
             if (!confirmReset) return;
 
 
-            localStorage.removeItem("careerCompassSettings");
-            localStorage.removeItem("careerCompassTheme");
-            localStorage.removeItem("savedCareers");
-            localStorage.removeItem("careerResults");
-            localStorage.removeItem("careerAnswers");
-            localStorage.removeItem("riasecScores");
-            localStorage.removeItem("topRiasecTypes");
+            localStorage.removeItem(
+                "careerCompassSettings"
+            );
+
+            localStorage.removeItem(
+                "careerCompassTheme"
+            );
+
+            localStorage.removeItem(
+                "savedCareers"
+            );
+
+            localStorage.removeItem(
+                "careerResults"
+            );
+
+            localStorage.removeItem(
+                "careerAnswers"
+            );
+
+            localStorage.removeItem(
+                "riasecScores"
+            );
+
+            localStorage.removeItem(
+                "topRiasecTypes"
+            );
+
 
             alert(
                 "Your local Career Compass data has been reset."
             );
+
 
             location.reload();
 

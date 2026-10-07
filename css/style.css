@@ -53,6 +53,10 @@ input {
     --light-text: #756d76;
 
     --border: #ded8d4;
+
+    --plum: #443846;
+    --plum-dark: #322936;
+    --muted: #756d76;
 }
 
 
@@ -94,7 +98,6 @@ input {
 }
 
 .nav-links a {
-    text-decoration: none;
     color: var(--text);
 
     font-size: 15px;
@@ -114,10 +117,8 @@ input {
 }
 
 .login-link {
-    text-decoration: none;
     color: var(--purple);
     font-weight: 600;
-
     cursor: pointer;
 }
 
@@ -133,7 +134,6 @@ input {
 
     border-radius: 30px;
 
-    text-decoration: none;
     font-weight: 600;
 
     transition: 0.3s;
@@ -235,8 +235,6 @@ input {
 
     border-radius: 40px;
 
-    text-decoration: none;
-
     font-weight: 600;
 
     transition: 0.3s;
@@ -257,8 +255,6 @@ input {
     border-radius: 40px;
 
     color: var(--purple);
-
-    text-decoration: none;
 
     font-weight: 600;
 
@@ -675,8 +671,6 @@ footer p {
 }
 
 .footer-links a {
-    text-decoration: none;
-
     color: var(--light-text);
 
     font-size: 13px;
@@ -691,7 +685,6 @@ footer p {
 
 /* =========================================================
    AUTH PAGES
-   LOGIN + SIGNUP
 ========================================================= */
 
 .auth-body {
@@ -890,8 +883,6 @@ footer p {
 
     margin-bottom: 40px;
 
-    text-decoration: none;
-
     color: var(--light-text);
 
     font-size: 14px;
@@ -954,8 +945,6 @@ footer p {
 }
 
 .forgot-password {
-    text-decoration: none;
-
     font-size: 13px;
 
     color: #805269;
@@ -1010,8 +999,6 @@ footer p {
     background: var(--purple);
 
     color: white;
-
-    font-family: inherit;
 
     font-weight: 600;
 
@@ -1073,8 +1060,6 @@ footer p {
 
     border-radius: 15px;
 
-    font-family: inherit;
-
     font-size: 15px;
 
     cursor: pointer;
@@ -1123,8 +1108,6 @@ footer p {
     color: var(--purple);
 
     font-weight: 700;
-
-    text-decoration: none;
 }
 
 .switch-auth a:hover {
@@ -1171,8 +1154,6 @@ footer p {
 
 .checkbox-container a {
     color: #805269;
-
-    text-decoration: none;
 }
 
 .checkbox-container a:hover {
@@ -1181,8 +1162,7 @@ footer p {
 
 
 /* =========================================================
-   EXTRA CLASSES FOR THE LOGIN PAGE
-   These match the login.html I gave you
+   LOGIN EXTRA CLASSES
 ========================================================= */
 
 .auth-section {
@@ -1337,8 +1317,6 @@ footer p {
     color: #805269;
 
     font-size: 12px;
-
-    text-decoration: none;
 }
 
 .password-label a:hover {
@@ -1389,261 +1367,8 @@ footer p {
 
 
 /* =========================================================
-   RESPONSIVE
-========================================================= */
-
-@media (max-width: 1100px) {
-
-    .navbar {
-        padding: 20px 35px;
-    }
-
-    .hero {
-        gap: 40px;
-    }
-
-    .hero h1 {
-        font-size: 58px;
-    }
-
-    .auth-intro {
-        padding: 30px;
-    }
-
-    .auth-intro h1 {
-        font-size: 48px;
-    }
-}
-
-
-@media (max-width: 900px) {
-
-    .navbar {
-        padding: 20px 25px;
-    }
-
-    .nav-links {
-        display: none;
-    }
-
-    .hero {
-        grid-template-columns: 1fr;
-
-        padding: 60px 30px;
-    }
-
-    .hero h1 {
-        font-size: 50px;
-    }
-
-    .hero-content {
-        text-align: center;
-    }
-
-    .hero-content p {
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .hero-buttons {
-        justify-content: center;
-    }
-
-    .hero-info {
-        justify-content: center;
-    }
-
-    .hero-visual {
-        min-height: 400px;
-    }
-
-    .steps-container {
-        grid-template-columns: 1fr;
-    }
-
-    .cta-section {
-        margin: 50px 25px;
-
-        flex-direction: column;
-
-        align-items: flex-start;
-
-        padding: 45px 35px;
-    }
-
-    /* AUTH */
-
-    .auth-container {
-        grid-template-columns: 1fr;
-
-        max-width: 650px;
-    }
-
-    .auth-left {
-        display: none;
-    }
-
-    .auth-right {
-        padding: 45px 25px;
-    }
-
-    .auth-section {
-        padding: 40px 20px;
-    }
-
-    .auth-intro {
-        display: none;
-    }
-
-    .auth-card {
-        max-width: 520px;
-    }
-}
-
-
-@media (max-width: 550px) {
-
-    .navbar {
-        padding: 18px 20px;
-    }
-
-    .logo img {
-        width: 150px;
-    }
-
-    .login-link {
-        display: none;
-    }
-
-    .nav-signup {
-        padding: 10px 17px;
-
-        font-size: 13px;
-    }
-
-    .hero {
-        padding: 50px 20px;
-    }
-
-    .hero h1 {
-        font-size: 42px;
-    }
-
-    .hero-buttons {
-        flex-direction: column;
-    }
-
-    .primary-btn,
-    .secondary-btn {
-        text-align: center;
-
-        width: 100%;
-    }
-
-    .hero-info {
-        gap: 20px;
-
-        flex-wrap: wrap;
-    }
-
-    .main-card {
-        width: 280px;
-    }
-
-    .floating-card {
-        transform: scale(0.8);
-    }
-
-    .orbit-one {
-        width: 340px;
-        height: 340px;
-    }
-
-    .orbit-two {
-        width: 290px;
-        height: 290px;
-    }
-
-    .how-section {
-        padding: 75px 20px;
-    }
-
-    .section-heading h2 {
-        font-size: 35px;
-    }
-
-    .cta-section {
-        margin: 40px 20px;
-
-        padding: 35px 25px;
-    }
-
-    .cta-section h2 {
-        font-size: 30px;
-    }
-
-    footer {
-        flex-direction: column;
-
-        gap: 20px;
-
-        text-align: center;
-
-        padding: 30px 20px;
-    }
-
-    .footer-links {
-        flex-wrap: wrap;
-
-        justify-content: center;
-    }
-
-    /* AUTH */
-
-    .auth-body {
-        padding: 20px;
-    }
-
-    .auth-container {
-        min-height: auto;
-
-        border-radius: 25px;
-    }
-
-    .auth-right {
-        padding: 30px 20px;
-    }
-
-    .auth-card {
-        padding: 30px 22px;
-
-        box-shadow: none;
-    }
-
-    .auth-card-heading h2 {
-        font-size: 32px;
-    }
-
-    .auth-form-container h1 {
-        font-size: 35px;
-    }
-
-    .name-row {
-        grid-template-columns: 1fr;
-    }
-
-    .auth-section {
-        padding: 30px 15px;
-    }
-}
-/* =========================================================
    CREATIVE LOGIN PAGE
 ========================================================= */
-
-
-/* =========================
-   LOGIN BODY
-========================= */
 
 .login-page {
     min-height: 100vh;
@@ -1665,11 +1390,6 @@ footer p {
 
     overflow-x: hidden;
 }
-
-
-/* =========================
-   BACKGROUND CIRCLES
-========================= */
 
 .login-bg-circle {
     position: fixed;
@@ -1701,11 +1421,6 @@ footer p {
     border: 1px dashed rgba(68, 56, 70, 0.15);
 }
 
-
-/* =========================
-   LOGIN NAVBAR
-========================= */
-
 .login-navbar {
     position: relative;
 
@@ -1719,11 +1434,6 @@ footer p {
 
     font-size: 14px;
 }
-
-
-/* =========================================================
-   MAIN LOGIN AREA
-========================================================= */
 
 .creative-login {
     position: relative;
@@ -1754,11 +1464,6 @@ footer p {
 
     align-items: center;
 }
-
-
-/* =========================================================
-   LEFT STORY
-========================================================= */
 
 .login-story {
     position: relative;
@@ -1998,11 +1703,6 @@ footer p {
     pointer-events: none;
 }
 
-
-/* =========================================================
-   LOGIN CARD HEADER
-========================================================= */
-
 .login-card-top {
     display: flex;
 
@@ -2047,11 +1747,6 @@ footer p {
     margin-top: 4px;
 }
 
-
-/* =========================================================
-   FORM
-========================================================= */
-
 .creative-form-group {
     margin-bottom: 21px;
 }
@@ -2087,19 +1782,12 @@ footer p {
 
     font-size: 11px;
 
-    text-decoration: none;
-
     transition: 0.2s;
 }
 
 .forgot-link:hover {
     color: var(--pink);
 }
-
-
-/* =========================================================
-   INPUT
-========================================================= */
 
 .input-wrapper {
     position: relative;
@@ -2154,11 +1842,6 @@ footer p {
         0 0 0 4px rgba(233, 152, 179, 0.12);
 }
 
-
-/* =========================
-   SHOW PASSWORD
-========================= */
-
 .show-password {
     position: absolute;
 
@@ -2180,11 +1863,6 @@ footer p {
 .show-password:hover {
     color: var(--purple);
 }
-
-
-/* =========================================================
-   REMEMBER ME
-========================================================= */
 
 .remember-box {
     margin: 2px 0 23px;
@@ -2211,11 +1889,6 @@ footer p {
     accent-color: var(--purple);
 }
 
-
-/* =========================================================
-   LOGIN BUTTON
-========================================================= */
-
 .creative-login-btn {
     width: 100%;
 
@@ -2236,8 +1909,6 @@ footer p {
     justify-content: space-between;
 
     padding: 0 20px;
-
-    font-family: inherit;
 
     font-size: 13px;
 
@@ -2281,11 +1952,6 @@ footer p {
     background: var(--pink);
 }
 
-
-/* =========================================================
-   DIVIDER
-========================================================= */
-
 .creative-divider {
     display: flex;
 
@@ -2312,11 +1978,6 @@ footer p {
     letter-spacing: 1px;
 }
 
-
-/* =========================================================
-   NEW USER
-========================================================= */
-
 .new-user {
     text-align: center;
 }
@@ -2335,18 +1996,11 @@ footer p {
     font-size: 13px;
 
     font-weight: 700;
-
-    text-decoration: none;
 }
 
 .new-user a:hover {
     color: var(--pink);
 }
-
-
-/* =========================================================
-   BACK HOME
-========================================================= */
 
 .login-back-home {
     display: block;
@@ -2358,8 +2012,6 @@ footer p {
     color: #989095;
 
     font-size: 11px;
-
-    text-decoration: none;
 }
 
 .login-back-home:hover {
@@ -2367,124 +2019,6 @@ footer p {
 }
 
 
-/* =========================================================
-   LOGIN RESPONSIVE
-========================================================= */
-
-@media (max-width: 1000px) {
-
-    .login-wrapper {
-        grid-template-columns: 1fr 440px;
-
-        gap: 40px;
-    }
-
-    .login-story h1 {
-        font-size: 50px;
-    }
-
-    .compass-visual {
-        transform: scale(0.9);
-
-        margin-left: 0;
-    }
-}
-
-
-@media (max-width: 800px) {
-
-    .creative-login {
-        padding: 35px 20px 60px;
-    }
-
-    .login-wrapper {
-        grid-template-columns: 1fr;
-
-        max-width: 520px;
-    }
-
-    .login-story {
-        text-align: center;
-
-        padding: 20px 0;
-    }
-
-    .login-story .hero-badge {
-        margin-bottom: 18px;
-    }
-
-    .login-story h1 {
-        font-size: 48px;
-    }
-
-    .login-story-text {
-        margin: auto;
-    }
-
-    .compass-visual {
-        margin: 30px auto 20px;
-    }
-
-    .login-tip {
-        margin: auto;
-
-        text-align: left;
-    }
-
-    .creative-login-card {
-        padding: 35px 30px;
-    }
-}
-
-
-@media (max-width: 550px) {
-
-    .login-navbar {
-        padding: 18px 20px;
-    }
-
-    .login-navbar .logo img {
-        width: 150px;
-    }
-
-    .login-question {
-        display: none;
-    }
-
-    .creative-login {
-        padding: 25px 15px 50px;
-    }
-
-    .login-story h1 {
-        font-size: 40px;
-    }
-
-    .login-story-text {
-        font-size: 15px;
-    }
-
-    .compass-visual {
-        transform: scale(0.8);
-
-        margin-top: 5px;
-
-        margin-bottom: -10px;
-    }
-
-    .login-tip {
-        max-width: 100%;
-    }
-
-    .creative-login-card {
-        padding: 28px 22px;
-
-        border-radius: 25px;
-    }
-
-    .login-card-top h2 {
-        font-size: 27px;
-    }
-}
 /* =========================================================
    PROFILE / ONBOARDING PAGE
 ========================================================= */
@@ -2500,11 +2034,6 @@ footer p {
 
     min-height: 100vh;
 }
-
-
-/* =========================
-   PROFILE NAVBAR
-========================= */
 
 .profile-step {
     color: var(--muted);
@@ -2522,11 +2051,6 @@ footer p {
     border-radius: 30px;
 }
 
-
-/* =========================
-   MAIN
-========================= */
-
 .profile-main {
     padding: 55px 20px 80px;
 }
@@ -2536,11 +2060,6 @@ footer p {
 
     margin: auto;
 }
-
-
-/* =========================
-   PROGRESS
-========================= */
 
 .profile-progress {
     max-width: 650px;
@@ -2638,11 +2157,6 @@ footer p {
     color: var(--plum);
 }
 
-
-/* =========================
-   HEADING
-========================= */
-
 .profile-heading {
     text-align: center;
 
@@ -2677,11 +2191,6 @@ footer p {
     line-height: 1.7;
 }
 
-
-/* =========================
-   PROFILE CARD
-========================= */
-
 .profile-card {
     background: white;
 
@@ -2694,11 +2203,6 @@ footer p {
     box-shadow:
         0 20px 60px rgba(68, 56, 70, 0.08);
 }
-
-
-/* =========================
-   PROFILE SECTION
-========================= */
 
 .profile-section {
     padding: 30px 0;
@@ -2752,11 +2256,6 @@ footer p {
     font-size: 12px;
 }
 
-
-/* =========================
-   FORM
-========================= */
-
 .profile-grid {
     display: grid;
 
@@ -2765,16 +2264,16 @@ footer p {
     gap: 20px;
 }
 
+.full-width {
+    grid-column: 1 / -1;
+}
+
 .form-group {
     display: flex;
 
     flex-direction: column;
 
     gap: 8px;
-}
-
-.full-width {
-    grid-column: 1 / -1;
 }
 
 .form-group label {
@@ -2801,8 +2300,6 @@ footer p {
 
     color: var(--text);
 
-    font-family: inherit;
-
     font-size: 13px;
 
     outline: none;
@@ -2821,11 +2318,6 @@ footer p {
 .form-group input::placeholder {
     color: #aaa3a5;
 }
-
-
-/* =========================
-   CHOICE CARDS
-========================= */
 
 .choice-grid {
     display: grid;
@@ -2918,11 +2410,6 @@ footer p {
         0 8px 25px rgba(233, 152, 179, 0.12);
 }
 
-
-/* =========================
-   INTERESTS
-========================= */
-
 .interest-grid {
     display: grid;
 
@@ -2983,11 +2470,6 @@ footer p {
 
     color: var(--plum);
 }
-
-
-/* =========================
-   GOALS
-========================= */
 
 .goal-grid {
     display: grid;
@@ -3050,11 +2532,6 @@ footer p {
         0 8px 25px rgba(233, 152, 179, 0.10);
 }
 
-
-/* =========================
-   SUBMIT
-========================= */
-
 .profile-submit {
     padding-top: 30px;
 
@@ -3090,88 +2567,14 @@ footer p {
 }
 
 
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media (max-width: 700px) {
-
-    .profile-main {
-        padding: 40px 15px 60px;
-    }
-
-    .profile-card {
-        padding: 25px 20px;
-
-        border-radius: 22px;
-    }
-
-    .profile-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .full-width {
-        grid-column: auto;
-    }
-
-    .choice-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .interest-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .goal-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .profile-submit {
-        flex-direction: column;
-
-        align-items: stretch;
-
-        text-align: center;
-    }
-
-    .profile-next-btn {
-        width: 100%;
-    }
-
-}
-
-
-@media (max-width: 450px) {
-
-    .profile-step {
-        display: none;
-    }
-
-    .profile-heading h1 {
-        font-size: 38px;
-    }
-
-    .interest-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .progress-step small {
-        font-size: 9px;
-    }
-
-}
 /* =========================================================
-   AUTH / SIGNUP / LOGIN PAGES
+   AUTH / SIGNUP / LOGIN
 ========================================================= */
 
 .auth-page {
     min-height: 100vh;
     background: #f7f5f2;
 }
-
-/* -------------------------
-   AUTH NAVBAR
-------------------------- */
 
 .auth-navbar {
     background: rgba(247, 245, 242, 0.96);
@@ -3192,40 +2595,39 @@ footer p {
     color: var(--pink);
 }
 
-
-/* -------------------------
-   MAIN AUTH AREA
-------------------------- */
-
 .auth-main {
     min-height: calc(100vh - 76px);
+
     position: relative;
+
     overflow: hidden;
+
     padding: 60px 0;
 }
 
 .auth-container {
     width: min(1120px, 92%);
+
     margin: auto;
 
     display: grid;
+
     grid-template-columns: 1fr 470px;
 
     align-items: center;
+
     gap: 80px;
 
     position: relative;
+
     z-index: 2;
 }
 
-
-/* -------------------------
-   DECORATIVE CIRCLES
-------------------------- */
-
 .auth-decoration {
     position: absolute;
+
     border-radius: 50%;
+
     pointer-events: none;
 }
 
@@ -3251,11 +2653,6 @@ footer p {
     bottom: -160px;
 }
 
-
-/* -------------------------
-   LEFT INTRO
-------------------------- */
-
 .auth-intro {
     padding: 20px 0;
 }
@@ -3280,6 +2677,7 @@ footer p {
 
 .auth-intro h1 span {
     display: block;
+
     color: var(--pink);
 }
 
@@ -3295,20 +2693,19 @@ footer p {
     margin-bottom: 35px;
 }
 
-
-/* -------------------------
-   BENEFITS
-------------------------- */
-
 .auth-benefits {
     display: flex;
+
     flex-direction: column;
+
     gap: 18px;
 }
 
 .benefit-item {
     display: flex;
+
     align-items: center;
+
     gap: 15px;
 }
 
@@ -3319,6 +2716,7 @@ footer p {
     flex-shrink: 0;
 
     display: grid;
+
     place-items: center;
 
     background: white;
@@ -3348,11 +2746,6 @@ footer p {
 
     font-size: 12px;
 }
-
-
-/* -------------------------
-   AUTH CARD
-------------------------- */
 
 .auth-card {
     background: white;
@@ -3390,11 +2783,6 @@ footer p {
 
     font-size: 13px;
 }
-
-
-/* -------------------------
-   GOOGLE BUTTON
-------------------------- */
 
 .google-btn {
     width: 100%;
@@ -3440,6 +2828,7 @@ footer p {
     height: 24px;
 
     display: grid;
+
     place-items: center;
 
     font-weight: 700;
@@ -3448,11 +2837,6 @@ footer p {
 
     color: #4285f4;
 }
-
-
-/* -------------------------
-   DIVIDER
-------------------------- */
 
 .auth-divider {
     display: flex;
@@ -3480,11 +2864,6 @@ footer p {
     white-space: nowrap;
 }
 
-
-/* -------------------------
-   FORM
-------------------------- */
-
 .auth-form {
     display: flex;
 
@@ -3507,26 +2886,6 @@ footer p {
     font-size: 13px;
 
     font-weight: 600;
-}
-
-.input-wrapper {
-    position: relative;
-
-    display: flex;
-
-    align-items: center;
-}
-
-.input-icon {
-    position: absolute;
-
-    left: 14px;
-
-    font-size: 15px;
-
-    opacity: 0.65;
-
-    pointer-events: none;
 }
 
 .input-wrapper input {
@@ -3566,11 +2925,6 @@ footer p {
         0 0 0 3px rgba(233, 152, 179, 0.12);
 }
 
-
-/* -------------------------
-   PASSWORD TOGGLE
-------------------------- */
-
 .password-toggle {
     position: absolute;
 
@@ -3592,11 +2946,6 @@ footer p {
 .password-toggle:hover {
     color: var(--plum);
 }
-
-
-/* -------------------------
-   TERMS
-------------------------- */
 
 .terms-check {
     display: flex;
@@ -3634,11 +2983,6 @@ footer p {
     color: var(--plum);
 }
 
-
-/* -------------------------
-   SUBMIT BUTTON
-------------------------- */
-
 .auth-submit {
     width: 100%;
 
@@ -3662,11 +3006,6 @@ footer p {
 .auth-submit:hover span {
     transform: translateX(4px);
 }
-
-
-/* -------------------------
-   BOTTOM LOGIN TEXT
-------------------------- */
 
 .auth-bottom {
     text-align: center;
@@ -3692,78 +3031,12 @@ footer p {
 
 
 /* =========================================================
-   AUTH RESPONSIVE
+   CHATBOT
 ========================================================= */
-
-@media (max-width: 900px) {
-
-    .auth-container {
-        grid-template-columns: 1fr;
-
-        gap: 40px;
-
-        max-width: 600px;
-    }
-
-    .auth-intro {
-        text-align: center;
-    }
-
-    .auth-intro h1 {
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .auth-intro > p {
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .auth-benefits {
-        max-width: 390px;
-
-        margin: auto;
-
-        text-align: left;
-    }
-
-}
-
-
-@media (max-width: 560px) {
-
-    .auth-main {
-        padding: 35px 0;
-    }
-
-    .auth-container {
-        width: 92%;
-    }
-
-    .auth-card {
-        padding: 25px 20px;
-
-        border-radius: 23px;
-    }
-
-    .auth-intro h1 {
-        font-size: 45px;
-    }
-
-    .auth-intro > p {
-        font-size: 15px;
-    }
-
-    .auth-nav-text {
-        display: none;
-    }
-
-}
-
-/* Chatbot Button */
 
 #chatbot-button {
     position: fixed;
+
     right: 25px;
     bottom: 25px;
 
@@ -3771,18 +3044,21 @@ footer p {
     height: 60px;
 
     border: none;
+
     border-radius: 50%;
 
     background: #8e7cc3;
+
     color: white;
 
     font-size: 25px;
+
     cursor: pointer;
 
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
 
-/* Chatbot Box */
+    z-index: 9999;
+}
 
 #chatbot-box {
     position: fixed;
@@ -3800,6 +3076,7 @@ footer p {
     box-shadow: 0 5px 25px rgba(0,0,0,0.25);
 
     display: none;
+
     flex-direction: column;
 
     overflow: hidden;
@@ -3807,25 +3084,25 @@ footer p {
     z-index: 9999;
 }
 
-/* Header */
-
 #chatbot-header {
     background: #8e7cc3;
+
     color: white;
 
     padding: 18px;
 
     font-size: 18px;
+
     font-weight: bold;
 }
 
 #close-chat {
     float: right;
+
     font-size: 25px;
+
     cursor: pointer;
 }
-
-/* Messages */
 
 #chat-messages {
     flex: 1;
@@ -3852,42 +3129,53 @@ footer p {
 
 .bot-message {
     background: #e5def5;
+
     margin-right: auto;
 }
 
 .user-message {
     background: #8e7cc3;
+
     color: white;
+
     margin-left: auto;
 }
 
-/* Quick-option buttons */
-
 .chat-quick-options {
     display: flex;
+
     flex-wrap: wrap;
+
     gap: 8px;
+
     margin: 4px 0 12px;
 }
 
 .chat-quick-btn {
     background: #fff;
+
     border: 1.5px solid #8e7cc3;
+
     color: #6c5aa8;
+
     border-radius: 18px;
+
     padding: 7px 14px;
+
     font-size: 13px;
+
     font-weight: 600;
+
     cursor: pointer;
+
     transition: all 0.2s ease;
 }
 
 .chat-quick-btn:hover {
     background: #8e7cc3;
+
     color: #fff;
 }
-
-/* Input */
 
 #chat-input-area {
     display: flex;
@@ -3927,33 +3215,55 @@ footer p {
     cursor: pointer;
 }
 
-/* FIX LOGO SIZE */
+
+/* =========================================================
+   LOGO SIZE
+========================================================= */
 
 .navbar .brand:has(img),
 .auth-navbar .brand {
     display: flex;
+
     align-items: center;
+
     width: 175px;
+
     height: 55px;
 }
 
 .navbar .brand img,
 .auth-navbar .brand img {
     width: 175px !important;
+
     height: 55px !important;
+
     max-width: 175px !important;
+
     max-height: 55px !important;
+
     object-fit: contain !important;
+
     display: block !important;
 }
 
+
+/* =========================================================
+   RESULTS / RIASEC
+========================================================= */
+
 .match-score {
     display: inline-block;
+
     margin-top: 14px;
+
     padding: 8px 16px;
+
     border-radius: 20px;
+
     background: #e8f5f2;
+
     color: #166b5f;
+
     font-size: 15px;
 }
 
@@ -3963,27 +3273,928 @@ footer p {
 
 .riasec-match {
     margin-top: 18px;
+
     padding: 18px;
+
     border: 1px solid #ebe5e3;
+
     border-radius: 14px;
+
     background: #faf9f7;
 }
 
 .riasec-match h3 {
     margin: 0 0 14px;
+
     font-size: 18px;
 }
 
 .riasec-grid {
     display: grid;
+
     grid-template-columns: repeat(2, 1fr);
+
     gap: 10px;
 }
 
 .riasec-grid div {
     padding: 10px 12px;
+
     border-radius: 10px;
+
     background: white;
+
     border: 1px solid #ebe5e3;
+
     font-size: 14px;
+}
+
+
+/* =========================================================
+   DISCOVER YOUR DIRECTION
+   OVERLAP FIX
+========================================================= */
+
+/*
+   Ye section screenshot wale
+   "Discover Your Direction" card ke liye hai.
+*/
+
+.discover-card,
+.direction-card,
+.discovery-card {
+    position: relative;
+
+    overflow: hidden;
+}
+
+
+/* Heading ko separate space */
+
+.discover-card h1,
+.direction-card h1,
+.discovery-card h1 {
+    position: relative;
+
+    z-index: 5;
+
+    margin-bottom: 24px;
+}
+
+
+/* Description ko pills se upar rakho */
+
+.discover-card > p,
+.direction-card > p,
+.discovery-card > p {
+    position: relative;
+
+    z-index: 5;
+
+    width: 100%;
+
+    max-width: 330px;
+
+    margin: 0 auto;
+
+    padding: 0 10px;
+
+    text-align: center;
+
+    line-height: 1.55;
+
+    font-size: 16px;
+}
+
+
+/* Bottom three items */
+
+.discover-features,
+.direction-features,
+.discovery-features {
+    position: relative;
+
+    z-index: 4;
+
+    width: calc(100% - 40px);
+
+    min-height: 48px;
+
+    margin: 38px auto 0;
+
+    display: flex;
+
+    align-items: stretch;
+
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background: rgba(255,255,255,0.08);
+
+    overflow: hidden;
+}
+
+
+/* Individual item */
+
+.discover-feature,
+.direction-feature,
+.discovery-feature {
+    flex: 1;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 12px 8px;
+
+    font-size: 11px;
+
+    line-height: 1.25;
+
+    white-space: normal;
+}
+
+
+/* If the items are simple divs/spans */
+
+.discover-features > div,
+.direction-features > div,
+.discovery-features > div {
+    flex: 1;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 12px 7px;
+
+    line-height: 1.25;
+
+    font-size: 11px;
+}
+
+
+/* Make sure description never sits over feature bar */
+
+.discover-card .description,
+.direction-card .description,
+.discovery-card .description {
+    position: relative;
+
+    z-index: 5;
+
+    margin-bottom: 0;
+
+    line-height: 1.55;
+}
+
+
+/* If feature bar is called journey steps */
+
+.journey-steps {
+    position: relative;
+
+    z-index: 4;
+
+    width: calc(100% - 40px);
+
+    margin: 38px auto 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 14px;
+
+    overflow: hidden;
+}
+
+.journey-step {
+    flex: 1;
+
+    text-align: center;
+
+    padding: 12px 6px;
+
+    line-height: 1.25;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   ASSESSMENT INTRO CARD
+========================================================= */
+
+.assessment-intro {
+    min-height: 100vh;
+
+    background: #f7f5f2;
+
+    overflow-x: hidden;
+}
+
+.assessment-hero {
+    position: relative;
+
+    min-height: calc(100vh - 80px);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 50px 20px 80px;
+}
+
+
+/*
+   Main dark card
+*/
+
+.assessment-card,
+.assessment-visual,
+.direction-card,
+.discover-card {
+    position: relative;
+
+    overflow: hidden;
+}
+
+
+/*
+   Keep content above decorative circles
+*/
+
+.assessment-card h1,
+.assessment-card h2,
+.assessment-card p,
+.assessment-card .card-content,
+.assessment-card .direction-content {
+    position: relative;
+
+    z-index: 5;
+}
+
+
+/*
+   Main heading
+*/
+
+.assessment-card h1,
+.assessment-card h2 {
+    line-height: 1.15;
+
+    margin-bottom: 24px;
+}
+
+
+/*
+   Description
+*/
+
+.assessment-card > p,
+.assessment-card .description {
+    max-width: 330px;
+
+    margin-left: auto;
+
+    margin-right: auto;
+
+    line-height: 1.55;
+
+    text-align: center;
+
+    position: relative;
+
+    z-index: 5;
+}
+
+
+/*
+   Bottom interest/strength/career row
+*/
+
+.assessment-features,
+.assessment-steps {
+    position: relative;
+
+    z-index: 6;
+
+    width: calc(100% - 40px);
+
+    margin: 38px auto 0;
+
+    display: flex;
+
+    align-items: stretch;
+
+    justify-content: center;
+
+    border-radius: 14px;
+
+    overflow: hidden;
+
+    background: rgba(255,255,255,0.08);
+}
+
+.assessment-feature,
+.assessment-step {
+    flex: 1;
+
+    min-width: 0;
+
+    padding: 12px 6px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    font-size: 11px;
+
+    line-height: 1.25;
+}
+
+
+/* =========================================================
+   IMPORTANT OVERLAP PROTECTION
+========================================================= */
+
+/*
+   The screenshot shows the description touching
+   the Interests / Strengths / Careers row.
+
+   These rules create a guaranteed gap.
+*/
+
+.assessment-card .description,
+.assessment-card .subtitle,
+.direction-card .description,
+.discover-card .description {
+    margin-bottom: 0 !important;
+
+    padding-bottom: 0 !important;
+}
+
+.assessment-card .assessment-features,
+.assessment-card .assessment-steps,
+.direction-card .direction-features,
+.discover-card .discover-features {
+    margin-top: 42px !important;
+}
+
+
+/*
+   Prevent text from becoming one long overlapping line
+*/
+
+.assessment-card p,
+.direction-card p,
+.discover-card p {
+    overflow-wrap: normal;
+
+    word-break: normal;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .navbar {
+        padding: 20px 35px;
+    }
+
+    .hero {
+        gap: 40px;
+    }
+
+    .hero h1 {
+        font-size: 58px;
+    }
+
+    .auth-intro {
+        padding: 30px;
+    }
+
+    .auth-intro h1 {
+        font-size: 48px;
+    }
+
+    .login-wrapper {
+        grid-template-columns: 1fr 440px;
+
+        gap: 40px;
+    }
+
+    .login-story h1 {
+        font-size: 50px;
+    }
+
+    .compass-visual {
+        transform: scale(0.9);
+
+        margin-left: 0;
+    }
+}
+
+
+@media (max-width: 900px) {
+
+    .navbar {
+        padding: 20px 25px;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .hero {
+        grid-template-columns: 1fr;
+
+        padding: 60px 30px;
+    }
+
+    .hero h1 {
+        font-size: 50px;
+    }
+
+    .hero-content {
+        text-align: center;
+    }
+
+    .hero-content p {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+    }
+
+    .hero-info {
+        justify-content: center;
+    }
+
+    .hero-visual {
+        min-height: 400px;
+    }
+
+    .steps-container {
+        grid-template-columns: 1fr;
+    }
+
+    .cta-section {
+        margin: 50px 25px;
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        padding: 45px 35px;
+    }
+
+
+    /* AUTH */
+
+    .auth-container {
+        grid-template-columns: 1fr;
+
+        max-width: 650px;
+    }
+
+    .auth-left {
+        display: none;
+    }
+
+    .auth-right {
+        padding: 45px 25px;
+    }
+
+    .auth-section {
+        padding: 40px 20px;
+    }
+
+    .auth-intro {
+        display: none;
+    }
+
+    .auth-card {
+        max-width: 520px;
+    }
+
+
+    /* LOGIN */
+
+    .creative-login {
+        padding: 35px 20px 60px;
+    }
+
+    .login-wrapper {
+        grid-template-columns: 1fr;
+
+        max-width: 520px;
+    }
+
+    .login-story {
+        text-align: center;
+
+        padding: 20px 0;
+    }
+
+    .login-story h1 {
+        font-size: 48px;
+    }
+
+    .login-story-text {
+        margin: auto;
+    }
+
+    .compass-visual {
+        margin: 30px auto 20px;
+    }
+
+    .login-tip {
+        margin: auto;
+
+        text-align: left;
+    }
+
+    .creative-login-card {
+        padding: 35px 30px;
+    }
+
+
+    /* AUTH SIGNUP */
+
+    .auth-main {
+        padding: 45px 0;
+    }
+
+    .auth-container {
+        grid-template-columns: 1fr;
+
+        gap: 40px;
+
+        max-width: 600px;
+    }
+
+    .auth-intro {
+        text-align: center;
+    }
+
+    .auth-intro h1 {
+        margin-left: auto;
+
+        margin-right: auto;
+    }
+
+    .auth-intro > p {
+        margin-left: auto;
+
+        margin-right: auto;
+    }
+
+    .auth-benefits {
+        max-width: 390px;
+
+        margin: auto;
+
+        text-align: left;
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .profile-main {
+        padding: 40px 15px 60px;
+    }
+
+    .profile-card {
+        padding: 25px 20px;
+
+        border-radius: 22px;
+    }
+
+    .profile-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full-width {
+        grid-column: auto;
+    }
+
+    .choice-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .interest-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .goal-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-submit {
+        flex-direction: column;
+
+        align-items: stretch;
+
+        text-align: center;
+    }
+
+    .profile-next-btn {
+        width: 100%;
+    }
+}
+
+
+@media (max-width: 560px) {
+
+    .auth-main {
+        padding: 35px 0;
+    }
+
+    .auth-container {
+        width: 92%;
+    }
+
+    .auth-card {
+        padding: 25px 20px;
+
+        border-radius: 23px;
+    }
+
+    .auth-intro h1 {
+        font-size: 45px;
+    }
+
+    .auth-intro > p {
+        font-size: 15px;
+    }
+
+    .auth-nav-text {
+        display: none;
+    }
+}
+
+
+@media (max-width: 550px) {
+
+    .navbar {
+        padding: 18px 20px;
+    }
+
+    .logo img {
+        width: 150px;
+    }
+
+    .login-link {
+        display: none;
+    }
+
+    .nav-signup {
+        padding: 10px 17px;
+
+        font-size: 13px;
+    }
+
+    .hero {
+        padding: 50px 20px;
+    }
+
+    .hero h1 {
+        font-size: 42px;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+    }
+
+    .primary-btn,
+    .secondary-btn {
+        text-align: center;
+
+        width: 100%;
+    }
+
+    .hero-info {
+        gap: 20px;
+
+        flex-wrap: wrap;
+    }
+
+    .main-card {
+        width: 280px;
+    }
+
+    .floating-card {
+        transform: scale(0.8);
+    }
+
+    .orbit-one {
+        width: 340px;
+        height: 340px;
+    }
+
+    .orbit-two {
+        width: 290px;
+        height: 290px;
+    }
+
+    .how-section {
+        padding: 75px 20px;
+    }
+
+    .section-heading h2 {
+        font-size: 35px;
+    }
+
+    .cta-section {
+        margin: 40px 20px;
+
+        padding: 35px 25px;
+    }
+
+    .cta-section h2 {
+        font-size: 30px;
+    }
+
+    footer {
+        flex-direction: column;
+
+        gap: 20px;
+
+        text-align: center;
+
+        padding: 30px 20px;
+    }
+
+    .footer-links {
+        flex-wrap: wrap;
+
+        justify-content: center;
+    }
+
+
+    /* AUTH */
+
+    .auth-body {
+        padding: 20px;
+    }
+
+    .auth-container {
+        min-height: auto;
+
+        border-radius: 25px;
+    }
+
+    .auth-right {
+        padding: 30px 20px;
+    }
+
+    .auth-card {
+        padding: 30px 22px;
+
+        box-shadow: none;
+    }
+
+    .auth-card-heading h2 {
+        font-size: 32px;
+    }
+
+    .auth-form-container h1 {
+        font-size: 35px;
+    }
+
+    .name-row {
+        grid-template-columns: 1fr;
+    }
+
+    .auth-section {
+        padding: 30px 15px;
+    }
+
+
+    /* LOGIN */
+
+    .login-navbar {
+        padding: 18px 20px;
+    }
+
+    .login-navbar .logo img {
+        width: 150px;
+    }
+
+    .login-question {
+        display: none;
+    }
+
+    .creative-login {
+        padding: 25px 15px 50px;
+    }
+
+    .login-story h1 {
+        font-size: 40px;
+    }
+
+    .login-story-text {
+        font-size: 15px;
+    }
+
+    .compass-visual {
+        transform: scale(0.8);
+
+        margin-top: 5px;
+
+        margin-bottom: -10px;
+    }
+
+    .login-tip {
+        max-width: 100%;
+    }
+
+    .creative-login-card {
+        padding: 28px 22px;
+
+        border-radius: 25px;
+    }
+
+    .login-card-top h2 {
+        font-size: 27px;
+    }
+
+
+    /* DISCOVER CARD MOBILE */
+
+    .discover-card p,
+    .direction-card p,
+    .assessment-card p {
+        max-width: 285px;
+
+        font-size: 14px;
+
+        line-height: 1.55;
+    }
+
+    .discover-features,
+    .direction-features,
+    .assessment-features,
+    .assessment-steps,
+    .journey-steps {
+        width: calc(100% - 25px);
+
+        margin-top: 35px !important;
+    }
+
+    .discover-feature,
+    .direction-feature,
+    .assessment-feature,
+    .assessment-step,
+    .journey-step {
+        font-size: 10px;
+
+        padding: 10px 4px;
+    }
+}
+
+
+@media (max-width: 450px) {
+
+    .profile-step {
+        display: none;
+    }
+
+    .profile-heading h1 {
+        font-size: 38px;
+    }
+
+    .interest-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .progress-step small {
+        font-size: 9px;
+    }
 }

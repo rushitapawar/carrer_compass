@@ -8,6 +8,7 @@
     <title>Career Details | Career Compass AI</title>
 
     <style>
+
         * {
             margin: 0;
             padding: 0;
@@ -21,9 +22,10 @@
             min-height: 100vh;
         }
 
+
         /* =========================
            NAVBAR
-        ========================= */
+        ========================== */
 
         .navbar {
             height: 82px;
@@ -41,6 +43,7 @@
             z-index: 1000;
         }
 
+
         .brand {
             width: 175px;
             height: 55px;
@@ -51,6 +54,7 @@
             text-decoration: none;
             flex-shrink: 0;
         }
+
 
         .brand img {
             width: 175px;
@@ -63,11 +67,13 @@
             display: block;
         }
 
+
         .nav-links {
             display: flex;
             align-items: center;
             gap: 28px;
         }
+
 
         .nav-links a {
             text-decoration: none;
@@ -79,9 +85,15 @@
             transition: 0.25s ease;
         }
 
+
         .nav-links a:hover {
             color: #443846;
         }
+
+
+        /* =========================
+           PROFILE AVATAR
+        ========================== */
 
         .profile-btn {
             width: 43px;
@@ -89,8 +101,8 @@
 
             border-radius: 50%;
 
-            background: #443846;
-            color: white;
+            background: #f6c4d3;
+            color: #443846;
 
             display: flex;
             align-items: center;
@@ -98,22 +110,27 @@
 
             text-decoration: none;
 
-            font-size: 15px;
-            font-weight: 700;
+            font-size: 22px;
+            font-weight: 400;
 
-            box-shadow: 0 7px 18px rgba(68, 56, 70, 0.18);
+            border: 3px solid #f6c4d3;
+
+            box-shadow: 0 7px 18px rgba(68, 56, 70, 0.12);
 
             transition: 0.25s ease;
         }
 
+
         .profile-btn:hover {
-            background: #322936;
+            background: #e998b3;
+            border-color: #e998b3;
             transform: translateY(-2px);
         }
 
+
         /* =========================
            MAIN PAGE
-        ========================= */
+        ========================== */
 
         .page {
             max-width: 1180px;
@@ -122,9 +139,10 @@
             padding: 45px 35px 80px;
         }
 
+
         /* =========================
            BACK BUTTON
-        ========================= */
+        ========================== */
 
         .back-btn {
             display: inline-flex;
@@ -143,14 +161,16 @@
             transition: 0.2s ease;
         }
 
+
         .back-btn:hover {
             color: #443846;
             transform: translateX(-3px);
         }
 
+
         /* =========================
            HERO
-        ========================= */
+        ========================== */
 
         .career-hero {
             background: white;
@@ -175,6 +195,7 @@
             margin-bottom: 28px;
         }
 
+
         .career-hero::after {
             content: "";
 
@@ -193,12 +214,14 @@
             opacity: 0.65;
         }
 
+
         .career-hero-content {
             position: relative;
             z-index: 2;
 
             max-width: 700px;
         }
+
 
         .sector-label {
             display: inline-flex;
@@ -220,6 +243,7 @@
             margin-bottom: 18px;
         }
 
+
         .career-hero h1 {
             font-family: Georgia, "Times New Roman", serif;
 
@@ -232,6 +256,7 @@
             margin-bottom: 16px;
         }
 
+
         .career-hero p {
             color: #756d76;
 
@@ -241,6 +266,7 @@
 
             max-width: 680px;
         }
+
 
         .career-icon {
             width: 120px;
@@ -264,9 +290,10 @@
             box-shadow: inset 0 0 0 1px #eedce2;
         }
 
+
         /* =========================
            ACTIONS
-        ========================= */
+        ========================== */
 
         .hero-actions {
             display: flex;
@@ -275,6 +302,7 @@
 
             margin-top: 25px;
         }
+
 
         .btn {
             text-decoration: none;
@@ -297,6 +325,7 @@
             transition: 0.25s ease;
         }
 
+
         .btn-primary {
             background: #443846;
             color: white;
@@ -304,10 +333,12 @@
             box-shadow: 0 7px 18px rgba(68, 56, 70, 0.14);
         }
 
+
         .btn-primary:hover {
             background: #322936;
             transform: translateY(-2px);
         }
+
 
         .btn-secondary {
             background: #f7f2f0;
@@ -316,13 +347,15 @@
             border: 1px solid #e4dcd8;
         }
 
+
         .btn-secondary:hover {
             background: #eee7e4;
         }
 
+
         /* =========================
            CONTENT GRID
-        ========================= */
+        ========================== */
 
         .details-grid {
             display: grid;
@@ -332,6 +365,7 @@
             gap: 25px;
         }
 
+
         .left-column,
         .right-column {
             display: flex;
@@ -339,9 +373,10 @@
             gap: 25px;
         }
 
+
         /* =========================
            CARD
-        ========================= */
+        ========================== */
 
         .card {
             background: white;
@@ -355,6 +390,7 @@
             box-shadow: 0 8px 25px rgba(68, 56, 70, 0.05);
         }
 
+
         .card h2 {
             font-family: Georgia, "Times New Roman", serif;
 
@@ -365,6 +401,7 @@
             margin-bottom: 20px;
         }
 
+
         .card p {
             color: #756d76;
 
@@ -373,9 +410,10 @@
             line-height: 1.75;
         }
 
+
         /* =========================
            SKILLS
-        ========================= */
+        ========================== */
 
         .skills {
             display: flex;
@@ -384,6 +422,7 @@
 
             gap: 10px;
         }
+
 
         .skill-tag {
             background: #f8efec;
@@ -401,9 +440,10 @@
             font-weight: 600;
         }
 
+
         /* =========================
            INFO LIST
-        ========================= */
+        ========================== */
 
         .info-list {
             display: flex;
@@ -411,6 +451,7 @@
 
             gap: 16px;
         }
+
 
         .info-item {
             display: flex;
@@ -424,10 +465,12 @@
             border-bottom: 1px solid #eee7e4;
         }
 
+
         .info-item:last-child {
             border-bottom: none;
             padding-bottom: 0;
         }
+
 
         .info-icon {
             width: 37px;
@@ -446,6 +489,7 @@
             font-size: 16px;
         }
 
+
         .info-text span {
             display: block;
 
@@ -460,15 +504,17 @@
             letter-spacing: 0.4px;
         }
 
+
         .info-text strong {
             color: #443846;
 
             font-size: 13px;
         }
 
+
         /* =========================
            EDUCATION
-        ========================= */
+        ========================== */
 
         .education-step {
             display: flex;
@@ -478,9 +524,11 @@
             margin-bottom: 20px;
         }
 
+
         .education-step:last-child {
             margin-bottom: 0;
         }
+
 
         .step-number {
             width: 35px;
@@ -502,6 +550,7 @@
             flex-shrink: 0;
         }
 
+
         .education-step h3 {
             font-size: 14px;
 
@@ -510,14 +559,16 @@
             margin-bottom: 5px;
         }
 
+
         .education-step p {
             font-size: 12px;
             line-height: 1.55;
         }
 
+
         /* =========================
            OPPORTUNITY BOX
-        ========================= */
+        ========================== */
 
         .opportunity {
             background: #443846;
@@ -529,6 +580,7 @@
             padding: 28px;
         }
 
+
         .opportunity h2 {
             color: white;
 
@@ -538,6 +590,7 @@
 
             margin-bottom: 10px;
         }
+
 
         .opportunity p {
             color: #ddd2d8;
@@ -549,18 +602,21 @@
             margin-bottom: 20px;
         }
 
+
         .opportunity .btn {
             background: #f2b5c8;
             color: #443846;
         }
 
+
         .opportunity .btn:hover {
             background: #f6c7d6;
         }
 
+
         /* =========================
            EMPTY / ERROR STATE
-        ========================= */
+        ========================== */
 
         .empty-state {
             background: white;
@@ -575,6 +631,7 @@
 
             box-shadow: 0 10px 30px rgba(68, 56, 70, 0.06);
         }
+
 
         .empty-icon {
             width: 75px;
@@ -593,6 +650,7 @@
             font-size: 30px;
         }
 
+
         .empty-state h2 {
             font-family: Georgia, "Times New Roman", serif;
 
@@ -600,6 +658,7 @@
 
             margin-bottom: 10px;
         }
+
 
         .empty-state p {
             color: #756d76;
@@ -613,9 +672,10 @@
             line-height: 1.7;
         }
 
+
         /* =========================
            FOOTER
-        ========================= */
+        ========================== */
 
         footer {
             border-top: 1px solid #e4dcd8;
@@ -631,9 +691,10 @@
             font-size: 12px;
         }
 
+
         /* =========================
            RESPONSIVE
-        ========================= */
+        ========================== */
 
         @media (max-width: 900px) {
 
@@ -641,18 +702,23 @@
                 padding: 0 25px;
             }
 
+
             .nav-links {
                 gap: 17px;
             }
+
 
             .details-grid {
                 grid-template-columns: 1fr;
             }
 
+
             .career-hero {
                 padding: 32px;
             }
+
         }
+
 
         @media (max-width: 700px) {
 
@@ -661,24 +727,29 @@
                 padding: 0 18px;
             }
 
+
             .brand,
             .brand img {
                 width: 145px;
                 height: 48px;
             }
 
+
             .nav-links {
                 display: none;
             }
+
 
             .page {
                 padding: 35px 18px 60px;
             }
 
+
             .career-hero {
                 flex-direction: column;
                 align-items: flex-start;
             }
+
 
             .career-icon {
                 width: 85px;
@@ -686,18 +757,23 @@
                 font-size: 38px;
             }
 
+
             .career-hero h1 {
                 font-size: 39px;
             }
+
 
             .hero-actions {
                 flex-wrap: wrap;
             }
 
+
             .hero-actions .btn {
                 flex: 1;
             }
+
         }
+
 
         @media (max-width: 450px) {
 
@@ -705,27 +781,35 @@
                 padding: 25px;
             }
 
+
             .card {
                 padding: 23px;
             }
+
 
             .hero-actions {
                 flex-direction: column;
                 width: 100%;
             }
 
+
             .hero-actions .btn {
                 width: 100%;
             }
+
         }
+
     </style>
+
 </head>
+
 
 <body>
 
+
     <!-- =========================
          NAVBAR
-    ========================= -->
+    ========================== -->
 
     <header class="navbar">
 
@@ -764,11 +848,14 @@
         </nav>
 
 
+        <!-- AVATAR -->
+
         <a
             href="profile.html"
             class="profile-btn"
+            title="My Profile"
         >
-            A
+            👩🏻‍💻
         </a>
 
     </header>
@@ -776,9 +863,10 @@
 
     <!-- =========================
          MAIN
-    ========================= -->
+    ========================== -->
 
     <main class="page">
+
 
         <a
             href="results.html"
@@ -790,7 +878,7 @@
 
         <!-- =========================
              CAREER HERO
-        ========================= -->
+        ========================== -->
 
         <section
             class="career-hero"
@@ -806,9 +894,11 @@
                     Career
                 </div>
 
+
                 <h1 id="careerTitle">
                     Career Details
                 </h1>
+
 
                 <p id="careerDescription">
                     Explore this career path and discover
@@ -825,6 +915,7 @@
                     >
                         ♡ Save Career
                     </button>
+
 
                     <a
                         href="compare.html"
@@ -850,7 +941,7 @@
 
         <!-- =========================
              DETAILS
-        ========================= -->
+        ========================== -->
 
         <section
             class="details-grid"
@@ -858,6 +949,7 @@
         >
 
             <div class="left-column">
+
 
                 <!-- ABOUT -->
 
@@ -917,6 +1009,7 @@
                     <h2>
                         Education Path
                     </h2>
+
 
                     <div class="education-step">
 
@@ -992,6 +1085,7 @@
 
             <div class="right-column">
 
+
                 <!-- QUICK INFO -->
 
                 <article class="card">
@@ -1000,7 +1094,9 @@
                         Quick Overview
                     </h2>
 
+
                     <div class="info-list">
+
 
                         <div class="info-item">
 
@@ -1122,7 +1218,7 @@
 
     <!-- =========================
          FOOTER
-    ========================= -->
+    ========================== -->
 
     <footer>
 
@@ -1158,6 +1254,7 @@
                 ]
             },
 
+
             data: {
                 title: "Data Scientist",
                 category: "Technology",
@@ -1176,6 +1273,7 @@
                     "Problem Solving"
                 ]
             },
+
 
             designer: {
                 title: "UX/UI Designer",
@@ -1196,6 +1294,7 @@
                 ]
             },
 
+
             teacher: {
                 title: "Teacher",
                 category: "Education",
@@ -1215,6 +1314,7 @@
                 ]
             },
 
+
             doctor: {
                 title: "Doctor",
                 category: "Healthcare",
@@ -1233,6 +1333,7 @@
                     "Critical Thinking"
                 ]
             },
+
 
             lawyer: {
                 title: "Lawyer",
@@ -1263,6 +1364,7 @@
         const params =
             new URLSearchParams(window.location.search);
 
+
         const requestedCareer =
             params.get("id") ||
             params.get("career") ||
@@ -1276,9 +1378,11 @@
                     .toLowerCase()
                     .trim();
 
+
             if (careerDatabase[search]) {
                 return careerDatabase[search];
             }
+
 
             const found =
                 Object.values(careerDatabase)
@@ -1287,6 +1391,7 @@
                             .toLowerCase()
                             .includes(search)
                     );
+
 
             return found || careerDatabase.software;
         }
@@ -1303,23 +1408,30 @@
         document.getElementById("careerTitle").textContent =
             career.title;
 
+
         document.getElementById("sectorLabel").textContent =
             career.category;
+
 
         document.getElementById("careerIcon").textContent =
             career.icon;
 
+
         document.getElementById("careerDescription").textContent =
             career.description;
+
 
         document.getElementById("aboutCareer").textContent =
             career.about;
 
+
         document.getElementById("educationInfo").textContent =
             career.education;
 
+
         document.getElementById("workStyleInfo").textContent =
             career.workStyle;
+
 
         document.getElementById("fieldInfo").textContent =
             career.category;
@@ -1332,16 +1444,21 @@
         const skillsContainer =
             document.getElementById("skillsContainer");
 
+
         skillsContainer.innerHTML = "";
+
 
         career.skills.forEach(skill => {
 
             const tag =
                 document.createElement("span");
 
+
             tag.className = "skill-tag";
 
+
             tag.textContent = skill;
+
 
             skillsContainer.appendChild(tag);
 
@@ -1357,6 +1474,7 @@
 
 
         let savedCareers = [];
+
 
         try {
 
@@ -1380,6 +1498,7 @@
                     typeof item === "string"
                         ? item
                         : item.title || item.name;
+
 
                 return title === career.title;
 
@@ -1416,6 +1535,7 @@
                             typeof item === "string"
                                 ? item
                                 : item.title || item.name;
+
 
                         return title === career.title;
 

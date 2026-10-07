@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <title>Career Roles | Career Compass AI</title>
 
     <style>
+
         * {
             margin: 0;
             padding: 0;
@@ -19,7 +21,9 @@
             color: #342d3b;
         }
 
-        /* NAVBAR */
+        /* =========================
+           NAVBAR
+        ========================= */
 
         .navbar {
             height: 82px;
@@ -79,14 +83,18 @@
             color: #443846;
         }
 
+        /* =========================
+           PROFILE AVATAR
+        ========================= */
+
         .profile-btn {
             width: 43px;
             height: 43px;
 
             border-radius: 50%;
 
-            background: #443846;
-            color: white;
+            background: #f6c4d3;
+            color: #443846;
 
             display: flex;
             align-items: center;
@@ -94,20 +102,25 @@
 
             text-decoration: none;
 
-            font-size: 15px;
-            font-weight: 700;
+            font-size: 22px;
+            font-weight: 400;
 
-            box-shadow: 0 7px 18px rgba(68,56,70,.18);
+            border: 3px solid #f6c4d3;
+
+            box-shadow: 0 7px 18px rgba(68, 56, 70, .12);
 
             transition: .25s;
         }
 
         .profile-btn:hover {
-            background: #322936;
+            background: #f2b5c8;
+            border-color: #f2b5c8;
             transform: translateY(-2px);
         }
 
-        /* PAGE */
+        /* =========================
+           PAGE
+        ========================= */
 
         .page {
             max-width: 1180px;
@@ -116,7 +129,9 @@
             padding: 65px 35px 80px;
         }
 
-        /* HERO */
+        /* =========================
+           HERO
+        ========================= */
 
         .hero {
             text-align: center;
@@ -169,7 +184,9 @@
             line-height: 1.7;
         }
 
-        /* SEARCH */
+        /* =========================
+           SEARCH
+        ========================= */
 
         .search-box {
             max-width: 720px;
@@ -203,7 +220,9 @@
 
         .search-box input:focus {
             border-color: #d99aae;
-            box-shadow: 0 8px 25px rgba(182,109,135,.10);
+
+            box-shadow:
+                0 8px 25px rgba(182,109,135,.10);
         }
 
         .search-icon {
@@ -217,7 +236,9 @@
             font-size: 18px;
         }
 
-        /* HEADER */
+        /* =========================
+           HEADER
+        ========================= */
 
         .roles-header {
             display: flex;
@@ -250,7 +271,9 @@
             padding: 8px 14px;
         }
 
-        /* GRID */
+        /* =========================
+           GRID
+        ========================= */
 
         .roles-grid {
             display: grid;
@@ -271,7 +294,8 @@
 
             min-height: 255px;
 
-            box-shadow: 0 8px 25px rgba(68,56,70,.05);
+            box-shadow:
+                0 8px 25px rgba(68,56,70,.05);
 
             transition: .3s;
         }
@@ -352,7 +376,9 @@
             color: #b66d87;
         }
 
-        /* EMPTY */
+        /* =========================
+           EMPTY
+        ========================= */
 
         .empty {
             display: none;
@@ -388,7 +414,9 @@
             font-size: 13px;
         }
 
-        /* FOOTER */
+        /* =========================
+           FOOTER
+        ========================= */
 
         footer {
             border-top: 1px solid #e4dcd8;
@@ -404,7 +432,9 @@
             font-size: 12px;
         }
 
-        /* MOBILE */
+        /* =========================
+           MOBILE
+        ========================= */
 
         @media (max-width: 950px) {
 
@@ -421,6 +451,7 @@
 
             .navbar {
                 height: 72px;
+
                 padding: 0 18px;
             }
 
@@ -446,19 +477,33 @@
                 grid-template-columns: 1fr;
             }
         }
+
     </style>
+
 </head>
+
 
 <body>
 
+
+    <!-- =========================
+         NAVBAR
+    ========================= -->
+
     <header class="navbar">
 
-        <a href="dashboard.html" class="brand">
+        <a
+            href="dashboard.html"
+            class="brand"
+        >
+
             <img
                 src="../images/logo.png"
                 alt="Career Compass AI"
             >
+
         </a>
+
 
         <nav class="nav-links">
 
@@ -474,7 +519,10 @@
                 Favourites
             </a>
 
-            <a href="job-roles.html" class="active">
+            <a
+                href="job-roles.html"
+                class="active"
+            >
                 Job Roles
             </a>
 
@@ -484,14 +532,31 @@
 
         </nav>
 
-        <a href="profile.html" class="profile-btn">
-            A
+
+        <!-- AVATAR -->
+
+        <a
+            href="profile.html"
+            class="profile-btn"
+            title="My Profile"
+        >
+            👩🏻‍💻
         </a>
 
     </header>
 
 
+
+    <!-- =========================
+         MAIN
+    ========================= -->
+
     <main class="page">
+
+
+        <!-- =========================
+             HERO
+        ========================= -->
 
         <section class="hero">
 
@@ -513,6 +578,11 @@
         </section>
 
 
+
+        <!-- =========================
+             SEARCH
+        ========================= -->
+
         <div class="search-box">
 
             <span class="search-icon">
@@ -527,6 +597,11 @@
 
         </div>
 
+
+
+        <!-- =========================
+             ROLE HEADER
+        ========================= -->
 
         <div class="roles-header">
 
@@ -544,11 +619,21 @@
         </div>
 
 
+
+        <!-- =========================
+             ROLES GRID
+        ========================= -->
+
         <section
             class="roles-grid"
             id="rolesGrid"
         ></section>
 
+
+
+        <!-- =========================
+             EMPTY STATE
+        ========================= -->
 
         <section
             class="empty"
@@ -572,10 +657,22 @@
     </main>
 
 
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
     <footer>
+
         © 2026 Career Compass AI · Explore your possibilities.
+
     </footer>
 
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
 
     <script>
 
@@ -585,7 +682,8 @@
                 title: "Software Developer",
                 category: "Technology",
                 icon: "💻",
-                description: "Build applications, websites and software systems.",
+                description:
+                    "Build applications, websites and software systems.",
                 id: "software"
             },
 
@@ -593,7 +691,8 @@
                 title: "Data Scientist",
                 category: "Technology",
                 icon: "📊",
-                description: "Analyze data and discover useful patterns and insights.",
+                description:
+                    "Analyze data and discover useful patterns and insights.",
                 id: "data"
             },
 
@@ -601,7 +700,8 @@
                 title: "UX/UI Designer",
                 category: "Creative",
                 icon: "🎨",
-                description: "Create useful and engaging digital experiences.",
+                description:
+                    "Create useful and engaging digital experiences.",
                 id: "designer"
             },
 
@@ -609,7 +709,8 @@
                 title: "Teacher",
                 category: "Education",
                 icon: "📚",
-                description: "Guide students and help them develop their abilities.",
+                description:
+                    "Guide students and help them develop their abilities.",
                 id: "teacher"
             },
 
@@ -617,7 +718,8 @@
                 title: "Doctor",
                 category: "Healthcare",
                 icon: "🩺",
-                description: "Provide medical care and help people manage health conditions.",
+                description:
+                    "Provide medical care and help people manage health conditions.",
                 id: "doctor"
             },
 
@@ -625,7 +727,8 @@
                 title: "Lawyer",
                 category: "Law",
                 icon: "⚖️",
-                description: "Use legal knowledge and reasoning to support clients.",
+                description:
+                    "Use legal knowledge and reasoning to support clients.",
                 id: "lawyer"
             },
 
@@ -633,7 +736,8 @@
                 title: "Business Analyst",
                 category: "Business",
                 icon: "📈",
-                description: "Analyze business needs and help organizations make decisions.",
+                description:
+                    "Analyze business needs and help organizations make decisions.",
                 id: "business"
             },
 
@@ -641,7 +745,8 @@
                 title: "Graphic Designer",
                 category: "Creative",
                 icon: "🖌️",
-                description: "Create visual concepts for digital and print communication.",
+                description:
+                    "Create visual concepts for digital and print communication.",
                 id: "graphic"
             },
 
@@ -649,7 +754,8 @@
                 title: "Psychologist",
                 category: "People",
                 icon: "🧠",
-                description: "Study behavior and support people through psychological services.",
+                description:
+                    "Study behavior and support people through psychological services.",
                 id: "psychologist"
             },
 
@@ -657,7 +763,8 @@
                 title: "Civil Engineer",
                 category: "Engineering",
                 icon: "🏗️",
-                description: "Plan and develop infrastructure and construction projects.",
+                description:
+                    "Plan and develop infrastructure and construction projects.",
                 id: "civil"
             },
 
@@ -665,7 +772,8 @@
                 title: "Financial Analyst",
                 category: "Finance",
                 icon: "💰",
-                description: "Evaluate financial information and support financial decisions.",
+                description:
+                    "Evaluate financial information and support financial decisions.",
                 id: "finance"
             },
 
@@ -673,11 +781,13 @@
                 title: "Content Strategist",
                 category: "Creative",
                 icon: "✍️",
-                description: "Plan and develop useful content for different audiences.",
+                description:
+                    "Plan and develop useful content for different audiences.",
                 id: "content"
             }
 
         ];
+
 
 
         const grid =
@@ -693,6 +803,7 @@
             document.getElementById("emptyState");
 
 
+
         function renderRoles(list) {
 
             grid.innerHTML = "";
@@ -704,6 +815,7 @@
             if (list.length === 0) {
 
                 grid.style.display = "none";
+
                 empty.style.display = "block";
 
                 return;
@@ -711,6 +823,7 @@
 
 
             grid.style.display = "grid";
+
             empty.style.display = "none";
 
 
@@ -719,7 +832,9 @@
                 const card =
                     document.createElement("article");
 
-                card.className = "role-card";
+                card.className =
+                    "role-card";
+
 
                 card.innerHTML = `
 
@@ -748,10 +863,13 @@
 
                 `;
 
+
                 grid.appendChild(card);
 
             });
+
         }
+
 
 
         search.addEventListener(
@@ -786,9 +904,12 @@
         );
 
 
+
         renderRoles(roles);
 
     </script>
 
+
 </body>
+
 </html>

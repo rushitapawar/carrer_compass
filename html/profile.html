@@ -42,16 +42,20 @@
             color: inherit;
         }
 
+
         /* ================= NAVBAR ================= */
 
         .navbar {
             height: 82px;
             background: var(--white);
             border-bottom: 1px solid #eee8e5;
+
             display: flex;
             align-items: center;
             justify-content: space-between;
+
             padding: 0 6%;
+
             position: sticky;
             top: 0;
             z-index: 100;
@@ -87,18 +91,38 @@
             color: var(--plum);
         }
 
+
+        /* ================= PROFILE AVATAR ================= */
+
         .profile-btn {
             width: 42px;
             height: 42px;
+
             border-radius: 50%;
-            background: var(--plum);
-            color: white;
+
+            background: var(--pink-light);
+            color: var(--plum);
+
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
-            font-size: 16px;
+
+            font-weight: 400;
+            font-size: 22px;
+
+            border: 3px solid var(--pink-light);
+
+            box-shadow: 0 7px 18px rgba(68, 56, 70, 0.12);
+
+            transition: 0.25s ease;
         }
+
+        .profile-btn:hover {
+            background: var(--pink);
+            border-color: var(--pink);
+            transform: translateY(-2px);
+        }
+
 
         /* ================= HERO ================= */
 
@@ -130,6 +154,7 @@
             font-size: 16px;
         }
 
+
         /* ================= MAIN ================= */
 
         .main-container {
@@ -145,13 +170,16 @@
             align-items: start;
         }
 
+
         /* ================= PROFILE CARD ================= */
 
         .profile-card {
             background: var(--white);
             border-radius: 24px;
             padding: 30px;
+
             box-shadow: 0 15px 45px rgba(68, 56, 70, 0.08);
+
             position: sticky;
             top: 105px;
         }
@@ -159,13 +187,18 @@
         .avatar {
             width: 92px;
             height: 92px;
+
             border-radius: 50%;
+
             background: var(--soft-pink);
             border: 2px solid var(--pink-light);
+
             display: flex;
             align-items: center;
             justify-content: center;
+
             font-size: 38px;
+
             margin-bottom: 20px;
         }
 
@@ -194,6 +227,7 @@
             display: flex;
             justify-content: space-between;
             margin-bottom: 9px;
+
             font-size: 13px;
             font-weight: 600;
         }
@@ -201,16 +235,22 @@
         .progress-bar {
             width: 100%;
             height: 7px;
+
             background: #eadfe3;
+
             border-radius: 20px;
+
             overflow: hidden;
         }
 
         .progress-fill {
             width: 0%;
             height: 100%;
+
             background: var(--pink);
+
             border-radius: 20px;
+
             transition: width 0.4s ease;
         }
 
@@ -245,12 +285,14 @@
             color: var(--plum);
         }
 
+
         /* ================= FORM ================= */
 
         .form-card {
             background: var(--white);
             border-radius: 24px;
             padding: 38px;
+
             box-shadow: 0 15px 45px rgba(68, 56, 70, 0.08);
         }
 
@@ -300,14 +342,21 @@
         select,
         textarea {
             width: 100%;
+
             border: 1px solid var(--border);
             border-radius: 12px;
+
             background: #fffdfc;
+
             padding: 13px 14px;
+
             font-family: inherit;
             font-size: 14px;
+
             color: var(--text);
+
             outline: none;
+
             transition: 0.25s ease;
         }
 
@@ -315,13 +364,16 @@
         select:focus,
         textarea:focus {
             border-color: var(--pink);
-            box-shadow: 0 0 0 4px rgba(233, 152, 179, 0.12);
+
+            box-shadow:
+                0 0 0 4px rgba(233, 152, 179, 0.12);
         }
 
         textarea {
             min-height: 110px;
             resize: vertical;
         }
+
 
         /* ================= INTERESTS ================= */
 
@@ -337,12 +389,19 @@
 
         .interest-option span {
             display: inline-block;
+
             border: 1px solid var(--border);
+
             padding: 10px 15px;
+
             border-radius: 30px;
+
             font-size: 13px;
+
             cursor: pointer;
+
             transition: 0.25s ease;
+
             background: #fffdfc;
         }
 
@@ -356,24 +415,32 @@
             color: white;
         }
 
+
         /* ================= BUTTONS ================= */
 
         .form-actions {
             display: flex;
             justify-content: flex-end;
+
             gap: 14px;
+
             margin-top: 35px;
             padding-top: 25px;
+
             border-top: 1px solid #eee8e5;
         }
 
         .btn {
             border: none;
             border-radius: 12px;
+
             padding: 13px 24px;
+
             font-family: inherit;
             font-weight: 700;
+
             cursor: pointer;
+
             transition: 0.25s ease;
         }
 
@@ -396,27 +463,35 @@
             transform: translateY(-1px);
         }
 
+
         /* ================= FOOTER ================= */
 
         footer {
             background: var(--plum-dark);
             color: white;
+
             padding: 40px 6%;
+
             margin-top: 20px;
         }
 
         .footer-inner {
             max-width: 1180px;
             margin: auto;
+
             display: flex;
+
             justify-content: space-between;
             align-items: center;
+
             gap: 30px;
         }
 
         .footer-logo img {
             width: 105px;
+
             filter: brightness(0) invert(1);
+
             margin-bottom: 8px;
         }
 
@@ -440,9 +515,11 @@
             color: var(--pink-light);
         }
 
+
         /* ================= RESPONSIVE ================= */
 
         @media (max-width: 900px) {
+
             .profile-layout {
                 grid-template-columns: 1fr;
             }
@@ -457,6 +534,7 @@
         }
 
         @media (max-width: 650px) {
+
             .navbar {
                 padding: 0 20px;
             }
@@ -490,30 +568,63 @@
                 align-items: flex-start;
             }
         }
+
     </style>
 </head>
 
 <body>
+
 
     <!-- ================= NAVBAR ================= -->
 
     <nav class="navbar">
 
         <a href="index.html" class="brand">
-            <img src="../images/logo.png" alt="Career Compass AI">
+
+            <img
+                src="../images/logo.png"
+                alt="Career Compass AI"
+            >
+
         </a>
+
 
         <div class="nav-right">
 
             <div class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="about.html">About</a>
-                <a href="how-it-works.html">How It Works</a>
-                <a href="questionnaire.html">Assessment</a>
-                <a href="contact.html">Contact</a>
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="about.html">
+                    About
+                </a>
+
+                <a href="how-it-works.html">
+                    How It Works
+                </a>
+
+                <a href="questionnaire.html">
+                    Assessment
+                </a>
+
+                <a href="contact.html">
+                    Contact
+                </a>
+
             </div>
 
-            <a href="profile.html" class="profile-btn">A</a>
+
+            <!-- AVATAR -->
+
+            <a
+                href="profile.html"
+                class="profile-btn"
+                title="My Profile"
+            >
+                👩🏻‍💻
+            </a>
 
         </div>
 
@@ -524,9 +635,13 @@
 
     <section class="hero">
 
-        <div class="hero-label">YOUR PROFILE</div>
+        <div class="hero-label">
+            YOUR PROFILE
+        </div>
 
-        <h1>Build your profile.</h1>
+        <h1>
+            Build your profile.
+        </h1>
 
         <p>
             Tell us a little about yourself, your education, interests,
@@ -541,6 +656,7 @@
     <main class="main-container">
 
         <div class="profile-layout">
+
 
             <!-- PROFILE PREVIEW -->
 
@@ -558,42 +674,84 @@
                     your@email.com
                 </div>
 
+
                 <div class="completion">
 
                     <div class="completion-top">
-                        <span>Profile completion</span>
-                        <span id="completionPercent">0%</span>
+
+                        <span>
+                            Profile completion
+                        </span>
+
+                        <span id="completionPercent">
+                            0%
+                        </span>
+
                     </div>
 
+
                     <div class="progress-bar">
-                        <div class="progress-fill" id="progressFill"></div>
+
+                        <div
+                            class="progress-fill"
+                            id="progressFill"
+                        ></div>
+
                     </div>
 
                 </div>
+
 
                 <div class="preview-title">
                     Profile Preview
                 </div>
 
-                <div class="preview-item">
-                    <span class="preview-label">Education</span>
-                    <span class="preview-value" id="previewEducation">
-                        Not added
-                    </span>
-                </div>
 
                 <div class="preview-item">
-                    <span class="preview-label">Field of Study</span>
-                    <span class="preview-value" id="previewField">
+
+                    <span class="preview-label">
+                        Education
+                    </span>
+
+                    <span
+                        class="preview-value"
+                        id="previewEducation"
+                    >
                         Not added
                     </span>
+
                 </div>
 
+
                 <div class="preview-item">
-                    <span class="preview-label">Career Goal</span>
-                    <span class="preview-value" id="previewGoal">
+
+                    <span class="preview-label">
+                        Field of Study
+                    </span>
+
+                    <span
+                        class="preview-value"
+                        id="previewField"
+                    >
                         Not added
                     </span>
+
+                </div>
+
+
+                <div class="preview-item">
+
+                    <span class="preview-label">
+                        Career Goal
+                    </span>
+
+                    <span
+                        class="preview-value"
+                        id="previewGoal"
+                    >
+                        Not added
+                    </span>
+
                 </div>
 
             </aside>
@@ -601,44 +759,73 @@
 
             <!-- FORM -->
 
-            <form class="form-card" id="profileForm">
+            <form
+                class="form-card"
+                id="profileForm"
+            >
+
 
                 <!-- PERSONAL INFORMATION -->
 
                 <section class="section">
 
                     <div class="section-header">
-                        <h2>Personal Information</h2>
-                        <p>Start with a few basic details about yourself.</p>
+
+                        <h2>
+                            Personal Information
+                        </h2>
+
+                        <p>
+                            Start with a few basic details about yourself.
+                        </p>
+
                     </div>
+
 
                     <div class="fields">
 
                         <div class="field">
-                            <label for="fullName">Full Name</label>
+
+                            <label for="fullName">
+                                Full Name
+                            </label>
+
                             <input
                                 type="text"
                                 id="fullName"
                                 placeholder="Enter your full name"
                             >
+
                         </div>
 
+
                         <div class="field">
-                            <label for="email">Email Address</label>
+
+                            <label for="email">
+                                Email Address
+                            </label>
+
                             <input
                                 type="email"
                                 id="email"
                                 placeholder="Enter your email"
                             >
+
                         </div>
 
+
                         <div class="field full">
-                            <label for="location">City / Location</label>
+
+                            <label for="location">
+                                City / Location
+                            </label>
+
                             <input
                                 type="text"
                                 id="location"
                                 placeholder="e.g. Surat, Gujarat"
                             >
+
                         </div>
 
                     </div>
@@ -651,15 +838,25 @@
                 <section class="section">
 
                     <div class="section-header">
-                        <h2>Education</h2>
-                        <p>Help us understand your current academic background.</p>
+
+                        <h2>
+                            Education
+                        </h2>
+
+                        <p>
+                            Help us understand your current academic background.
+                        </p>
+
                     </div>
+
 
                     <div class="fields">
 
                         <div class="field">
 
-                            <label for="education">Current Education</label>
+                            <label for="education">
+                                Current Education
+                            </label>
 
                             <select id="education">
 
@@ -724,50 +921,130 @@
                 <section class="section">
 
                     <div class="section-header">
-                        <h2>Your Interests</h2>
-                        <p>Select the areas that interest you the most.</p>
+
+                        <h2>
+                            Your Interests
+                        </h2>
+
+                        <p>
+                            Select the areas that interest you the most.
+                        </p>
+
                     </div>
+
 
                     <div class="interest-grid">
 
-                        <label class="interest-option">
-                            <input type="checkbox" value="Technology">
-                            <span>Technology</span>
-                        </label>
 
                         <label class="interest-option">
-                            <input type="checkbox" value="Design">
-                            <span>Design</span>
+
+                            <input
+                                type="checkbox"
+                                value="Technology"
+                            >
+
+                            <span>
+                                Technology
+                            </span>
+
                         </label>
 
-                        <label class="interest-option">
-                            <input type="checkbox" value="Business">
-                            <span>Business</span>
-                        </label>
 
                         <label class="interest-option">
-                            <input type="checkbox" value="Science">
-                            <span>Science</span>
+
+                            <input
+                                type="checkbox"
+                                value="Design"
+                            >
+
+                            <span>
+                                Design
+                            </span>
+
                         </label>
 
-                        <label class="interest-option">
-                            <input type="checkbox" value="Healthcare">
-                            <span>Healthcare</span>
-                        </label>
 
                         <label class="interest-option">
-                            <input type="checkbox" value="Education">
-                            <span>Education</span>
+
+                            <input
+                                type="checkbox"
+                                value="Business"
+                            >
+
+                            <span>
+                                Business
+                            </span>
+
                         </label>
 
-                        <label class="interest-option">
-                            <input type="checkbox" value="Law">
-                            <span>Law</span>
-                        </label>
 
                         <label class="interest-option">
-                            <input type="checkbox" value="Media">
-                            <span>Media</span>
+
+                            <input
+                                type="checkbox"
+                                value="Science"
+                            >
+
+                            <span>
+                                Science
+                            </span>
+
+                        </label>
+
+
+                        <label class="interest-option">
+
+                            <input
+                                type="checkbox"
+                                value="Healthcare"
+                            >
+
+                            <span>
+                                Healthcare
+                            </span>
+
+                        </label>
+
+
+                        <label class="interest-option">
+
+                            <input
+                                type="checkbox"
+                                value="Education"
+                            >
+
+                            <span>
+                                Education
+                            </span>
+
+                        </label>
+
+
+                        <label class="interest-option">
+
+                            <input
+                                type="checkbox"
+                                value="Law"
+                            >
+
+                            <span>
+                                Law
+                            </span>
+
+                        </label>
+
+
+                        <label class="interest-option">
+
+                            <input
+                                type="checkbox"
+                                value="Media"
+                            >
+
+                            <span>
+                                Media
+                            </span>
+
                         </label>
 
                     </div>
@@ -780,9 +1057,17 @@
                 <section class="section">
 
                     <div class="section-header">
-                        <h2>Career Goals</h2>
-                        <p>Tell us what you are looking for in your future career.</p>
+
+                        <h2>
+                            Career Goals
+                        </h2>
+
+                        <p>
+                            Tell us what you are looking for in your future career.
+                        </p>
+
                     </div>
+
 
                     <div class="fields">
 
@@ -799,6 +1084,7 @@
                             >
 
                         </div>
+
 
                         <div class="field full">
 
@@ -830,6 +1116,7 @@
                         Clear
                     </button>
 
+
                     <button
                         type="submit"
                         class="btn btn-primary"
@@ -852,9 +1139,13 @@
 
         <div class="footer-inner">
 
+
             <div class="footer-logo">
 
-                <img src="../images/logo.png" alt="Career Compass AI">
+                <img
+                    src="../images/logo.png"
+                    alt="Career Compass AI"
+                >
 
                 <div class="footer-text">
                     Helping you discover a career that fits you.
@@ -862,11 +1153,25 @@
 
             </div>
 
+
             <div class="footer-links">
-                <a href="about.html">About</a>
-                <a href="how-it-works.html">How It Works</a>
-                <a href="privacy.html">Privacy</a>
-                <a href="contact.html">Contact</a>
+
+                <a href="about.html">
+                    About
+                </a>
+
+                <a href="how-it-works.html">
+                    How It Works
+                </a>
+
+                <a href="privacy.html">
+                    Privacy
+                </a>
+
+                <a href="contact.html">
+                    Contact
+                </a>
+
             </div>
 
         </div>

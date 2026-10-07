@@ -2,38 +2,13 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Your Career Journey | Career Compass AI</title>
-
-
-    <!-- Google Fonts -->
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin
-    >
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
-        rel="stylesheet"
-    >
-
+    <title>Career Journey | Career Compass AI</title>
 
     <style>
-
-        /* =====================================================
-           RESET
-        ===================================================== */
 
         * {
             margin: 0;
@@ -42,831 +17,536 @@
         }
 
 
-        html {
-            scroll-behavior: smooth;
-        }
-
-
         body {
-
-            min-height: 100vh;
-
-            font-family: "DM Sans", sans-serif;
-
+            font-family: Georgia, "Times New Roman", serif;
+            background: #f8f6f3;
             color: #443846;
-
-            background:
-                radial-gradient(
-                    circle at 8% 10%,
-                    rgba(233, 152, 179, 0.10),
-                    transparent 28%
-                ),
-                radial-gradient(
-                    circle at 92% 90%,
-                    rgba(68, 56, 70, 0.05),
-                    transparent 28%
-                ),
-                #f7f5f2;
-
-            overflow-x: hidden;
         }
 
 
-        a {
-            text-decoration: none;
-        }
-
-
-        /* =====================================================
+        /* =========================
            NAVBAR
-        ===================================================== */
+        ========================= */
 
-        .journey-navbar {
+        .navbar {
+            height: 95px;
 
-            width: 100%;
+            background: #ffffff;
 
-            height: 82px;
-
-            padding: 0 7%;
-
-            background: rgba(255, 255, 255, 0.97);
-
-            border-bottom: 1px solid #ebe5e3;
+            border-bottom: 1px solid #e8e1e1;
 
             display: flex;
-
             align-items: center;
 
             justify-content: space-between;
 
+            padding: 0 7%;
+
             position: relative;
-
-            z-index: 20;
-
-            box-shadow:
-                0 4px 18px
-                rgba(68, 56, 70, 0.04);
+            z-index: 10;
         }
 
 
-        /* LOGO */
-
-        .journey-logo {
-
-            width: 190px;
-
-            height: 58px;
-
+        .brand {
             display: flex;
-
             align-items: center;
 
-            flex-shrink: 0;
+            text-decoration: none;
         }
 
 
-        .journey-logo img {
-
+        .brand img {
             width: 190px;
-
-            height: 58px;
-
-            max-width: 190px;
-
-            max-height: 58px;
-
-            object-fit: contain;
-
-            object-position: left center;
+            height: auto;
 
             display: block;
         }
 
 
-        /* NAVIGATION */
-
-        .journey-nav {
-
+        .nav-right {
             display: flex;
-
             align-items: center;
 
-            gap: 28px;
+            gap: 14px;
+
+            font-family: Arial, sans-serif;
         }
 
 
-        .journey-nav a {
+        .home-link {
+            text-decoration: none;
 
-            color: #756d76;
+            color: #443846;
 
-            font-size: 14px;
+            font-size: 16px;
 
-            font-weight: 600;
+            margin-right: 18px;
 
-            transition:
-                color 0.25s ease;
+            transition: 0.2s ease;
         }
 
 
-        .journey-nav a:hover {
-
+        .home-link:hover {
             color: #e998b3;
         }
 
 
-        /* ACTIVE LINK */
+        .nav-login,
+        .nav-signup {
+            text-decoration: none;
 
-        .journey-nav .active {
+            padding: 13px 25px;
 
-            color: #443846;
+            border-radius: 30px;
 
-            position: relative;
-        }
+            font-size: 15px;
 
+            font-weight: 600;
 
-        .journey-nav .active::after {
-
-            content: "";
-
-            position: absolute;
-
-            left: 0;
-
-            right: 0;
-
-            bottom: -9px;
-
-            height: 2px;
-
-            border-radius: 10px;
-
-            background: #e998b3;
+            transition: 0.25s ease;
         }
 
 
         .nav-login {
-
-            padding:
-                10px 18px;
-
-            border:
-                1px solid #ded8d4;
-
-            border-radius: 50px;
+            color: #443846;
 
             background: #ffffff;
 
-            color: #443846 !important;
+            border: 1px solid #ded7d8;
         }
 
 
         .nav-login:hover {
-
             border-color: #e998b3;
 
-            color: #e998b3 !important;
+            color: #d87e9d;
         }
 
 
-        /* =====================================================
+        .nav-signup {
+            background: #443846;
+
+            color: #ffffff;
+
+            border: 1px solid #443846;
+        }
+
+
+        .nav-signup:hover {
+            background: #e998b3;
+
+            border-color: #e998b3;
+        }
+
+
+        /* =========================
            MAIN
-        ===================================================== */
+        ========================= */
 
-        .journey-main {
+        .page {
+            width: 100%;
 
-            min-height:
-                calc(100vh - 82px);
-
-            padding:
-                55px 20px 75px;
-
-            display: flex;
-
-            justify-content: center;
-
-            position: relative;
+            padding: 75px 7% 90px;
         }
 
 
-        .journey-container {
+        .content {
+            max-width: 1220px;
 
-            width: min(1050px, 100%);
+            margin: auto;
         }
 
 
-        /* =====================================================
+        /* =========================
            HERO
-        ===================================================== */
+        ========================= */
 
-        .journey-hero {
-
+        .hero {
             text-align: center;
 
-            margin-bottom: 38px;
+            padding: 35px 20px 65px;
         }
 
 
-        .journey-badge {
+        .hero-badge {
+            display: inline-block;
 
-            display: inline-flex;
+            background: #f9e3ea;
 
-            align-items: center;
+            color: #443846;
 
-            gap: 7px;
+            padding: 11px 22px;
 
-            padding:
-                9px 17px;
+            border-radius: 30px;
 
-            background: #f4e4ea;
+            font-family: Arial, sans-serif;
 
-            border:
-                1px solid #efd2dd;
-
-            border-radius: 50px;
-
-            color: #7a5867;
-
-            font-size: 12px;
+            font-size: 14px;
 
             font-weight: 700;
 
-            letter-spacing: 0.8px;
+            letter-spacing: 0.3px;
 
-            text-transform: uppercase;
-
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
 
-        .journey-hero h1 {
+        .hero h1 {
+            font-size: clamp(48px, 6vw, 78px);
 
-            font-family:
-                "Playfair Display",
-                Georgia,
-                serif;
+            line-height: 1.05;
 
-            font-size:
-                clamp(42px, 6vw, 68px);
-
-            line-height: 1.08;
+            font-weight: 700;
 
             color: #443846;
+
+            margin-bottom: 28px;
+        }
+
+
+        .hero h1 span {
+            color: #e998b3;
+        }
+
+
+        .hero p {
+            max-width: 760px;
+
+            margin: auto;
+
+            font-family: Arial, sans-serif;
+
+            color: #756d76;
+
+            font-size: 18px;
+
+            line-height: 1.8;
+        }
+
+
+        /* =========================
+           JOURNEY CARD
+        ========================= */
+
+        .journey-card {
+            background: #ffffff;
+
+            border: 1px solid #e6dfe0;
+
+            border-radius: 32px;
+
+            padding: 65px 70px;
+
+            box-shadow: 0 18px 45px rgba(68, 56, 70, 0.06);
+
+            text-align: center;
+        }
+
+
+        .compass-circle {
+            width: 105px;
+            height: 105px;
+
+            margin: 0 auto 30px;
+
+            border-radius: 50%;
+
+            background: #f8e1e8;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 52px;
+
+            box-shadow: 0 12px 25px rgba(233, 152, 179, 0.16);
+        }
+
+
+        .journey-card h2 {
+            font-size: clamp(36px, 4vw, 52px);
+
+            line-height: 1.15;
+
+            margin-bottom: 22px;
+
+            color: #443846;
+        }
+
+
+        .journey-card h2 span {
+            color: #e998b3;
+        }
+
+
+        .journey-card > p {
+            max-width: 700px;
+
+            margin: 0 auto;
+
+            font-family: Arial, sans-serif;
+
+            color: #756d76;
+
+            line-height: 1.7;
+
+            font-size: 16px;
+        }
+
+
+        /* =========================
+           STEPS
+        ========================= */
+
+        .steps {
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 25px;
+
+            margin-top: 50px;
+        }
+
+
+        .step {
+            background: #faf8f7;
+
+            border: 1px solid #eee7e7;
+
+            border-radius: 22px;
+
+            padding: 30px 25px;
+
+            text-align: left;
+
+            transition: 0.25s ease;
+        }
+
+
+        .step:hover {
+            transform: translateY(-4px);
+
+            box-shadow: 0 12px 28px rgba(68, 56, 70, 0.07);
+        }
+
+
+        .step-number {
+            width: 42px;
+            height: 42px;
+
+            border-radius: 50%;
+
+            background: #443846;
+
+            color: #ffffff;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-family: Arial, sans-serif;
+
+            font-weight: 700;
 
             margin-bottom: 18px;
         }
 
 
-        .journey-hero h1 span {
+        .step h3 {
+            font-size: 22px;
 
+            margin-bottom: 10px;
+
+            color: #443846;
+        }
+
+
+        .step p {
+            font-family: Arial, sans-serif;
+
+            color: #756d76;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================
+           BOTTOM LOGIN/SIGNUP
+        ========================= */
+
+        .bottom-actions {
+            margin-top: 55px;
+
+            padding-top: 35px;
+
+            border-top: 1px solid #eee6e7;
+
+            text-align: center;
+        }
+
+
+        .bottom-actions p {
+            font-family: Arial, sans-serif;
+
+            color: #756d76;
+
+            margin-bottom: 20px;
+
+            font-size: 15px;
+        }
+
+
+        .action-buttons {
+            display: flex;
+
+            justify-content: center;
+
+            gap: 14px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .login-btn,
+        .signup-btn {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            min-width: 150px;
+
+            padding: 15px 28px;
+
+            border-radius: 30px;
+
+            text-decoration: none;
+
+            font-family: Arial, sans-serif;
+
+            font-weight: 700;
+
+            transition: 0.25s ease;
+        }
+
+
+        .login-btn {
+            background: #ffffff;
+
+            color: #443846;
+
+            border: 1px solid #dcd4d6;
+        }
+
+
+        .login-btn:hover {
+            border-color: #e998b3;
+
+            color: #d87e9d;
+
+            transform: translateY(-2px);
+        }
+
+
+        .signup-btn {
+            background: #e998b3;
+
+            color: #ffffff;
+
+            border: 1px solid #e998b3;
+        }
+
+
+        .signup-btn:hover {
+            background: #d87e9d;
+
+            border-color: #d87e9d;
+
+            transform: translateY(-2px);
+        }
+
+
+        /* =========================
+           BACK HOME
+        ========================= */
+
+        .back-home {
+            text-align: center;
+
+            margin-top: 30px;
+        }
+
+
+        .back-home a {
+            font-family: Arial, sans-serif;
+
+            color: #756d76;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            transition: 0.2s ease;
+        }
+
+
+        .back-home a:hover {
             color: #e998b3;
         }
 
 
-        .journey-hero p {
+        /* =========================
+           FOOTER
+        ========================= */
 
-            max-width: 650px;
+        .footer {
+            text-align: center;
 
-            margin: 0 auto;
-
-            color: #756d76;
-
-            font-size: 16px;
-
-            line-height: 1.7;
-        }
-
-
-        /* =====================================================
-           CONTENT GRID
-        ===================================================== */
-
-        .journey-grid {
-
-            display: grid;
-
-            grid-template-columns:
-                1.05fr 0.95fr;
-
-            gap: 25px;
-
-            align-items: stretch;
-        }
-
-
-        /* =====================================================
-           LEFT CARD
-        ===================================================== */
-
-        .journey-card {
-
-            background: #ffffff;
-
-            border:
-                1px solid #ebe4e4;
-
-            border-radius: 28px;
-
-            padding: 34px;
-
-            box-shadow:
-                0 20px 55px
-                rgba(68, 56, 70, 0.08);
-        }
-
-
-        .card-heading {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 14px;
-
-            margin-bottom: 25px;
-        }
-
-
-        .card-icon {
-
-            width: 48px;
-
-            height: 48px;
-
-            border-radius: 15px;
-
-            background: #f4e4ea;
-
-            display: grid;
-
-            place-items: center;
-
-            font-size: 23px;
-        }
-
-
-        .card-heading h2 {
-
-            font-family:
-                "Playfair Display",
-                Georgia,
-                serif;
-
-            font-size: 25px;
-
-            color: #443846;
-        }
-
-
-        .card-heading p {
-
-            margin-top: 3px;
-
-            color: #91868f;
-
-            font-size: 12px;
-        }
-
-
-        /* =====================================================
-           STEPS
-        ===================================================== */
-
-        .journey-steps {
-
-            display: flex;
-
-            flex-direction: column;
-
-            gap: 15px;
-        }
-
-
-        .journey-step {
-
-            display: flex;
-
-            align-items: flex-start;
-
-            gap: 15px;
-
-            padding: 16px;
-
-            border:
-                1px solid #eee8e9;
-
-            background: #faf8f8;
-
-            border-radius: 17px;
-
-            transition:
-                transform 0.25s ease,
-                border-color 0.25s ease,
-                background 0.25s ease;
-        }
-
-
-        .journey-step:hover {
-
-            transform:
-                translateX(4px);
-
-            background: #fdf8fa;
-
-            border-color: #efd2dd;
-        }
-
-
-        .step-icon {
-
-            width: 39px;
-
-            height: 39px;
-
-            flex: 0 0 39px;
-
-            border-radius: 50%;
+            padding: 25px;
 
             background: #443846;
 
             color: #ffffff;
 
-            display: grid;
-
-            place-items: center;
+            font-family: Arial, sans-serif;
 
             font-size: 13px;
-
-            font-weight: 700;
         }
 
 
-        .journey-step:nth-child(2)
-        .step-icon {
-
-            background: #e998b3;
+        .footer span {
+            color: #e998b3;
         }
 
 
-        .journey-step:nth-child(3)
-        .step-icon {
-
-            background: #443846;
-        }
-
-
-        .journey-step:nth-child(4)
-        .step-icon {
-
-            background: #e998b3;
-        }
-
-
-        .step-text {
-
-            flex: 1;
-        }
-
-
-        .step-text h3 {
-
-            font-size: 14px;
-
-            color: #443846;
-
-            margin-bottom: 4px;
-        }
-
-
-        .step-text p {
-
-            color: #91868f;
-
-            font-size: 12px;
-
-            line-height: 1.5;
-        }
-
-
-        /* =====================================================
-           RIGHT CARD
-        ===================================================== */
-
-        .start-card {
-
-            background:
-                linear-gradient(
-                    145deg,
-                    #443846,
-                    #554656
-                );
-
-            color: #ffffff;
-
-            border-radius: 28px;
-
-            padding: 36px;
-
-            min-height: 100%;
-
-            display: flex;
-
-            flex-direction: column;
-
-            justify-content: space-between;
-
-            box-shadow:
-                0 25px 60px
-                rgba(68, 56, 70, 0.20);
-
-            position: relative;
-
-            overflow: hidden;
-        }
-
-
-        .start-card::before {
-
-            content: "";
-
-            position: absolute;
-
-            width: 220px;
-
-            height: 220px;
-
-            border-radius: 50%;
-
-            right: -90px;
-
-            top: -90px;
-
-            background:
-                rgba(233, 152, 179, 0.15);
-        }
-
-
-        .start-card::after {
-
-            content: "";
-
-            position: absolute;
-
-            width: 170px;
-
-            height: 170px;
-
-            border-radius: 50%;
-
-            left: -80px;
-
-            bottom: -80px;
-
-            background:
-                rgba(255, 255, 255, 0.05);
-        }
-
-
-        .start-content {
-
-            position: relative;
-
-            z-index: 2;
-        }
-
-
-        .start-small {
-
-            color: #f6c4d3;
-
-            font-size: 12px;
-
-            font-weight: 700;
-
-            letter-spacing: 1px;
-
-            text-transform: uppercase;
-
-            margin-bottom: 16px;
-        }
-
-
-        .start-card h2 {
-
-            font-family:
-                "Playfair Display",
-                Georgia,
-                serif;
-
-            font-size: 37px;
-
-            line-height: 1.15;
-
-            margin-bottom: 16px;
-        }
-
-
-        .start-card h2 span {
-
-            color: #f1a9c1;
-        }
-
-
-        .start-card > .start-content > p {
-
-            color: #dcd4dc;
-
-            font-size: 14px;
-
-            line-height: 1.7;
-
-            margin-bottom: 28px;
-        }
-
-
-        /* =====================================================
-           QUICK INFO
-        ===================================================== */
-
-        .quick-info {
-
-            display: flex;
-
-            flex-direction: column;
-
-            gap: 12px;
-
-            margin-bottom: 28px;
-        }
-
-
-        .quick-item {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 11px;
-
-            color: #eee8ee;
-
-            font-size: 13px;
-        }
-
-
-        .quick-item span:first-child {
-
-            width: 29px;
-
-            height: 29px;
-
-            border-radius: 50%;
-
-            background:
-                rgba(255, 255, 255, 0.10);
-
-            display: grid;
-
-            place-items: center;
-
-            font-size: 12px;
-        }
-
-
-        /* =====================================================
-           BUTTONS
-        ===================================================== */
-
-        .start-button {
-
-            width: 100%;
-
-            min-height: 54px;
-
-            border: none;
-
-            border-radius: 14px;
-
-            background: #e998b3;
-
-            color: #ffffff;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            gap: 10px;
-
-            font-family:
-                "DM Sans",
-                sans-serif;
-
-            font-size: 14px;
-
-            font-weight: 700;
-
-            cursor: pointer;
-
-            transition:
-                transform 0.25s ease,
-                background 0.25s ease,
-                box-shadow 0.25s ease;
-        }
-
-
-        .start-button:hover {
-
-            background: #df86a5;
-
-            transform:
-                translateY(-2px);
-
-            box-shadow:
-                0 10px 25px
-                rgba(233, 152, 179, 0.25);
-        }
-
-
-        .back-home {
-
-            display: block;
-
-            text-align: center;
-
-            margin-top: 17px;
-
-            color: #cfc5cf;
-
-            font-size: 12px;
-
-            transition:
-                color 0.2s ease;
-        }
-
-
-        .back-home:hover {
-
-            color: #ffffff;
-        }
-
-
-        /* =====================================================
-           BOTTOM NOTE
-        ===================================================== */
-
-        .journey-note {
-
-            margin-top: 24px;
-
-            padding:
-                15px 20px;
-
-            border:
-                1px solid #ebe4e4;
-
-            border-radius: 15px;
-
-            background: rgba(255, 255, 255, 0.72);
-
-            color: #756d76;
-
-            font-size: 12px;
-
-            line-height: 1.6;
-
-            text-align: center;
-        }
-
-
-        .journey-note strong {
-
-            color: #443846;
-        }
-
-
-        /* =====================================================
+        /* =========================
            RESPONSIVE
-        ===================================================== */
+        ========================= */
 
-        @media (max-width: 850px) {
+        @media (max-width: 900px) {
 
-            .journey-navbar {
-
-                padding:
-                    0 5%;
+            .navbar {
+                padding: 0 5%;
             }
 
 
-            .journey-grid {
+            .page {
+                padding: 55px 5% 70px;
+            }
 
+
+            .journey-card {
+                padding: 50px 30px;
+            }
+
+
+            .steps {
                 grid-template-columns: 1fr;
-            }
-
-
-            .start-card {
-
-                min-height: auto;
             }
 
         }
@@ -874,112 +554,76 @@
 
         @media (max-width: 650px) {
 
-            .journey-navbar {
-
-                height: 72px;
+            .navbar {
+                height: 80px;
             }
 
 
-            .journey-logo {
-
-                width: 155px;
-
-                height: 48px;
+            .brand img {
+                width: 150px;
             }
 
 
-            .journey-logo img {
-
-                width: 155px;
-
-                height: 48px;
-            }
-
-
-            .journey-nav {
-
-                gap: 8px;
-            }
-
-
-            .journey-nav > a:not(.nav-login) {
-
+            .home-link {
                 display: none;
             }
 
 
-            .nav-login {
+            .nav-login,
+            .nav-signup {
+                padding: 10px 15px;
 
-                padding:
-                    8px 14px;
-
-                font-size: 12px !important;
+                font-size: 13px;
             }
 
 
-            .journey-main {
-
-                padding:
-                    38px 15px 55px;
+            .hero {
+                padding-top: 20px;
             }
 
 
-            .journey-hero h1 {
+            .hero h1 {
+                font-size: 45px;
+            }
+
+
+            .hero p {
+                font-size: 15px;
+            }
+
+
+            .journey-card {
+                padding: 40px 20px;
+
+                border-radius: 24px;
+            }
+
+
+            .journey-card h2 {
+                font-size: 34px;
+            }
+
+
+            .compass-circle {
+                width: 85px;
+                height: 85px;
 
                 font-size: 42px;
             }
 
 
-            .journey-hero p {
+            .action-buttons {
+                flex-direction: column;
 
-                font-size: 14px;
+                align-items: center;
             }
 
 
-            .journey-card,
-            .start-card {
+            .login-btn,
+            .signup-btn {
+                width: 100%;
 
-                padding: 25px 20px;
-
-                border-radius: 23px;
-            }
-
-
-            .start-card h2 {
-
-                font-size: 32px;
-            }
-
-        }
-
-
-        @media (max-width: 420px) {
-
-            .journey-hero h1 {
-
-                font-size: 36px;
-            }
-
-
-            .journey-badge {
-
-                font-size: 10px;
-            }
-
-
-            .journey-step {
-
-                padding: 13px;
-            }
-
-
-            .step-icon {
-
-                width: 35px;
-
-                height: 35px;
-
-                flex-basis: 35px;
+                max-width: 260px;
             }
 
         }
@@ -992,20 +636,13 @@
 <body>
 
 
-    <!-- =====================================================
+    <!-- =========================
          NAVBAR
-    ====================================================== -->
+    ========================= -->
 
-    <header class="journey-navbar">
+    <header class="navbar">
 
-
-        <!-- LOGO -->
-
-        <a
-            href="index.html"
-            class="journey-logo"
-            aria-label="Career Compass AI Home"
-        >
+        <a href="./index.html" class="brand">
 
             <img
                 src="../images/logo.png"
@@ -1015,31 +652,29 @@
         </a>
 
 
-
-        <!-- NAVIGATION -->
-
-        <nav class="journey-nav">
-
-            <!-- THIS IS THE IMPORTANT LINK -->
+        <nav class="nav-right">
 
             <a
-                href="assessment-intro.html"
-                class="active"
+                href="./index.html"
+                class="home-link"
             >
-                Your Career Journey
-            </a>
-
-
-            <a href="how-it-works.html">
-                How It Works
+                Home
             </a>
 
 
             <a
-                href="login.html"
+                href="./login.html"
                 class="nav-login"
             >
                 Login
+            </a>
+
+
+            <a
+                href="./signup.html"
+                class="nav-signup"
+            >
+                Sign Up
             </a>
 
         </nav>
@@ -1048,325 +683,156 @@
 
 
 
-    <!-- =====================================================
-         MAIN
-    ====================================================== -->
+    <!-- =========================
+         MAIN PAGE
+    ========================= -->
 
-    <main class="journey-main">
+    <main class="page">
 
-
-        <div class="journey-container">
-
-
-            <!-- =================================================
-                 HERO
-            ================================================== -->
-
-            <section class="journey-hero">
+        <div class="content">
 
 
-                <div class="journey-badge">
+            <!-- HERO -->
 
-                    ✦ Your personalized journey
+            <section class="hero">
 
+                <div class="hero-badge">
+                    ✦ YOUR CAREER JOURNEY
                 </div>
 
 
                 <h1>
-
-                    Your Career
-                    <span>Journey</span>
-
+                    Let's find your
+                    <span>direction.</span>
                 </h1>
 
 
                 <p>
+                    Discover your strengths, explore your interests,
+                    and find career possibilities that match your
+                    unique personality.
+                </p>
 
-                    Discover what makes you unique,
-                    understand your strengths, and explore
-                    career paths that could fit your future.
+            </section>
 
+
+
+            <!-- JOURNEY -->
+
+            <section class="journey-card">
+
+
+                <div class="compass-circle">
+                    🧭
+                </div>
+
+
+                <h2>
+                    Your journey starts
+                    <span>here.</span>
+                </h2>
+
+
+                <p>
+                    Career decisions become easier when you understand
+                    yourself first. Explore your interests, strengths,
+                    personality and possibilities with Career Compass AI.
                 </p>
 
 
-            </section>
+
+                <!-- STEPS -->
+
+                <div class="steps">
 
 
+                    <div class="step">
 
-            <!-- =================================================
-                 CONTENT
-            ================================================== -->
-
-            <section class="journey-grid">
-
-
-                <!-- =================================================
-                     LEFT — HOW IT WORKS
-                ================================================== -->
-
-                <div class="journey-card">
-
-
-                    <div class="card-heading">
-
-
-                        <div class="card-icon">
-                            🧭
+                        <div class="step-number">
+                            01
                         </div>
 
-
-                        <div>
-
-                            <h2>
-                                How your journey works
-                            </h2>
-
-                            <p>
-                                A simple process designed around you
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div class="journey-steps">
-
-
-                        <!-- STEP 1 -->
-
-                        <div class="journey-step">
-
-
-                            <div class="step-icon">
-                                1
-                            </div>
-
-
-                            <div class="step-text">
-
-                                <h3>
-                                    Tell us about yourself
-                                </h3>
-
-                                <p>
-                                    Share your interests,
-                                    favourite subjects and
-                                    things you enjoy doing.
-                                </p>
-
-                            </div>
-
-
-                        </div>
-
-
-
-                        <!-- STEP 2 -->
-
-                        <div class="journey-step">
-
-
-                            <div class="step-icon">
-                                2
-                            </div>
-
-
-                            <div class="step-text">
-
-                                <h3>
-                                    Discover your strengths
-                                </h3>
-
-                                <p>
-                                    Explore the skills and
-                                    qualities that make your
-                                    profile unique.
-                                </p>
-
-                            </div>
-
-
-                        </div>
-
-
-
-                        <!-- STEP 3 -->
-
-                        <div class="journey-step">
-
-
-                            <div class="step-icon">
-                                3
-                            </div>
-
-
-                            <div class="step-text">
-
-                                <h3>
-                                    Explore career possibilities
-                                </h3>
-
-                                <p>
-                                    Get career suggestions
-                                    based on your interests,
-                                    strengths and goals.
-                                </p>
-
-                            </div>
-
-
-                        </div>
-
-
-
-                        <!-- STEP 4 -->
-
-                        <div class="journey-step">
-
-
-                            <div class="step-icon">
-                                4
-                            </div>
-
-
-                            <div class="step-text">
-
-                                <h3>
-                                    Plan your next step
-                                </h3>
-
-                                <p>
-                                    Compare opportunities,
-                                    explore roles and start
-                                    planning your future.
-                                </p>
-
-                            </div>
-
-
-                        </div>
-
-
-                    </div>
-
-
-                </div>
-
-
-
-                <!-- =================================================
-                     RIGHT — START ASSESSMENT
-                ================================================== -->
-
-                <div class="start-card">
-
-
-                    <div class="start-content">
-
-
-                        <div class="start-small">
-
-                            ✦ READY WHEN YOU ARE
-
-                        </div>
-
-
-                        <h2>
-
-                            Let's find your
-                            <span>direction.</span>
-
-                        </h2>
-
+                        <h3>
+                            Discover
+                        </h3>
 
                         <p>
-
-                            Take a short career assessment
-                            designed to understand your
-                            interests, strengths and goals.
-
+                            Understand your interests, strengths and
+                            personality through your career journey.
                         </p>
-
-
-
-                        <!-- QUICK INFO -->
-
-                        <div class="quick-info">
-
-
-                            <div class="quick-item">
-
-                                <span>
-                                    ✓
-                                </span>
-
-                                <span>
-                                    Personalized questions
-                                </span>
-
-                            </div>
-
-
-                            <div class="quick-item">
-
-                                <span>
-                                    ⏱
-                                </span>
-
-                                <span>
-                                    Takes only a few minutes
-                                </span>
-
-                            </div>
-
-
-                            <div class="quick-item">
-
-                                <span>
-                                    ✦
-                                </span>
-
-                                <span>
-                                    Career recommendations
-                                </span>
-
-                            </div>
-
-
-                        </div>
-
-
-
-                        <!-- START BUTTON -->
-
-                        <a
-                            href="questionnaire.html"
-                            class="start-button"
-                        >
-
-                            Start Your Assessment
-
-                            <span>
-                                →
-                            </span>
-
-                        </a>
-
-
-                        <a
-                            href="index.html"
-                            class="back-home"
-                        >
-
-                            ← Back to Home
-
-                        </a>
-
 
                     </div>
 
+
+
+                    <div class="step">
+
+                        <div class="step-number">
+                            02
+                        </div>
+
+                        <h3>
+                            Understand
+                        </h3>
+
+                        <p>
+                            Explore the areas and career paths that
+                            connect with your unique abilities.
+                        </p>
+
+                    </div>
+
+
+
+                    <div class="step">
+
+                        <div class="step-number">
+                            03
+                        </div>
+
+                        <h3>
+                            Explore
+                        </h3>
+
+                        <p>
+                            Discover career options and possibilities
+                            that can help shape your future.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- LOGIN / SIGN UP -->
+
+                <div class="bottom-actions">
+
+                    <p>
+                        Ready to continue your career journey?
+                    </p>
+
+
+                    <div class="action-buttons">
+
+                        <a
+                            href="./login.html"
+                            class="login-btn"
+                        >
+                            Login
+                        </a>
+
+
+                        <a
+                            href="./signup.html"
+                            class="signup-btn"
+                        >
+                            Sign Up
+                        </a>
+
+                    </div>
 
                 </div>
 
@@ -1375,18 +841,13 @@
 
 
 
-            <!-- =================================================
-                 NOTE
-            ================================================== -->
+            <!-- BACK HOME -->
 
-            <div class="journey-note">
+            <div class="back-home">
 
-                <strong>
-                    Your answers matter.
-                </strong>
-
-                There are no right or wrong answers —
-                just choose what feels most like you.
+                <a href="./index.html">
+                    ← Back to Home
+                </a>
 
             </div>
 
@@ -1394,6 +855,18 @@
         </div>
 
     </main>
+
+
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+
+        © 2026 Career Compass
+        <span>AI</span>
+        · Your future, your direction.
+
+    </footer>
 
 
 </body>
