@@ -1456,115 +1456,84 @@
                 © 2026 Career Compass AI
             </div>
 
-        <div class="footer-links">
+            <div class="footer-links">
 
-            <a href="about.html">
-                About
-            </a>
+                <a href="about.html">
+                    About
+                </a>
 
-            <a href="how-it-works.html">
-                How It Works
-            </a>
+                <a href="how-it-works.html">
+                    How It Works
+                </a>
 
-            <a href="privacy.html">
-                Privacy
-            </a>
+                <a href="privacy.html">
+                    Privacy
+                </a>
 
-        </div>
+            </div>
 
-    </footer>
+        </footer>
 
-</main>
-
-
-<!-- =====================================================
-     JAVASCRIPT
-===================================================== -->
-
-<script>
-
-    const contactForm =
-        document.getElementById("contactForm");
-
-    const successMessage =
-        document.getElementById("successMessage");
+    </main>
 
 
-    contactForm.addEventListener(
-        "submit",
-        async function(event) {
 
-            event.preventDefault();
+    <!-- =====================================================
+         JAVASCRIPT
+    ===================================================== -->
 
-            const name =
-                document.getElementById("name").value.trim();
+    <script>
 
-            const email =
-                document.getElementById("email").value.trim();
+        const contactForm =
+            document.getElementById("contactForm");
 
-            const subject =
-                document.getElementById("subject").value;
-
-            const message =
-                document.getElementById("message").value.trim();
+        const successMessage =
+            document.getElementById("successMessage");
 
 
-            if (
-                !name ||
-                !email ||
-                !subject ||
-                !message
-            ) {
+        contactForm.addEventListener(
+            "submit",
+            function(event) {
 
-                alert(
-                    "Please fill in all required fields."
-                );
-
-                return;
-            }
+                event.preventDefault();
 
 
-            try {
+                const name =
+                    document.getElementById("name").value.trim();
 
-                const response = await fetch(
-                    "/api/contact",
-                    {
-                        method: "POST",
+                const email =
+                    document.getElementById("email").value.trim();
 
-                        headers: {
-                            "Content-Type":
-                                "application/json"
-                        },
+                const subject =
+                    document.getElementById("subject").value;
 
-                        body: JSON.stringify({
-                            name: name,
-                            email: email,
-                            subject: subject,
-                            message: message
-                        })
-                    }
-                );
+                const message =
+                    document.getElementById("message").value.trim();
 
 
-                const result =
-                    await response.json();
-
-
-                if (!result.success) {
+                if (
+                    !name ||
+                    !email ||
+                    !subject ||
+                    !message
+                ) {
 
                     alert(
-                        result.message ||
-                        "Unable to send your message."
+                        "Please fill in all required fields."
                     );
 
                     return;
                 }
 
 
+                /* Demo submission */
+
                 successMessage.classList.add("show");
 
                 contactForm.reset();
 
+
+                /* Scroll slightly toward success message */
 
                 setTimeout(function() {
 
@@ -1575,24 +1544,10 @@
 
                 }, 100);
 
-
-            } catch (error) {
-
-                console.error(
-                    "Contact form error:",
-                    error
-                );
-
-                alert(
-                    "Unable to connect to the server. Please try again."
-                );
             }
+        );
 
-        }
-    );
-
-</script>
-
+    </script>
 
 </body>
 </html>

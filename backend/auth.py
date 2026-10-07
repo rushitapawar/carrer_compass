@@ -1,5 +1,3 @@
-import sqlite3
-
 from flask import Blueprint, request, jsonify, session
 
 from werkzeug.security import (
@@ -24,12 +22,11 @@ auth_bp = Blueprint("auth", __name__)
 @auth_bp.route("/api/signup", methods=["POST"])
 def signup():
 
-    data = request.get_json(silent=True) or {}
+    data = request.get_json()
 
     first_name = data.get("firstName", "").strip()
     last_name = data.get("lastName", "").strip()
-    # Normalize email: trimmed + lowercase (login matches the same way)
-    email = data.get("email", "").strip().lower()
+    email = data.get("email", "").strip()
     password = data.get("password", "")
 
 
@@ -58,19 +55,6 @@ def signup():
 
     try:
 
-        # Case-insensitive duplicate check
-        existing = conn.execute(
-            "SELECT id FROM users WHERE LOWER(email) = ?",
-            (email,)
-        ).fetchone()
-
-        if existing is not None:
-
-            return jsonify({
-                "success": False,
-                "message": "Email already exists. Please login instead."
-            }), 400
-
         conn.execute(
             """
             INSERT INTO users (name, email, password)
@@ -92,23 +76,15 @@ def signup():
         })
 
 
-    except sqlite3.IntegrityError as error:
+    except Exception as error:
 
         print("Signup error:", error)
+
 
         return jsonify({
             "success": False,
             "message": "Email already exists"
         }), 400
-
-    except Exception as error:
-
-        print("Signup error:", error)
-
-        return jsonify({
-            "success": False,
-            "message": "Unable to create account. Please try again."
-        }), 500
 
 
     finally:
@@ -122,10 +98,9 @@ def signup():
 @auth_bp.route("/api/login", methods=["POST"])
 def login():
 
-    data = request.get_json(silent=True) or {}
+    data = request.get_json()
 
-    # Normalize email the same way as signup (trimmed + lowercase)
-    email = data.get("email", "").strip().lower()
+    email = data.get("email", "").strip()
     password = data.get("password", "")
 
     # Check required fields
@@ -141,8 +116,7 @@ def login():
 
     try:
 
-        # Find user by email (case-insensitive so emails stored
-        # before normalization still match)
+        # Find user by email
         user = conn.execute(
             """
             SELECT
@@ -151,7 +125,7 @@ def login():
                 email,
                 password
             FROM users
-            WHERE LOWER(email) = ?
+            WHERE email = ?
             """,
             (email,)
         ).fetchone()
@@ -162,9 +136,7 @@ def login():
 
             return jsonify({
                 "success": False,
-                "message":
-                    f"No account found for '{email}'. "
-                    "Please sign up first (or check for typos)."
+                "message": "Email not found."
             }), 401
 
 
@@ -321,106 +293,4 @@ def save_profile():
         }), 500
 
     finally:
-        conn.close()
-
-        # ============================================================
-# LOGOUT API
-# ============================================================
-
-@auth_bp.route("/api/logout", methods=["POST"])
-def logout():
-
-    session.clear()
-
-    return jsonify({
-        "success": True,
-        "message": "Logged out successfully."
-    })
-
-
-# =========================================
-# GET PROFILE
-# =========================================
-
-@auth_bp.route("/api/profile", methods=["GET"])
-def get_profile():
-
-    if "user_id" not in session:
-        return jsonify({
-            "success": False,
-            "message": "Please login first."
-        }), 401
-
-    conn = get_db_connection()
-
-    try:
-
-        user = conn.execute(
-            """
-            SELECT
-                id,
-                name,
-                email
-            FROM users
-            WHERE id = ?
-            """,
-            (session["user_id"],)
-        ).fetchone()
-
-        if user is None:
-            return jsonify({
-                "success": False,
-                "message": "User not found."
-            }), 404
-
-        profile = conn.execute(
-            """
-            SELECT *
-            FROM profiles
-            WHERE user_id = ?
-            """,
-            (session["user_id"],)
-        ).fetchone()
-
-        profile_data = None
-
-        if profile is not None:
-
-            interests_text = profile["interests"] or ""
-
-            profile_data = {
-                "fullName": profile["full_name"],
-                "ageGroup": profile["age_group"],
-                "education": profile["education"],
-                "stream": profile["stream"],
-                "interests": [
-                    item.strip()
-                    for item in interests_text.split(",")
-                    if item.strip()
-                ],
-                "careerGoal": profile["career_goal"],
-                "createdAt": profile["created_at"]
-            }
-
-        return jsonify({
-            "success": True,
-            "user": {
-                "id": user["id"],
-                "name": user["name"],
-                "email": user["email"]
-            },
-            "profile": profile_data
-        })
-
-    except Exception as error:
-
-        print("GET PROFILE ERROR:", error)
-
-        return jsonify({
-            "success": False,
-            "message": "Unable to load profile."
-        }), 500
-
-    finally:
-
         conn.close()
