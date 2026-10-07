@@ -89,18 +89,27 @@ QUESTION_MAPPING = [
 ]
 
 
-def score_answers(answers):
-    """Map the 25 numeric answers to RIASEC scores.
+@analysis_bp.route(
+    "/api/analyze-assessment",
+    methods=["POST"]
+)
+def analyze_assessment():
 
-    Shared by /api/analyze-assessment and the assessment save
-    endpoint so results are always calculated the same way.
+    if "user_id" not in session:
+        return jsonify({
+            "success": False,
+            "message": "Please login first."
+        }), 401
 
-    Returns (scores, top_types).
-    Raises ValueError with a user-facing message when invalid.
-    """
+    data = request.get_json()
 
-    if not isinstance(answers, list) or len(answers) != 25:
-        raise ValueError("Exactly 25 answers are required.")
+    answers = data.get("answers", [])
+
+    if len(answers) != 25:
+        return jsonify({
+            "success": False,
+            "message": "Exactly 25 answers are required."
+        }), 400
 
     scores = {
         "R": 0,
@@ -113,11 +122,17 @@ def score_answers(answers):
 
     for question_index, answer in enumerate(answers):
 
-        if not isinstance(answer, int) or isinstance(answer, bool):
-            raise ValueError("Answers must contain numbers only.")
+        if not isinstance(answer, int):
+            return jsonify({
+                "success": False,
+                "message": "Answers must contain numbers only."
+            }), 400
 
         if answer < 0 or answer > 3:
-            raise ValueError("Each answer must be between 0 and 3.")
+            return jsonify({
+                "success": False,
+                "message": "Each answer must be between 0 and 3."
+            }), 400
 
         riasec_type = QUESTION_MAPPING[
             question_index
@@ -135,34 +150,6 @@ def score_answers(answers):
         item[0]
         for item in sorted_scores[:3]
     ]
-
-    return scores, top_types
-
-
-@analysis_bp.route(
-    "/api/analyze-assessment",
-    methods=["POST"]
-)
-def analyze_assessment():
-
-    if "user_id" not in session:
-        return jsonify({
-            "success": False,
-            "message": "Please login first."
-        }), 401
-
-    data = request.get_json(silent=True) or {}
-
-    answers = data.get("answers", [])
-
-    try:
-        scores, top_types = score_answers(answers)
-
-    except ValueError as error:
-        return jsonify({
-            "success": False,
-            "message": str(error)
-        }), 400
 
     return jsonify({
         "success": True,

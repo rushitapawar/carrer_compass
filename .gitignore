@@ -216,6 +216,5 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
-
-# Career Compass - local session secret key
-.secret_key
+backend/.secret_key
+backend/.secret_key

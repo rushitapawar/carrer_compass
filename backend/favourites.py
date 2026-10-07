@@ -21,7 +21,7 @@ def save_career():
             "message": "Please login first."
         }), 401
 
-    data = request.get_json(silent=True) or {}
+    data = request.get_json()
 
     career_title = data.get(
         "careerTitle",
@@ -178,7 +178,7 @@ def remove_career():
             "message": "Please login first."
         }), 401
 
-    data = request.get_json(silent=True) or {}
+    data = request.get_json()
 
     career_title = data.get(
         "careerTitle",
@@ -225,47 +225,6 @@ def remove_career():
             "success": False,
             "message":
                 "Unable to remove career."
-        }), 500
-
-    finally:
-        conn.close()
-
-        # =========================================
-# CLEAR ALL SAVED CAREERS
-# =========================================
-
-@favourites_bp.route("/api/clear-saved-careers", methods=["POST"])
-def clear_saved_careers():
-
-    if "user_id" not in session:
-        return jsonify({
-            "success": False,
-            "message": "Please login first."
-        }), 401
-
-    conn = get_db_connection()
-
-    try:
-
-        conn.execute("""
-            DELETE FROM saved_careers
-            WHERE user_id = ?
-        """, (session["user_id"],))
-
-        conn.commit()
-
-        return jsonify({
-            "success": True,
-            "message": "All saved careers have been removed."
-        })
-
-    except Exception as error:
-
-        print("Clear saved careers error:", error)
-
-        return jsonify({
-            "success": False,
-            "message": "Unable to clear saved careers."
         }), 500
 
     finally:

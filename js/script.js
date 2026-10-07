@@ -305,9 +305,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /* ================= SAVE PROFILE ================= */
 
+    if (!profileForm) {
+        return;
+    }
+
     profileForm.addEventListener(
         "submit",
-        function (event) {
+        async function (event) {
 
             event.preventDefault();
 
@@ -319,7 +323,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 email.value.trim();
 
             const userLocation =
-                location.value.trim();
+                location ? location.value.trim() : "";
 
             const selectedEducation =
                 education.value;
@@ -387,6 +391,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             );
 
+            if (selectedInterests.length === 0) {
+                alert("Please select at least one interest.");
+                return;
+            }
+
+            if (!goal) {
+                alert("Please enter your career goal.");
+                careerGoal.focus();
+                return;
+            }
+
 
             /* Profile object */
 
@@ -400,7 +415,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 education: selectedEducation,
 
-                fieldOfStudy: studyField,
+                fieldOfStudy: studyField || "general",
+
+                stream: studyField || "general",
+
+                ageGroup: "not-specified",
 
                 interests: selectedInterests,
 
@@ -411,7 +430,38 @@ document.addEventListener("DOMContentLoaded", function () {
             };
 
 
-            /* Save profile */
+            /* Save profile to backend first (required for dashboard redirect) */
+
+            try {
+
+                const res = await fetch("/api/profile", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(profileData)
+                });
+
+                const data = await res.json();
+
+                if (!res.ok || !data.success) {
+
+                    if (res.status === 401) {
+                        alert("Session expired. Please login again.");
+                        window.location.href = "login.html";
+                        return;
+                    }
+
+                    alert(data.message || "Could not save profile. Please complete all fields.");
+                    return;
+                }
+
+            } catch (err) {
+
+                alert("Cannot reach server. Profile saved locally only.");
+
+            }
+
 
             localStorage.setItem(
                 "careerProfile",
