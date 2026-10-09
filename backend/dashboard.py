@@ -1,169 +1,76 @@
-from flask import Blueprint, jsonify, session
-from database import get_db_connection
+﻿"""Dashboard API: aggregated statistics for the logged-in user."""
+from flask import Blueprint, session
 
-dashboard = Blueprint("dashboard", __name__)
+from auth import login_required
+from database import get_db
+from helpers import api_error, api_success
 
-
-@dashboard.route("/api/dashboard", methods=["GET"])
-def get_dashboard():
-
-    # ============================================================
-    # ONLY THE LOGGED-IN USER'S DATA IS RETURNED
-    # ============================================================
-
-    user_id = session.get("user_id")
-    if not user_id:
-        return jsonify({
-            "success": False,
-            "message": "Please login first."
-        }), 401
+dashboard_bp = Blueprint("dashboard", __name__)
 
 
-    conn = get_db_connection()
+@dashboard_bp.route("/api/dashboard", methods=["GET"])
+@login_required
+def dashboard():
+    """Return user info plus assessment/saved/comparison/catalog statistics."""
+    user_id = session["user_id"]
 
     try:
+        with get_db() as conn:
+            user = conn.execute(
+                "SELECT id, name, email FROM users WHERE id = ?",
+                (user_id,),
+            ).fetchone()
 
-        # ========================================
-        # GET USER INFORMATION
-        # ========================================
+            if user is None:
+                session.clear()
+                return api_error("Please login first.", 401)
 
-        user = conn.execute(
-            """
-            SELECT
-                id,
-                name,
-                email
-            FROM users
-            WHERE id = ?
-            """,
-            (user_id,)
-        ).fetchone()
+            profile = conn.execute(
+                "SELECT id FROM profiles WHERE user_id = ?",
+                (user_id,),
+            ).fetchone()
 
+            assessment_row = conn.execute(
+                "SELECT COUNT(*) AS count, MAX(created_at) AS last_at"
+                " FROM assessments WHERE user_id = ?",
+                (user_id,),
+            ).fetchone()
 
-        if user is None:
+            saved_count = conn.execute(
+                "SELECT COUNT(*) FROM saved_careers WHERE user_id = ?",
+                (user_id,),
+            ).fetchone()[0]
 
-            return jsonify({
-                "success": False,
-                "message": "User not found."
-            }), 404
+            comparison_count = conn.execute(
+                "SELECT COUNT(*) FROM comparisons WHERE user_id = ?",
+                (user_id,),
+            ).fetchone()[0]
 
+            total_careers = conn.execute(
+                "SELECT COUNT(*) FROM careers"
+            ).fetchone()[0]
 
-        # ========================================
-        # CHECK ASSESSMENT
-        # ========================================
-
-        assessment = conn.execute(
-            """
-            SELECT id
-            FROM assessments
-            WHERE user_id = ?
-            ORDER BY created_at DESC
-            LIMIT 1
-            """,
-            (user_id,)
-        ).fetchone()
-
-
-        assessment_completed = (
-            assessment is not None
-        )
-
-
-        # ========================================
-        # GET SAVED CAREERS
-        # ========================================
-
-        careers = conn.execute(
-            """
-            SELECT
-                id,
-                career_title,
-                onet_soc_code,
-                match_percentage,
-                created_at
-            FROM saved_careers
-            WHERE user_id = ?
-            ORDER BY created_at DESC
-            """,
-            (user_id,)
-        ).fetchall()
-
-
-        saved_careers = []
-
-
-        for career in careers:
-
-            saved_careers.append({
-
-                "id":
-                    career["id"],
-
-                "name":
-                    career["career_title"],
-
-                "onetSocCode":
-                    career["onet_soc_code"],
-
-                "matchPercentage":
-                    career["match_percentage"],
-
-                "createdAt":
-                    career["created_at"]
-
-            })
-
-
-        # ========================================
-        # RETURN DASHBOARD DATA
-        # ========================================
-
-        return jsonify({
-
-            "success": True,
-
-            "user": {
-
-                "id":
-                    user["id"],
-
-                "name":
-                    user["name"],
-
-                "email":
-                    user["email"]
-
-            },
-
-            "assessment_completed":
-                assessment_completed,
-
-            "saved_careers":
-                saved_careers,
-
-            "career_count":
-                len(saved_careers)
-
-        })
-
-
+            total_sectors = conn.execute(
+                "SELECT COUNT(DISTINCT sector) FROM careers"
+            ).fetchone()[0]
     except Exception as error:
+        print("Dashboard error:", error)
+        return api_error("Unable to load the dashboard.", 500)
 
-        print(
-            "Dashboard error:",
-            error
-        )
+    assessment_count = assessment_row["count"] or 0
 
-        return jsonify({
-
-            "success": False,
-
-            "message":
-                "Unable to load dashboard."
-
-        }), 500
-
-
-    finally:
-
-        conn.close()
+    return api_success(
+        user={
+            "id": user["id"],
+            "name": user["name"],
+            "email": user["email"],
+        },
+        profile_completed=profile is not None,
+        assessment_completed=assessment_count > 0,
+        assessment_count=assessment_count,
+        last_assessment_at=assessment_row["last_at"],
+        saved_career_count=saved_count,
+        comparison_count=comparison_count,
+        total_careers=total_careers,
+        total_sectors=total_sectors,
+    )

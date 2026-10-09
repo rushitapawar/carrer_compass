@@ -548,7 +548,7 @@
              QUESTION FORM
         ========================== -->
 
-        <form action="results.html" method="get">
+        <form id="careerQuizForm">
 
 
             <!-- QUESTION 1 -->
@@ -1558,6 +1558,53 @@
         </form>
 
     </main>
+
+<script>
+document.getElementById("careerQuizForm").addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+    const answers = [];
+
+    for (let i = 1; i <= 25; i++) {
+        const selected = form.querySelector(`input[name="q${i}"]:checked`);
+
+        if (!selected) {
+            alert(`Please answer question ${i} before submitting.`);
+            return;
+        }
+
+        answers.push(Number(selected.value));
+    }
+
+    try {
+        const response = await fetch("/api/save-assessment", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            credentials: "same-origin",
+            body: JSON.stringify({ answers: answers })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            alert(data.message || "Unable to save your assessment. Please log in and try again.");
+            return;
+        }
+
+        localStorage.setItem("careerAnswers", JSON.stringify(answers));
+        localStorage.setItem("riasecScores", JSON.stringify(data.riasecScores));
+        localStorage.setItem("topRiasecTypes", JSON.stringify(data.topTypes));
+
+        window.location.href = "results.html";
+    } catch (error) {
+        console.error("Assessment submission error:", error);
+        alert("Could not connect to the backend. Please ensure the server is running.");
+    }
+});
+</script>
 
 </body>
 

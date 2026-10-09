@@ -1450,209 +1450,131 @@
            CAREER DATABASE
         ===================================================== */
 
-        const careerDatabase = {
+let careerDatabase = {
+    R: [],
+    I: [],
+    A: [],
+    S: [],
+    E: [],
+    C: []
+};
 
-            R: [
-                {
-                    id: "civil-engineer",
-                    name: "Civil Engineer",
-                    icon: "🏗️",
-                    description: "Design and develop real-world infrastructure and engineering solutions."
-                },
-                {
-                    id: "mechanical-engineer",
-                    name: "Mechanical Engineer",
-                    icon: "⚙️",
-                    description: "Design machines, mechanical systems and practical technologies."
-                },
-                {
-                    id: "architect",
-                    name: "Architect",
-                    icon: "🏛️",
-                    description: "Design functional and creative buildings and spaces."
-                },
-                {
-                    id: "robotics-engineer",
-                    name: "Robotics Engineer",
-                    icon: "🤖",
-                    description: "Build and improve intelligent robotic systems."
-                }
-            ],
+function getRiasecType(career) {
+    const text = [
+        career.sector,
+        career.career_title,
+        career.short_description,
+        career.important_skills,
+        career.common_job_roles
+    ].filter(Boolean).join(" ").toLowerCase();
 
-            I: [
-                {
-                    id: "data-scientist",
-                    name: "Data Scientist",
-                    icon: "📊",
-                    description: "Use data, statistics and technology to solve complex problems."
-                },
-                {
-                    id: "software-developer",
-                    name: "Software Developer",
-                    icon: "💻",
-                    description: "Build applications and software solutions using technology."
-                },
-                {
-                    id: "research-scientist",
-                    name: "Research Scientist",
-                    icon: "🔬",
-                    description: "Investigate questions and develop new scientific knowledge."
-                },
-                {
-                    id: "cybersecurity-analyst",
-                    name: "Cybersecurity Analyst",
-                    icon: "🔐",
-                    description: "Protect digital systems, networks and information."
-                }
-            ],
+    const keywords = {
+        R: ["engineering", "construction", "mechanical", "manufacturing", "technical"],
+        I: ["research", "science", "data", "software", "technology", "analytics"],
+        A: ["design", "creative", "arts", "media", "content", "fashion"],
+        S: ["education", "teaching", "healthcare", "counselling", "social", "human resources", "hr"],
+        E: ["management", "business", "marketing", "entrepreneur", "sales", "leadership"],
+        C: ["accounting", "finance", "administration", "operations", "compliance"]
+    };
 
-            A: [
-                {
-                    id: "ux-ui-designer",
-                    name: "UX/UI Designer",
-                    icon: "🎨",
-                    description: "Create useful, attractive and enjoyable digital experiences."
-                },
-                {
-                    id: "graphic-designer",
-                    name: "Graphic Designer",
-                    icon: "🖌️",
-                    description: "Communicate ideas through visual design and creative concepts."
-                },
-                {
-                    id: "content-creator",
-                    name: "Content Creator",
-                    icon: "📸",
-                    description: "Create engaging content for digital audiences."
-                },
-                {
-                    id: "fashion-designer",
-                    name: "Fashion Designer",
-                    icon: "👗",
-                    description: "Develop creative clothing and fashion concepts."
-                }
-            ],
+    let bestType = "I";
+    let bestScore = 0;
 
-            S: [
-                {
-                    id: "teacher",
-                    name: "Teacher",
-                    icon: "📚",
-                    description: "Educate, guide and support students in their development."
-                },
-                {
-                    id: "psychologist",
-                    name: "Psychologist",
-                    icon: "🧠",
-                    description: "Study human behavior and support mental wellbeing."
-                },
-                {
-                    id: "career-counselor",
-                    name: "Career Counselor",
-                    icon: "🧭",
-                    description: "Help people explore education and career opportunities."
-                },
-                {
-                    id: "social-worker",
-                    name: "Social Worker",
-                    icon: "🤝",
-                    description: "Support individuals, families and communities."
-                }
-            ],
+    for (const [type, words] of Object.entries(keywords)) {
+        const score = words.reduce(
+            (total, word) => total + (text.includes(word) ? 1 : 0),
+            0
+        );
 
-            E: [
-                {
-                    id: "product-manager",
-                    name: "Product Manager",
-                    icon: "🚀",
-                    description: "Lead product strategy and coordinate teams toward goals."
-                },
-                {
-                    id: "entrepreneur",
-                    name: "Entrepreneur",
-                    icon: "💡",
-                    description: "Build and grow new ideas, products or businesses."
-                },
-                {
-                    id: "marketing-manager",
-                    name: "Marketing Manager",
-                    icon: "📣",
-                    description: "Develop strategies that connect products with audiences."
-                },
-                {
-                    id: "business-analyst",
-                    name: "Business Analyst",
-                    icon: "📈",
-                    description: "Analyze business needs and improve organizational decisions."
-                }
-            ],
+        if (score > bestScore) {
+            bestScore = score;
+            bestType = type;
+        }
+    }
 
-            C: [
-                {
-                    id: "financial-analyst",
-                    name: "Financial Analyst",
-                    icon: "💰",
-                    description: "Analyze financial information and business performance."
-                },
-                {
-                    id: "accountant",
-                    name: "Accountant",
-                    icon: "🧾",
-                    description: "Manage financial records and organized financial information."
-                },
-                {
-                    id: "project-manager",
-                    name: "Project Manager",
-                    icon: "📋",
-                    description: "Plan, organize and coordinate projects."
-                },
-                {
-                    id: "operations-manager",
-                    name: "Operations Manager",
-                    icon: "⚙️",
-                    description: "Improve processes and coordinate organizational operations."
-                }
-            ]
+    return bestType;
+}
 
-        };
+function mapCareerFromDatabase(career) {
+    return {
+        id: career.career_id,
+        name: career.career_title,
+        icon: "💼",
+        description: career.short_description || "Explore this career and its opportunities.",
+        sector: career.sector
+    };
+}
+
+async function loadCareerDatabase() {
+    const response = await fetch("/api/career-catalog", {
+        method: "GET",
+        credentials: "same-origin"
+    });
+
+    if (!response.ok) {
+        throw new Error("Unable to load careers from the database.");
+    }
+
+    const data = await response.json();
+
+    if (!data.success || !Array.isArray(data.careers)) {
+        throw new Error("The career catalog response is invalid.");
+    }
+
+    careerDatabase = {
+        R: [],
+        I: [],
+        A: [],
+        S: [],
+        E: [],
+        C: []
+    };
+
+    data.careers.forEach(function (career) {
+        const type = getRiasecType(career);
+        careerDatabase[type].push(mapCareerFromDatabase(career));
+    });
+}
+
+        
 
 
         /* =====================================================
            GET CAREERS FROM TOP 3 TYPES
         ===================================================== */
 
-        let recommendedCareers = [];
+        
+let recommendedCareers = [];
 
+async function prepareRecommendations() {
+    try {
+        await loadCareerDatabase();
 
         topTypes.forEach(function(type) {
-
-            const careers =
-                careerDatabase[type] || [];
-
+            const careers = careerDatabase[type] || [];
 
             careers.forEach(function(career) {
-
                 if (
-                    !recommendedCareers.some(
-                        function(existing) {
-                            return existing.id === career.id;
-                        }
-                    )
+                    !recommendedCareers.some(function(existing) {
+                        return existing.id === career.id;
+                    })
                 ) {
-
-                    recommendedCareers.push(
-                        career
-                    );
-
+                    recommendedCareers.push(career);
                 }
-
             });
-
         });
 
+        recommendedCareers = recommendedCareers.slice(0, 8);
 
-        recommendedCareers =
-            recommendedCareers.slice(0, 8);
+        displayRecommendedCareers();
+    } catch (error) {
+        console.error("Career database error:", error);
+
+        document.getElementById("careerGrid").textContent =
+            "Unable to load careers from the database. Please refresh and try again.";
+    }
+}
+
 
 
         /* =====================================================
@@ -1736,169 +1658,78 @@
             );
 
 
-        recommendedCareers.forEach(
-            function(career, index) {
+        
+function displayRecommendedCareers() {
+    const careerGrid = document.getElementById("careerGrid");
+    careerGrid.innerHTML = "";
 
-                const typeIndex =
-                    Math.floor(
-                        index / 4
-                    );
+    recommendedCareers.forEach(function(career, index) {
+        const typeIndex = Math.floor(index / 4);
 
+        const match = getCareerMatch(index, typeIndex);
 
-                const match =
-                    getCareerMatch(
-                        index,
-                        typeIndex
-                    );
+        const card = document.createElement("article");
+        card.className = "career-card";
 
+        card.innerHTML = `
+            <div class="career-top">
+                <div class="career-icon">${career.icon}</div>
+                <div class="match">${match}% Match</div>
+            </div>
 
-                const card =
-                    document.createElement(
-                        "article"
-                    );
+            <h3>${career.name}</h3>
+            <p>${career.description}</p>
 
+            <div class="why-match">
+                ✦ Matches your
+                ${riasecInfo[topTypes[typeIndex] || strongestType].name.toLowerCase()}
+                interests.
+            </div>
 
-                card.className =
-                    "career-card";
+            <div class="career-actions">
+                <button class="explore-btn" data-career-id="${career.id}">
+                    Explore Career
+                </button>
 
+                <button class="save-btn" type="button" aria-label="Save career">
+                    ♡
+                </button>
+            </div>
+        `;
 
-                card.innerHTML = `
+        const saveButton = card.querySelector(".save-btn");
 
-                    <div class="career-top">
-
-                        <div class="career-icon">
-                            ${career.icon}
-                        </div>
-
-                        <div class="match">
-                            ${match}% Match
-                        </div>
-
-                    </div>
-
-
-                    <h3>
-                        ${career.name}
-                    </h3>
-
-
-                    <p>
-                        ${career.description}
-                    </p>
-
-
-                    <div class="why-match">
-                        ✦ Matches your
-                        ${
-                            riasecInfo[
-                                topTypes[typeIndex] ||
-                                strongestType
-                            ].name.toLowerCase()
-                        }
-                        interests.
-                    </div>
-
-
-                    <div class="career-actions">
-
-                        <button
-                            class="explore-btn"
-                            data-career-id="${career.id}"
-                        >
-                            Explore Career
-                        </button>
-
-                        <button
-                            class="save-btn"
-                            type="button"
-                            aria-label="Save career"
-                        >
-                            ♡
-                        </button>
-
-                    </div>
-
-                `;
-
-
-                const saveButton =
-                    card.querySelector(
-                        ".save-btn"
-                    );
-
-
-                const savedCareers =
-                    JSON.parse(
-                        localStorage.getItem(
-                            "savedCareers"
-                        )
-                    ) || [];
-
-
-                const alreadySaved =
-                    savedCareers.some(
-                        function(item) {
-
-                            return (
-                                item.name ===
-                                career.name
-                            );
-
-                        }
-                    );
-
-
-                if (alreadySaved) {
-
-                    saveButton.classList.add(
-                        "saved"
-                    );
-
-                    saveButton.textContent =
-                        "♥";
-
-                }
-
-
-                saveButton.addEventListener(
-                    "click",
-                    function() {
-
-                        toggleSavedCareer(
-                            career,
-                            saveButton
-                        );
-
-                    }
-                );
-
-
-                const exploreButton =
-                    card.querySelector(
-                        ".explore-btn"
-                    );
-
-
-                exploreButton.addEventListener(
-                    "click",
-                    function() {
-
-                        window.location.href =
-                            "role-detail.html?id=" +
-                            encodeURIComponent(
-                                career.id
-                            );
-
-                    }
-                );
-
-
-                careerGrid.appendChild(
-                    card
-                );
-
-            }
+        const savedCareers = JSON.parse(
+            localStorage.getItem("savedCareers") || "[]"
         );
+
+        const alreadySaved = savedCareers.some(function(item) {
+            return String(item.id) === String(career.id) ||
+                   item.name === career.name;
+        });
+
+        if (alreadySaved) {
+            saveButton.classList.add("saved");
+            saveButton.textContent = "♥";
+        }
+
+        saveButton.addEventListener("click", function() {
+            toggleSavedCareer(career, saveButton);
+        });
+
+        const exploreButton = card.querySelector(".explore-btn");
+
+        exploreButton.addEventListener("click", function() {
+            window.location.href =
+                "role-detail.html?id=" +
+                encodeURIComponent(career.id);
+        });
+
+        careerGrid.appendChild(card);
+    });
+}
+
+prepareRecommendations();
 
 
         /* =====================================================

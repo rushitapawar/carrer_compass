@@ -1937,31 +1937,73 @@
 
         /* ================= GET CAREER ID ================= */
 
-        const params = new URLSearchParams(window.location.search);
+       
+const params = new URLSearchParams(window.location.search);
+const careerId = params.get("id");
 
-        let careerId = params.get("id") || "software-developer";
+async function loadCareerDetails() {
+    if (!careerId || !/^\d+$/.test(careerId)) {
+        showCareerNotFound();
+        return;
+    }
 
-        const career = careers[careerId];
+    try {
+        const response = await fetch(
+            `/api/career-detail/${encodeURIComponent(careerId)}`,
+            { credentials: "same-origin" }
+        );
 
+        const data = await response.json();
 
-        /* ================= FALLBACK ================= */
-
-        if (!career) {
-
-            document.getElementById("careerTitle").textContent = "Career Not Found";
-
-            document.getElementById("careerShort").textContent =
-                "We could not find the career you were looking for.";
-
-            document.getElementById("careerDescription").textContent =
-                "Please return to your career results and select another career.";
-
-            document.getElementById("careerCategory").textContent =
-                "Career";
-
-            document.getElementById("matchPercent").textContent = "--";
-
+        if (!response.ok || !data.success || !data.career) {
+            showCareerNotFound();
+            return;
         }
+
+        const career = data.career;
+
+        document.getElementById("careerTitle").textContent =
+            career.career_title || "Career";
+
+        document.getElementById("careerShort").textContent =
+            career.short_description || "Explore this career and its opportunities.";
+
+        document.getElementById("careerDescription").textContent =
+            career.short_description || "No additional description is available.";
+
+        document.getElementById("careerCategory").textContent =
+            career.sector || "Career";
+
+        // Keep the existing match value if available.
+        const storedMatches = JSON.parse(
+            localStorage.getItem("careerMatches") || "{}"
+        );
+
+        document.getElementById("matchPercent").textContent =
+            storedMatches[careerId] != null
+                ? `${storedMatches[careerId]}%`
+                : "--";
+
+        // Make the remaining career fields available to existing page code.
+        window.loadedCareer = career;
+
+    } catch (error) {
+        console.error("Unable to load career details:", error);
+        showCareerNotFound();
+    }
+}
+
+function showCareerNotFound() {
+    document.getElementById("careerTitle").textContent = "Career Not Found";
+    document.getElementById("careerShort").textContent =
+        "We could not find the career you were looking for.";
+    document.getElementById("careerDescription").textContent =
+        "Please return to your career results and select another career.";
+    document.getElementById("careerCategory").textContent = "Career";
+    document.getElementById("matchPercent").textContent = "--";
+}
+
+loadCareerDetails();
 
 
         /* ================= LOAD CAREER ================= */
