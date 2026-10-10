@@ -676,236 +676,273 @@
 
     <script>
 
-        const roles = [
+       
+/* ==========================================
+   CAREER ROLES - DATABASE CONNECTION
+========================================== */
 
-            {
-                title: "Software Developer",
-                category: "Technology",
-                icon: "💻",
-                description:
-                    "Build applications, websites and software systems.",
-                id: "software"
-            },
+const grid = document.getElementById("rolesGrid");
+const search = document.getElementById("searchInput");
+const count = document.getElementById("roleCount");
+const empty = document.getElementById("emptyState");
 
-            {
-                title: "Data Scientist",
-                category: "Technology",
-                icon: "📊",
-                description:
-                    "Analyze data and discover useful patterns and insights.",
-                id: "data"
-            },
-
-            {
-                title: "UX/UI Designer",
-                category: "Creative",
-                icon: "🎨",
-                description:
-                    "Create useful and engaging digital experiences.",
-                id: "designer"
-            },
-
-            {
-                title: "Teacher",
-                category: "Education",
-                icon: "📚",
-                description:
-                    "Guide students and help them develop their abilities.",
-                id: "teacher"
-            },
-
-            {
-                title: "Doctor",
-                category: "Healthcare",
-                icon: "🩺",
-                description:
-                    "Provide medical care and help people manage health conditions.",
-                id: "doctor"
-            },
-
-            {
-                title: "Lawyer",
-                category: "Law",
-                icon: "⚖️",
-                description:
-                    "Use legal knowledge and reasoning to support clients.",
-                id: "lawyer"
-            },
-
-            {
-                title: "Business Analyst",
-                category: "Business",
-                icon: "📈",
-                description:
-                    "Analyze business needs and help organizations make decisions.",
-                id: "business"
-            },
-
-            {
-                title: "Graphic Designer",
-                category: "Creative",
-                icon: "🖌️",
-                description:
-                    "Create visual concepts for digital and print communication.",
-                id: "graphic"
-            },
-
-            {
-                title: "Psychologist",
-                category: "People",
-                icon: "🧠",
-                description:
-                    "Study behavior and support people through psychological services.",
-                id: "psychologist"
-            },
-
-            {
-                title: "Civil Engineer",
-                category: "Engineering",
-                icon: "🏗️",
-                description:
-                    "Plan and develop infrastructure and construction projects.",
-                id: "civil"
-            },
-
-            {
-                title: "Financial Analyst",
-                category: "Finance",
-                icon: "💰",
-                description:
-                    "Evaluate financial information and support financial decisions.",
-                id: "finance"
-            },
-
-            {
-                title: "Content Strategist",
-                category: "Creative",
-                icon: "✍️",
-                description:
-                    "Plan and develop useful content for different audiences.",
-                id: "content"
-            }
-
-        ];
+let allRoles = [];
 
 
+/* ==========================================
+   CAREER DATA HELPERS
+========================================== */
 
-        const grid =
-            document.getElementById("rolesGrid");
+function getTitle(role) {
+    return role.career_title ||
+        role.careerTitle ||
+        role.title ||
+        "Untitled Career";
+}
 
-        const search =
-            document.getElementById("searchInput");
+function getSector(role) {
+    return role.sector ||
+        role.category ||
+        "Other";
+}
 
-        const count =
-            document.getElementById("roleCount");
+function getDescription(role) {
+    return role.short_description ||
+        role.shortDescription ||
+        role.description ||
+        "Explore this career and its opportunities.";
+}
 
-        const empty =
-            document.getElementById("emptyState");
+function getSkills(role) {
+    const value =
+        role.important_skills ??
+        role.importantSkills ??
+        role.skills ??
+        "";
+
+    if (Array.isArray(value)) {
+        return value.map(String).filter(Boolean);
+    }
+
+    if (!String(value).trim()) {
+        return [];
+    }
+
+    // Supports semicolon-separated skills and JSON arrays.
+    try {
+        const parsed = JSON.parse(value);
+
+        if (Array.isArray(parsed)) {
+            return parsed.map(String).filter(Boolean);
+        }
+    } catch (error) {
+        // Continue with the ordinary text format.
+    }
+
+    return String(value)
+        .split(/[,;|\n]/)
+        .map(skill => skill.trim())
+        .filter(Boolean);
+}
+
+function getCareerIcon(sector) {
+    const value = String(sector).toLowerCase();
+
+    if (value.includes("technology") || value.includes("software") ||
+        value.includes("it ")) return "💻";
+
+    if (value.includes("design") || value.includes("creative") ||
+        value.includes("media")) return "🎨";
+
+    if (value.includes("business") || value.includes("management"))
+        return "📊";
+
+    if (value.includes("finance") || value.includes("account"))
+        return "💰";
+
+    if (value.includes("health") || value.includes("medical"))
+        return "🩺";
+
+    if (value.includes("education") || value.includes("teaching"))
+        return "📚";
+
+    if (value.includes("engineering")) return "⚙️";
+
+    if (value.includes("science") || value.includes("research"))
+        return "🔬";
+
+    if (value.includes("law") || value.includes("legal"))
+        return "⚖️";
+
+    if (value.includes("people") || value.includes("social") ||
+        value.includes("human resource")) return "👥";
+
+    return "💼";
+}
 
 
+/* ==========================================
+   LOAD ALL CAREERS FROM BACKEND
+========================================== */
 
-        function renderRoles(list) {
+async function loadRoles() {
+    grid.style.display = "grid";
+    grid.innerHTML = "";
+    count.textContent = "Loading...";
 
-            grid.innerHTML = "";
+    const loadingMessage = document.createElement("p");
+    loadingMessage.textContent = "Loading careers from the database...";
+    grid.appendChild(loadingMessage);
 
-            count.textContent =
-                `${list.length} ${list.length === 1 ? "role" : "roles"}`;
+    try {
+        const response = await fetch("/api/career-catalog", {
+            method: "GET",
+            credentials: "same-origin"
+        });
 
+        const data = await response.json();
 
-            if (list.length === 0) {
-
-                grid.style.display = "none";
-
-                empty.style.display = "block";
-
-                return;
-            }
-
-
-            grid.style.display = "grid";
-
-            empty.style.display = "none";
-
-
-            list.forEach(role => {
-
-                const card =
-                    document.createElement("article");
-
-                card.className =
-                    "role-card";
-
-
-                card.innerHTML = `
-
-                    <div class="role-icon">
-                        ${role.icon}
-                    </div>
-
-                    <div class="role-category">
-                        ${role.category}
-                    </div>
-
-                    <h3>
-                        ${role.title}
-                    </h3>
-
-                    <p>
-                        ${role.description}
-                    </p>
-
-                    <a
-                        href="role-detail.html?id=${encodeURIComponent(role.id)}"
-                        class="view-btn"
-                    >
-                        View Career Details →
-                    </a>
-
-                `;
-
-
-                grid.appendChild(card);
-
-            });
-
+        if (!response.ok || !data.success ||
+            !Array.isArray(data.careers)) {
+            throw new Error(
+                data.message || "Unable to load career records."
+            );
         }
 
+        allRoles = data.careers;
+
+        // Show the actual number of returned database records.
+        console.log("Career records loaded:", allRoles.length);
+
+        renderRoles(allRoles);
+
+    } catch (error) {
+        console.error("Career roles loading error:", error);
+
+        grid.innerHTML = "";
+        grid.style.display = "block";
+        count.textContent = "Unavailable";
+
+        const message = document.createElement("p");
+        message.textContent =
+            "Unable to load careers. Check that Flask is running and refresh the page.";
+
+        grid.appendChild(message);
+    }
+}
 
 
-        search.addEventListener(
-            "input",
-            function () {
+/* ==========================================
+   RENDER CAREER CARDS
+========================================== */
 
-                const value =
-                    search.value
-                        .toLowerCase()
-                        .trim();
+function renderRoles(list) {
+    grid.innerHTML = "";
+
+    count.textContent =
+        `${list.length} ${list.length === 1 ? "role" : "roles"}`;
+
+    if (list.length === 0) {
+        grid.style.display = "none";
+        empty.style.display = "block";
+        return;
+    }
+
+    grid.style.display = "grid";
+    empty.style.display = "none";
+
+    list.forEach(function (role) {
+        const title = getTitle(role);
+        const sector = getSector(role);
+        const description = getDescription(role);
+        const skills = getSkills(role).slice(0, 4);
+
+        // The backend uses numeric career IDs.
+        const careerId = Number(role.career_id ?? role.id);
+
+        const card = document.createElement("article");
+        card.className = "role-card";
+
+        const icon = document.createElement("div");
+        icon.className = "role-icon";
+        icon.textContent = getCareerIcon(sector);
+
+        const category = document.createElement("div");
+        category.className = "role-category";
+        category.textContent = sector;
+
+        const heading = document.createElement("h3");
+        heading.textContent = title;
+
+        const summary = document.createElement("p");
+        summary.textContent = description;
+
+        card.append(icon, category, heading, summary);
+
+        if (skills.length > 0) {
+            const skillText = document.createElement("p");
+            skillText.style.fontSize = "12px";
+            skillText.style.marginBottom = "15px";
+            skillText.textContent = "Skills: " + skills.join(", ");
+            card.appendChild(skillText);
+        }
+
+        const detailsLink = document.createElement("a");
+        detailsLink.className = "view-btn";
+        detailsLink.textContent = "View Career Details →";
+
+        if (Number.isInteger(careerId) && careerId > 0) {
+            detailsLink.href =
+                `role-detail.html?id=${encodeURIComponent(careerId)}`;
+        } else {
+            detailsLink.href = "#";
+            detailsLink.addEventListener("click", function (event) {
+                event.preventDefault();
+            });
+
+            console.warn("Missing numeric career ID:", role);
+        }
+
+        card.appendChild(detailsLink);
+        grid.appendChild(card);
+    });
+}
 
 
-                const filtered =
-                    roles.filter(role =>
+/* ==========================================
+   SEARCH ALL CAREER RECORDS
+========================================== */
 
-                        role.title
-                            .toLowerCase()
-                            .includes(value)
+function filterRoles() {
+    const query = search.value.trim().toLowerCase();
 
-                        ||
+    const filtered = allRoles.filter(function (role) {
+        const searchableText = [
+            getTitle(role),
+            getSector(role),
+            getDescription(role),
+            getSkills(role).join(" "),
+            role.education_qualification || "",
+            role.recommended_courses || "",
+            role.common_job_roles || "",
+            role.career_growth || ""
+        ].join(" ").toLowerCase();
 
-                        role.category
-                            .toLowerCase()
-                            .includes(value)
+        return searchableText.includes(query);
+    });
 
-                    );
-
-
-                renderRoles(filtered);
-
-            }
-        );
+    renderRoles(filtered);
+}
 
 
+/* ==========================================
+   SEARCH AND INITIAL LOAD
+========================================== */
 
-        renderRoles(roles);
+search.addEventListener("input", filterRoles);
+
+loadRoles();
+
 
     </script>
 

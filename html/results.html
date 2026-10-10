@@ -1544,21 +1544,25 @@ async function loadCareerDatabase() {
         ===================================================== */
 
         
+
 let recommendedCareers = [];
 
+/* LOAD AND PREPARE RECOMMENDATIONS */
 async function prepareRecommendations() {
     try {
         await loadCareerDatabase();
 
-        topTypes.forEach(function(type) {
+        recommendedCareers = [];
+
+        topTypes.forEach(function (type) {
             const careers = careerDatabase[type] || [];
 
-            careers.forEach(function(career) {
-                if (
-                    !recommendedCareers.some(function(existing) {
-                        return existing.id === career.id;
-                    })
-                ) {
+            careers.forEach(function (career) {
+                const exists = recommendedCareers.some(
+                    item => item.id === career.id
+                );
+
+                if (!exists) {
                     recommendedCareers.push(career);
                 }
             });
@@ -1567,247 +1571,195 @@ async function prepareRecommendations() {
         recommendedCareers = recommendedCareers.slice(0, 8);
 
         displayRecommendedCareers();
-    } catch (error) {
-        console.error("Career database error:", error);
 
-        document.getElementById("careerGrid").textContent =
-            "Unable to load careers from the database. Please refresh and try again.";
+    } catch (error) {
+        console.error("Career recommendations error:", error);
+
+        const grid = document.getElementById("careerGrid");
+        grid.innerHTML = "";
+
+        const message = document.createElement("p");
+        message.textContent =
+            "Unable to load career recommendations. Please refresh and try again.";
+
+        grid.appendChild(message);
     }
 }
 
 
+/* CAREER MATCH SCORE */
+function getCareerMatch(careerIndex, typeIndex) {
+    const strongest = scores[topTypes[typeIndex] || strongestType] || 0;
+    const second = scores[topTypes[1] || strongestType] || 0;
+    const third = scores[topTypes[2] || strongestType] || 0;
 
-        /* =====================================================
-           CAREER MATCH SCORE
-        ===================================================== */
+    const total = strongest + second + third;
 
-        function getCareerMatch(
-            careerIndex,
-            typeIndex
-        ) {
+    if (total === 0) {
+        return Math.max(65, 90 - careerIndex * 4);
+    }
 
-            const strongest =
-                scores[
-                    topTypes[typeIndex] ||
-                    strongestType
-                ] || 0;
+    const percentage =
+        60 + (strongest / total) * 32 - careerIndex * 2;
 
-
-            const second =
-                scores[
-                    topTypes[1] ||
-                    strongestType
-                ] || 0;
+    return Math.max(
+        60,
+        Math.min(97, Math.round(percentage))
+    );
+}
 
 
-            const third =
-                scores[
-                    topTypes[2] ||
-                    strongestType
-                ] || 0;
-
-
-            const total =
-                strongest +
-                second +
-                third;
-
-
-            if (total === 0) {
-
-                return Math.max(
-                    65,
-                    90 - careerIndex * 4
-                );
-
-            }
-
-
-            let percentage =
-                60 +
-                (
-                    strongest /
-                    total
-                ) * 32;
-
-
-            percentage -=
-                careerIndex * 2;
-
-
-            return Math.max(
-                60,
-                Math.min(
-                    97,
-                    Math.round(
-                        percentage
-                    )
-                )
-            );
-
-        }
-
-
-        /* =====================================================
-           DISPLAY CAREERS
-        ===================================================== */
-
-        const careerGrid =
-            document.getElementById(
-                "careerGrid"
-            );
-
-
-        
+/* DISPLAY CAREER CARDS */
 function displayRecommendedCareers() {
     const careerGrid = document.getElementById("careerGrid");
     careerGrid.innerHTML = "";
 
-    recommendedCareers.forEach(function(career, index) {
-        const typeIndex = Math.floor(index / 4);
+    if (recommendedCareers.length === 0) {
+        careerGrid.textContent = "No career recommendations are available yet.";
+        return;
+    }
 
+    let savedCareers = [];
+
+    try {
+        const stored = JSON.parse(
+            localStorage.getItem("savedCareers") || "[]"
+        );
+
+        savedCareers = Array.isArray(stored) ? stored : [];
+    } catch (error) {
+        console.warn("Could not read saved careers:", error);
+    }
+
+    recommendedCareers.forEach(function (career, index) {
+        const typeIndex = Math.min(
+            Math.floor(index / 4),
+            topTypes.length - 1
+        );
+
+        const type = topTypes[typeIndex] || strongestType;
+        const typeInfo = riasecInfo[type] || riasecInfo.I;
         const match = getCareerMatch(index, typeIndex);
 
         const card = document.createElement("article");
         card.className = "career-card";
 
-        card.innerHTML = `
-            <div class="career-top">
-                <div class="career-icon">${career.icon}</div>
-                <div class="match">${match}% Match</div>
-            </div>
+        const top = document.createElement("div");
+        top.className = "career-top";
 
-            <h3>${career.name}</h3>
-            <p>${career.description}</p>
+        const icon = document.createElement("div");
+        icon.className = "career-icon";
+        icon.textContent = career.icon || "💼";
 
-            <div class="why-match">
-                ✦ Matches your
-                ${riasecInfo[topTypes[typeIndex] || strongestType].name.toLowerCase()}
-                interests.
-            </div>
+        const matchLabel = document.createElement("div");
+        matchLabel.className = "match";
+        matchLabel.textContent = `${match}% Match`;
 
-            <div class="career-actions">
-                <button class="explore-btn" data-career-id="${career.id}">
-                    Explore Career
-                </button>
+        top.append(icon, matchLabel);
+        card.appendChild(top);
 
-                <button class="save-btn" type="button" aria-label="Save career">
-                    ♡
-                </button>
-            </div>
-        `;
+        const heading = document.createElement("h3");
+        heading.textContent = career.name || "Career";
+        card.appendChild(heading);
 
-        const saveButton = card.querySelector(".save-btn");
+        const description = document.createElement("p");
+        description.textContent =
+            career.description || "Explore this career and its opportunities.";
+        card.appendChild(description);
 
-        const savedCareers = JSON.parse(
-            localStorage.getItem("savedCareers") || "[]"
-        );
+        const reason = document.createElement("div");
+        reason.className = "why-match";
+        reason.textContent =
+            `✦ Matches your ${typeInfo.name.toLowerCase()} interests.`;
+        card.appendChild(reason);
 
-        const alreadySaved = savedCareers.some(function(item) {
-            return String(item.id) === String(career.id) ||
-                   item.name === career.name;
+        const actions = document.createElement("div");
+        actions.className = "career-actions";
+
+        const exploreButton = document.createElement("button");
+        exploreButton.className = "explore-btn";
+        exploreButton.type = "button";
+        exploreButton.textContent = "Explore Career";
+
+        exploreButton.addEventListener("click", function () {
+            window.location.href =
+                "role-detail.html?id=" +
+                encodeURIComponent(career.id) +
+                "&match=" +
+                encodeURIComponent(match);
         });
+
+        const saveButton = document.createElement("button");
+        saveButton.className = "save-btn";
+        saveButton.type = "button";
+        saveButton.setAttribute("aria-label", "Save career");
+
+        function isSaved(item) {
+            const savedId = item.id ?? item.career_id ?? item.careerId;
+
+            return String(savedId) === String(career.id) ||
+                String(item.name || item.title || "").toLowerCase() ===
+                String(career.name || "").toLowerCase();
+        }
+
+        const alreadySaved = savedCareers.some(isSaved);
+
+        saveButton.textContent = alreadySaved ? "♥" : "♡";
 
         if (alreadySaved) {
             saveButton.classList.add("saved");
-            saveButton.textContent = "♥";
         }
 
-        saveButton.addEventListener("click", function() {
-            toggleSavedCareer(career, saveButton);
+        saveButton.addEventListener("click", function () {
+            let currentSaved = [];
+
+            try {
+                const stored = JSON.parse(
+                    localStorage.getItem("savedCareers") || "[]"
+                );
+
+                currentSaved = Array.isArray(stored) ? stored : [];
+            } catch (error) {
+                currentSaved = [];
+            }
+
+            const existingIndex = currentSaved.findIndex(isSaved);
+
+            if (existingIndex >= 0) {
+                currentSaved.splice(existingIndex, 1);
+                saveButton.textContent = "♡";
+                saveButton.classList.remove("saved");
+            } else {
+                currentSaved.push({
+                    id: career.id,
+                    title: career.name,
+                    name: career.name,
+                    icon: career.icon,
+                    description: career.description,
+                    match: match
+                });
+
+                saveButton.textContent = "♥";
+                saveButton.classList.add("saved");
+            }
+
+            localStorage.setItem(
+                "savedCareers",
+                JSON.stringify(currentSaved)
+            );
         });
 
-        const exploreButton = card.querySelector(".explore-btn");
+        actions.append(exploreButton, saveButton);
+        card.appendChild(actions);
 
-        exploreButton.addEventListener("click", function() {
-            window.location.href =
-                "role-detail.html?id=" +
-                encodeURIComponent(career.id);
-        });
-
+        // IMPORTANT: add each card to the visible grid.
         careerGrid.appendChild(card);
     });
 }
 
+
+/* START LOADING CAREER RECOMMENDATIONS */
 prepareRecommendations();
-
-
-        /* =====================================================
-           SAVE / REMOVE CAREER
-        ===================================================== */
-
-        function toggleSavedCareer(
-            career,
-            button
-        ) {
-
-            let savedCareers =
-                JSON.parse(
-                    localStorage.getItem(
-                        "savedCareers"
-                    )
-                ) || [];
-
-
-            const existingIndex =
-                savedCareers.findIndex(
-                    function(item) {
-
-                        return (
-                            item.name ===
-                            career.name
-                        );
-
-                    }
-                );
-
-
-            if (existingIndex === -1) {
-
-                savedCareers.push({
-
-                    id: career.id,
-                    name: career.name,
-                    icon: career.icon,
-                    description:
-                        career.description
-
-                });
-
-
-                button.classList.add(
-                    "saved"
-                );
-
-                button.textContent =
-                    "♥";
-
-            } else {
-
-                savedCareers.splice(
-                    existingIndex,
-                    1
-                );
-
-
-                button.classList.remove(
-                    "saved"
-                );
-
-                button.textContent =
-                    "♡";
-
-            }
-
-
-            localStorage.setItem(
-                "savedCareers",
-                JSON.stringify(
-                    savedCareers
-                )
-            );
-
-        }
 
     </script>
 

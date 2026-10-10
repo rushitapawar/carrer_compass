@@ -1,0 +1,690 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | Career Compass AI</title>
+
+    <style>
+        :root {
+            --plum: #443846;
+            --plum-dark: #302733;
+            --pink: #e998b3;
+            --pink-light: #f7d9e3;
+            --cream: #f8f5f2;
+            --white: #ffffff;
+            --text: #342d3b;
+            --muted: #756d76;
+            --border: #e4dcdf;
+            --danger: #a84d5d;
+            --success: #47785c;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: "DM Sans", Arial, sans-serif;
+            background: var(--cream);
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        button, input, textarea, select { font: inherit; }
+        button, a { -webkit-tap-highlight-color: transparent; }
+        a { color: inherit; text-decoration: none; }
+
+        .navbar {
+            background: white;
+            border-bottom: 1px solid var(--border);
+            padding: 17px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .brand {
+            color: var(--plum);
+            font-weight: 800;
+            font-size: 19px;
+        }
+
+        .brand span { color: #bd6f8b; }
+
+        .nav-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+        .page {
+            width: min(1250px, 94%);
+            margin: auto;
+            padding: 34px 0 65px;
+        }
+
+        .page-header { margin-bottom: 25px; }
+
+        .page-header h1 {
+            color: var(--plum);
+            font-size: clamp(30px, 4vw, 42px);
+            margin-bottom: 5px;
+        }
+
+        .page-header p { color: var(--muted); }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+            margin-bottom: 22px;
+        }
+
+        .stat, .panel {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 17px;
+            box-shadow: 0 7px 24px rgba(68, 56, 70, 0.04);
+        }
+
+        .stat { padding: 20px; }
+        .stat-label { color: var(--muted); font-size: 13px; }
+        .stat-value { font-size: 29px; color: var(--plum); font-weight: 800; }
+
+        .panel { padding: 23px; margin-bottom: 22px; min-width: 0; }
+
+        .panel h2 {
+            font-size: 22px;
+            color: var(--plum);
+            margin-bottom: 5px;
+        }
+
+        .panel-description {
+            color: var(--muted);
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        .search-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            min-width: 0;
+            padding: 11px 12px;
+            border: 1px solid #dcd3d8;
+            border-radius: 10px;
+            background: #fffdfc;
+            color: var(--text);
+            outline: none;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--pink);
+            box-shadow: 0 0 0 3px rgba(233, 152, 179, 0.15);
+        }
+
+        .search-row input { flex: 1 1 270px; }
+        .search-row select { flex: 0 1 230px; }
+
+        .btn {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 7px;
+            border: 1px solid transparent;
+            border-radius: 10px;
+            padding: 10px 15px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn:disabled { opacity: 0.6; cursor: wait; }
+        .btn-primary { background: var(--plum); color: white; }
+        .btn-primary:hover { background: var(--plum-dark); }
+        .btn-light { background: var(--pink-light); color: var(--plum); }
+        .btn-outline { background: white; border-color: var(--border); color: var(--plum); }
+        .btn-danger { background: #fff5f6; border-color: #edc6ce; color: var(--danger); }
+        .btn-small { padding: 7px 10px; font-size: 12px; }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 15px;
+        }
+
+        .field { min-width: 0; }
+        .field.full { grid-column: 1 / -1; }
+
+        .field label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--plum);
+        }
+
+        textarea { min-height: 82px; resize: vertical; }
+
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 17px;
+        }
+
+        .status {
+            display: none;
+            padding: 11px 13px;
+            border-radius: 10px;
+            font-size: 13px;
+            margin-bottom: 16px;
+            overflow-wrap: anywhere;
+        }
+
+        .status.show { display: block; }
+        .status.error { background: #fff0f1; color: #9b3146; }
+        .status.success { background: #eef8f0; color: #326c48; }
+
+        .table-wrap { width: 100%; overflow-x: auto; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            min-width: 650px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 13px 12px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+        }
+
+        th {
+            background: #faf5f7;
+            color: var(--plum);
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        td.title-cell { font-weight: 700; min-width: 190px; }
+        td.muted { color: var(--muted); }
+        .table-actions { display: flex; gap: 7px; }
+        .empty { padding: 26px; text-align: center; color: var(--muted); }
+
+        .list-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        @media (max-width: 700px) {
+            .stats { grid-template-columns: 1fr; }
+            .form-grid { grid-template-columns: 1fr; }
+            .field.full { grid-column: auto; }
+            .panel { padding: 17px; }
+            .navbar { padding: 14px 4%; }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="navbar">
+        <a class="brand" href="index.html">Career Compass <span>AI</span> · Admin</a>
+        <div class="nav-actions">
+            <a class="btn btn-outline" href="dashboard.html">Dashboard</a>
+            <button class="btn btn-outline" id="refreshBtn" type="button">Refresh</button>
+        </div>
+    </header>
+
+    <main class="page">
+        <header class="page-header">
+            <h1>Admin Panel</h1>
+            <p>Manage career information in the Career Compass database.</p>
+        </header>
+
+        <div id="status" class="status" role="status" aria-live="polite"></div>
+
+        <section class="stats" aria-label="Career statistics">
+            <div class="stat">
+                <div class="stat-label">Careers in database</div>
+                <div class="stat-value" id="totalCount">—</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">Careers displayed</div>
+                <div class="stat-value" id="displayCount">—</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">Access status</div>
+                <div class="stat-value" id="accessStatus" style="font-size:20px">Checking…</div>
+            </div>
+        </section>
+
+        <section class="panel">
+            <h2 id="formTitle">Add a career</h2>
+            <p class="panel-description">
+                Enter the career information below. Career title and sector are required.
+            </p>
+
+            <form id="careerForm">
+                <input type="hidden" id="editingId">
+
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="career_title">Career title *</label>
+                        <input id="career_title" name="career_title" required maxlength="200">
+                    </div>
+
+                    <div class="field">
+                        <label for="sector">Sector / Industry *</label>
+                        <input id="sector" name="sector" required maxlength="200">
+                    </div>
+
+                    <div class="field full">
+                        <label for="short_description">Short description</label>
+                        <textarea id="short_description" name="short_description"></textarea>
+                    </div>
+
+                    <div class="field">
+                        <label for="important_skills">Important skills</label>
+                        <textarea id="important_skills" name="important_skills"></textarea>
+                    </div>
+
+                    <div class="field">
+                        <label for="education_qualification">Education qualification</label>
+                        <textarea id="education_qualification" name="education_qualification"></textarea>
+                    </div>
+
+                    <div class="field">
+                        <label for="recommended_courses">Recommended courses</label>
+                        <textarea id="recommended_courses" name="recommended_courses"></textarea>
+                    </div>
+
+                    <div class="field">
+                        <label for="salary_range">Salary range</label>
+                        <input id="salary_range" name="salary_range">
+                    </div>
+
+                    <div class="field">
+                        <label for="demand_level">Demand level</label>
+                        <input id="demand_level" name="demand_level">
+                    </div>
+
+                    <div class="field">
+                        <label for="onet_soc_code">ONET-SOC code</label>
+                        <input id="onet_soc_code" name="onet_soc_code">
+                    </div>
+
+                    <div class="field full">
+                        <label for="career_roadmap">Career roadmap</label>
+                        <textarea id="career_roadmap" name="career_roadmap"></textarea>
+                    </div>
+
+                    <div class="field">
+                        <label for="common_job_roles">Common job roles</label>
+                        <textarea id="common_job_roles" name="common_job_roles"></textarea>
+                    </div>
+
+                    <div class="field">
+                        <label for="career_growth">Career growth</label>
+                        <textarea id="career_growth" name="career_growth"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button class="btn btn-primary" id="saveBtn" type="submit">Add career</button>
+                    <button class="btn btn-outline" id="cancelEditBtn" type="button" hidden>Cancel edit</button>
+                    <button class="btn btn-light" type="reset" id="clearFormBtn">Clear form</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="panel">
+            <h2>Career library</h2>
+            <p class="panel-description">
+                Search the database and edit or remove individual career records.
+            </p>
+
+            <div class="search-row">
+                <input id="searchInput" type="search" placeholder="Search career title or sector…">
+                <select id="sectorFilter">
+                    <option value="">All sectors</option>
+                </select>
+                <button class="btn btn-primary" id="searchBtn" type="button">Search</button>
+                <button class="btn btn-outline" id="clearSearchBtn" type="button">Clear</button>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Career title</th>
+                            <th>Sector</th>
+                            <th>Demand</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="careersTableBody">
+                        <tr><td colspan="5" class="empty">Loading careers…</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="list-footer">
+                <span id="listSummary">Loading…</span>
+                <span>Changes are saved to the backend database.</span>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const careerForm = document.getElementById("careerForm");
+        const statusBox = document.getElementById("status");
+        const tableBody = document.getElementById("careersTableBody");
+        const searchInput = document.getElementById("searchInput");
+        const sectorFilter = document.getElementById("sectorFilter");
+
+        const fieldNames = [
+            "career_title",
+            "sector",
+            "short_description",
+            "important_skills",
+            "education_qualification",
+            "recommended_courses",
+            "salary_range",
+            "demand_level",
+            "career_roadmap",
+            "common_job_roles",
+            "career_growth",
+            "onet_soc_code"
+        ];
+
+        let currentCareers = [];
+        let allSectors = [];
+
+        function showStatus(message, type = "success") {
+            statusBox.textContent = message;
+            statusBox.className = `status show ${type}`;
+            window.clearTimeout(showStatus.timer);
+            showStatus.timer = window.setTimeout(() => {
+                statusBox.classList.remove("show");
+            }, 6000);
+        }
+
+        async function apiRequest(url, options = {}) {
+            const response = await fetch(url, {
+                credentials: "same-origin",
+                ...options,
+                headers: {
+                    ...(options.body ? { "Content-Type": "application/json" } : {}),
+                    ...(options.headers || {})
+                }
+            });
+
+            const data = await response.json().catch(() => ({}));
+
+            if (!response.ok || !data.success) {
+                if (response.status === 401) {
+                    document.getElementById("accessStatus").textContent = "Login required";
+                } else if (response.status === 403) {
+                    document.getElementById("accessStatus").textContent = "Not admin";
+                }
+
+                throw new Error(
+                    data.message ||
+                    `Request failed with status ${response.status}.`
+                );
+            }
+
+            return data;
+        }
+
+        function buildSectorFilter(careers) {
+            allSectors = [...new Set(
+                careers.map(career => String(career.sector || "").trim()).filter(Boolean)
+            )].sort((a, b) => a.localeCompare(b));
+
+            const selected = sectorFilter.value;
+            sectorFilter.replaceChildren();
+
+            const allOption = document.createElement("option");
+            allOption.value = "";
+            allOption.textContent = "All sectors";
+            sectorFilter.appendChild(allOption);
+
+            allSectors.forEach(sector => {
+                const option = document.createElement("option");
+                option.value = sector;
+                option.textContent = sector;
+                sectorFilter.appendChild(option);
+            });
+
+            if (allSectors.includes(selected)) {
+                sectorFilter.value = selected;
+            }
+        }
+
+        function renderCareers(careers, total = careers.length) {
+            currentCareers = careers;
+            tableBody.replaceChildren();
+
+            document.getElementById("totalCount").textContent = total;
+            document.getElementById("displayCount").textContent = careers.length;
+            document.getElementById("listSummary").textContent =
+                `Showing ${careers.length} career record(s)`;
+
+            if (!careers.length) {
+                const row = document.createElement("tr");
+                const cell = document.createElement("td");
+                cell.colSpan = 5;
+                cell.className = "empty";
+                cell.textContent = "No careers found.";
+                row.appendChild(cell);
+                tableBody.appendChild(row);
+                return;
+            }
+
+            careers.forEach(career => {
+                const row = document.createElement("tr");
+
+                const idCell = document.createElement("td");
+                idCell.textContent = career.career_id;
+
+                const titleCell = document.createElement("td");
+                titleCell.className = "title-cell";
+                titleCell.textContent = career.career_title || "";
+
+                const sectorCell = document.createElement("td");
+                sectorCell.textContent = career.sector || "";
+
+                const demandCell = document.createElement("td");
+                demandCell.textContent = career.demand_level || "—";
+
+                const actionsCell = document.createElement("td");
+                const actions = document.createElement("div");
+                actions.className = "table-actions";
+
+                const editButton = document.createElement("button");
+                editButton.type = "button";
+                editButton.className = "btn btn-light btn-small";
+                editButton.textContent = "Edit";
+                editButton.addEventListener("click", () => startEdit(career));
+
+                const deleteButton = document.createElement("button");
+                deleteButton.type = "button";
+                deleteButton.className = "btn btn-danger btn-small";
+                deleteButton.textContent = "Delete";
+                deleteButton.addEventListener("click", () => deleteCareer(career));
+
+                actions.append(editButton, deleteButton);
+                actionsCell.appendChild(actions);
+                row.append(idCell, titleCell, sectorCell, demandCell, actionsCell);
+                tableBody.appendChild(row);
+            });
+        }
+
+        async function loadCareers() {
+            document.getElementById("accessStatus").textContent = "Checking…";
+            tableBody.innerHTML =
+                '<tr><td colspan="5" class="empty">Loading careers…</td></tr>';
+
+            try {
+                const params = new URLSearchParams();
+                const search = searchInput.value.trim();
+                const sector = sectorFilter.value;
+
+                if (search) params.set("search", search);
+                if (sector) params.set("sector", sector);
+
+                const url = "/api/admin/careers" +
+                    (params.toString() ? `?${params.toString()}` : "");
+
+                const data = await apiRequest(url);
+
+                document.getElementById("accessStatus").textContent = "Admin active";
+                buildSectorFilter(data.careers);
+                renderCareers(data.careers, data.total);
+
+            } catch (error) {
+                console.error("Admin career list error:", error);
+                tableBody.replaceChildren();
+
+                const row = document.createElement("tr");
+                const cell = document.createElement("td");
+                cell.colSpan = 5;
+                cell.className = "empty";
+                cell.textContent = error.message;
+                row.appendChild(cell);
+                tableBody.appendChild(row);
+
+                document.getElementById("totalCount").textContent = "—";
+                document.getElementById("displayCount").textContent = "—";
+                document.getElementById("listSummary").textContent =
+                    "Could not load the career records.";
+
+                showStatus(error.message, "error");
+            }
+        }
+
+        function startEdit(career) {
+            document.getElementById("editingId").value = career.career_id;
+
+            fieldNames.forEach(name => {
+                document.getElementById(name).value = career[name] ?? "";
+            });
+
+            document.getElementById("formTitle").textContent =
+                `Edit career #${career.career_id}`;
+            document.getElementById("saveBtn").textContent = "Save changes";
+            document.getElementById("cancelEditBtn").hidden = false;
+
+            careerForm.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        function resetCareerForm() {
+            careerForm.reset();
+            document.getElementById("editingId").value = "";
+            document.getElementById("formTitle").textContent = "Add a career";
+            document.getElementById("saveBtn").textContent = "Add career";
+            document.getElementById("cancelEditBtn").hidden = true;
+        }
+
+        careerForm.addEventListener("submit", async event => {
+            event.preventDefault();
+
+            const editingId = document.getElementById("editingId").value;
+            const career = {};
+
+            fieldNames.forEach(name => {
+                career[name] = document.getElementById(name).value.trim();
+            });
+
+            const saveBtn = document.getElementById("saveBtn");
+            saveBtn.disabled = true;
+
+            try {
+                if (editingId) {
+                    await apiRequest(`/api/admin/careers/${encodeURIComponent(editingId)}`, {
+                        method: "PUT",
+                        body: JSON.stringify(career)
+                    });
+
+                    showStatus("Career updated successfully.");
+                } else {
+                    await apiRequest("/api/admin/careers", {
+                        method: "POST",
+                        body: JSON.stringify(career)
+                    });
+
+                    showStatus("Career added successfully.");
+                }
+
+                resetCareerForm();
+                await loadCareers();
+
+            } catch (error) {
+                console.error("Save career error:", error);
+                showStatus(error.message, "error");
+            } finally {
+                saveBtn.disabled = false;
+            }
+        });
+
+        async function deleteCareer(career) {
+            const confirmed = confirm(
+                `Delete "${career.career_title}" (ID ${career.career_id})?\n\nThis cannot be undone. Careers referenced by saved careers or comparisons may not be deletable.`
+            );
+
+            if (!confirmed) return;
+
+            try {
+                await apiRequest(
+                    `/api/admin/careers/${encodeURIComponent(career.career_id)}`,
+                    { method: "DELETE" }
+                );
+
+                showStatus("Career deleted successfully.");
+                await loadCareers();
+
+            } catch (error) {
+                console.error("Delete career error:", error);
+                showStatus(error.message, "error");
+            }
+        }
+
+        document.getElementById("cancelEditBtn").addEventListener("click", resetCareerForm);
+        document.getElementById("clearFormBtn").addEventListener("click", () => {
+            window.setTimeout(resetCareerForm, 0);
+        });
+        document.getElementById("refreshBtn").addEventListener("click", loadCareers);
+        document.getElementById("searchBtn").addEventListener("click", loadCareers);
+        document.getElementById("clearSearchBtn").addEventListener("click", () => {
+            searchInput.value = "";
+            sectorFilter.value = "";
+            loadCareers();
+        });
+
+        searchInput.addEventListener("keydown", event => {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                loadCareers();
+            }
+        });
+
+        sectorFilter.addEventListener("change", loadCareers);
+
+        loadCareers();
+    </script>
+</body>
+</html>

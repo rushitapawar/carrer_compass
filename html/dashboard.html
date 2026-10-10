@@ -1225,10 +1225,21 @@
                 Career Roles
             </a>
 
+            <!-- Explore Sectors -->
+             <a href="sectors.html">
+                <div class="nav-icon">▦</div>
+                Explore Sectors
+            </a>
+
             <!-- Settings -->
             <a href="settings.html">
                 <div class="nav-icon">⚙</div>
                 Settings
+            </a>
+                        
+            <a href="admin.html" id="adminNavLink" style="display: none;">
+                <div class="nav-icon">⚙</div>
+                Admin Panel
             </a>
 
             <!-- Retake Assessment -->
@@ -1488,89 +1499,11 @@
                     </div>
 
 
-                    <a
-                        href="job-role-detail.html?career=Software%20Developer"
-                        class="match-card"
-                    >
+                    <div id="dashboardCareerMatches">
+                        <p>Finding your best career matches...</p>
+                    </div>
 
-                        <div class="career-icon">
-                            💻
-                        </div>
-
-                        <div class="match-info">
-
-                            <h3>
-                                Software Developer
-                            </h3>
-
-                            <p>
-                                Build applications and solve technical problems.
-                            </p>
-
-                        </div>
-
-                        <div class="match-score">
-                            96% Match
-                        </div>
-
-                    </a>
-
-
-                    <a
-                        href="job-role-detail.html?career=UI%2FUX%20Designer"
-                        class="match-card"
-                    >
-
-                        <div class="career-icon">
-                            🎨
-                        </div>
-
-                        <div class="match-info">
-
-                            <h3>
-                                UI/UX Designer
-                            </h3>
-
-                            <p>
-                                Create useful and engaging digital experiences.
-                            </p>
-
-                        </div>
-
-                        <div class="match-score">
-                            93% Match
-                        </div>
-
-                    </a>
-
-
-                    <a
-                        href="job-role-detail.html?career=Data%20Scientist"
-                        class="match-card"
-                    >
-
-                        <div class="career-icon">
-                            📊
-                        </div>
-
-                        <div class="match-info">
-
-                            <h3>
-                                Data Scientist
-                            </h3>
-
-                            <p>
-                                Turn data into insights and meaningful decisions.
-                            </p>
-
-                        </div>
-
-                        <div class="match-score">
-                            90% Match
-                        </div>
-
-                    </a>
-
+                    
 
                 </div>
 
@@ -2169,11 +2102,65 @@
         }
 
     }
+/* ==========================================
+   MAKE DASHBOARD STAT CARDS CLICKABLE
+========================================== */
 
+const statCardLinks = [
+    "results.html",       // Assessment completed
+    "favourites.html",    // Careers saved
+    "compare.html",       // Careers to compare
+    "sectors.html"        // Career areas available
+];
+
+document.querySelectorAll(".stats-grid .stat-card")
+    .forEach(function(card, index) {
+
+        const destination = statCardLinks[index];
+
+        if (!destination) return;
+
+        card.style.cursor = "pointer";
+        card.setAttribute("role", "link");
+        card.setAttribute("tabindex", "0");
+
+        card.addEventListener("click", function() {
+            window.location.href = destination;
+        });
+
+        card.addEventListener("keydown", function(event) {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                window.location.href = destination;
+            }
+        });
+    });
 
     /* =====================================================
        INITIALIZE
     ===================================================== */
+    
+async function showAdminLink() {
+    const adminLink = document.getElementById("adminNavLink");
+
+    if (!adminLink) return;
+
+    try {
+        const response = await fetch("/api/session", {
+            credentials: "same-origin"
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success && data.user?.isAdmin) {
+            adminLink.style.display = "flex";
+        }
+    } catch (error) {
+        console.error("Unable to verify admin access:", error);
+    }
+}
+
+showAdminLink();
 
     loadSavedCareers();
 

@@ -992,24 +992,43 @@
 
     /* ================= ACCOUNT INFORMATION ================= */
 
-    const user =
-        JSON.parse(
-            localStorage.getItem("careerCompassUser") || "null"
-        );
+    
+/* ================= ACCOUNT INFORMATION ================= */
 
+async function loadAccountInformation() {
+    const accountName = document.getElementById("accountName");
+    const accountEmail = document.getElementById("accountEmail");
 
-    if (user) {
+    try {
+        const response = await fetch("/api/session", {
+            method: "GET",
+            credentials: "same-origin"
+        });
 
-        document.getElementById("accountName")
-            .textContent =
-            user.name || "Career Compass User";
+        const data = await response.json();
 
+        if (!response.ok || !data.success || !data.user) {
+            accountName.textContent = "Not signed in";
+            accountEmail.textContent = "Please login to view your account.";
+            return;
+        }
 
-        document.getElementById("accountEmail")
-            .textContent =
-            user.email || "Account connected";
+        accountName.textContent =
+            data.user.name || "Career Compass User";
 
+        accountEmail.textContent =
+            data.user.email || "Email unavailable";
+
+    } catch (error) {
+        console.error("Unable to load account information:", error);
+        accountName.textContent = "Unable to load account";
+        accountEmail.textContent =
+            "Please refresh the page and try again.";
     }
+}
+
+loadAccountInformation();
+
 
 
     /* ================= RESET ================= */

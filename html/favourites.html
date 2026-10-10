@@ -812,304 +812,385 @@
 
 
     <script>
+            
+/* ==========================================
+   FAVOURITES - BACKEND CONNECTION
+========================================== */
+
+const careerGrid = document.getElementById("careerGrid");
+const emptyState = document.getElementById("emptyState");
+const savedCount = document.getElementById("savedCount");
+
+let savedCareers = [];
 
 
-        /* ==========================================
-           SAVED CAREERS
-        ========================================== */
+/* ==========================================
+   SAFE HTML
+========================================== */
 
-        const careerGrid =
-            document.getElementById("careerGrid");
-
-
-        const emptyState =
-            document.getElementById("emptyState");
-
-
-        const savedCount =
-            document.getElementById("savedCount");
-
-
-        let savedCareers = [];
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, function (char) {
+        return {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        }[char];
+    });
+}
 
 
-        try {
+/* ==========================================
+   CAREER FIELD HELPERS
+========================================== */
 
-            savedCareers =
-                JSON.parse(
-                    localStorage.getItem("savedCareers")
-                ) || [];
+function getCareerTitle(career) {
+    return career.career_title ||
+        career.careerTitle ||
+        career.title ||
+        career.name ||
+        "Career";
+}
 
-        } catch (error) {
+function getCareerSector(career) {
+    return career.sector ||
+        career.category ||
+        career.field ||
+        "Career";
+}
 
-            savedCareers = [];
+function getCareerDescription(career) {
+    return career.short_description ||
+        career.shortDescription ||
+        career.description ||
+        "Explore this career path and discover its opportunities.";
+}
 
+function getCareerIcon(sector) {
+    const value = String(sector || "").toLowerCase();
+
+    if (value.includes("tech") || value.includes("software")) return "💻";
+    if (value.includes("design") || value.includes("creative") || value.includes("media")) return "🎨";
+    if (value.includes("business") || value.includes("management")) return "📊";
+    if (value.includes("people") || value.includes("human resource")) return "👥";
+    if (value.includes("science") || value.includes("research")) return "🔬";
+    if (value.includes("health") || value.includes("medical")) return "🩺";
+    if (value.includes("education") || value.includes("teaching")) return "📚";
+    if (value.includes("engineering")) return "⚙️";
+    if (value.includes("law") || value.includes("legal")) return "⚖️";
+    if (value.includes("finance") || value.includes("account")) return "💰";
+
+    return "✦";
+}
+
+
+/* ==========================================
+   MIGRATE OLD LOCAL SAVED CAREERS
+   This preserves compatible old favourites.
+========================================== */
+
+async function migrateOldSavedCareers() {
+    let oldSaved = [];
+
+    try {
+        oldSaved = JSON.parse(
+            localStorage.getItem("savedCareers") || "[]"
+        );
+
+        if (!Array.isArray(oldSaved)) {
+            oldSaved = [];
+        }
+    } catch (error) {
+        console.error("Could not read old favourites:", error);
+        return;
+    }
+
+    if (oldSaved.length === 0) {
+        return;
+    }
+
+    let catalog = [];
+
+    try {
+        const response = await fetch("/api/career-catalog");
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+            catalog = result.careers || [];
+        }
+    } catch (error) {
+        console.warn("Career catalog unavailable for migration:", error);
+    }
+
+    const remaining = [];
+
+    for (const oldCareer of oldSaved) {
+        const item = typeof oldCareer === "string"
+            ? { title: oldCareer }
+            : oldCareer;
+
+        const title =
+            item.career_title ||
+            item.careerTitle ||
+            item.title ||
+            item.name ||
+            item.career ||
+            item.role ||
+            "";
+
+        const rawId =
+            item.career_id ??
+            item.careerId ??
+            item.id;
+
+        let careerId = /^\d+$/.test(String(rawId ?? ""))
+            ? Number(rawId)
+            : null;
+
+        // If the old ID is not numeric, try to find the career by title.
+        if (!careerId && title) {
+            const match = catalog.find(function (career) {
+                return getCareerTitle(career).toLowerCase() ===
+                    title.toLowerCase();
+            });
+
+            if (match) {
+                careerId = Number(match.career_id);
+            }
         }
 
+        // Keep entries that cannot be safely matched.
+        if (!Number.isInteger(careerId) || careerId <= 0) {
+            remaining.push(oldCareer);
+            continue;
+        }
 
+        const rawMatch =
+            item.match_percentage ??
+            item.matchPercentage ??
+            item.match ??
+            "";
 
-        /* ==========================================
-           ICONS
-        ========================================== */
+        const parsedMatch = Number.parseInt(
+            String(rawMatch).replace("%", ""),
+            10
+        );
 
-        const icons = {
-
-            technology: "💻",
-
-            creative: "🎨",
-
-            business: "📊",
-
-            people: "👥",
-
-            science: "🔬",
-
-            healthcare: "🩺",
-
-            education: "📚",
-
-            engineering: "⚙️",
-
-            law: "⚖️",
-
-            finance: "💰",
-
-            default: "✦"
-
+        const payload = {
+            career_id: careerId
         };
 
-
-
-        /* ==========================================
-           NORMALIZE CAREER DATA
-        ========================================== */
-
-        function normalizeCareer(career) {
-
-
-            if (typeof career === "string") {
-
-                return {
-
-                    title: career,
-
-                    description:
-                        "Explore this career path and discover whether it matches your interests.",
-
-                    category: "Career"
-
-                };
-
-            }
-
-
-            return {
-
-                title:
-                    career.title ||
-                    career.name ||
-                    "Career",
-
-
-                description:
-                    career.description ||
-                    career.desc ||
-                    "Explore this career path and discover whether it matches your interests.",
-
-
-                category:
-                    career.category ||
-                    career.field ||
-                    "Career",
-
-
-                id:
-                    career.id ||
-                    career.title ||
-                    career.name ||
-                    ""
-
-            };
-
-        }
-
-
-
-        /* ==========================================
-           RENDER
-        ========================================== */
-
-        function renderCareers() {
-
-
-            careerGrid.innerHTML = "";
-
-
-            savedCount.textContent =
-                `${savedCareers.length} saved`;
-
-
-
-            if (savedCareers.length === 0) {
-
-
-                careerGrid.style.display = "none";
-
-                emptyState.style.display = "block";
-
-
-                return;
-
-            }
-
-
-
-            careerGrid.style.display = "grid";
-
-            emptyState.style.display = "none";
-
-
-
-            savedCareers.forEach(
-                (career, index) => {
-
-
-                    const item =
-                        normalizeCareer(career);
-
-
-                    const category =
-                        String(item.category)
-                            .toLowerCase()
-                            .trim();
-
-
-                    const icon =
-                        icons[category] ||
-                        icons.default;
-
-
-
-                    const card =
-                        document.createElement("article");
-
-
-                    card.className =
-                        "career-card";
-
-
-
-                    card.innerHTML = `
-
-                        <button
-                            class="heart"
-                            title="Remove from favourites"
-                            onclick="removeCareer(${index})"
-                        >
-                            ♥
-                        </button>
-
-
-                        <div class="career-icon">
-                            ${icon}
-                        </div>
-
-
-                        <h3>
-                            ${escapeHTML(item.title)}
-                        </h3>
-
-
-                        <p>
-                            ${escapeHTML(item.description)}
-                        </p>
-
-
-                        <div class="card-actions">
-
-
-                            <a
-                                href="role-detail.html?id=${encodeURIComponent(item.id || item.title)}"
-                                class="btn btn-primary"
-                            >
-                                View Details
-                            </a>
-
-
-                            <a
-                                href="compare.html?career=${encodeURIComponent(item.title)}"
-                                class="btn btn-secondary"
-                            >
-                                Compare
-                            </a>
-
-
-                        </div>
-
-                    `;
-
-
-                    careerGrid.appendChild(card);
-
-                }
+        if (Number.isFinite(parsedMatch)) {
+            payload.match_percentage = Math.max(
+                0,
+                Math.min(100, parsedMatch)
             );
-
         }
 
+        try {
+            const response = await fetch("/api/save-career", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+
+            const result = await response.json();
+
+            if (!response.ok || !result.success) {
+                remaining.push(oldCareer);
+            }
+        } catch (error) {
+            console.error("Could not migrate a favourite:", error);
+            remaining.push(oldCareer);
+        }
+    }
+
+    // Retain any old entries that could not be imported.
+    localStorage.setItem("savedCareers", JSON.stringify(remaining));
+}
 
 
-        /* ==========================================
-           REMOVE CAREER
-        ========================================== */
+/* ==========================================
+   LOAD CAREERS FROM SQLITE BACKEND
+========================================== */
 
-        function removeCareer(index) {
+async function loadSavedCareers() {
+    try {
+        let response = await fetch("/api/saved-careers", {
+            credentials: "same-origin"
+        });
 
+        let result = await response.json();
 
-            savedCareers.splice(index, 1);
+        if (response.status === 401) {
+            alert("Please log in to view your saved careers.");
+            window.location.href = "login.html";
+            return;
+        }
 
-
-            localStorage.setItem(
-                "savedCareers",
-                JSON.stringify(savedCareers)
+        if (!response.ok || !result.success) {
+            throw new Error(
+                result.message || "Unable to load saved careers."
             );
-
-
-            renderCareers();
-
         }
 
+        // Import compatible favourites from the old localStorage system.
+        await migrateOldSavedCareers();
 
+        // Fetch the latest database records after migration.
+        response = await fetch("/api/saved-careers", {
+            credentials: "same-origin"
+        });
 
-        /* ==========================================
-           HTML SAFETY
-        ========================================== */
+        result = await response.json();
 
-        function escapeHTML(value) {
-
-
-            return String(value)
-
-                .replace(/&/g, "&amp;")
-
-                .replace(/</g, "&lt;")
-
-                .replace(/>/g, "&gt;")
-
-                .replace(/"/g, "&quot;")
-
-                .replace(/'/g, "&#039;");
-
+        if (!response.ok || !result.success) {
+            throw new Error(
+                result.message || "Unable to refresh saved careers."
+            );
         }
 
+        savedCareers = result.careers || [];
+        renderCareers();
+
+    } catch (error) {
+        console.error("Favourites loading error:", error);
+
+        careerGrid.style.display = "none";
+        emptyState.style.display = "block";
+        emptyState.querySelector("h2").textContent =
+            "Unable to load favourites";
+
+        emptyState.querySelector("p").textContent =
+            "Please make sure Flask is running and that you are logged in.";
+    }
+}
 
 
-        /* ==========================================
-           INITIAL LOAD
-        ========================================== */
+/* ==========================================
+   DISPLAY CAREER CARDS
+========================================== */
+
+function renderCareers() {
+    savedCount.textContent = `${savedCareers.length} saved`;
+
+    if (savedCareers.length === 0) {
+        careerGrid.innerHTML = "";
+        careerGrid.style.display = "none";
+        emptyState.style.display = "block";
+        return;
+    }
+
+    careerGrid.style.display = "grid";
+    emptyState.style.display = "none";
+    careerGrid.innerHTML = "";
+
+    savedCareers.forEach(function (career) {
+        const careerId = Number(career.career_id);
+        const title = getCareerTitle(career);
+        const sector = getCareerSector(career);
+        const description = getCareerDescription(career);
+        const icon = getCareerIcon(sector);
+
+        const card = document.createElement("article");
+        card.className = "career-card";
+
+        card.innerHTML = `
+            <button
+                class="heart"
+                type="button"
+                title="Remove from favourites"
+                aria-label="Remove ${escapeHTML(title)} from favourites"
+            >♥</button>
+
+            <div class="career-icon">${icon}</div>
+
+            <h3>${escapeHTML(title)}</h3>
+
+            <p>${escapeHTML(description)}</p>
+
+            <div class="card-actions">
+                <a
+                    href="role-detail.html?id=${encodeURIComponent(careerId)}"
+                    class="btn btn-primary"
+                >View Details</a>
+
+                <a
+                    href="compare.html?career=${encodeURIComponent(title)}"
+                    class="btn btn-secondary"
+                >Compare</a>
+            </div>
+        `;
+
+        card.querySelector(".heart").addEventListener("click", function () {
+            removeCareer(careerId, title);
+        });
+
+        careerGrid.appendChild(card);
+    });
+}
+
+
+/* ==========================================
+   REMOVE CAREER FROM DATABASE
+========================================== */
+
+async function removeCareer(careerId, careerTitle) {
+    if (!confirm(`Remove "${careerTitle}" from your favourites?`)) {
+        return;
+    }
+
+    try {
+        const response = await fetch("/api/remove-career", {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            credentials: "same-origin",
+            body: JSON.stringify({
+                career_id: careerId
+            })
+        });
+
+        const result = await response.json();
+
+        if (response.status === 401) {
+            alert("Please log in again.");
+            window.location.href = "login.html";
+            return;
+        }
+
+        if (!response.ok || !result.success) {
+            throw new Error(
+                result.message || "Unable to remove this career."
+            );
+        }
+
+        // Update the page only after the backend confirms removal.
+        savedCareers = savedCareers.filter(function (career) {
+            return Number(career.career_id) !== careerId;
+        });
 
         renderCareers();
 
+    } catch (error) {
+        console.error("Remove favourite error:", error);
+        alert(error.message || "Could not remove this career. Please try again.");
+    }
+}
 
+
+/* ==========================================
+   INITIAL LOAD
+========================================== */
+
+loadSavedCareers();
+
+
+       
     </script>
 
 

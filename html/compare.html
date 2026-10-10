@@ -1036,596 +1036,377 @@
     <!-- =========================================================
          JAVASCRIPT
     ========================================================= -->
-
     <script>
+const careerOptions = document.getElementById("careerOptions");
+const selectedContainer = document.getElementById("selectedCareers");
+const comparisonContainer = document.getElementById("comparisonContainer");
 
-        /* =========================================================
-           CAREER DATA
-        ========================================================= */
+let allCareers = [];
+let selectedCareers = [];
 
-        const careers = {
+function displayValue(value, fallback = "Not available") {
+    if (Array.isArray(value)) {
+        return value.join(", ") || fallback;
+    }
 
-            "Software Developer": {
-                icon: "💻",
-                sector: "Technology",
-                salary: "₹4–12 LPA",
-                education: "B.Tech / BCA / B.Sc. Computer Science",
-                work: "Coding, problem solving & software development",
-                demand: "Very High",
-                skills: [
-                    "Programming",
-                    "Problem Solving",
-                    "Algorithms",
-                    "Teamwork"
-                ],
-                environment: "Office / Remote / Hybrid"
-            },
+    const text = String(value ?? "").trim();
+    return text || fallback;
+}
 
-            "UI/UX Designer": {
-                icon: "🎨",
-                sector: "Creative Technology",
-                salary: "₹3–10 LPA",
-                education: "Design / UX / HCI / Related Degree",
-                work: "Designing digital experiences and interfaces",
-                demand: "High",
-                skills: [
-                    "Figma",
-                    "Visual Design",
-                    "Research",
-                    "Creativity"
-                ],
-                environment: "Studio / Office / Remote"
-            },
+function splitItems(value) {
+    if (Array.isArray(value)) {
+        return value.map(item => String(item).trim()).filter(Boolean);
+    }
 
-            "Data Scientist": {
-                icon: "📊",
-                sector: "Data & Technology",
-                salary: "₹6–18 LPA",
-                education: "Statistics / Computer Science / Data Science",
-                work: "Data analysis, modelling & machine learning",
-                demand: "Very High",
-                skills: [
-                    "Python",
-                    "Statistics",
-                    "Machine Learning",
-                    "Analytics"
-                ],
-                environment: "Office / Remote / Hybrid"
-            },
+    const text = String(value ?? "").trim();
+    if (!text) return [];
 
-            "Digital Marketer": {
-                icon: "📱",
-                sector: "Business",
-                salary: "₹3–9 LPA",
-                education: "Marketing / Business / Communications",
-                work: "Online marketing, campaigns & brand growth",
-                demand: "High",
-                skills: [
-                    "SEO",
-                    "Content",
-                    "Analytics",
-                    "Communication"
-                ],
-                environment: "Agency / Office / Remote"
-            },
+    try {
+        const parsed = JSON.parse(text);
+        if (Array.isArray(parsed)) return parsed;
+    } catch (error) {
+        // The database value may be a comma- or line-separated list.
+    }
 
-            "Teacher": {
-                icon: "📚",
-                sector: "Education",
-                salary: "₹2.5–8 LPA",
-                education: "Bachelor's / Master's + Teaching Qualification",
-                work: "Teaching, mentoring & student development",
-                demand: "High",
-                skills: [
-                    "Communication",
-                    "Patience",
-                    "Planning",
-                    "Leadership"
-                ],
-                environment: "School / College / Online"
-            },
+    return text
+        .split(/\r?\n|[,;|]+/)
+        .map(item => item.trim())
+        .filter(Boolean);
+}
 
-            "Psychologist": {
-                icon: "🧠",
-                sector: "People & Science",
-                salary: "₹3–10 LPA",
-                education: "Psychology Degree + Further Qualification",
-                work: "Understanding behaviour and supporting people",
-                demand: "Growing",
-                skills: [
-                    "Listening",
-                    "Research",
-                    "Empathy",
-                    "Communication"
-                ],
-                environment: "Clinic / Institution / Private Practice"
-            },
+function findCareer(id) {
+    return allCareers.find(
+        career => String(career.career_id) === String(id)
+    );
+}
 
-            "Business Analyst": {
-                icon: "📈",
-                sector: "Business & Data",
-                salary: "₹4–12 LPA",
-                education: "Business / Economics / IT / Related Degree",
-                work: "Analysing business problems and improving processes",
-                demand: "High",
-                skills: [
-                    "Analytics",
-                    "Communication",
-                    "Business Strategy",
-                    "Problem Solving"
-                ],
-                environment: "Office / Hybrid"
-            },
+function renderCareerOptions() {
+    const query = document
+        .getElementById("careerSearch")
+        .value.trim().toLowerCase();
 
-            "Content Creator": {
-                icon: "✍️",
-                sector: "Media & Creative",
-                salary: "₹2–10 LPA+",
-                education: "Any relevant degree + Portfolio",
-                work: "Creating digital content for audiences and brands",
-                demand: "Growing",
-                skills: [
-                    "Writing",
-                    "Video",
-                    "Creativity",
-                    "Social Media"
-                ],
-                environment: "Remote / Studio / Freelance"
-            }
+    careerOptions.replaceChildren();
 
-        };
+    const matches = allCareers.filter(career => {
+        const title = String(career.career_title || "").toLowerCase();
+        const sector = String(career.sector || "").toLowerCase();
 
+        return title.includes(query) || sector.includes(query);
+    });
 
-        /* =========================================================
-           SELECTED CAREERS
-        ========================================================= */
+    // Show a manageable list initially, but search across the full catalog.
+    const visibleCareers = matches.slice(0, query ? 100 : 16);
 
-        let selectedCareers = [];
+    if (visibleCareers.length === 0) {
+        careerOptions.textContent = "No matching careers found.";
+        return;
+    }
 
+    visibleCareers.forEach(career => {
+        const id = String(career.career_id);
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "career-option";
 
-        function selectCareer(element) {
-
-            const careerName = element.dataset.career;
-
-            /* REMOVE */
-
-            if (selectedCareers.includes(careerName)) {
-
-                selectedCareers =
-                    selectedCareers.filter(
-                        career => career !== careerName
-                    );
-
-                element.classList.remove("selected");
-
-                updateSelected();
-
-                renderComparison();
-
-                return;
-            }
-
-
-            /* MAX TWO */
-
-            if (selectedCareers.length >= 2) {
-
-                alert(
-                    "You can compare only two careers at a time."
-                );
-
-                return;
-            }
-
-
-            selectedCareers.push(careerName);
-
-            element.classList.add("selected");
-
-            updateSelected();
-
-            renderComparison();
+        if (selectedCareers.includes(id)) {
+            button.classList.add("selected");
         }
 
+        const icon = document.createElement("div");
+        icon.className = "career-icon";
+        icon.textContent = "💼";
 
-        /* =========================================================
-           UPDATE SELECTED CHIPS
-        ========================================================= */
+        const title = document.createElement("strong");
+        title.textContent = career.career_title || "Career";
 
-        function updateSelected() {
+        const sector = document.createElement("small");
+        sector.textContent = career.sector || "Other";
 
-            const container =
-                document.getElementById("selectedCareers");
+        button.append(icon, title, sector);
+        button.addEventListener("click", () => selectCareer(id));
 
-            if (selectedCareers.length === 0) {
+        careerOptions.appendChild(button);
+    });
 
-                container.innerHTML = `
-                    <span style="color:#958991;font-size:13px;">
-                        Select two careers above to begin comparison.
-                    </span>
-                `;
+    if (matches.length > visibleCareers.length) {
+        const note = document.createElement("p");
+        note.style.gridColumn = "1 / -1";
+        note.style.fontSize = "12px";
+        note.style.color = "#756d76";
+        note.textContent =
+            `Showing ${visibleCareers.length} of ${matches.length} matches. Search to narrow the list.`;
 
-                return;
-            }
+        careerOptions.appendChild(note);
+    }
+}
 
+function filterCareers() {
+    renderCareerOptions();
+}
 
-            container.innerHTML =
-                selectedCareers.map(career => `
+function selectCareer(id) {
+    const career = findCareer(id);
+    if (!career) return;
 
-                    <div class="selected-chip">
-
-                        ${career}
-
-                        <button
-                            onclick="removeCareer('${career}')"
-                            title="Remove"
-                        >
-                            ×
-                        </button>
-
-                    </div>
-
-                `).join("");
+    if (selectedCareers.includes(String(id))) {
+        selectedCareers = selectedCareers.filter(
+            selectedId => selectedId !== String(id)
+        );
+    } else {
+        if (selectedCareers.length >= 2) {
+            alert("You can compare only two careers at a time.");
+            return;
         }
 
+        selectedCareers.push(String(id));
+    }
 
-        /* =========================================================
-           REMOVE CAREER
-        ========================================================= */
+    renderCareerOptions();
+    updateSelected();
+    renderComparison();
+}
 
-        function removeCareer(careerName) {
+function updateSelected() {
+    selectedContainer.replaceChildren();
 
-            selectedCareers =
-                selectedCareers.filter(
-                    career => career !== careerName
-                );
+    if (selectedCareers.length === 0) {
+        const note = document.createElement("span");
+        note.style.color = "#958991";
+        note.style.fontSize = "13px";
+        note.textContent = "Select two careers above to begin comparison.";
+        selectedContainer.appendChild(note);
+        return;
+    }
 
+    selectedCareers.forEach(id => {
+        const career = findCareer(id);
+        if (!career) return;
 
-            document
-                .querySelectorAll(".career-option")
-                .forEach(option => {
+        const chip = document.createElement("div");
+        chip.className = "selected-chip";
 
-                    if (
-                        option.dataset.career === careerName
-                    ) {
-                        option.classList.remove("selected");
-                    }
+        const title = document.createElement("span");
+        title.textContent = career.career_title;
 
+        const removeButton = document.createElement("button");
+        removeButton.type = "button";
+        removeButton.textContent = "×";
+        removeButton.title = "Remove career";
+        removeButton.addEventListener("click", () => selectCareer(id));
+
+        chip.append(title, removeButton);
+        selectedContainer.appendChild(chip);
+    });
+}
+
+function removeCareer(id) {
+    selectedCareers = selectedCareers.filter(
+        selectedId => selectedId !== String(id)
+    );
+
+    renderCareerOptions();
+    updateSelected();
+    renderComparison();
+}
+
+function clearSelection() {
+    selectedCareers = [];
+    renderCareerOptions();
+    updateSelected();
+    renderComparison();
+}
+
+function addCell(grid, text, isLabel = false) {
+    const cell = document.createElement("div");
+    cell.className = "comparison-cell";
+
+    if (isLabel) {
+        cell.classList.add("label");
+    }
+
+    const content = document.createElement("div");
+    content.className = "comparison-value";
+    content.textContent = text;
+    cell.appendChild(content);
+    grid.appendChild(cell);
+
+    return cell;
+}
+
+function addComparisonRow(grid, label, getValue, type = "text") {
+    addCell(grid, label, true);
+
+    selectedCareers.forEach(id => {
+        const career = findCareer(id);
+        const cell = document.createElement("div");
+        cell.className = "comparison-cell";
+
+        const value = getValue(career);
+
+        if (type === "skills") {
+            const tagList = document.createElement("div");
+            tagList.className = "tag-list";
+
+            const items = splitItems(value);
+
+            if (items.length === 0) {
+                tagList.textContent = "Not available";
+            } else {
+                items.forEach(item => {
+                    const tag = document.createElement("span");
+                    tag.className = "tag";
+                    tag.textContent = item;
+                    tagList.appendChild(tag);
                 });
-
-
-            updateSelected();
-
-            renderComparison();
-        }
-
-
-        /* =========================================================
-           CLEAR ALL
-        ========================================================= */
-
-        function clearSelection() {
-
-            selectedCareers = [];
-
-            document
-                .querySelectorAll(".career-option")
-                .forEach(option => {
-                    option.classList.remove("selected");
-                });
-
-            updateSelected();
-
-            renderComparison();
-        }
-
-
-        /* =========================================================
-           SEARCH
-        ========================================================= */
-
-        function filterCareers() {
-
-            const query =
-                document
-                    .getElementById("careerSearch")
-                    .value
-                    .toLowerCase()
-                    .trim();
-
-
-            document
-                .querySelectorAll(".career-option")
-                .forEach(option => {
-
-                    const name =
-                        option.dataset.career
-                            .toLowerCase();
-
-                    option.style.display =
-                        name.includes(query)
-                            ? "block"
-                            : "none";
-
-                });
-        }
-
-
-        /* =========================================================
-           RENDER COMPARISON
-        ========================================================= */
-
-        function renderComparison() {
-
-            const container =
-                document.getElementById(
-                    "comparisonContainer"
-                );
-
-
-            if (selectedCareers.length < 2) {
-
-                container.innerHTML = `
-
-                    <div class="empty-state">
-
-                        <div class="empty-icon">
-                            ⚖️
-                        </div>
-
-                        <h3>
-                            Ready to compare?
-                        </h3>
-
-                        <p>
-                            Select two careers from the options above
-                            and we'll show you their key differences
-                            side by side.
-                        </p>
-
-                    </div>
-
-                `;
-
-                return;
             }
 
-
-            const career1 =
-                careers[selectedCareers[0]];
-
-            const career2 =
-                careers[selectedCareers[1]];
-
-
-            container.innerHTML = `
-
-                <div class="comparison-grid">
-
-
-                    <!-- HEADER LABEL -->
-
-                    <div class="comparison-cell label career-heading">
-                        <strong>Career</strong>
-                    </div>
-
-
-                    <!-- CAREER ONE -->
-
-                    <div class="comparison-cell career-heading">
-
-                        <div class="big-icon">
-                            ${career1.icon}
-                        </div>
-
-                        <h3>
-                            ${selectedCareers[0]}
-                        </h3>
-
-                        <small>
-                            ${career1.sector}
-                        </small>
-
-                    </div>
-
-
-                    <!-- CAREER TWO -->
-
-                    <div class="comparison-cell career-heading">
-
-                        <div class="big-icon">
-                            ${career2.icon}
-                        </div>
-
-                        <h3>
-                            ${selectedCareers[1]}
-                        </h3>
-
-                        <small>
-                            ${career2.sector}
-                        </small>
-
-                    </div>
-
-
-                    <!-- SALARY -->
-
-                    <div class="comparison-cell label">
-                        Typical salary
-                    </div>
-
-                    <div class="comparison-cell">
-                        <div class="comparison-value">
-                            <div class="salary">
-                                ${career1.salary}
-                            </div>
-                            <small>Indicative range</small>
-                        </div>
-                    </div>
-
-                    <div class="comparison-cell">
-                        <div class="comparison-value">
-                            <div class="salary">
-                                ${career2.salary}
-                            </div>
-                            <small>Indicative range</small>
-                        </div>
-                    </div>
-
-
-                    <!-- EDUCATION -->
-
-                    <div class="comparison-cell label">
-                        Education
-                    </div>
-
-                    <div class="comparison-cell">
-                        <div class="comparison-value">
-                            ${career1.education}
-                        </div>
-                    </div>
-
-                    <div class="comparison-cell">
-                        <div class="comparison-value">
-                            ${career2.education}
-                        </div>
-                    </div>
-
-
-                    <!-- WORK -->
-
-                    <div class="comparison-cell label">
-                        What you do
-                    </div>
-
-                    <div class="comparison-cell">
-                        <div class="comparison-value">
-                            ${career1.work}
-                        </div>
-                    </div>
-
-                    <div class="comparison-cell">
-                        <div class="comparison-value">
-                            ${career2.work}
-                        </div>
-                    </div>
-
-
-                    <!-- SKILLS -->
-
-                    <div class="comparison-cell label">
-                        Key skills
-                    </div>
-
-                    <div class="comparison-cell">
-
-                        <div class="tag-list">
-
-                            ${career1.skills.map(
-                                skill => `
-                                    <span class="tag">
-                                        ${skill}
-                                    </span>
-                                `
-                            ).join("")}
-
-                        </div>
-
-                    </div>
-
-                    <div class="comparison-cell">
-
-                        <div class="tag-list">
-
-                            ${career2.skills.map(
-                                skill => `
-                                    <span class="tag">
-                                        ${skill}
-                                    </span>
-                                `
-                            ).join("")}
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- DEMAND -->
-
-                    <div class="comparison-cell label">
-                        Career demand
-                    </div>
-
-                    <div class="comparison-cell">
-                        <div class="comparison-value">
-                            <strong>
-                                ${career1.demand}
-                            </strong>
-                        </div>
-                    </div>
-
-                    <div class="comparison-cell">
-                        <div class="comparison-value">
-                            <strong>
-                                ${career2.demand}
-                            </strong>
-                        </div>
-                    </div>
-
-
-                    <!-- WORK ENVIRONMENT -->
-
-                    <div class="comparison-cell label">
-                        Work environment
-                    </div>
-
-                    <div class="comparison-cell">
-                        <div class="comparison-value">
-                            ${career1.environment}
-                        </div>
-                    </div>
-
-                    <div class="comparison-cell">
-                        <div class="comparison-value">
-                            ${career2.environment}
-                        </div>
-                    </div>
-
-
-                    <!-- ACTIONS -->
-
-                    <div class="comparison-cell label">
-                        Explore
-                    </div>
-
-                    <div class="comparison-cell action-cell">
-
-                        <a
-                            href="role-detail.html?career=${encodeURIComponent(selectedCareers[0])}"
-                            class="btn btn-primary"
-                        >
-                            View Details
-                        </a>
-
-                    </div>
-
-                    <div class="comparison-cell action-cell">
-
-                        <a
-                            href="role-detail.html?career=${encodeURIComponent(selectedCareers[1])}"
-                            class="btn btn-primary"
-                        >
-                            View Details
-                        </a>
-
-                    </div>
-
-                </div>
-
-            `;
+            cell.appendChild(tagList);
+        } else if (type === "salary") {
+            const salary = document.createElement("div");
+            salary.className = "salary";
+            salary.textContent = displayValue(value);
+            cell.appendChild(salary);
+        } else {
+            const content = document.createElement("div");
+            content.className = "comparison-value";
+            content.textContent = displayValue(value);
+            cell.appendChild(content);
         }
 
-    </script>
+        grid.appendChild(cell);
+    });
+}
+
+function renderComparison() {
+    comparisonContainer.replaceChildren();
+
+    if (selectedCareers.length < 2) {
+        const empty = document.createElement("div");
+        empty.className = "empty-state";
+
+        const icon = document.createElement("div");
+        icon.className = "empty-icon";
+        icon.textContent = "⚖️";
+
+        const heading = document.createElement("h3");
+        heading.textContent = "Ready to compare?";
+
+        const paragraph = document.createElement("p");
+        paragraph.textContent =
+            "Select two careers above to compare their education, salary, skills, demand and career outlook.";
+
+        empty.append(icon, heading, paragraph);
+        comparisonContainer.appendChild(empty);
+        return;
+    }
+
+    const first = findCareer(selectedCareers[0]);
+    const second = findCareer(selectedCareers[1]);
+
+    if (!first || !second) return;
+
+    const grid = document.createElement("div");
+    grid.className = "comparison-grid";
+
+    addCell(grid, "Career", true);
+
+    [first, second].forEach(career => {
+        const cell = document.createElement("div");
+        cell.className = "comparison-cell career-heading";
+
+        const icon = document.createElement("div");
+        icon.className = "big-icon";
+        icon.textContent = "💼";
+
+        const title = document.createElement("h3");
+        title.textContent = career.career_title || "Career";
+
+        const sector = document.createElement("small");
+        sector.textContent = career.sector || "Other";
+
+        cell.append(icon, title, sector);
+        grid.appendChild(cell);
+    });
+
+    addComparisonRow(grid, "Sector", c => c.sector);
+    addComparisonRow(grid, "Salary range", c => c.salary_range, "salary");
+    addComparisonRow(
+        grid,
+        "Education qualification",
+        c => c.education_qualification
+    );
+    addComparisonRow(
+        grid,
+        "What you'll do",
+        c => c.common_job_roles || c.short_description
+    );
+    addComparisonRow(
+        grid,
+        "Important skills",
+        c => c.important_skills,
+        "skills"
+    );
+    addComparisonRow(grid, "Recommended courses", c => c.recommended_courses);
+    addComparisonRow(grid, "Demand level", c => c.demand_level);
+    addComparisonRow(grid, "Career roadmap", c => c.career_roadmap);
+    addComparisonRow(grid, "Career growth", c => c.career_growth);
+    addComparisonRow(grid, "ONET-SOC code", c => c.onet_soc_code);
+
+    addCell(grid, "Explore", true);
+
+    [first, second].forEach(career => {
+        const cell = document.createElement("div");
+        cell.className = "comparison-cell action-cell";
+
+        const link = document.createElement("a");
+        link.className = "btn btn-primary";
+        link.href =
+            "role-detail.html?id=" +
+            encodeURIComponent(career.career_id);
+        link.textContent = "View Details";
+
+        cell.appendChild(link);
+        grid.appendChild(cell);
+    });
+
+    comparisonContainer.appendChild(grid);
+}
+
+async function loadCareerCatalog() {
+    careerOptions.textContent = "Loading careers from the database...";
+
+    try {
+        const response = await fetch("/api/career-catalog", {
+            method: "GET",
+            credentials: "same-origin"
+        });
+
+        if (!response.ok) {
+            throw new Error(`Catalog request failed (${response.status}).`);
+        }
+
+        const data = await response.json();
+
+        if (!data.success || !Array.isArray(data.careers)) {
+            throw new Error("The career catalog response was invalid.");
+        }
+
+        allCareers = data.careers;
+
+        renderCareerOptions();
+        updateSelected();
+        renderComparison();
+
+    } catch (error) {
+        console.error("Unable to load career catalog:", error);
+        careerOptions.textContent =
+            "Could not load careers from the database. Check that Flask is running and /api/career-catalog is available.";
+    }
+}
+
+loadCareerCatalog();
+</script>
+
 
 </body>
 </html>

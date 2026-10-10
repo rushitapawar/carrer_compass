@@ -784,409 +784,312 @@
 
     <script>
 
-        const careers = [
-
-            {
-                id: "software-developer",
-                title: "Software Developer",
-                category: "Technology",
-                icon: "💻",
-                description: "Build applications, websites and digital solutions using technology.",
-                skills: ["Programming", "Problem Solving", "Logic"]
-            },
-
-            {
-                id: "data-scientist",
-                title: "Data Scientist",
-                category: "Technology",
-                icon: "📊",
-                description: "Analyze data and discover insights that help organizations make better decisions.",
-                skills: ["Statistics", "Data", "Python"]
-            },
-
-            {
-                id: "cybersecurity-analyst",
-                title: "Cybersecurity Analyst",
-                category: "Technology",
-                icon: "🔐",
-                description: "Help protect digital systems, information and organizations from security threats.",
-                skills: ["Security", "Networking", "Analysis"]
-            },
-
-            {
-                id: "robotics-engineer",
-                title: "Robotics Engineer",
-                category: "Technology",
-                icon: "🤖",
-                description: "Combine engineering and software to develop intelligent robotic systems.",
-                skills: ["Robotics", "Programming", "Engineering"]
-            },
-
-            {
-                id: "ux-ui-designer",
-                title: "UX/UI Designer",
-                category: "Creative",
-                icon: "🎨",
-                description: "Design digital experiences that are useful, clear and enjoyable to use.",
-                skills: ["Design", "Creativity", "Research"]
-            },
-
-            {
-                id: "graphic-designer",
-                title: "Graphic Designer",
-                category: "Creative",
-                icon: "🖌️",
-                description: "Create visual concepts for brands, digital products and communication.",
-                skills: ["Typography", "Branding", "Design"]
-            },
-
-            {
-                id: "content-creator",
-                title: "Content Creator",
-                category: "Creative",
-                icon: "🎥",
-                description: "Create useful and engaging content for digital audiences.",
-                skills: ["Writing", "Creativity", "Media"]
-            },
-
-            {
-                id: "fashion-designer",
-                title: "Fashion Designer",
-                category: "Creative",
-                icon: "👗",
-                description: "Develop clothing and fashion concepts through creativity and design.",
-                skills: ["Fashion", "Sketching", "Creativity"]
-            },
-
-            {
-                id: "teacher",
-                title: "Teacher",
-                category: "People",
-                icon: "📚",
-                description: "Help learners understand ideas, develop skills and grow with confidence.",
-                skills: ["Teaching", "Communication", "Patience"]
-            },
-
-            {
-                id: "psychologist",
-                title: "Psychologist",
-                category: "People",
-                icon: "🧠",
-                description: "Study human behavior and support people through professional approaches.",
-                skills: ["Research", "Empathy", "Listening"]
-            },
-
-            {
-                id: "career-counselor",
-                title: "Career Counselor",
-                category: "People",
-                icon: "🧭",
-                description: "Help people understand their strengths and explore career directions.",
-                skills: ["Guidance", "Listening", "Planning"]
-            },
-
-            {
-                id: "social-worker",
-                title: "Social Worker",
-                category: "People",
-                icon: "🤝",
-                description: "Support individuals and communities through guidance and resources.",
-                skills: ["Empathy", "Advocacy", "Communication"]
-            },
-
-            {
-                id: "business-analyst",
-                title: "Business Analyst",
-                category: "Business",
-                icon: "📈",
-                description: "Connect business needs with practical solutions using analysis and communication.",
-                skills: ["Analysis", "Strategy", "Communication"]
-            },
-
-            {
-                id: "product-manager",
-                title: "Product Manager",
-                category: "Business",
-                icon: "🚀",
-                description: "Guide products from ideas to useful solutions for real users.",
-                skills: ["Leadership", "Strategy", "Planning"]
-            },
-
-            {
-                id: "project-manager",
-                title: "Project Manager",
-                category: "Business",
-                icon: "📋",
-                description: "Plan and coordinate projects so teams can achieve clear goals.",
-                skills: ["Planning", "Leadership", "Organization"]
-            },
-
-            {
-                id: "operations-manager",
-                title: "Operations Manager",
-                category: "Business",
-                icon: "⚙️",
-                description: "Improve processes and coordinate operations so organizations work effectively.",
-                skills: ["Management", "Planning", "Analysis"]
-            },
-
-            {
-                id: "marketing-manager",
-                title: "Marketing Manager",
-                category: "Business",
-                icon: "📣",
-                description: "Plan marketing strategies that help organizations connect with audiences.",
-                skills: ["Marketing", "Strategy", "Creativity"]
-            },
-
-            {
-                id: "financial-analyst",
-                title: "Financial Analyst",
-                category: "Finance",
-                icon: "💰",
-                description: "Use financial information and analysis to support business decisions.",
-                skills: ["Finance", "Math", "Analysis"]
-            },
-
-            {
-                id: "accountant",
-                title: "Accountant",
-                category: "Finance",
-                icon: "🧮",
-                description: "Manage financial records and help organizations understand their finances.",
-                skills: ["Accounting", "Numeracy", "Detail"]
-            },
-
-            {
-                id: "civil-engineer",
-                title: "Civil Engineer",
-                category: "Engineering",
-                icon: "🏗️",
-                description: "Design and develop infrastructure that supports communities and everyday life.",
-                skills: ["Engineering", "Math", "Planning"]
-            },
-
-            {
-                id: "mechanical-engineer",
-                title: "Mechanical Engineer",
-                category: "Engineering",
-                icon: "⚙️",
-                description: "Design, develop and improve machines and mechanical systems.",
-                skills: ["Physics", "CAD", "Engineering"]
-            },
-
-            {
-                id: "architect",
-                title: "Architect",
-                category: "Design",
-                icon: "🏛️",
-                description: "Combine creativity and technical thinking to design spaces and structures.",
-                skills: ["Design", "Creativity", "Planning"]
-            },
-
-            {
-                id: "research-scientist",
-                title: "Research Scientist",
-                category: "Science",
-                icon: "🔬",
-                description: "Investigate questions, test ideas and contribute to new knowledge.",
-                skills: ["Research", "Science", "Analysis"]
-            },
-
-            {
-                id: "doctor",
-                title: "Doctor",
-                category: "People",
-                icon: "🩺",
-                description: "Study medicine and help people through diagnosis, treatment and healthcare.",
-                skills: ["Science", "Communication", "Decision Making"]
-            },
-
-            {
-                id: "lawyer",
-                title: "Lawyer",
-                category: "People",
-                icon: "⚖️",
-                description: "Use legal knowledge, research and communication to help address legal matters.",
-                skills: ["Research", "Reasoning", "Communication"]
-            }
-
-        ];
-
-
-        const careerGrid =
-            document.getElementById("careerGrid");
-
-        const searchInput =
-            document.getElementById("searchInput");
-
-        const categoryFilter =
-            document.getElementById("categoryFilter");
-
-        const resultCount =
-            document.getElementById("resultCount");
-
-        const emptyState =
-            document.getElementById("emptyState");
-
-
-        /* ================= RENDER ================= */
-
-        function renderCareers(list) {
-
-            careerGrid.innerHTML = "";
-
-            resultCount.textContent =
-                `${list.length} ${list.length === 1 ? "career" : "careers"}`;
-
-
-            if (list.length === 0) {
-
-                emptyState.style.display = "block";
-
-                return;
-
-            }
-
-
-            emptyState.style.display = "none";
-
-
-            list.forEach((career, index) => {
-
-                const card =
-                    document.createElement("article");
-
-                card.className =
-                    "career-card";
-
-
-                const match =
-                    Math.max(
-                        72,
-                        96 - (index * 2)
-                    );
-
-
-                card.innerHTML = `
-
-                    <div class="card-top">
-
-                        <div class="career-icon">
-                            ${career.icon}
-                        </div>
-
-                        <span class="category">
-                            ${career.category}
-                        </span>
-
-                    </div>
-
-
-                    <h3>
-                        ${career.title}
-                    </h3>
-
-
-                    <p>
-                        ${career.description}
-                    </p>
-
-
-                    <div class="skills">
-
-                        ${career.skills.map(skill => `
-                            <span class="skill">
-                                ${skill}
-                            </span>
-                        `).join("")}
-
-                    </div>
-
-
-                    <div class="card-bottom">
-
-                        <span class="match">
-                            ${match}% Match
-                        </span>
-
-                        <a
-                            href="role-detail.html?id=${career.id}"
-                            class="view-btn"
-                        >
-                            Explore →
-                        </a>
-
-                    </div>
-
-                `;
-
-
-                careerGrid.appendChild(card);
-
-            });
-
+       
+/* ==========================================
+   CAREER SECTOR PAGE - DATABASE CONNECTION
+========================================== */
+
+const careerGrid = document.getElementById("careerGrid");
+const searchInput = document.getElementById("searchInput");
+const categoryFilter = document.getElementById("categoryFilter");
+const resultCount = document.getElementById("resultCount");
+const emptyState = document.getElementById("emptyState");
+
+let careers = [];
+
+
+/* ==========================================
+   HELPERS
+========================================== */
+
+function getTitle(career) {
+    return career.career_title ||
+        career.careerTitle ||
+        career.title ||
+        "Untitled Career";
+}
+
+function getSector(career) {
+    return career.sector || career.category || "Other";
+}
+
+function getDescription(career) {
+    return career.short_description ||
+        career.shortDescription ||
+        career.description ||
+        "Explore this career and its opportunities.";
+}
+
+function getField(career, ...keys) {
+    for (const key of keys) {
+        if (career[key] !== undefined && career[key] !== null) {
+            return career[key];
         }
+    }
 
+    return "";
+}
 
-        /* ================= FILTER ================= */
+function getList(value) {
+    if (Array.isArray(value)) {
+        return value.map(item => String(item).trim()).filter(Boolean);
+    }
 
-        function filterCareers() {
+    if (typeof value !== "string" || !value.trim()) {
+        return [];
+    }
 
-            const search =
-                searchInput.value
-                    .trim()
-                    .toLowerCase();
+    try {
+        const parsed = JSON.parse(value);
 
-            const category =
-                categoryFilter.value;
-
-
-            const filtered =
-                careers.filter(career => {
-
-                    const matchesSearch =
-                        !search ||
-                        career.title.toLowerCase().includes(search) ||
-                        career.category.toLowerCase().includes(search) ||
-                        career.description.toLowerCase().includes(search) ||
-                        career.skills.some(
-                            skill =>
-                                skill.toLowerCase().includes(search)
-                        );
-
-
-                    const matchesCategory =
-                        category === "all" ||
-                        career.category === category;
-
-
-                    return matchesSearch &&
-                           matchesCategory;
-
-                });
-
-
-            renderCareers(filtered);
-
+        if (Array.isArray(parsed)) {
+            return parsed.map(item => String(item).trim()).filter(Boolean);
         }
+    } catch (error) {
+        // The database may store skills as a comma-separated string.
+    }
+
+    return value
+        .split(/[,;|]/)
+        .map(item => item.trim())
+        .filter(Boolean);
+}
+
+function getIcon(sector) {
+    const value = String(sector).toLowerCase();
+
+    if (value.includes("technology") || value.includes("software")) return "💻";
+    if (value.includes("creative") || value.includes("design")) return "🎨";
+    if (value.includes("business") || value.includes("management")) return "📊";
+    if (value.includes("finance") || value.includes("account")) return "💰";
+    if (value.includes("health") || value.includes("medical")) return "🩺";
+    if (value.includes("education")) return "📚";
+    if (value.includes("engineering")) return "⚙️";
+    if (value.includes("science") || value.includes("research")) return "🔬";
+    if (value.includes("law") || value.includes("legal")) return "⚖️";
+    if (value.includes("people") || value.includes("social")) return "👥";
+
+    return "💼";
+}
 
 
-        searchInput.addEventListener(
-            "input",
-            filterCareers
+/* ==========================================
+   LOAD SECTORS FROM DATABASE CAREERS
+========================================== */
+
+function populateSectorFilter() {
+    const sectors = [
+        ...new Set(
+            careers
+                .map(career => getSector(career).trim())
+                .filter(Boolean)
+        )
+    ].sort((a, b) => a.localeCompare(b));
+
+    categoryFilter.innerHTML = "";
+
+    const allOption = document.createElement("option");
+    allOption.value = "all";
+    allOption.textContent = "All Career Areas";
+    categoryFilter.appendChild(allOption);
+
+    sectors.forEach(function (sector) {
+        const option = document.createElement("option");
+        option.value = sector;
+        option.textContent = sector;
+        categoryFilter.appendChild(option);
+    });
+}
+
+
+/* ==========================================
+   RENDER CAREER CARDS
+========================================== */
+
+function renderCareers(list) {
+    careerGrid.innerHTML = "";
+
+    resultCount.textContent =
+        `${list.length} ${list.length === 1 ? "career" : "careers"}`;
+
+    if (list.length === 0) {
+        careerGrid.style.display = "none";
+        emptyState.style.display = "block";
+        return;
+    }
+
+    careerGrid.style.display = "grid";
+    emptyState.style.display = "none";
+
+    list.forEach(function (career) {
+        const id = Number(career.career_id ?? career.id);
+
+        const title = getTitle(career);
+        const sector = getSector(career);
+        const description = getDescription(career);
+
+        const skills = getList(
+            getField(career, "important_skills", "importantSkills", "skills")
+        ).slice(0, 4);
+
+        const demand = getField(
+            career,
+            "demand_level",
+            "demandLevel"
         );
 
+        const card = document.createElement("article");
+        card.className = "career-card";
 
-        categoryFilter.addEventListener(
-            "change",
-            filterCareers
-        );
+        const top = document.createElement("div");
+        top.className = "card-top";
+
+        const icon = document.createElement("div");
+        icon.className = "career-icon";
+        icon.textContent = getIcon(sector);
+
+        const category = document.createElement("span");
+        category.className = "category";
+        category.textContent = sector;
+
+        top.append(icon, category);
+        card.appendChild(top);
+
+        const heading = document.createElement("h3");
+        heading.textContent = title;
+        card.appendChild(heading);
+
+        const summary = document.createElement("p");
+        summary.textContent = description;
+        card.appendChild(summary);
+
+        const skillBox = document.createElement("div");
+        skillBox.className = "skills";
+
+        skills.forEach(function (skill) {
+            const tag = document.createElement("span");
+            tag.className = "skill";
+            tag.textContent = skill;
+            skillBox.appendChild(tag);
+        });
+
+        if (skills.length > 0) {
+            card.appendChild(skillBox);
+        }
+
+        const bottom = document.createElement("div");
+        bottom.className = "card-bottom";
+
+        const demandLabel = document.createElement("span");
+        demandLabel.className = "match";
+        demandLabel.textContent = demand
+            ? `Demand: ${demand}`
+            : "Career opportunity";
+
+        bottom.appendChild(demandLabel);
+
+        const viewLink = document.createElement("a");
+        viewLink.className = "view-btn";
+        viewLink.textContent = "Explore →";
+
+        if (Number.isInteger(id) && id > 0) {
+            viewLink.href = `role-detail.html?id=${encodeURIComponent(id)}`;
+        } else {
+            viewLink.href = "#";
+            viewLink.addEventListener("click", event => event.preventDefault());
+        }
+
+        bottom.appendChild(viewLink);
+        card.appendChild(bottom);
+
+        careerGrid.appendChild(card);
+    });
+}
 
 
-        /* ================= INITIAL LOAD ================= */
+/* ==========================================
+   SEARCH AND SECTOR FILTER
+========================================== */
 
-        renderCareers(careers);
+function filterCareers() {
+    const query = searchInput.value.trim().toLowerCase();
+    const selectedSector = categoryFilter.value;
+
+    const filtered = careers.filter(function (career) {
+        const sector = getSector(career);
+
+        const searchableText = [
+            getTitle(career),
+            sector,
+            getDescription(career),
+            getField(career, "important_skills", "importantSkills", "skills"),
+            getField(career, "education_qualification", "educationQualification"),
+            getField(career, "common_job_roles", "commonJobRoles"),
+            getField(career, "recommended_courses", "recommendedCourses")
+        ].join(" ").toLowerCase();
+
+        const matchesSearch = searchableText.includes(query);
+
+        const matchesSector =
+            selectedSector === "all" ||
+            sector.toLowerCase() === selectedSector.toLowerCase();
+
+        return matchesSearch && matchesSector;
+    });
+
+    renderCareers(filtered);
+}
+
+
+/* ==========================================
+   FETCH CAREER CATALOGUE
+========================================== */
+
+async function loadCareers() {
+    try {
+        careerGrid.style.display = "grid";
+        careerGrid.textContent = "Loading careers...";
+
+        const response = await fetch("/api/career-catalog", {
+            method: "GET",
+            credentials: "same-origin"
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success ||
+            !Array.isArray(data.careers)) {
+            throw new Error(
+                data.message || "Unable to load the career catalogue."
+            );
+        }
+
+        careers = data.careers;
+
+        populateSectorFilter();
+        filterCareers();
+
+    } catch (error) {
+        console.error("Career catalogue error:", error);
+
+        careerGrid.style.display = "block";
+        careerGrid.textContent =
+            "Unable to load careers. Please check that Flask is running and refresh the page.";
+
+        resultCount.textContent = "Careers unavailable";
+        emptyState.style.display = "none";
+    }
+}
+
+
+/* ==========================================
+   EVENT LISTENERS AND INITIAL LOAD
+========================================== */
+
+searchInput.addEventListener("input", filterCareers);
+categoryFilter.addEventListener("change", filterCareers);
+
+loadCareers();
 
     </script>
 
